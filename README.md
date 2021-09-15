@@ -1,26 +1,40 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111)
-# Javafx template
+# Salary Checker
 
-A repository with three variants of a javafx projects, with maven setup for Java 16 and JavaFX 16, and JUnit 5 (Jupiter) and TestFX for testing.
+This repo contains a multi-module, multi-package javafx project for checking salary. This application is mainly meant for people who work on commision. 
+The app will calculate if you have been paid the correct amount based on your sales. You can read more about the project here: [Salary Checker](docs/README.md).
 
-To make the project(s) more interesting, it is the start of an [RPN](https://en.wikipedia.org/wiki/Reverse_Polish_notation) calculator (look for `// TODO`) markers). The core logic is almost implemented (in [Calc.java](javafx-template/src/main/java/app/Calc.java)), the fxml file (in [App.fxml](javafx-template/src/main/resources/app/App.fxml) is almost complete, but the controller class (in [AppController.java](javafx-template/src/main/java/app/AppController.java) is pretty limited. And last, but not least, there is a TestFX-based test (in [AppTest.java](javafx-template/src/test/java/app/AppTest.java), see the [README](javafx-template/src/test/java/app/README.md) for details about what it tests).
+## Building and running the project
 
-## javafx-template
+1. `mvn clean install` | tells Maven to do the clean phase in each module before running the install phase for each module. In addition all the tests will also be run.
+     
+     If you want to skip the tests: `mvn clean install -Dskiptests`
+2. `mvn -pl ui javafx:run` | tells Maven to run the app from the UI module. 
 
-Template for  single-module, single-package javafx project.
+## Organization of the code:
 
-## packages-template
+- [salary-checker](salary-checker/)
+    - [core](salary-checker/core)
+        - [domain-logic](salary-checker/core/src/main/java/core)
+        - [persistence-layer](salary-checker/core/src/main/java/json)
+    - [ui](salary-checker/ui)
+        - [javafx](salary-checker/ui/src/main/java/ui)
+        - [FXML](salary-checker/ui/src/main/resources)
 
-Template for  single-module, multi-package javafx project.
+[Read more about the modules and the code](salary-checker/README.md)
+    
+## The plan
 
-## salary-checker
+**Read more about the project here:** [Salary-Checker](docs/README.md)
 
-Template for  multi-module, multi-package javafx project.
+The project is set to three releases.
 
-## Trying it out
+####Sprint 1
 
-All projects can be tried out by cd-ing into the corresponding folder and using `mvn`:
+This sprint contains two user stories: us-1 and us-2.
 
-- compile with `mvn compile` (after `cd javafx-template` of course)
-- test with `mvn test` (it should fail until you complete the RPN calculator)
-- run with `mvn javafx:run` (it should open, but not work properly)
+**US-1:** As an already registered user, I want to log in to SalaryChecker.
+
+**US-2:** As a user I want to see the functionality in the app, after I have given my correct credentials.
+
+
