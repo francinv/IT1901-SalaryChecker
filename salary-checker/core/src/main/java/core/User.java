@@ -10,8 +10,8 @@ public class User {
     private String lastname;
     private String email;
     private String password;
-    private String soscial_number;
-    private String employee_number;
+    private long soscial_number;
+    private int employee_number;
     private String employer_email;
     private double tax_count;
 
@@ -27,8 +27,8 @@ public class User {
      * @param employer_email
      * @param tax_count
      */
-    public User(String firstname, String lastname, String email, String password, String soscial_number,
-            String employee_number, String employer_email, double tax_count) {
+    public User(String firstname, String lastname, String email, String password, long soscial_number,
+            int employee_number, String employer_email, double tax_count) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -62,16 +62,16 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getSoscial_number() {
+    public long getSoscial_number() {
         return soscial_number;
     }
-    public void setSoscial_number(String soscial_number) {
+    public void setSoscial_number(long soscial_number) {
         this.soscial_number = soscial_number;
     }
-    public String getEmployee_number() {
+    public int getEmployee_number() {
         return employee_number;
     }
-    public void setEmployee_number(String employee_number) {
+    public void setEmployee_number(int employee_number) {
         this.employee_number = employee_number;
     }
     public String getEmployer_email() {
