@@ -10,10 +10,11 @@ public class User {
     private String lastname;
     private String email;
     private String password;
-    private long soscial_number;
-    private int employee_number;
-    private String employer_email;
-    private double tax_count;
+    private long socialNumber;
+    private int employeeNumber;
+    private String employerEmail;
+    private double taxCount;
+    private UserValidation validation;
 
     /**
      * Constructor
@@ -22,21 +23,27 @@ public class User {
      * @param lastname
      * @param email
      * @param password
-     * @param soscial_number
-     * @param employee_number
-     * @param employer_email
-     * @param tax_count
+     * @param soscialNumber
+     * @param employeeNumber
+     * @param employerEmail
+     * @param taxCount
      */
-    public User(String firstname, String lastname, String email, String password, long soscial_number,
-            int employee_number, String employer_email, double tax_count) {
+    public User(String firstname, String lastname, String email, String password, long socialNumber,
+            int employeeNumber, String employerEmail, double taxCount) {
+        this.validation = new UserValidation();
+        if (!validation.isValidUser(firstname, lastname, email, password, 
+            socialNumber, employeeNumber, employerEmail, taxCount)) {
+            throw new IllegalArgumentException("Kan ikke opprette bruker");
+        }
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.soscial_number = soscial_number;
-        this.employee_number = employee_number;
-        this.employer_email = employer_email;
-        this.tax_count = tax_count;
+        this.socialNumber = socialNumber;
+        this.employeeNumber = employeeNumber;
+        this.employerEmail = employerEmail;
+        this.taxCount = taxCount;
+        
     }
     public String getFirstname() {
         return firstname;
@@ -62,35 +69,35 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public long getSoscial_number() {
-        return soscial_number;
+    public long getSocialNumber() {
+        return socialNumber;
     }
-    public void setSoscial_number(long soscial_number) {
-        this.soscial_number = soscial_number;
+    public void setSoscialNumber(long socialNumber) {
+        this.socialNumber = socialNumber;
     }
-    public int getEmployee_number() {
-        return employee_number;
+    public int getEmployeeNumber() {
+        return employeeNumber;
     }
-    public void setEmployee_number(int employee_number) {
-        this.employee_number = employee_number;
+    public void setEmployeeNumber(int employeeNumber) {
+        this.employeeNumber = employeeNumber;
     }
-    public String getEmployer_email() {
-        return employer_email;
+    public String getEmployerEmail() {
+        return employerEmail;
     }
-    public void setEmployer_email(String employer_email) {
-        this.employer_email = employer_email;
+    public void setEmployerEmail(String employerEmail) {
+        this.employerEmail = employerEmail;
     }
-    public double getTax_count() {
-        return tax_count;
+    public double getTaxCount() {
+        return taxCount;
     }
-    public void setTax_count(double tax_count) {
-        this.tax_count = tax_count;
+    public void setTaxCount(double taxCount) {
+        this.taxCount = taxCount;
     }
 
     @Override
     public String toString() {
-        return "User [email=" + email + ", employee_number=" + employee_number + ", employer_email=" + employer_email
+        return "User [email=" + email + ", employee_number=" + employeeNumber + ", employer_email=" + employerEmail
                 + ", firstname=" + firstname + ", lastname=" + lastname + ", password=" + password + ", soscial_number="
-                + soscial_number + ", tax_count=" + tax_count + "]";
+                + socialNumber + ", tax_count=" + taxCount + "]";
     }
 }
