@@ -1,4 +1,4 @@
-package ui;
+package salarychecker.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
