@@ -1,5 +1,5 @@
-module calc.ui {
-    requires calc.core;
+module salarychecker.ui {
+    requires salarychecker.core;
     requires javafx.controls;
     requires javafx.fxml;
 

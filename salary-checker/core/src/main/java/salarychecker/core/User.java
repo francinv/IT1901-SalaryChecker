@@ -1,4 +1,4 @@
-package core;
+package salarychecker.core;
 
 /** 
  * Class for creating a user, and store their information.
