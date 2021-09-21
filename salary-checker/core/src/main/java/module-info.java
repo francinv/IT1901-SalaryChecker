@@ -1,3 +1,3 @@
-module calc.core {
+module salarychecker.core {
     exports core;
 }
