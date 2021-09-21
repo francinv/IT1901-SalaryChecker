@@ -1,3 +1,3 @@
 module salarychecker.core {
-    exports core;
+    exports salarychecker.core;
 }
