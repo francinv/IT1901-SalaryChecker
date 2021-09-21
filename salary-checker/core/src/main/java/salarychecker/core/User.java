@@ -30,11 +30,6 @@ public class User {
      */
     public User(String firstname, String lastname, String email, String password, long socialNumber,
             int employeeNumber, String employerEmail, double taxCount) {
-        this.validation = new UserValidation();
-        if (!validation.isValidUser(firstname, lastname, email, password, 
-            socialNumber, employeeNumber, employerEmail, taxCount)) {
-            throw new IllegalArgumentException("Kan ikke opprette bruker");
-        }
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -42,9 +37,17 @@ public class User {
         this.socialNumber = socialNumber;
         this.employeeNumber = employeeNumber;
         this.employerEmail = employerEmail;
-        this.taxCount = taxCount;
-        
+        this.taxCount = taxCount;    
     }
+
+    public User(String email, String password) {
+        this.validation = new UserValidation();
+        if (validation.isExistingUser(email, password)) {
+            this.email = email;
+            this.password = password;
+        }
+    }
+
     public String getFirstname() {
         return firstname;
     }
