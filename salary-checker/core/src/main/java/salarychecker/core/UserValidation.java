@@ -52,4 +52,8 @@ public class UserValidation {
                    isValidEmployeeNumber(employeeNumber) && isValidEmail(employerEmail) && 
                    isValidTaxCount(taxCount); 
     }
+
+    public boolean isExistingUser(String email, String password) {
+        return false;
+    }
 }

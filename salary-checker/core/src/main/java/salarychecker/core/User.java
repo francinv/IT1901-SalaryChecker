@@ -48,6 +48,8 @@ public class User {
         }
     }
 
+    public User() {}
+
     public String getFirstname() {
         return firstname;
     }
@@ -75,7 +77,7 @@ public class User {
     public long getSocialNumber() {
         return socialNumber;
     }
-    public void setSoscialNumber(long socialNumber) {
+    public void setSocialNumber(long socialNumber) {
         this.socialNumber = socialNumber;
     }
     public int getEmployeeNumber() {
