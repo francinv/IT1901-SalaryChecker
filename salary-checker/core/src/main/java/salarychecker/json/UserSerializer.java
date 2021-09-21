@@ -28,13 +28,13 @@ format:
     public void serialize(User user, JsonGenerator jsonGen, SerializerProvider serializerProvider)
         throws IOException {
     jsonGen.writeStartObject();
-    
+
     jsonGen.writeStringField("firstname", user.getFirstname());
     jsonGen.writeStringField("lastname", user.getLastname());
     jsonGen.writeStringField("email", user.getEmail());
     jsonGen.writeStringField("password", user.getPassword());
     jsonGen.writeNumberField("socialNumber", user.getSocialNumber());
-    jsonGen.writeNumberField("employeeNyumber", user.getEmployeeNumber());
+    jsonGen.writeNumberField("employeeNumber", user.getEmployeeNumber());
     jsonGen.writeStringField("employerEmail", user.getEmployerEmail());
 
     jsonGen.writeEndObject();

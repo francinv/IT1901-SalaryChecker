@@ -1,5 +1,9 @@
 package salarychecker.core;
 
+import java.io.IOException;
+
+import salarychecker.json.SalaryCheckerPersistence;
+
 /** 
  * Class for creating a user, and store their information.
  * 
@@ -104,5 +108,17 @@ public class User {
         return "User [email=" + email + ", employee_number=" + employeeNumber + ", employer_email=" + employerEmail
                 + ", firstname=" + firstname + ", lastname=" + lastname + ", password=" + password + ", soscial_number="
                 + socialNumber + ", tax_count=" + taxCount + "]";
+    }
+
+    public static void main(String[] args) throws IllegalStateException, IOException {
+        SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+
+        User seran = new User("firstname", "lastname", "email", "password", 26080199999L, 99999, "employerEmail", 33.0);
+        persistence.setSaveFile("TestJSON.json");
+        persistence.saveUser(seran);
+        User sander = persistence.loadUser();
+
+        String firstname = sander.getFirstname();
+        System.out.println(firstname);
     }
 }
