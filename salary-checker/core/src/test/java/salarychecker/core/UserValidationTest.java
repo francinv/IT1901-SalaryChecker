@@ -1,4 +1,4 @@
-package core;
+package salarychecker.core;
 
 import org.junit.jupiter.api.Test;
 
