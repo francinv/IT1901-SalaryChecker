@@ -1,4 +1,4 @@
-package core;
+package salarychecker.core;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ public class UserTest {
         Assertions.assertNotEquals("email@email.com", testUser.getEmail());
         testUser.setPassword("passord");
         Assertions.assertNotEquals("password!123", testUser.getPassword());
-        testUser.setSoscialNumber(22030199999L);
+        testUser.setSocialNumber(22030199999L);
         Assertions.assertNotEquals(22019893456L, testUser.getSocialNumber());
         testUser.setEmployeeNumber(11111);
         Assertions.assertNotEquals(33333, testUser.getEmployeeNumber());
