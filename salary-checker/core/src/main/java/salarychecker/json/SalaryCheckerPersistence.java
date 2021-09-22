@@ -12,8 +12,7 @@ import java.nio.file.Paths;
 import salarychecker.core.User;
 
 /**
- * Wrapper class for JSON serialization,
- * to avoid direct compile dependencies on Jackson for other modules.
+ * Class for persistence using jackson serializer and deserializer
  */
 public class SalaryCheckerPersistence {
 
@@ -64,5 +63,14 @@ public class SalaryCheckerPersistence {
     try (Writer writer = new FileWriter(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
       writeUser(user, writer);
     }
+  }
+
+  public static void main(String[] args) throws IOException {
+    User user = new User("firstname", "lastname", "email", "password", 55555555555L, 55555, "employerEmail", 30.0);
+      SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
+      salaryCheckerPersistence.setSaveFile("SaveTest.json");
+      salaryCheckerPersistence.saveUser(user);
+      User user2 = salaryCheckerPersistence.loadUser();
+      System.out.println(user2);
   }
 }

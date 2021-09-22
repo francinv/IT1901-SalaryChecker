@@ -3,5 +3,5 @@ module salarychecker.ui {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens ui to javafx.graphics, javafx.fxml;
+    opens salarychecker.ui to javafx.graphics, javafx.fxml;
 }
