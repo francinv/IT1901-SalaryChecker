@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1300.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController.java">
+   <children>
+      <TabPane prefHeight="1300.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Profil">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text fx:id="navnDisplay" layoutX="100.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn Navnesen">
+                           <font>
+                              <Font size="59.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="epostTitle" layoutX="100.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Post">
+                           <font>
+                              <Font size="49.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="epostDisplay" layoutX="100.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="navn.navnesen@firma.no">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="idTitle" layoutX="100.0" layoutY="604.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt ID">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="658.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="newPassword" layoutX="100.0" layoutY="478.0" promptText="Bekreft Nytt Passord" />
+                        <TextField fx:id="confirmNewPessword" layoutX="100.0" layoutY="421.0" promptText="Nytt Passord" />
+                        <Button fx:id="changePassword" layoutX="100.0" layoutY="360.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="222.0" text="Endre passord" onAction="changePassword" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Lønnsutregninger">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Timelister">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Mine Lønninger ">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Send Epost">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Innstillinger">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
