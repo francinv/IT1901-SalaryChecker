@@ -1,5 +1,7 @@
 package salarychecker.json;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,11 +11,12 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import salarychecker.core.Accounts;
 import salarychecker.core.User;
 
 /**
- * Wrapper class for JSON serialization,
- * to avoid direct compile dependencies on Jackson for other modules.
+ * Class for persistence using jackson serializer and deserializer
  */
 public class SalaryCheckerPersistence {
 
@@ -21,6 +24,8 @@ public class SalaryCheckerPersistence {
 
   public SalaryCheckerPersistence() {
     mapper = new ObjectMapper();
+    //mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
     mapper.registerModule(new SalaryCheckerModule());
   }
 
@@ -64,5 +69,48 @@ public class SalaryCheckerPersistence {
     try (Writer writer = new FileWriter(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
       writeUser(user, writer);
     }
+  }
+
+  public void saveAccounts(Accounts accounts) throws IOException, IllegalStateException {
+    if (saveFilePath == null) {
+      throw new IllegalStateException("Save file path is not set, yet");
+    }
+    try (Writer writer = new FileWriter(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
+      writeAccounts(accounts, writer);
+    }
+  }
+
+  public void writeAccounts(Accounts accounts, Writer writer) throws IOException {
+    mapper.writerWithDefaultPrettyPrinter().writeValue(writer, accounts);
+  }
+
+  public Accounts loadAccounts() throws IOException, IllegalStateException {
+    if (saveFilePath == null) {
+      throw new IllegalStateException("Save file path is not set, yet");
+    }
+    try (Reader reader = new FileReader(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
+      return readAccounts(reader);
+    }
+  }
+
+  public Accounts readAccounts(Reader reader) throws IOException {
+    return mapper.readValue(reader, Accounts.class);
+  }
+
+  public static void main(String[] args) throws IOException {
+    User user = new User("Seran", "Shanmugathas", "seran@live.no", "password123", 55555555555L, 55555, "employerEmail@gmail.com", 30.0);
+    User user3 = new User("Francin", "Vincent", "vinc@gmail.com", "Vandre333!", 222222222222L, 333333, "employerE2mail@gmail.com", 23.0);
+    
+    Accounts accounts = new Accounts();
+    accounts.addUser(user);
+    accounts.addUser(user3);
+
+    SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
+    salaryCheckerPersistence.setSaveFile("SaveTest.json");
+    salaryCheckerPersistence.saveAccounts(accounts);
+
+    Accounts accounts2 = salaryCheckerPersistence.loadAccounts();
+    System.out.println(accounts.getAccounts());
+    System.out.println(accounts2.getAccounts());
   }
 }

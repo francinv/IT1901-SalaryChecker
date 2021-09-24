@@ -18,6 +18,7 @@ public class SalaryCheckerModule extends SimpleModule {
     public SalaryCheckerModule(boolean deepSalaryCheckerModelSerializer) {
         super(NAME, Version.unknownVersion());
         addSerializer(User.class, new UserSerializer());
+        addSerializer(Accounts.class, new AccountsSerializer());
         //addSerializer(TodoModel.class, new TodoModelSerializer(deepSalaryCheckerModelSerializer));
     }
 
