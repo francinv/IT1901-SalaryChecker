@@ -10,15 +10,10 @@ import java.util.List;
  */
 public class Accounts implements Iterable<User> {
 
-    private List<User> accounts = new ArrayList<>();
-    private String name;
+    public List<User> accounts = new ArrayList<>();
 
-    public Accounts(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+    public List<User> getAccounts() {
+        return accounts;
     }
 
     /**
@@ -28,7 +23,7 @@ public class Accounts implements Iterable<User> {
      * @throws IllegalStateException if the user already exists.
      */
     public void addUser(User user) {
-        if (!contains(user)) {
+        if (contains(user)) {
             throw new IllegalArgumentException("User already exists!");
         }
         this.accounts.add(user);
@@ -41,7 +36,7 @@ public class Accounts implements Iterable<User> {
      * @throws IllegalStateException if the user dosen't already exists.
      */
     public void removeUser(User user) {
-        if (contains(user)) {
+        if (!contains(user)) {
             throw new IllegalArgumentException("User does not exists!");
         }
         this.accounts.remove(user);
@@ -61,7 +56,7 @@ public class Accounts implements Iterable<User> {
     }
 
     public boolean contains(User user) {
-        return accounts.stream().anyMatch(u -> user.getEmail().equals(user.getEmail()));
+        return accounts.stream().anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
     // @Override
