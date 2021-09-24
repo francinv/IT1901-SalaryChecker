@@ -59,10 +59,6 @@ public class Accounts implements Iterable<User> {
         return accounts.stream().anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
-    public boolean checkValidUserLogin(String email, String password) {
-        return accounts.stream().anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
-    }
-
     // @Override
     // public String toString() {
     //     StringBuilder ...
@@ -72,5 +68,9 @@ public class Accounts implements Iterable<User> {
     //     return String.format("[User \n%s %s \ne-mail: %s]",
     //         get,);
     // }
+
+    public boolean checkValidUserLogin(String email, String password) {
+        return accounts.stream().anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
+    }
 }
 
