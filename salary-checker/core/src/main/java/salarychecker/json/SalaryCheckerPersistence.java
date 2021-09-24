@@ -1,6 +1,7 @@
 package salarychecker.json;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -24,6 +25,7 @@ public class SalaryCheckerPersistence {
   public SalaryCheckerPersistence() {
     mapper = new ObjectMapper();
     //mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
     mapper.registerModule(new SalaryCheckerModule());
   }
 
@@ -96,8 +98,8 @@ public class SalaryCheckerPersistence {
   }
 
   public static void main(String[] args) throws IOException {
-    User user = new User("firstname", "lastname", "email", "password", 55555555555L, 55555, "employerEmail", 30.0);
-    User user3 = new User("firstname2", "w", "  w", " ", 222222222222L, 333333, "employerE2mail", 23.0);
+    User user = new User("Seran", "Shanmugathas", "seran@live.no", "password123", 55555555555L, 55555, "employerEmail@gmail.com", 30.0);
+    User user3 = new User("Francin", "Vincent", "vinc@gmail.com", "Vandre333!", 222222222222L, 333333, "employerE2mail@gmail.com", 23.0);
     
     Accounts accounts = new Accounts();
     accounts.addUser(user);
