@@ -19,6 +19,7 @@ public class User {
     private String employerEmail;
     private double taxCount;
     private UserValidation validation;
+    private User user;
 
     /**
      * Constructor
@@ -27,7 +28,7 @@ public class User {
      * @param lastname
      * @param email
      * @param password
-     * @param soscialNumber
+     * @param socialNumber
      * @param employeeNumber
      * @param employerEmail
      * @param taxCount

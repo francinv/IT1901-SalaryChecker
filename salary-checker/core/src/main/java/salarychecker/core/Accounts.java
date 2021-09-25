@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.lang.Iterable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Lists of items in a todo list.
@@ -72,5 +73,17 @@ public class Accounts implements Iterable<User> {
     public boolean checkValidUserLogin(String email, String password) {
         return accounts.stream().anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
     }
+
+    public User getUser(String email, String password) {
+        return accounts.stream()
+                .filter(u -> u.getEmail().equals(email) && u.getPassword().equals(password))
+                .findAny()
+                .orElse(null);
+    }
+
+    public void updatePassword(String email, String newpassword) {
+        accounts.stream().filter(u->u.getEmail().equals(email)).findAny().ifPresent(u->u.setPassword(newpassword));
+    }
+
 }
 
