@@ -1,0 +1,29 @@
+@startuml
+
+component core {
+	package salarychecker.core
+	package salarychecker.json
+}
+
+component jackson {
+}
+
+salarychecker.json ..> jackson
+
+component ui {
+	package salarychecker.ui
+}
+
+
+salarychecker.ui ..> salarychecker.core
+salarychecker.ui ..> salarychecker.json
+
+component javafx {
+	component fxml {
+	}
+}
+
+ui ..> javafx
+ui ..> fxml
+
+@enduml
