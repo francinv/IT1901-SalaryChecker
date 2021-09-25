@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 public class UserValidationTest {
     @Test
-    void testIsValidEmail() {
+    public void testIsValidEmail() {
 
     }
 
     @Test
-    void testIsValidEmployeeNumber() {
+    public void testIsValidEmployeeNumber() {
 
     }
 }

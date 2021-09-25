@@ -15,7 +15,7 @@ public class UserTest {
     }
 
     @Test
-    void testGetMethods() {
+    public void testGetMethods() {
         Assertions.assertEquals("Firstname", testUser.getFirstname());
         Assertions.assertEquals("Lastname", testUser.getLastname());
         Assertions.assertEquals("email@email.com", testUser.getEmail());
@@ -27,7 +27,7 @@ public class UserTest {
     }
 
     @Test
-    void testSetMethods() {
+    public void testSetMethods() {
         testUser.setFirstname("Sander");
         Assertions.assertNotEquals("Firstname", testUser.getFirstname());
         testUser.setLastname("Olsen");
