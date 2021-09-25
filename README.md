@@ -2,7 +2,7 @@
 # Salary Checker :computer:
 
 This repo contains a multi-module, multi-package javafx project for checking salary. This application is mainly meant for people who work on commision. 
-The app will calculate if you have been paid the correct amount based on your sales. You can read more about the project here: [Salary Checker](docs/README.md).
+The app will calculate if you have been paid the correct amount based on your sales. You can read more about the project here: [Salary Checker](salary-checker/README.md).
 
 ## Building and running the project
 
