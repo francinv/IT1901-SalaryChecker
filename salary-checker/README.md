@@ -44,6 +44,8 @@ Many people are employed in the sales industry, and a lot of companies reward th
 
 ## Project structure:
 ### Project structure will be updated after later releases.
+![Architecture](../docs/ARCHITECTURE.png)
+
 - [docs](../../docs)
     - [release1](../../docs/release1)
         - [README.md](../../docs/release1/README.md) :point_right: Documentation for release 1
