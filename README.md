@@ -15,17 +15,17 @@ The app will calculate if you have been paid the correct amount based on your sa
 
 - [salary-checker](salary-checker/)
     - [core](salary-checker/core)
-        - [domain-logic](salary-checker/core/src/main/java/core)
-        - [persistence-layer](salary-checker/core/src/main/java/json)
+        - [domain-logic](salary-checker/core/src/main/java/salarychecker/core)
+        - [persistence-layer](salary-checker/core/src/main/java/salarychecker/json)
     - [ui](salary-checker/ui)
-        - [javafx](salary-checker/ui/src/main/java/ui)
+        - [javafx](salary-checker/ui/src/main/java/salarychecker/ui)
         - [FXML](salary-checker/ui/src/main/resources)
 
 [Read more about the modules and the code](salary-checker/README.md)
     
 ## The plan
 
-**Read more about the project here:** [Salary-Checker](docs/README.md)
+**Read more about the project here:** [Salary-Checker](salary-checker/README.md)
 
 The project is set to three releases.
 
