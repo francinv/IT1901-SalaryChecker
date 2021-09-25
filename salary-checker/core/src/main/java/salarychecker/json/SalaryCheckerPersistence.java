@@ -97,20 +97,4 @@ public class SalaryCheckerPersistence {
     return mapper.readValue(reader, Accounts.class);
   }
 
-  public static void main(String[] args) throws IOException {
-    User user = new User("Seran", "Shanmugathas", "seran@live.no", "password123", 55555555555L, 55555, "employerEmail@gmail.com", 30.0);
-    User user3 = new User("Francin", "Vincent", "vinc@gmail.com", "Vandre333!", 222222222222L, 333333, "employerE2mail@gmail.com", 23.0);
-    
-    Accounts accounts = new Accounts();
-    accounts.addUser(user);
-    accounts.addUser(user3);
-
-    SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
-    salaryCheckerPersistence.setSaveFile("SaveTest.json");
-    salaryCheckerPersistence.saveAccounts(accounts);
-
-    Accounts accounts2 = salaryCheckerPersistence.loadAccounts();
-    System.out.println(accounts.getAccounts());
-    System.out.println(accounts2.getAccounts());
-  }
 }
