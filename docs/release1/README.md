@@ -41,6 +41,8 @@
 - When clicking the login button it will be verified that the user exists. 
 - The user will see the correct credentials when logged in. 
 
+- The initialize method in logincontroller runs a method thats write down test users to a json file located in user.home. To use the app, the user need to find this json file and use the registres email and password to login. We will implement user registration for later release.
+
 
 ## Userstory for release 1:
 "An employee at a salesfirm implementing the Salarychecker application wants to check his userprofile, and verify that his personal information is correct. He therefore logs on to Salarychecker and looks at his profile page to view his personal information."
