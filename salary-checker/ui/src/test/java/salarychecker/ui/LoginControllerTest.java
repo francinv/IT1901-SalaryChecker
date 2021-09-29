@@ -13,6 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import org.assertj.core.api.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,16 +77,47 @@ public class LoginControllerTest extends ApplicationTest {
         }
     }
 
-    @Test()
+    @Test
     public void testInvalidEmail() {
         writeInLoginFields("seran", "Password123!");
         clickOn(logInButton);
         alertDialogPopsUp("Password or e-mail is not valid.");
-        /*Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        Assertions.assertThrows(RuntimeException.class, () -> {
             writeInLoginFields("seran", "Password123!");
             clickOn(logInButton);
-        });*/
+            }
+        );
+
     }
+
+    @Test
+    public void testInvalidPwd() {
+        writeInLoginFields("seran@live.no", "t");
+        clickOn(logInButton);
+        alertDialogPopsUp("Password or e-mail is not valid.");
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            writeInLoginFields("seran@live.no", "t");
+            clickOn(logInButton);
+        });
+    }
+
+    @Test
+    public void testNonExistingUser() {
+        writeInLoginFields("fxtest@gmail.no", "FxTest123!");
+        clickOn(logInButton);
+        alertDialogPopsUp("No user of this kind registered.");
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            writeInLoginFields("fxtest@gmail.no", "FxTest123!");
+            clickOn(logInButton);
+        });
+    }
+
+    @AfterEach
+    public void clearLoginFields() {
+        emailField.clear();
+        passwordField.clear();
+    }
+
 
     private void alertDialogPopsUp(final String expectedContent) {
         final Stage actualAlertDialog = getTopModalStage();
