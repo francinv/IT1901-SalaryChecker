@@ -17,7 +17,7 @@ public class UserTest {
     @Test
     public void testConstructor() {
         User loginConstructor = new User("email@email.com", "password!123");
-        Assertions.assertNotNull(loginConstructor.getEmail());
+        Assertions.assertNull(loginConstructor.getEmail());
 
         User emptyConstructor = new User();
         Assertions.assertNull(emptyConstructor.getEmail());
