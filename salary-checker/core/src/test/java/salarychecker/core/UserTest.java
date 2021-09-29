@@ -15,6 +15,15 @@ public class UserTest {
     }
 
     @Test
+    public void testConstructor() {
+        User loginConstructor = new User("email@email.com", "password!123");
+        Assertions.assertNotNull(loginConstructor.getEmail());
+
+        User emptyConstructor = new User();
+        Assertions.assertNull(emptyConstructor.getEmail());
+    }
+
+    @Test
     public void testGetMethods() {
         Assertions.assertEquals("Firstname", testUser.getFirstname());
         Assertions.assertEquals("Lastname", testUser.getLastname());
