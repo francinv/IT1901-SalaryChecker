@@ -52,7 +52,7 @@ public class LoginController {
             else {
                 a.setAlertType(Alert.AlertType.ERROR);
                 a.setContentText("No user of this kind registered.");
-                a.showAndWait();
+                a.show();
                 throw new IllegalStateException("No user of this kind registered.");
             }
         } else {
