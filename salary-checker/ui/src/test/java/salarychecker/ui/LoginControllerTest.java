@@ -1,7 +1,6 @@
 package salarychecker.ui;
 
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,14 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
-import salarychecker.core.Accounts;
 import salarychecker.core.User;
 
 import java.io.IOException;
@@ -30,11 +27,9 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LoginControllerTest extends ApplicationTest {
-
-    private static final String EMPTY_STRING = "";
+    
     private TextField emailField;
     private PasswordField passwordField;
     private Button logInButton;
