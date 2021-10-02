@@ -25,7 +25,6 @@ public class HomepageController {
     @FXML private TextField newPassword;
     @FXML private TextField confirmNewPessword;
     @FXML private Button changebutton;
-    @FXML private SimpleStringProperty f1, f2, f3, f4, f5, f6,f7,f8,d9;
 
     /*
     * buttons to read and calculate salary*/
@@ -61,15 +60,6 @@ public class HomepageController {
     private void readCSV(){
         csvReader.readCSV();
         csvReader.printCSV();
-    }
-
-    /*
-    * method to do the core calculation logic
-    * add the logic inside the method
-    * */
-    @FXML
-    private void calculateSalary(){
-        salaryLabel.setText("Salary is: 769999$");
     }
 
     @FXML
