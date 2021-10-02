@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
@@ -22,7 +23,22 @@ public class HomepageController {
     @FXML private TextField newPassword;
     @FXML private TextField confirmNewPessword;
     @FXML private Button changebutton;
+
+    /*
+    * buttons to read and calculate salary*/
+    @FXML private Button readButton;
+    @FXML private Button calculateButton;
+    /*
+    label to show the calculated salary
+    * */
+    @FXML private Label salaryLabel;
+
     Alert a = new Alert(Alert.AlertType.NONE);
+
+    /*
+    * Object of CSV Reader
+    * */
+    CSVReader csvReader = new CSVReader();
 
 
     User user = new User();
@@ -33,6 +49,24 @@ public class HomepageController {
         navnDisplay.setText(user.getFirstname()+ " " + user.getLastname());
         epostDisplay.setText(user.getEmail());
         idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
+    }
+
+    /*
+    * calling the method to read and print the csv data
+    * */
+    @FXML
+    private void readCSV(){
+        csvReader.readCSV();
+        csvReader.printCSV();
+    }
+
+    /*
+    * method to do the core calculation logic
+    * add the logic inside the method
+    * */
+    @FXML
+    private void calculateSalary(){
+        salaryLabel.setText("Salary is: 769999$");
     }
 
     @FXML
