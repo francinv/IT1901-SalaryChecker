@@ -33,10 +33,6 @@ public class HomepageController {
     label to show the calculated salary
     * */
     @FXML private Label salaryLabel;
-    /*
-    * Text field to get the reciepent email
-    * */
-    @FXML private TextField emailField;
 
     Alert a = new Alert(Alert.AlertType.NONE);
 
@@ -44,11 +40,6 @@ public class HomepageController {
     * Object of CSV Reader
     * */
     CSVReader csvReader = new CSVReader();
-
-    /*
-    * Object of email sender class
-    * */
-    EmailSender emailSender = new EmailSender();
 
 
     User user = new User();
@@ -78,15 +69,6 @@ public class HomepageController {
     private void calculateSalary(){
         salaryLabel.setText("Salary is: 769999$");
     }
-
-    /*
-    * method to call the send email from email sender class
-    * */
-    @FXML
-    private void sendEmail() throws Exception {
-        emailSender.sendMail(emailField.getText());
-    }
-
 
     @FXML
     void passwordAction(ActionEvent event) throws IOException {

@@ -37,7 +37,6 @@ public class CSVReader {
                 }
 
             }
-
         }
         catch (IOException ex) {
             System.out.println(ex.getMessage());
