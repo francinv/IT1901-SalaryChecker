@@ -1,14 +1,26 @@
 package salarychecker.ui;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Text;
+import javafx.scene.text.Text;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationTest;
+import salarychecker.core.Accounts;
+import salarychecker.core.User;
 
-public class HomePagControllerTest extends ApplicationTest {
+import java.io.IOException;
+
+public class HomePageControllerTest extends ApplicationTest {
 
     //LOGIN - VARIABLES
     private TextField emailField;
@@ -19,34 +31,37 @@ public class HomePagControllerTest extends ApplicationTest {
     private Button changePasswordButton;
     private TextField firstPasswordField;
     private TextField secondPasswordField;
-    private javafx.scene.text.Text nameDisplay;
+    private Text nameDisplay;
     private Text emailDisplay;
     private Text idDisplay;
 
+    FXMLLoader fxmlLoader = new FXMLLoader();
+    HomepageController homepageController = new HomepageController();
+
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-        final Parent parent = fxmlLoader.load();
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
+        final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
+        homepageController = loader.getController();
     }
 
     @BeforeEach
     public void initFields() {
-        emailField = lookup("#email").query();
-        passwordField = lookup("#password").query();
-        logInButton = lookup("#logIn").query();
+        User user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", 55555555555L, 12345, "employeer1@gmail.com", 30.0);
+        homepageController.setUser(user);
+        nameDisplay = lookup("#navnDisplay").query();
+        emailDisplay = lookup("#epostDisplay").query();
+        idDisplay = lookup("#idDisplay").query();
     }
 
     @Test
     public void checkCorrectInfoShown() {
-        writeInLoginFields("seran@live.no", "Password123!");
-        clickOn(logInButton);
-        HomepageController homepageController = fxmlLoader.getController();
-        initHomePageFields();
+        homepageController = fxmlLoader.getController();
         String name = homepageController.user.getFirstname() + " " + homepageController.user.getLastname();
-        Assertions.assertEquals(name, nameDisplay.getText();
+        Assertions.assertEquals(name, nameDisplay.getText());
 
     }
 
@@ -55,11 +70,6 @@ public class HomePagControllerTest extends ApplicationTest {
         clickOn(passwordField).write(pwd);
     }
 
-    private void initHomePageFields() {
-        nameDisplay = lookup("#navnDisplay").query();
-        emailDisplay = lookup("#epostDisplay").query();
-        idDisplay = lookup("#idDisplay").query();
-    }
 
 }
 
