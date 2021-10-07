@@ -43,7 +43,7 @@ public class LoginController {
         if (userval.isValidEmail(usernameField) && userval.isValidPassword(passwordField)){
             Accounts accounts = SCP.loadAccounts();
             boolean valid = accounts.checkValidUserLogin(usernameField, passwordField);
-            if (valid == true){
+            if (valid){
                 user = accounts.getUser(usernameField, passwordField);
                 System.out.println(user.getFirstname());
                 success();
@@ -52,15 +52,21 @@ public class LoginController {
             else {
                 a.setAlertType(Alert.AlertType.ERROR);
                 a.setContentText("No user of this kind registered.");
-                a.showAndWait();
+                a.show();
                 throw new IllegalStateException("No user of this kind registered.");
             }
         } else {
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("Password or e-mail is not correct.");
-            a.showAndWait();
-            throw new IllegalArgumentException("Password or e-mail is not correct.");
+            pwdemailNValid();
+            throw new IllegalArgumentException("Password or e-mail is not valid.");
+
+
         }
+    }
+
+    private void pwdemailNValid() {
+        a.setAlertType(Alert.AlertType.ERROR);
+        a.setContentText("Password or e-mail is not valid.");
+        a.show();
     }
 
     private void success() {
@@ -73,7 +79,7 @@ public class LoginController {
     private void switchScene(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             HomepageController homepageController = fxmlLoader.getController();
             homepageController.setUser(user);
             homepageController.setAccounts(SCP.loadAccounts());

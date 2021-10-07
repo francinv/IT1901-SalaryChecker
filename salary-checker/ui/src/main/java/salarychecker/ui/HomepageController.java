@@ -48,7 +48,7 @@ public class HomepageController {
         else {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setContentText("Passwords does not match");
-            a.showAndWait();
+            a.show();
             throw new IllegalArgumentException("Passwords does not match.");
         }
     }
@@ -66,7 +66,7 @@ public class HomepageController {
     private void Success() {
         a.setAlertType(Alert.AlertType.INFORMATION);
         a.setContentText("Password changed!");
-        a.showAndWait();
+        a.show();
     }
 
     public void setUser(User user) {
