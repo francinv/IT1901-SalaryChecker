@@ -8,6 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.Label?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1300.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salarychecker.ui.HomepageController">
    <children>
       <TabPane prefHeight="1300.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE">
@@ -50,7 +51,17 @@
           </Tab>
           <Tab text="Lønnsutregninger">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="readButton" layoutX="113.0" layoutY="73.0" mnemonicParsing="false" onAction="#readCSV" prefHeight="47.0" prefWidth="181.0" text="Read CSV" />
+                        <Button fx:id="calculateButton" layoutX="111.0" layoutY="158.0" mnemonicParsing="false" onAction="#calculateSalary" prefHeight="45.0" prefWidth="185.0" text="Calculate Salary" />
+                        <Label fx:id="salaryLabel" layoutX="111.0" layoutY="242.0" prefHeight="64.0" prefWidth="311.0" text="Salary is:">
+                            <font>
+                                <Font size="27.0" />
+                            </font>
+                        </Label>
+                    </children></AnchorPane>
+
             </content>
           </Tab>
             <Tab text="Timelister">
@@ -65,7 +76,11 @@
             </Tab>
             <Tab text="Send Epost">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                          <TextField fx:id="emailField" layoutX="160.0" layoutY="127.0" prefHeight="40.0" prefWidth="349.0" promptText="Enter Email" />
+                          <Button fx:id="sendButton" layoutX="381.0" layoutY="211.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="37.0" prefWidth="105.0" text="Send" />
+                      </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Innstillinger">
