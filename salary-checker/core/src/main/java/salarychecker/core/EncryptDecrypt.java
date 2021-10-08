@@ -22,6 +22,12 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+/**
+ * Class to encrypt and decrypt user information;
+ * @author serans
+ * @author jakobk
+ * @author francinv
+ */
 public class EncryptDecrypt {
 
     private KeyStore keyStore;
@@ -53,14 +59,12 @@ public class EncryptDecrypt {
     public void storeToKeyStore(String alias, SecretKey secretKey) throws KeyStoreException, 
         NoSuchAlgorithmException, CertificateException, IOException {
 
-        //String path = System.getProperty("user.home") + "/Downloads/keystorer";
-        String path = alias + "Keystore.keystore";
+        String path = System.getProperty("user.home") + "/Downloads/SalarycheckerKeystore.jks";
         File file = new File(path);
         char[] jksPassword = "changeit".toCharArray();
 
        if (!file.exists()) {
             keyStore.load(null, null);
-            System.out.println("File does not exist");
         } else {
             InputStream readCert = new FileInputStream(path);
             keyStore.load(readCert, jksPassword);
@@ -73,8 +77,7 @@ public class EncryptDecrypt {
 
     public SecretKey loadFromKeyStore(String alias) {
 
-        //String path = System.getProperty("user.home") + "/Downloads/keystorer";
-        String path = alias + "keystore.keystore";
+        String path = System.getProperty("user.home") + "/Downloads/SalarycheckerKeystore.jks";
         char[] jksPassword = "changeit".toCharArray();
 
         try {
@@ -138,32 +141,5 @@ public class EncryptDecrypt {
         byte[] plainText = cipher.doFinal(Base64.getDecoder()
             .decode(cipherText));
         return new String(plainText);
-}
-
-    public static void main(String[] args) {
-        EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
-        
-        String seranString = "r denne strengen";
-        String francinString = "sjekk ut";
-
-        
-        try {
-            String cipher = encryptDecrypt.encrypt(seranString, "Seran");
-            String ciphertwo = encryptDecrypt.encrypt(francinString, "Francin");
-            System.out.println(cipher);
-            System.out.println(ciphertwo);
-            String decrypted = encryptDecrypt.decrypt(cipher, "Seran");
-            String decryptedtwo = encryptDecrypt.decrypt(ciphertwo, "Francin");
-            System.out.println(decrypted);
-            System.out.println(decryptedtwo);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        
-
-        
     }
 }
