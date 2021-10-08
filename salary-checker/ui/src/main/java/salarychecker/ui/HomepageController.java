@@ -1,5 +1,6 @@
 package salarychecker.ui;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -23,6 +24,7 @@ public class HomepageController {
     @FXML private TextField newPassword;
     @FXML private TextField confirmNewPessword;
     @FXML private Button changebutton;
+    @FXML private SimpleStringProperty f1, f2, f3, f4, f5, f6,f7,f8,d9;
 
     /*
     * buttons to read and calculate salary*/
@@ -109,5 +111,18 @@ public class HomepageController {
 
     public void setAccounts(Accounts accounts) {
         this.existingaccounts = accounts;
+    }
+
+    public void setRecord(String f1, String f2, String f3, String f4,
+        String f5, String f6, String f7, String f8) {
+        
+        this.f1 = new SimpleStringProperty(f1);
+        this.f2 = new SimpleStringProperty(f2);
+        this.f3 = new SimpleStringProperty(f3);
+        this.f4 = new SimpleStringProperty(f4);
+        this.f5 = new SimpleStringProperty(f5);
+        this.f6 = new SimpleStringProperty(f6);
+        this.f7 = new SimpleStringProperty(f7);
+        this.f8 = new SimpleStringProperty(f8);
     }
 }
