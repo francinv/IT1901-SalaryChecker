@@ -36,6 +36,16 @@ public class HomepageController {
 
     Alert a = new Alert(Alert.AlertType.NONE);
 
+    /*
+    * Object of CSV Reader
+    * */
+    CSVReader csvReader = new CSVReader();
+
+    /*
+    * Object of email sender class
+    * */
+    EmailSender emailSender = new EmailSender();
+
 
 
     User user = new User();
