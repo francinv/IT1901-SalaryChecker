@@ -60,6 +60,15 @@ public class HomepageController {
         csvReader.printCSV();
     }
 
+    /*
+    * method to do the core calculation logic
+    * add the logic inside the method
+    * */
+    @FXML
+    private void calculateSalary(){
+        salaryLabel.setText("Salary is: 769999$");
+    }
+
     @FXML
     void passwordAction(ActionEvent event) throws IOException {
         String password1 = newPassword.getText();
