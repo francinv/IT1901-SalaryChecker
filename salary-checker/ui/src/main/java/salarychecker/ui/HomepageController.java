@@ -24,7 +24,10 @@ public class HomepageController {
     @FXML private TextField newPassword;
     @FXML private TextField confirmNewPessword;
     @FXML private Button changebutton;
+<<<<<<< HEAD
     @FXML private SimpleStringProperty f1, f2, f3, f4, f5, f6,f7,f8,d9;
+=======
+>>>>>>> 77c91becf5d58dcf8e9defe1e7a90c2bd5f67492
 
     /*
     * buttons to read and calculate salary*/
