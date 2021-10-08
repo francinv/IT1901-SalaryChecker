@@ -60,9 +60,11 @@ public class EncryptDecrypt {
 
        if (!file.exists()) {
             keyStore.load(null, null);
+            System.out.println("File does not exist");
+        } else {
+            InputStream readCert = new FileInputStream(path);
+            keyStore.load(readCert, jksPassword);
         }
-        InputStream readCert = new FileInputStream(path);
-        keyStore.load(readCert, jksPassword);
 
         keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
         OutputStream writStream = new FileOutputStream(path);
@@ -141,14 +143,19 @@ public class EncryptDecrypt {
     public static void main(String[] args) {
         EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
         
-        String encyptString = "r denne strengen";
+        String seranString = "r denne strengen";
+        String francinString = "sjekk ut";
 
         
         try {
-            String cipher = encryptDecrypt.encrypt(encyptString, "Seran");
+            String cipher = encryptDecrypt.encrypt(seranString, "Seran");
+            String ciphertwo = encryptDecrypt.encrypt(francinString, "Francin");
             System.out.println(cipher);
+            System.out.println(ciphertwo);
             String decrypted = encryptDecrypt.decrypt(cipher, "Seran");
+            String decryptedtwo = encryptDecrypt.decrypt(ciphertwo, "Francin");
             System.out.println(decrypted);
+            System.out.println(decryptedtwo);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
             // TODO Auto-generated catch block
