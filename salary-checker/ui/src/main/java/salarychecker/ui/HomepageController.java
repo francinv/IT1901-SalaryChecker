@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
+import salarychecker.core.EmailSender;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
@@ -24,7 +25,6 @@ public class HomepageController {
     @FXML private TextField confirmNewPessword;
     @FXML private Button changebutton;
 
-
     /*
     * buttons to read and calculate salary*/
     @FXML private Button readButton;
@@ -35,6 +35,16 @@ public class HomepageController {
     @FXML private Label salaryLabel;
 
     Alert a = new Alert(Alert.AlertType.NONE);
+
+    /*
+    * Object of CSV Reader
+    * */
+    CSVReader csvReader = new CSVReader();
+
+    /*
+    * Object of email sender class
+    * */
+    EmailSender emailSender = new EmailSender();
 
 
 

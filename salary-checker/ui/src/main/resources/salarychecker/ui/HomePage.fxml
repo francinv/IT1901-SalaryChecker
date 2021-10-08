@@ -5,8 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1300.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="HomepageController.java">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1300.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salarychecker.ui.HomepageController">
    <children>
       <TabPane prefHeight="1300.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -156,7 +157,11 @@
             </Tab>
             <Tab text="Send Epost">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                      <children>
+                          <TextField fx:id="emailField" layoutX="160.0" layoutY="127.0" prefHeight="40.0" prefWidth="349.0" promptText="Enter Email" />
+                          <Button fx:id="sendButton" layoutX="381.0" layoutY="211.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="37.0" prefWidth="105.0" text="Send" />
+                      </children></AnchorPane>
               </content>
             </Tab>
         </tabs>
