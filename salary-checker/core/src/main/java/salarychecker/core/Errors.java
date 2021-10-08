@@ -7,6 +7,7 @@ public enum Errors {
     NAME_FIELD_EMPTY("Please enter a name."),
     EMAIL_FIELD_EMPTY("Please enter an email."),
     PWD_FIELD_EMPTY("Please enter a password."),
+    SOCIAL_NUMBER_EMPTY("Please enter a social number."),
     NAME_IN_USE("That username is already in use."),
     INVALID_EMAIL("Invalid email, must be of format: name-part@domain, e.g. example@example.com."),
     INVALID_PWD("Invalid password, must be at least 8 characters and contain at least 1 digit and 1 lower and uppercase letter."),
@@ -18,7 +19,7 @@ public enum Errors {
       this.ERROR_MESSAGE = ERROR_MESSAGE;
     }
 
-    public String getERROR_MESSAGE() {
+    public String getMessage() {
         return ERROR_MESSAGE;
     }
 }
