@@ -69,8 +69,6 @@ public class EncryptDecrypt {
             InputStream readCert = new FileInputStream(path);
             keyStore.load(readCert, jksPassword);
         }
-        InputStream readCert = new FileInputStream(path);
-        keyStore.load(readCert, jksPassword);
 
         keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
         OutputStream writStream = new FileOutputStream(path);
