@@ -61,6 +61,8 @@ public class EncryptDecrypt {
        if (!file.exists()) {
             keyStore.load(null, null);
         }
+        InputStream readCert = new FileInputStream(path);
+        keyStore.load(readCert, jksPassword);
 
         keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
         OutputStream writStream = new FileOutputStream(path);
@@ -139,11 +141,12 @@ public class EncryptDecrypt {
     public static void main(String[] args) {
         EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
         
-        String encyptString = "Kryter denne strengen";
+        String encyptString = "r denne strengen";
 
         
         try {
             String cipher = encryptDecrypt.encrypt(encyptString, "Seran");
+            System.out.println(cipher);
             String decrypted = encryptDecrypt.decrypt(cipher, "Seran");
             System.out.println(decrypted);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
