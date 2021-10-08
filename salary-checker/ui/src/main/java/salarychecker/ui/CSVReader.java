@@ -37,22 +37,23 @@ public class CSVReader {
                 }
 
             }
-/*
-* - SalgsID (A-colon)
-- AnleggStatus (O-colon)
-- Salgstype (P-colon)
-- Bekreftet (W-colon)
-- Kampanje (Z-colon)
-- Bruddgebyr(KR) (AI-colon)
-- Norsk Vannkraft (AJ-colon)
-- ProductHubNavn (AL-colon)
-* */
+
         }
         catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
+    /** 
+     * SalgsID (A-colon)
+     * AnleggStatus (O-colon)
+     * Salgstype (P-colon)
+     * Bekreftet (W-colon)
+     * Kampanje (Z-colon)
+     * Bruddgebyr(KR) (AI-colon)
+     * Norsk Vannkraft (AJ-colon)
+     * ProductHubNavn (AL-colon)
+     */
     public static void printCSV(){
         for (Record r: dataList) {
             System.out.println(r.toString());
