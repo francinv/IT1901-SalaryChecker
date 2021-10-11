@@ -14,6 +14,9 @@ public class User {
     private String employerEmail;
     private double taxCount;
     private UserValidation validation;
+    private int expectedsalary;
+    private int paidsalary;
+    private int timesats;
 
     /**
      * Constructor
@@ -97,4 +100,11 @@ public class User {
     public void setTaxCount(double taxCount) {
         this.taxCount = taxCount;
     }
+    public int getTimesats(){
+        return timesats;
+    }
+    public void setTimesats(int timesats){
+        this.timesats = timesats;
+    }
+    
 }
