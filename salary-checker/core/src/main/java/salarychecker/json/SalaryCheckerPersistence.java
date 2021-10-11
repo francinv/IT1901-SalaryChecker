@@ -1,6 +1,5 @@
 package salarychecker.json;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileReader;
@@ -13,6 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 
 /**
