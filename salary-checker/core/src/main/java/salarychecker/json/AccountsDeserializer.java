@@ -10,11 +10,13 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 
 public class AccountsDeserializer extends JsonDeserializer<Accounts> {
 
     private UserDeserializer userDeserializer = new UserDeserializer();
+    private AdminUserDeserializer adminUserDeserializer = new AdminUserDeserializer();
     /*
     * format: { "Accounts": [ ... ] }
     */
@@ -35,9 +37,17 @@ public class AccountsDeserializer extends JsonDeserializer<Accounts> {
         Accounts accounts = new Accounts();
         
         for (JsonNode elementNode : ((ArrayNode) accountsNode)) {
-            User user = userDeserializer.deserialize(elementNode);
-            if (user != null) {
-                accounts.addUser(user);
+            if (elementNode.size() == 4) {
+                AdminUser adminUser = adminUserDeserializer.deserialize(elementNode);
+                if (adminUser != null) {
+                    accounts.addUser(adminUser);
+                }
+            }
+            else {
+                User user = userDeserializer.deserialize(elementNode);
+                if (user != null) {
+                    accounts.addUser(user);
+                }
             }
         }
         return accounts;
