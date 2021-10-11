@@ -3,17 +3,24 @@ package salarychecker.core;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.lang.Iterable;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * Lists of items in a todo list.
  */
-public class Accounts implements Iterable<User> {
+public class Accounts implements Iterable<AbstractUser> {
 
-    public List<User> accounts = new ArrayList<>();
+    public List<AbstractUser> accounts = new ArrayList<>();
 
-    public List<User> getAccounts() {
+    public List<AbstractUser> getAccounts() {
         return accounts;
     }
 
@@ -23,7 +30,7 @@ public class Accounts implements Iterable<User> {
      * @param user the user to add
      * @throws IllegalStateException if the user already exists.
      */
-    public void addUser(User user) {
+    public void addUser(AbstractUser user) {
         if (contains(user)) {
             throw new IllegalArgumentException("User already exists!");
         }
@@ -36,7 +43,7 @@ public class Accounts implements Iterable<User> {
      * @param user the user to remove
      * @throws IllegalStateException if the user dosen't already exists.
      */
-    public void removeUser(User user) {
+    public void removeUser(AbstractUser user) {
         if (!contains(user)) {
             throw new IllegalArgumentException("User does not exists!");
         }
@@ -44,7 +51,7 @@ public class Accounts implements Iterable<User> {
     }
 
     @Override
-    public Iterator<User> iterator() {
+    public Iterator<AbstractUser> iterator() {
         return accounts.iterator();
     }
 
@@ -52,33 +59,60 @@ public class Accounts implements Iterable<User> {
      * Finds the index of the user in list
      * @param user to find index for
      */
-    public int indexOf(User user) {
+    public int indexOf(AbstractUser user) {
         return accounts.indexOf(user);
     }
 
-    public boolean contains(User user) {
+    public boolean contains(AbstractUser user) {
         return accounts.stream().anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
-    // @Override
-    // public String toString() {
-    //     StringBuilder ...
-    //     for (User user : accounts) {
-            
-    //     }
-    //     return String.format("[User \n%s %s \ne-mail: %s]",
-    //         get,);
-    // }
+    EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
     public boolean checkValidUserLogin(String email, String password) {
-        return accounts.stream().anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
+        AbstractUser user = null;
+        String passwordDecrypted = null;
+
+        for (AbstractUser ab : accounts) {
+            if (ab.getEmail().equals(email)) {
+                user = ab;
+            }
+        }
+        try {
+            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname());
+        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
+                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //return accounts.stream().anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
+        return passwordDecrypted.equals(password);
     }
 
-    public User getUser(String email, String password) {
-        return accounts.stream()
-                .filter(u -> u.getEmail().equals(email) && u.getPassword().equals(password))
-                .findAny()
-                .orElse(null);
+    public AbstractUser getUser(String email, String password) {
+        // return accounts.stream()
+        //                .filter(u -> u.getEmail().equals(email) && u.getPassword().equals(password))
+        //                .findAny()
+        //                .orElse(null);
+        AbstractUser user = null;
+        String passwordDecrypted = null;
+
+        for (AbstractUser ab : accounts) {
+            if (ab.getEmail().equals(email)) {
+                user = ab;
+            }
+        }
+        try {
+            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname());
+        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
+                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (passwordDecrypted.equals(password)) {
+            return user;
+        }
+        return null;
     }
 
     public void updatePassword(String email, String newpassword) {
