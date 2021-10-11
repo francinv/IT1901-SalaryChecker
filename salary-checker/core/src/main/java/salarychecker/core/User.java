@@ -18,6 +18,10 @@ public class User extends AbstractUser {
     private int employeeNumber;
     private String employerEmail;
     private double taxCount;
+    private UserValidation validation;
+    private int expectedsalary;
+    private int paidsalary;
+    private int timesats;
 
     /**
      * Constructor
@@ -87,13 +91,11 @@ public class User extends AbstractUser {
         userValidation.checkValidTaxCount(taxCount);
         this.taxCount = taxCount;
     }
-
-    public static void main(String[] args) {
-        User user = new User();
-        try {
-            user.setFirstname("3");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public int getTimesats(){
+        return timesats;
     }
+    public void setTimesats(int timesats){
+        this.timesats = timesats;
+    }
+    
 }
