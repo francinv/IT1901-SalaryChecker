@@ -24,10 +24,7 @@ public class HomepageController {
     @FXML private TextField newPassword;
     @FXML private TextField confirmNewPessword;
     @FXML private Button changebutton;
-<<<<<<< HEAD
-    @FXML private SimpleStringProperty f1, f2, f3, f4, f5, f6,f7,f8,d9;
-=======
->>>>>>> 77c91becf5d58dcf8e9defe1e7a90c2bd5f67492
+
 
     /*
     * buttons to read and calculate salary*/
@@ -40,10 +37,6 @@ public class HomepageController {
 
     Alert a = new Alert(Alert.AlertType.NONE);
 
-    /*
-    * Object of CSV Reader
-    * */
-    CSVReader csvReader = new CSVReader();
 
 
     User user = new User();
@@ -56,14 +49,6 @@ public class HomepageController {
         idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
     }
 
-    /*
-    * calling the method to read and print the csv data
-    * */
-    @FXML
-    private void readCSV(){
-        csvReader.readCSV();
-        csvReader.printCSV();
-    }
 
     /*
     * method to do the core calculation logic
@@ -116,16 +101,4 @@ public class HomepageController {
         this.existingaccounts = accounts;
     }
 
-    public void setRecord(String f1, String f2, String f3, String f4,
-        String f5, String f6, String f7, String f8) {
-        
-        this.f1 = new SimpleStringProperty(f1);
-        this.f2 = new SimpleStringProperty(f2);
-        this.f3 = new SimpleStringProperty(f3);
-        this.f4 = new SimpleStringProperty(f4);
-        this.f5 = new SimpleStringProperty(f5);
-        this.f6 = new SimpleStringProperty(f6);
-        this.f7 = new SimpleStringProperty(f7);
-        this.f8 = new SimpleStringProperty(f8);
-    }
 }
