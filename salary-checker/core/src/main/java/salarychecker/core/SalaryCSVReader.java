@@ -46,9 +46,4 @@ public class SalaryCSVReader {
         return results;
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        SalaryCSVReader salaryCSVReader = new SalaryCSVReader();
-        String url = "salary-checker/core/src/main/resources/salarychecker/core/SalesReport.csv";
-        salaryCSVReader.csvToBean(url);
-    }
 }
