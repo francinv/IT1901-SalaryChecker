@@ -37,10 +37,6 @@ public class HomepageController {
 
     Alert a = new Alert(Alert.AlertType.NONE);
 
-    /*
-    * Object of CSV Reader
-    * */
-    CSVReader csvReader = new CSVReader();
 
 
     User user = new User();
@@ -53,14 +49,6 @@ public class HomepageController {
         idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
     }
 
-    /*
-    * calling the method to read and print the csv data
-    * */
-    @FXML
-    private void readCSV(){
-        csvReader.readCSV();
-        csvReader.printCSV();
-    }
 
     @FXML
     void passwordAction(ActionEvent event) throws IOException {
@@ -104,16 +92,4 @@ public class HomepageController {
         this.existingaccounts = accounts;
     }
 
-    public void setRecord(String f1, String f2, String f3, String f4,
-        String f5, String f6, String f7, String f8) {
-        
-        this.f1 = new SimpleStringProperty(f1);
-        this.f2 = new SimpleStringProperty(f2);
-        this.f3 = new SimpleStringProperty(f3);
-        this.f4 = new SimpleStringProperty(f4);
-        this.f5 = new SimpleStringProperty(f5);
-        this.f6 = new SimpleStringProperty(f6);
-        this.f7 = new SimpleStringProperty(f7);
-        this.f8 = new SimpleStringProperty(f8);
-    }
 }
