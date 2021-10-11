@@ -15,7 +15,7 @@ public class UserValidationTest {
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "Password!123", 
-            22010192834L, 33333, "employeremail@email.com", 35.5);
+            "22010192834", 33333, "employeremail@email.com", 35.5);
         userValidation = new UserValidation();
         accounts = new Accounts();
     }
@@ -23,24 +23,25 @@ public class UserValidationTest {
     @Test
     public void testValidCredentials() {
         String firstname = testUser.getFirstname();
-        Assertions.assertTrue(userValidation.isValidFirstname(firstname));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidFirstname(firstname));
         String lastname = testUser.getLastname();
-        Assertions.assertTrue(userValidation.isValidLastname(lastname));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidLastname(lastname));;
         String email = testUser.getEmail();
-        Assertions.assertTrue(userValidation.isValidEmail(email));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidEmail(email));
         String password = testUser.getPassword();
-        Assertions.assertTrue(userValidation.isValidPassword(password));
-        Long socialNumber = testUser.getSocialNumber();
-        Assertions.assertTrue(userValidation.isValidSocialNumber(socialNumber));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidPassword(password));
+        String socialNumber = testUser.getSocialNumber();
+        //Will throw exception since the socialNumber is encrytped
+        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.checkValidSocialNumber(socialNumber));
         int employeeNumber = testUser.getEmployeeNumber();
-        Assertions.assertTrue(userValidation.isValidEmployeeNumber(employeeNumber));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidEmployeeNumber(employeeNumber));
         String employerEmail = testUser.getEmployerEmail();
-        Assertions.assertTrue(userValidation.isValidEmail(employerEmail));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidEmail(employerEmail));
         double taxCount = testUser.getTaxCount();
-        Assertions.assertTrue(userValidation.isValidTaxCount(taxCount));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidTaxCount(taxCount));
 
-        Assertions.assertTrue(userValidation.isValidUser(firstname, lastname, email, password, 
-            socialNumber, employeeNumber, employerEmail, taxCount));
+        // Assertions.assertTrue(userValidation.isValidUser(firstname, lastname, email, password, 
+        //     socialNumber, employeeNumber, employerEmail, taxCount));
     }
 
     @Test

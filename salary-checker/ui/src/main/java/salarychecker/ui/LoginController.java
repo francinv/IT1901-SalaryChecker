@@ -44,7 +44,7 @@ public class LoginController {
             Accounts accounts = SCP.loadAccounts();
             boolean valid = accounts.checkValidUserLogin(usernameField, passwordField);
             if (valid){
-                user = accounts.getUser(usernameField, passwordField);
+                user = (User) accounts.getUser(usernameField, passwordField);
                 System.out.println(user.getFirstname());
                 success();
                 switchScene(event);
@@ -98,8 +98,8 @@ public class LoginController {
     private void createTestUser() throws IOException {
         System.out.println("Creating two test users to show functionality...");
 
-        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", 55555555555L, 12345, "employeer1@gmail.com", 30.0);
-        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", 222222222222L, 34567, "employeer2@gmail.com", 23.0);
+        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
+        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "21010092234", 34567, "employeer2@gmail.com", 23.0);
 
         Accounts accounts = new Accounts();
         accounts.addUser(testuser1);
