@@ -1,19 +1,23 @@
 package salarychecker.core;
+
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+
 /** 
  * Class for creating a user, and store their information.
- * 
-*/
-public class User {
+ * This class inheritance from {@link AbstractUser}
+ */
+public class User extends AbstractUser {
     
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
-    private long socialNumber;
+    private String socialNumber;
     private int employeeNumber;
     private String employerEmail;
     private double taxCount;
-    private UserValidation validation;
 
     /**
      * Constructor
@@ -27,74 +31,69 @@ public class User {
      * @param employerEmail
      * @param taxCount
      */
-    public User(String firstname, String lastname, String email, String password, long socialNumber,
+    public User(String firstname, String lastname, String email, String password, String socialNumber,
             int employeeNumber, String employerEmail, double taxCount) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.socialNumber = socialNumber;
+        super.firstname = firstname;
+        super.lastname = lastname;
+        super.email = email;
+        try {
+            super.password = encryptDecrypt.encrypt(password, firstname);
+            this.socialNumber = encryptDecrypt.encrypt(socialNumber, firstname);
+        } catch (NumberFormatException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
+                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
         this.employeeNumber = employeeNumber;
         this.employerEmail = employerEmail;
         this.taxCount = taxCount;    
     }
 
-    public User(String email, String password) {
-        this.validation = new UserValidation();
-        if (validation.isExistingUser(email, password)) {
-            this.email = email;
-            this.password = password;
-        }
-    }
-
+    /**
+     * Empty constructor to use in json deserializer.
+     */
     public User() {}
 
-    public String getFirstname() {
-        return firstname;
-    }
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-    public String getLastname() {
-        return lastname;
-    }
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public long getSocialNumber() {
+    public String getSocialNumber() {
         return socialNumber;
     }
-    public void setSocialNumber(long socialNumber) {
-        this.socialNumber = socialNumber;
+    public void setSocialNumber(String socialNumber) {
+        userValidation.checkValidSocialNumber(socialNumber);
+        try {
+            this.socialNumber = encryptDecrypt.encrypt(socialNumber, firstname);
+        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
+                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     public int getEmployeeNumber() {
         return employeeNumber;
     }
     public void setEmployeeNumber(int employeeNumber) {
+        userValidation.checkValidEmployeeNumber(employeeNumber);
         this.employeeNumber = employeeNumber;
     }
     public String getEmployerEmail() {
         return employerEmail;
     }
     public void setEmployerEmail(String employerEmail) {
+        userValidation.checkValidEmail(email);
         this.employerEmail = employerEmail;
     }
     public double getTaxCount() {
         return taxCount;
     }
     public void setTaxCount(double taxCount) {
+        userValidation.checkValidTaxCount(taxCount);
         this.taxCount = taxCount;
+    }
+
+    public static void main(String[] args) {
+        User user = new User();
+        try {
+            user.setFirstname("3");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

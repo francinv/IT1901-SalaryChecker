@@ -17,14 +17,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
+
+import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.EncryptDecrypt;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,6 +50,7 @@ public class HomePageControllerTest extends ApplicationTest {
     private Text idDisplay;
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
     User user;
+    EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
     @Override
     public void start(final Stage stage) throws Exception {
@@ -47,7 +58,7 @@ public class HomePageControllerTest extends ApplicationTest {
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
 
-        user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", 55555555555L, 12345, "employeer1@gmail.com", 30.0);
+        user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
         createTestUsers();
         HomepageController homepageController = loader.getController();
         homepageController.setUser(user);
@@ -60,8 +71,8 @@ public class HomePageControllerTest extends ApplicationTest {
     }
 
     private void createTestUsers() throws IOException {
-        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", 55555555555L, 12345, "employeer1@gmail.com", 30.0);
-        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", 222222222222L, 34567, "employeer2@gmail.com", 23.0);
+        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
+        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "21010092234", 34567, "employeer2@gmail.com", 23.0);
 
         Accounts accounts = new Accounts();
         accounts.addUser(testuser1);
@@ -99,8 +110,16 @@ public class HomePageControllerTest extends ApplicationTest {
         clickOn(changePasswordButton);
         SCP.setSaveFile("Accounts.json");
         Accounts account = SCP.loadAccounts();
-        String password = account.getUser(emailDisplay.getText(), newPassword).getPassword();
-        Assertions.assertEquals(newPassword, password);
+        AbstractUser user = account.getUser(emailDisplay.getText(), newPassword);
+        
+        try {
+            String password = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname());
+            Assertions.assertEquals(newPassword, password);
+        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
+                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         alertDialogPopsUp("Password changed!");
     }
 
