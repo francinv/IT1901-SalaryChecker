@@ -4,6 +4,18 @@ public class Sale {
 
     private String salgsID, anleggStatus, salgsType, campaign, brand, TX3, rebate, NVK, product;
 
+    private int provisjon;
+
+    public int getProvisjon() {
+        return this.provisjon;
+    }
+    public void setProvisjon(int provisjon) {
+        this.provisjon = provisjon;
+    }
+
+    public void updateProvisjon(int number) {
+        this.provisjon += number;
+    }
     public String getSalgsID() {
         return this.salgsID;
     }
@@ -88,6 +100,7 @@ public class Sale {
             ", Rabatt='" + getRebate() + "'" +
             ", Norsk VannKraft='" + getNVK() + "'" +
             ", Produktnavn='" + getProduct() + "'" +
+            ", Provisjon='" + getProvisjon() + "'" +
             "}";
     }
     
