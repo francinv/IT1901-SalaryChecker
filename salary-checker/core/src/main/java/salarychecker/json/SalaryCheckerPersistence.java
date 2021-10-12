@@ -119,6 +119,7 @@ public class SalaryCheckerPersistence {
       System.out.println(accounts2.getAccounts().get(0).getEmail());
       System.out.println(((User) accounts2.getAccounts().get(0)).getSocialNumber());
       System.out.println(accounts2.getAccounts().get(1).getPassword());
+      System.out.println(((User) accounts2.getAccounts().get(0)).getTaxCount());
     } catch (IllegalStateException | IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
