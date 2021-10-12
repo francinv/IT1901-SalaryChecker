@@ -11,14 +11,11 @@ public class UserTest {
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "password!123", 
-            22019893456L, 33333, "employer_email@email.com", 35.5);
+            "22019893456", 33333, "employer_email@email.com", 35.5);
     }
 
     @Test
     public void testConstructor() {
-        User loginConstructor = new User("email@email.com", "password!123");
-        Assertions.assertNull(loginConstructor.getEmail());
-
         User emptyConstructor = new User();
         Assertions.assertNull(emptyConstructor.getEmail());
     }
@@ -28,8 +25,8 @@ public class UserTest {
         Assertions.assertEquals("Firstname", testUser.getFirstname());
         Assertions.assertEquals("Lastname", testUser.getLastname());
         Assertions.assertEquals("email@email.com", testUser.getEmail());
-        Assertions.assertEquals("password!123", testUser.getPassword());
-        Assertions.assertEquals(22019893456L, testUser.getSocialNumber());
+        Assertions.assertNotEquals("password!123", testUser.getPassword());
+        Assertions.assertNotEquals("22019893456", testUser.getSocialNumber());
         Assertions.assertEquals(33333, testUser.getEmployeeNumber());
         Assertions.assertEquals("employer_email@email.com", testUser.getEmployerEmail());
         Assertions.assertEquals(35.5, testUser.getTaxCount());
@@ -43,10 +40,10 @@ public class UserTest {
         Assertions.assertNotEquals("Lastname", testUser.getLastname());
         testUser.setEmail("email@gmail.com");
         Assertions.assertNotEquals("email@email.com", testUser.getEmail());
-        testUser.setPassword("passord");
+        testUser.setPassword("Passord!1");
         Assertions.assertNotEquals("password!123", testUser.getPassword());
-        testUser.setSocialNumber(22030199999L);
-        Assertions.assertNotEquals(22019893456L, testUser.getSocialNumber());
+        testUser.setSocialNumber("22030199999");
+        Assertions.assertNotEquals("22019893456", testUser.getSocialNumber());
         testUser.setEmployeeNumber(11111);
         Assertions.assertNotEquals(33333, testUser.getEmployeeNumber());
         testUser.setEmployerEmail("employer_email@gmail.com");

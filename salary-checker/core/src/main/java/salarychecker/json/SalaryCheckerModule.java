@@ -13,16 +13,16 @@ public class SalaryCheckerModule extends SimpleModule {
     private static final String NAME = "UserModule";
 
     /**
-     * Initializes this TodoModule with appropriate serializers and deserializers.
+     * Initializes this SalaryCheckerModule with appropriate serializers and deserializers.
      */
-    public SalaryCheckerModule(boolean deepSalaryCheckerModelSerializer) {
+    public SalaryCheckerModule() {
         super(NAME, Version.unknownVersion());
         addSerializer(User.class, new UserSerializer());
+        addSerializer(AdminUser.class, new AdminUserSerializer());
         addSerializer(Accounts.class, new AccountsSerializer());
-        //addSerializer(TodoModel.class, new TodoModelSerializer(deepSalaryCheckerModelSerializer));
+        addDeserializer(User.class, new UserDeserializer());
+        addDeserializer(AdminUser.class, new AdminUserDeserializer());
+        addDeserializer(Accounts.class, new AccountsDeserializer());
     }
-
-    public SalaryCheckerModule() {
-        this(true);
-    }
+    
 }

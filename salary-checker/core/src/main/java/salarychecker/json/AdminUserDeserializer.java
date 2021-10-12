@@ -19,23 +19,23 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
 import salarychecker.core.EncryptDecrypt;
-import salarychecker.core.User;
+import salarychecker.core.AdminUser;
 
-public class UserDeserializer extends JsonDeserializer<User> {
+public class AdminUserDeserializer extends JsonDeserializer<AdminUser> {
 
     private EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
     @Override
-    public User deserialize(JsonParser parser, DeserializationContext ctxt)
+    public AdminUser deserialize(JsonParser parser, DeserializationContext ctxt)
         throws IOException, JsonProcessingException {
 
         TreeNode treeNode = parser.getCodec().readTree(parser);
         return deserialize((JsonNode) treeNode);
     }
 
-    User deserialize(JsonNode jsonNode) {
+    AdminUser deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode objectNode) {
-        User user = new User();
+        AdminUser user = new AdminUser();
         JsonNode firstnameNode = objectNode.get("firstname");
 
         if (firstnameNode instanceof TextNode) {
@@ -61,38 +61,9 @@ public class UserDeserializer extends JsonDeserializer<User> {
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
                 // TODO Auto-generated catch block
-                //e.printStackTrace();
-            }
-    
-        }
-
-        JsonNode socialNumberNode = objectNode.get("socialNumber");
-        if (socialNumberNode instanceof TextNode) {
-
-            try {
-                String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(), firstnameNode.asText());
-                user.setSocialNumber(decryptedSocialNumber);
-            } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                    | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
-        }
-
-        JsonNode employeeNumberNode = objectNode.get("employeeNumber");
-        if (employeeNumberNode instanceof TextNode) {
-            user.setEmployeeNumber(employeeNumberNode.intValue());
-        }
-
-        JsonNode employerEmailNode = objectNode.get("employerEmail");
-        if (employerEmailNode instanceof TextNode) {
-            user.setEmployerEmail(employerEmailNode.asText());
-        }
-
-        JsonNode taxCountNode = objectNode.get("taxCount");
-        if (taxCountNode instanceof TextNode) {
-            user.setTaxCount(taxCountNode.intValue());
+    
         }
         
         return user;

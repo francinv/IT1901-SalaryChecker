@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import salarychecker.core.Accounts;
+import salarychecker.core.AbstractUser;
 import salarychecker.core.User;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import java.io.IOException;
 public class AccountsSerializer extends JsonSerializer<Accounts> {
 
   /*
-   * format: { "name": "...", "items": [ ... ] }
+   * format: { "Accounts": [ ... ] }
    */
 
   @Override
@@ -22,7 +23,7 @@ public class AccountsSerializer extends JsonSerializer<Accounts> {
 
     if (accounts.getAccounts() != null) {
       jsonGen.writeArrayFieldStart("Accounts");
-      for (User user : accounts.getAccounts()) {
+      for (AbstractUser user : accounts.getAccounts()) {
         jsonGen.writeObject(user);
       }
       jsonGen.writeEndArray();
