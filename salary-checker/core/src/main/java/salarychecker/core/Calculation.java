@@ -57,7 +57,8 @@ public class Calculation {
             if (s.getSalgsType().equals("Produktbytte") && WINBACK.contains(s.getCampaign()) || s.getSalgsType().equals("Produktbytte") && LEADS.contains(s.getCampaign())) {
                 s.updateProvisjon(50);
             }
-            else if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")){
+            
+            if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")){
                 s.updateProvisjon(75);
             }
             else if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")){
@@ -66,93 +67,110 @@ public class Calculation {
             else if (s.getTX3().equals("Ja") && s.getTX3().equals("Ja")){
                 s.updateProvisjon(125);
             }
-            else if(NYSALG.contains(s.getCampaign()) && ORG.contains(s.getProduct()) || NYSALG.contains(s.getCampaign()) && VAR.contains(s.getProduct())) {
-                s.updateProvisjon(225);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-25);
-                }
-                else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                    s.updateProvisjon(-50);
-                }
-            }
-            else if (NYSALG.contains(s.getCampaign()) && NSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(200);
-                if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                    s.updateProvisjon(-25);
-                }
-            }
-            else if (BUN.contains(s.getProduct())) {
+
+            if (BUN.contains(s.getProduct()) && WINBACK.contains(s.getCampaign()) || BUN.contains(s.getProduct()) && LEADS.contains(s.getCampaign())) {
                 s.updateProvisjon(50);
             }
-            else if (NYSALG.contains(s.getCampaign()) && RSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(175);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-25);
+
+            if(NYSALG.contains(s.getCampaign())) {
+                
+                if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())){
+                    s.updateProvisjon(225);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-25);
+                    }
+                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                        s.updateProvisjon(-50);
+                    }
+                }
+                else if (NSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(200);
+                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
+                        s.updateProvisjon(-25);
+                    }
+                }
+                else if (RSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(175);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-25);
+                    }
+                }
+                
+            }
+
+            else if (WINBACK.contains(s.getCampaign())) {
+                if(ORG.contains(s.getProduct()) ||  VAR.contains(s.getProduct())) {
+                    s.updateProvisjon(110);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-30);
+                    }
+                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                        s.updateProvisjon(-60);
+                    }
+                }
+                else if (NSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(80);
+                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
+                        s.updateProvisjon(-30);
+                    }
+                }
+                else if (RSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(50);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-25);
+                    }
+                }
+
+            }
+
+            else if(COMEBACK.contains(s.getCampaign())){
+
+                if(ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+                    s.updateProvisjon(175);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-25);
+                    }
+                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                        s.updateProvisjon(-50);
+                    }
+                }
+                else if (NSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(150);
+                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
+                        s.updateProvisjon(-25);
+                    }
+                }
+                else if (RSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(125);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-25);
+                    }
                 }
             }
-            else if(WINBACK.contains(s.getCampaign()) && ORG.contains(s.getProduct()) || WINBACK.contains(s.getCampaign()) && VAR.contains(s.getProduct())) {
-                s.updateProvisjon(110);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-30);
+            
+            if(LEADS.contains(s.getCampaign())) {
+                if(ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+                    s.updateProvisjon(150);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-35);
+                    }
+                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                        s.updateProvisjon(-70);
+                    }
                 }
-                else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                    s.updateProvisjon(-60);
+                else if (NSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(115);
+                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
+                        s.updateProvisjon(-15);
+                    }
                 }
-            }
-            else if (WINBACK.contains(s.getCampaign()) && NSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(80);
-                if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                    s.updateProvisjon(-30);
+                else if (RSPOT.contains(s.getProduct())) {
+                    s.updateProvisjon(100);
+                    if (s.getRebate().equals("500")){
+                        s.updateProvisjon(-50);
+                    }
                 }
-            }
-            else if (WINBACK.contains(s.getCampaign()) && RSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(50);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-25);
-                }
-            }
-            else if(COMEBACK.contains(s.getCampaign()) && ORG.contains(s.getProduct()) || COMEBACK.contains(s.getCampaign()) && VAR.contains(s.getProduct())) {
-                s.updateProvisjon(175);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-25);
-                }
-                else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                    s.updateProvisjon(-50);
-                }
-            }
-            else if (COMEBACK.contains(s.getCampaign()) && NSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(150);
-                if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                    s.updateProvisjon(-25);
-                }
-            }
-            else if (COMEBACK.contains(s.getCampaign()) && RSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(125);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-25);
-                }
-            }
-            else if(LEADS.contains(s.getCampaign()) && ORG.contains(s.getProduct()) || LEADS.contains(s.getCampaign()) && VAR.contains(s.getProduct())) {
-                s.updateProvisjon(150);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-35);
-                }
-                else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                    s.updateProvisjon(-70);
-                }
-            }
-            else if (LEADS.contains(s.getCampaign()) && NSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(115);
-                if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                    s.updateProvisjon(-15);
-                }
-            }
-            else if (LEADS.contains(s.getCampaign()) && RSPOT.contains(s.getProduct())) {
-                s.updateProvisjon(100);
-                if (s.getRebate().equals("500")){
-                    s.updateProvisjon(-50);
-                }
-            }
+            } 
         }
     }
 
