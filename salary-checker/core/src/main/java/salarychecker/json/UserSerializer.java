@@ -37,6 +37,7 @@ format:
         jsonGen.writeStringField("socialNumber", user.getSocialNumber());
         jsonGen.writeNumberField("employeeNumber", user.getEmployeeNumber());
         jsonGen.writeStringField("employerEmail", user.getEmployerEmail());
+        jsonGen.writeNumberField("taxCount", user.getTaxCount());
 
         jsonGen.writeEndObject();
     }

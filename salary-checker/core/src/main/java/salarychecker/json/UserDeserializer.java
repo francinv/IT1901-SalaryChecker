@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.BooleanNode;
+import com.fasterxml.jackson.databind.node.DoubleNode;
+import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
@@ -81,7 +83,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
         }
 
         JsonNode employeeNumberNode = objectNode.get("employeeNumber");
-        if (employeeNumberNode instanceof TextNode) {
+        if (employeeNumberNode instanceof IntNode) {
             user.setEmployeeNumber(employeeNumberNode.intValue());
         }
 
@@ -91,8 +93,8 @@ public class UserDeserializer extends JsonDeserializer<User> {
         }
 
         JsonNode taxCountNode = objectNode.get("taxCount");
-        if (taxCountNode instanceof TextNode) {
-            user.setTaxCount(taxCountNode.intValue());
+        if (taxCountNode instanceof DoubleNode) {
+            user.setTaxCount(taxCountNode.doubleValue());
         }
         
         return user;
