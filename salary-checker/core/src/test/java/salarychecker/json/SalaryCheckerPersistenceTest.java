@@ -6,16 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.time.LocalDateTime;
 import java.util.Iterator;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import salarychecker.json.*;
 import salarychecker.core.*;
 
 public class SalaryCheckerPersistenceTest {
@@ -43,7 +39,7 @@ public class SalaryCheckerPersistenceTest {
       assertTrue(it.hasNext());
       SalaryCheckerModuleTest.checkUser((User) it.next(), "Hammad", "Siddiqui", "ham@mad.no", 12345, "employer@gmail.com", 30);
       assertTrue(it.hasNext());
-      SalaryCheckerModuleTest.checkAdminUser((AdminUser) it.next(), "Francin", "Vincent", "francin@vincent.com");
+      SalaryCheckerModuleTest.checkAdminUser((AdminUser) it.next(), "Francin", "Vincent", "francin@vincent.no");
       assertFalse(it.hasNext());
 
     } catch (IOException e) {
