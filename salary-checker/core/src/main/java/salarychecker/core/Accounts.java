@@ -79,7 +79,7 @@ public class Accounts implements Iterable<AbstractUser> {
             }
         }
         try {
-            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname());
+            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname() + user.getLastname());
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
             // TODO Auto-generated catch block
@@ -103,7 +103,7 @@ public class Accounts implements Iterable<AbstractUser> {
             }
         }
         try {
-            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname());
+            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname() + user.getLastname());
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
             // TODO Auto-generated catch block

@@ -56,7 +56,7 @@ public class AdminUserDeserializer extends JsonDeserializer<AdminUser> {
         if (passwordNode instanceof TextNode) {
 
             try {
-                String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(), firstnameNode.asText());
+                String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(), firstnameNode.asText() + lastnameNode.asText());
                 user.setPassword(decryptedPassword);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {

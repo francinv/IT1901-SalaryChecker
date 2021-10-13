@@ -37,8 +37,8 @@ public class User extends AbstractUser {
         super.lastname = lastname;
         super.email = email;
         try {
-            super.password = encryptDecrypt.encrypt(password, firstname);
-            this.socialNumber = encryptDecrypt.encrypt(socialNumber, firstname);
+            super.password = encryptDecrypt.encrypt(password, firstname + lastname);
+            this.socialNumber = encryptDecrypt.encrypt(socialNumber, lastname + firstname);
         } catch (NumberFormatException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
             e.printStackTrace();
@@ -59,7 +59,7 @@ public class User extends AbstractUser {
     public void setSocialNumber(String socialNumber) {
         userValidation.checkValidSocialNumber(socialNumber);
         try {
-            this.socialNumber = encryptDecrypt.encrypt(socialNumber, firstname);
+            this.socialNumber = encryptDecrypt.encrypt(socialNumber, lastname + firstname);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
             // TODO Auto-generated catch block

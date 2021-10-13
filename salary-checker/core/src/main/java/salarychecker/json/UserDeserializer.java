@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
@@ -56,12 +55,12 @@ public class UserDeserializer extends JsonDeserializer<User> {
         if (passwordNode instanceof TextNode) {
 
             try {
-                String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(), firstnameNode.asText());
+                String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(), firstnameNode.asText() + lastnameNode.asText());
                 user.setPassword(decryptedPassword);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
                 // TODO Auto-generated catch block
-                //e.printStackTrace();
+                e.printStackTrace();
             }
     
         }
@@ -70,7 +69,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
         if (socialNumberNode instanceof TextNode) {
 
             try {
-                String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(), firstnameNode.asText());
+                String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(), lastnameNode.asText() + firstnameNode.asText());
                 user.setSocialNumber(decryptedSocialNumber);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {

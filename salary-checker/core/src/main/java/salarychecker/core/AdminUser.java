@@ -27,7 +27,7 @@ public class AdminUser extends AbstractUser {
         super.lastname = lastname;
         super.email = email;
         try {
-            super.password = encryptDecrypt.encrypt(password, firstname);
+            super.password = encryptDecrypt.encrypt(password, firstname + lastname);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
             // TODO Auto-generated catch block
