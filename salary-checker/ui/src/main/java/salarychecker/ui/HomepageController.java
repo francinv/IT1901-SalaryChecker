@@ -47,7 +47,6 @@ public class HomepageController {
     EmailSender emailSender = new EmailSender();
 
 
-
     User user = new User();
     Accounts existingaccounts = new Accounts();
 
