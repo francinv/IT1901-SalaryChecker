@@ -4,4 +4,5 @@ module salarychecker.core {
     requires javax.mail;
     exports salarychecker.core;
     exports salarychecker.json;
+    opens salarychecker.core;
 }
