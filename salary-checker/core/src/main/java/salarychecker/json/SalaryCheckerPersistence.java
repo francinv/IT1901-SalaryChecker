@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 
 /**
@@ -95,35 +94,5 @@ public class SalaryCheckerPersistence {
 
   public Accounts readAccounts(Reader reader) throws IOException {
     return mapper.readValue(reader, Accounts.class);
-  }
-
-
-  public static void main(String[] args) {
-
-    User user;
-    AdminUser adminUser;
-    Accounts accounts = new Accounts();
-  
-    user = new User("Seran", "Shanmugathas", "seran@live.no", "Volla!123", 
-      "26080191390", 55555, "francin@gmail.com", 33.3);
-    adminUser = new AdminUser("Francin", "Vincent", "francin@gmail.com", "Vandre!123");
-    accounts.addUser(user);
-    accounts.addUser(adminUser);
-  
-    
-    SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
-    try {
-      salaryCheckerPersistence.setSaveFile("Accounts.json");
-      salaryCheckerPersistence.saveAccounts(accounts);
-      Accounts accounts2 = salaryCheckerPersistence.loadAccounts();
-      System.out.println(accounts2.getAccounts().get(0).getEmail());
-      System.out.println(((User) accounts2.getAccounts().get(0)).getSocialNumber());
-      System.out.println(accounts2.getAccounts().get(1).getPassword());
-    } catch (IllegalStateException | IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    
-
   }
 }
