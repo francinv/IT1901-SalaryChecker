@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.json.SalaryCheckerPersistence;
@@ -25,7 +26,6 @@ public class LoginController {
 
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
     public User user;
-    Alert a = new Alert(Alert.AlertType.NONE);
 
     @FXML
     void initialize() throws IOException {
@@ -40,41 +40,22 @@ public class LoginController {
 
         UserValidation userval = new UserValidation();
 
-        if (userval.isValidEmail(usernameField) && userval.isValidPassword(passwordField)){
-            Accounts accounts = SCP.loadAccounts();
-            boolean valid = accounts.checkValidUserLogin(usernameField, passwordField);
-            if (valid){
-                user = (User) accounts.getUser(usernameField, passwordField);
-                System.out.println(user.getFirstname());
-                success();
+        try {
+            userval.isValidEmail(usernameField);
+            userval.isValidPassword(passwordField);
+            try {
+                Accounts accounts = SCP.loadAccounts();
+                userval.isExistingUser(usernameField, passwordField, accounts);
                 switchScene(event);
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
             }
-            else {
-                a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("No user of this kind registered.");
-                a.show();
-                throw new IllegalStateException("No user of this kind registered.");
-            }
-        } else {
-            pwdemailNValid();
-            throw new IllegalArgumentException("Password or e-mail is not valid.");
-
 
         }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
-
-    private void pwdemailNValid() {
-        a.setAlertType(Alert.AlertType.ERROR);
-        a.setContentText("Password or e-mail is not valid.");
-        a.show();
-    }
-
-    private void success() {
-        a.setAlertType(Alert.AlertType.INFORMATION);
-        a.setContentText("You are logged in!");
-        a.showAndWait();
-    }
-
 
     private void switchScene(ActionEvent event) {
         try {
@@ -99,7 +80,7 @@ public class LoginController {
         System.out.println("Creating two test users to show functionality...");
 
         User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
-        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "21010092234", 34567, "employeer2@gmail.com", 23.0);
+        AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
 
         Accounts accounts = new Accounts();
         accounts.addUser(testuser1);
