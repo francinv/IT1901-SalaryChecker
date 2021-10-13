@@ -15,7 +15,8 @@ public enum Errors {
     INVALID_SOCIAL_NUMBER("The entered social number, is not valid."),
     INVALID_EMPLOYEE_NUMBER("Employee number should be exactly 5 numbers."),
     INVALID_TAX_COUNT("Tax count should be a decimal number between 0 and 100."),
-    INVALID_EMAIL_AND_OR_PWD("Invalid email address or password.");
+    INVALID_EMAIL_AND_OR_PWD("Invalid email address or password."),
+    NOT_REGISTERED("This user is not registered.");
 
     private final String ERROR_MESSAGE;
 
