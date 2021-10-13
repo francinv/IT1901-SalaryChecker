@@ -195,5 +195,5 @@ buildNumber.properties
 .history
 .ionide
 
-.csv
+*.csv
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,maven,visualstudiocode,eclipse
