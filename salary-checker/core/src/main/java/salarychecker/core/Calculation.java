@@ -27,7 +27,7 @@ public class Calculation {
     "Garantipris", "Coop / Trumf");
 
     private List<String> VAR = Arrays.asList("Forutsigbar", "Garantistrøm", "Garantistrøm Oktober-kampanje","Garantistrøm September-kampanje", "Garantistrøm Kampanje Høst 2021",
-     "Garantistrøm Kampanje Vår 2021", "Garantistrøm Standard", "Garantistrøm Nord", "Garantipris");
+     "Garantistrøm Kampanje Vår 2021", "Garantistrøm Standard", "Garantistrøm Nord", "Garantipris", "Garantistrøm Kampanje Høst");
 
     private List<String> NSPOT = Arrays.asList("Strøm til Spotpris", "Strøm til Spotpris Kampanje", "Solstrøm", "Trønderspot", "Trønderspot Kampanje", "Elbil-avtalen");
 
@@ -52,20 +52,19 @@ public class Calculation {
 
     public void updateElectricityCommission() {
         for (Sale s : saleslist) {
-            s.setProvisjon(0);
+
+            if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")){
+                s.setProvisjon(75);
+            }
+            if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")){
+                s.setProvisjon(50);
+            }
+            if (s.getTX3().equals("Ja") && s.getTX3().equals("Ja")){
+                s.setProvisjon(125);
+            }
 
             if (s.getSalgsType().equals("Produktbytte") && WINBACK.contains(s.getCampaign()) || s.getSalgsType().equals("Produktbytte") && LEADS.contains(s.getCampaign())) {
                 s.updateProvisjon(50);
-            }
-            
-            if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")){
-                s.updateProvisjon(75);
-            }
-            else if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")){
-                s.updateProvisjon(50);
-            }
-            else if (s.getTX3().equals("Ja") && s.getTX3().equals("Ja")){
-                s.updateProvisjon(125);
             }
 
             if (BUN.contains(s.getProduct()) && WINBACK.contains(s.getCampaign()) || BUN.contains(s.getProduct()) && LEADS.contains(s.getCampaign())) {
@@ -79,17 +78,17 @@ public class Calculation {
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-25);
                     }
-                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
                         s.updateProvisjon(-50);
                     }
                 }
-                else if (NSPOT.contains(s.getProduct())) {
+                if (NSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(200);
                     if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
                         s.updateProvisjon(-25);
                     }
                 }
-                else if (RSPOT.contains(s.getProduct())) {
+                if (RSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(175);
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-25);
@@ -98,23 +97,23 @@ public class Calculation {
                 
             }
 
-            else if (WINBACK.contains(s.getCampaign())) {
+            if (WINBACK.contains(s.getCampaign())) {
                 if(ORG.contains(s.getProduct()) ||  VAR.contains(s.getProduct())) {
                     s.updateProvisjon(110);
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-30);
                     }
-                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
                         s.updateProvisjon(-60);
                     }
                 }
-                else if (NSPOT.contains(s.getProduct())) {
+                if (NSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(80);
                     if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
                         s.updateProvisjon(-30);
                     }
                 }
-                else if (RSPOT.contains(s.getProduct())) {
+                if (RSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(50);
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-25);
@@ -123,24 +122,24 @@ public class Calculation {
 
             }
 
-            else if(COMEBACK.contains(s.getCampaign())){
+            if(COMEBACK.contains(s.getCampaign())){
 
                 if(ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
                     s.updateProvisjon(175);
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-25);
                     }
-                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
                         s.updateProvisjon(-50);
                     }
                 }
-                else if (NSPOT.contains(s.getProduct())) {
+                if (NSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(150);
                     if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
                         s.updateProvisjon(-25);
                     }
                 }
-                else if (RSPOT.contains(s.getProduct())) {
+                if (RSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(125);
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-25);
@@ -154,23 +153,24 @@ public class Calculation {
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-35);
                     }
-                    else if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
+                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
                         s.updateProvisjon(-70);
                     }
                 }
-                else if (NSPOT.contains(s.getProduct())) {
+                if (NSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(115);
                     if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
                         s.updateProvisjon(-15);
                     }
                 }
-                else if (RSPOT.contains(s.getProduct())) {
+                if (RSPOT.contains(s.getProduct())) {
                     s.updateProvisjon(100);
                     if (s.getRebate().equals("500")){
                         s.updateProvisjon(-50);
                     }
                 }
             } 
+            System.out.println(s.getProvisjon());
         }
     }
 
@@ -207,9 +207,7 @@ public class Calculation {
         calculation.updateElectricityCommission();
         calculation.calculateElectricityCommission();
         calculation.addMobile(5);
-        calculation.hourSalary(30);
-        calculation.getCalculated();
-
+        System.out.println(calculation.getCalculated());
 
     }
 
