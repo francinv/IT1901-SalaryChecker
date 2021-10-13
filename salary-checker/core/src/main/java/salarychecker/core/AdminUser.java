@@ -46,7 +46,7 @@ public class AdminUser extends AbstractUser {
 
 
     public void createUser(String firstname, String lastname, String email, String password, String socialNumber,
-                           int employeeNumber, String employerEmail, double taxCount, char type) {
+                           int employeeNumber, String employerEmail, double taxCount) {
         User user = new User(firstname, lastname, email, password, socialNumber, employeeNumber, employerEmail, taxCount);
         accounts.addUser(user);
     }
