@@ -14,7 +14,7 @@ public class UserValidationTest {
 
     @BeforeEach
     public void setUp() {
-        testUser = new User("Firstname", "Lastname", "email@email.com", "Password!123", 
+        testUser = new User("Firstname", "Lastname", "email@email.com", "Password!12345",
             "22010192834", 33333, "employeremail@email.com", 35.5);
         userValidation = new UserValidation();
         accounts = new Accounts();
@@ -42,12 +42,5 @@ public class UserValidationTest {
 
         // Assertions.assertTrue(userValidation.isValidUser(firstname, lastname, email, password, 
         //     socialNumber, employeeNumber, employerEmail, taxCount));
-    }
-
-    @Test
-    public void testExistingUser() {
-        accounts.addUser(testUser);
-        //Todo add test
-        assertFalse(userValidation.isExistingUser(testUser.getEmail(), testUser.getPassword()));
     }
 }
