@@ -1,6 +1,8 @@
 module salarychecker.core {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    requires com.opencsv;
+    requires java.sql;
     requires javax.mail;
     requires com.opencsv;
     requires java.sql;

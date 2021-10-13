@@ -45,6 +45,16 @@
                               <Font size="48.0" />
                            </font>
                         </Text>
+                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
                         <Text layoutX="100.0" layoutY="834.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
                            <font>
                               <Font size="34.0" />

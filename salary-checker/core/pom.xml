@@ -36,7 +36,11 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.5.2</version>
+        </dependency>
         <!--Email sending dependency-->
         <dependency>
             <groupId>com.sun.mail</groupId>
