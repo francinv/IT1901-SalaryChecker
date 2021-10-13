@@ -48,6 +48,7 @@ public class AdminUserTest{
 
     @Test
     public void testCreateUser(){
+        adminUser.setAccounts(accounts);
         adminUser.createUser("Jens", "Jensen", "jensen@salarychecker.com", "Jensen123!", "31129969420", 66638, "sjef@salarychecker.com", 22.0);
         Assertions.assertNotNull(accounts.getUser("jensen@salarychecker.com", "Jensen123!"));
     }
