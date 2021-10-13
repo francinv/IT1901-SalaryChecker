@@ -1,5 +1,6 @@
 package salarychecker.core;
 
+
 import java.util.regex.Pattern;
 
 public class UserValidation {
@@ -80,6 +81,12 @@ public class UserValidation {
         }
     }
 
+    public void isExistingUser(String email, String password, Accounts accounts) {
+        if(!accounts.checkValidUserLogin(email, password)){
+            throw new IllegalArgumentException(Errors.NOT_REGISTERED.getMessage());
+        }
+    }
+
     // public boolean isValidUser(String firstname, String lastname, String email, String password,
     //     String socialNumber, int employeeNumber, String employerEmail, double taxCount) {
     //         return checkValidFirstname(firstname) && checkValidLastname(lastname) &&
@@ -88,7 +95,4 @@ public class UserValidation {
     //                checkValidTaxCount(taxCount); 
     // }
 
-    public boolean isExistingUser(String email, String password) {
-        return false;
-    }
 }
