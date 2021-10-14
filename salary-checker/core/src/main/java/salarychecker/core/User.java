@@ -40,13 +40,8 @@ public class User extends AbstractUser {
         super.firstname = firstname;
         super.lastname = lastname;
         super.email = email;
-        try {
-            super.password = encryptDecrypt.encrypt(password, firstname + lastname);
-            this.socialNumber = encryptDecrypt.encrypt(socialNumber, lastname + firstname);
-        } catch (NumberFormatException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
-        }
+        super.password = password;
+        this.socialNumber = socialNumber;
         this.employeeNumber = employeeNumber;
         this.employerEmail = employerEmail;
         this.taxCount = taxCount;    
@@ -96,6 +91,20 @@ public class User extends AbstractUser {
     }
     public void setTimesats(int timesats){
         this.timesats = timesats;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " firstname='" + getFirstname() + "'" +
+            ", lastname='" + getLastname() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", password='" + getPassword() + "'" +
+            " socialNumber='" + getSocialNumber() + "'" +
+            ", employeeNumber='" + getEmployeeNumber() + "'" +
+            ", employerEmail='" + getEmployerEmail() + "'" +
+            ", taxCount='" + getTaxCount() + "'" +
+            "}";
     }
     
 }
