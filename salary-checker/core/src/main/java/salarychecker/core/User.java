@@ -1,4 +1,7 @@
 package salarychecker.core;
+
+import java.util.ArrayList;
+
 /** 
  * Class for creating a user, and store their information.
  * 
@@ -9,14 +12,14 @@ public class User {
     private String lastname;
     private String email;
     private String password;
-    private long socialNumber;
+    private String socialNumber;
     private int employeeNumber;
     private String employerEmail;
     private double taxCount;
     private UserValidation validation;
-    private int expectedsalary;
-    private int paidsalary;
-    private int timesats;
+    private double timesats;
+
+    private ArrayList<UserSale> userSales = new ArrayList<UserSale>();
 
     /**
      * Constructor
@@ -30,8 +33,8 @@ public class User {
      * @param employerEmail
      * @param taxCount
      */
-    public User(String firstname, String lastname, String email, String password, long socialNumber,
-            int employeeNumber, String employerEmail, double taxCount) {
+    public User(String firstname, String lastname, String email, String password, String socialNumber,
+            int employeeNumber, String employerEmail, double taxCount, double timesats) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
@@ -39,7 +42,8 @@ public class User {
         this.socialNumber = socialNumber;
         this.employeeNumber = employeeNumber;
         this.employerEmail = employerEmail;
-        this.taxCount = taxCount;    
+        this.taxCount = taxCount;
+        this.timesats = timesats;
     }
 
     public User(String email, String password) {
@@ -76,10 +80,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public long getSocialNumber() {
+    public String getSocialNumber() {
         return socialNumber;
     }
-    public void setSocialNumber(long socialNumber) {
+    public void setSocialNumber(String socialNumber) {
         this.socialNumber = socialNumber;
     }
     public int getEmployeeNumber() {
@@ -100,11 +104,41 @@ public class User {
     public void setTaxCount(double taxCount) {
         this.taxCount = taxCount;
     }
-    public int getTimesats(){
+    public double getTimesats(){
         return timesats;
     }
     public void setTimesats(int timesats){
         this.timesats = timesats;
     }
+
+    public ArrayList<UserSale> getUserSaleList(){
+        return userSales;
+    }
+
+    public void addUserSale(String salesperiod, double expected, double paid){
+        UserSale userSale = new UserSale();
+        userSale.setSalesperiod(salesperiod);
+        userSale.setExpected(expected);
+        userSale.setPaid(paid);
+        userSale.setDifference();
+
+        userSales.add(userSale);
+    }
     
+
+    @Override
+    public String toString() {
+        return "{" +
+            " firstname='" + getFirstname() + "'" +
+            ", lastname='" + getLastname() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", socialNumber='" + getSocialNumber() + "'" +
+            ", employeeNumber='" + getEmployeeNumber() + "'" +
+            ", employerEmail='" + getEmployerEmail() + "'" +
+            ", taxCount='" + getTaxCount() + "'" +
+            ", timesats='" + getTimesats() + "'" +
+            ", userSales='" + getUserSaleList() + "'" +
+            "}";
+    }
 }
