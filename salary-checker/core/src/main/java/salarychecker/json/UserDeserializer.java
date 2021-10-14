@@ -48,7 +48,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
         JsonNode socialNumberNode = objectNode.get("socialNumber");
         if (socialNumberNode instanceof TextNode) {
-            user.setSocialNumber(socialNumberNode.longValue());
+            user.setSocialNumber(socialNumberNode.asText());
         }
 
         JsonNode employeeNumberNode = objectNode.get("employeeNumber");

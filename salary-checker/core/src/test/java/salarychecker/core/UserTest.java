@@ -11,7 +11,7 @@ public class UserTest {
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "password!123", 
-            22019893456L, 33333, "employer_email@email.com", 35.5);
+            "22019893456", 33333, "employer_email@email.com", 35.5, 132.0);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class UserTest {
         Assertions.assertNotEquals("email@email.com", testUser.getEmail());
         testUser.setPassword("passord");
         Assertions.assertNotEquals("password!123", testUser.getPassword());
-        testUser.setSocialNumber(22030199999L);
+        testUser.setSocialNumber("22030199999");
         Assertions.assertNotEquals(22019893456L, testUser.getSocialNumber());
         testUser.setEmployeeNumber(11111);
         Assertions.assertNotEquals(33333, testUser.getEmployeeNumber());

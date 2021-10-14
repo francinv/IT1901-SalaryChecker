@@ -15,7 +15,7 @@ public class UserValidationTest {
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "Password!123", 
-            22010192834L, 33333, "employeremail@email.com", 35.5);
+            "22010192834", 33333, "employeremail@email.com", 35.5, 130.0);
         userValidation = new UserValidation();
         accounts = new Accounts();
     }
@@ -30,7 +30,7 @@ public class UserValidationTest {
         Assertions.assertTrue(userValidation.isValidEmail(email));
         String password = testUser.getPassword();
         Assertions.assertTrue(userValidation.isValidPassword(password));
-        Long socialNumber = testUser.getSocialNumber();
+        String socialNumber = testUser.getSocialNumber();
         Assertions.assertTrue(userValidation.isValidSocialNumber(socialNumber));
         int employeeNumber = testUser.getEmployeeNumber();
         Assertions.assertTrue(userValidation.isValidEmployeeNumber(employeeNumber));

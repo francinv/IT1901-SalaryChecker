@@ -29,8 +29,8 @@ public class UserValidation {
         return checkValidRegex(PASSWORD_REGEX, password);
     }
 
-    public boolean isValidSocialNumber(Long socialNumber) {
-        return checkValidRegex(SOCIAL_NUMBER_REGEX, String.valueOf(socialNumber));
+    public boolean isValidSocialNumber(String socialNumber) {
+        return checkValidRegex(SOCIAL_NUMBER_REGEX, socialNumber);
     }
 
     public boolean isValidEmployeeNumber(int employeeNumber) {
@@ -46,7 +46,7 @@ public class UserValidation {
     }
 
     public boolean isValidUser(String firstname, String lastname, String email, String password,
-        long socialNumber, int employeeNumber, String employerEmail, double taxCount) {
+        String socialNumber, int employeeNumber, String employerEmail, double taxCount) {
             return isValidFirstname(firstname) && isValidLastname(lastname) &&
                    isValidEmail(email) && isValidPassword(password) && isValidSocialNumber(socialNumber) &&
                    isValidEmployeeNumber(employeeNumber) && isValidEmail(employerEmail) && 
