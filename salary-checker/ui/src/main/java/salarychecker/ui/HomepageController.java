@@ -58,6 +58,11 @@ public class HomepageController {
         idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
     }
 
+    //TODO complete method for sendEmail
+    @FXML
+    void sendEmail(ActionEvent event) {
+        System.out.println("Test");
+    }
 
     @FXML
     void passwordAction(ActionEvent event) throws IOException {
