@@ -15,6 +15,8 @@ public abstract class AbstractUser {
     protected String email;
     protected String password;
 
+    
+
     protected UserValidation userValidation = new UserValidation();
     protected static EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
@@ -52,4 +54,17 @@ public abstract class AbstractUser {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " firstname='" + getFirstname() + "'" +
+            ", lastname='" + getLastname() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", password='" + getPassword() + "'" +
+            "}";
+    }
+
+    
+
 }
