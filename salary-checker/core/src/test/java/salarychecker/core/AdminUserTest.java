@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class for testing AdminUser
+ * @author jakobk
+ */
 public class AdminUserTest{
 
     private AdminUser adminUser;
@@ -27,7 +31,7 @@ public class AdminUserTest{
         Assertions.assertEquals("Jakob", adminUser.getFirstname());
         Assertions.assertEquals("Kessler", adminUser.getLastname());
         Assertions.assertEquals("kessler@salarychecker.com", adminUser.getEmail());
-        Assertions.assertNotEquals("JakobKessler99!", adminUser.getPassword());
+        Assertions.assertEquals("JakobKessler99!", adminUser.getPassword());
     }
 
     @Test
@@ -50,6 +54,6 @@ public class AdminUserTest{
     public void testCreateUser(){
         adminUser.setAccounts(accounts);
         adminUser.createUser("Jens", "Jensen", "jensen@salarychecker.com", "Jensen123!", "31129969420", 66638, "sjef@salarychecker.com", 22.0);
-        Assertions.assertNotNull(accounts.getUser("jensen@salarychecker.com", "Jensen123!"));
+        Assertions.assertNotNull(accounts.getAccounts().get(0));
     }
 }
