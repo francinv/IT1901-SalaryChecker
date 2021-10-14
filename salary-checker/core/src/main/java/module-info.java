@@ -4,9 +4,6 @@ module salarychecker.core {
     requires com.opencsv;
     requires java.sql;
     requires javax.mail;
-    requires com.opencsv;
-    requires java.sql;
-    requires javax.mail;
     exports salarychecker.core;
     exports salarychecker.json;
     opens salarychecker.core;
