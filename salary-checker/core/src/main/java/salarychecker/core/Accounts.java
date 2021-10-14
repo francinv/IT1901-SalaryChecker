@@ -75,7 +75,7 @@ public class Accounts implements Iterable<AbstractUser> {
         for (AbstractUser ab : accounts) {
             if (ab.getEmail().equals(email)) {
                 user = ab;
-            }
+            } 
         }
         try {
             passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname() + user.getLastname());
@@ -84,25 +84,34 @@ public class Accounts implements Iterable<AbstractUser> {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        //return accounts.stream().anyMatch(u -> u.getEmail().equals(email) && u.getPassword().equals(password));
         return passwordDecrypted.equals(password);
     }
 
+
     public AbstractUser getUser(String email, String password) {
-        // return accounts.stream()
-        //                .filter(u -> u.getEmail().equals(email) && u.getPassword().equals(password))
-        //                .findAny()
-        //                .orElse(null);
         AbstractUser user = null;
         String passwordDecrypted = null;
 
+        User u = new User();
+        AdminUser a = new AdminUser();
+
         for (AbstractUser ab : accounts) {
             if (ab.getEmail().equals(email)) {
+                if (getTypeOfUser(email).equals(u.getClass())){
+                    user = (User) ab;
+                } 
+                if (getTypeOfUser(email).equals(a.getClass())){
+                    user = (AdminUser) ab;
+                }
                 user = ab;
-            }
+            } 
         }
+        if (user == null) {
+            return null;
+        } 
         try {
             passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname() + user.getLastname());
+            
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
             // TODO Auto-generated catch block
@@ -114,6 +123,15 @@ public class Accounts implements Iterable<AbstractUser> {
         return null;
     }
 
+    public Class getTypeOfUser(String email){
+        AbstractUser user = null;
+        for (AbstractUser ab: accounts){
+            if (ab.getEmail().equals(email)){
+                user = ab;
+            }
+        }
+        return user.getClass();
+    }
     public void updatePassword(String email, String newpassword) {
         accounts.stream().filter(u->u.getEmail().equals(email)).findAny().ifPresent(u->u.setPassword(newpassword));
     }
