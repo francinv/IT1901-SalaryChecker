@@ -9,10 +9,6 @@ import java.util.stream.Collectors;
 public class Calculation {
 
     public List<Sale> saleslist = new ArrayList<Sale>();
-    public List<Sale> withTX3 = new ArrayList<Sale>();
-    public List<Sale> withNVK = new ArrayList<Sale>();
-    public List<Sale> fullPackage = new ArrayList<Sale>();
-    public List<Sale> noExtras = new ArrayList<Sale>();
 
     private List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
     private List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
@@ -35,22 +31,28 @@ public class Calculation {
 
     private List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
-    private int calculated = 0;
+    private double calculated;
+
+    User user;
+
+    public Calculation(User user){
+        this.user = user;
+    }
 
     SalaryCSVReader salaryCSVReader = new SalaryCSVReader();
 
-    public void updateList(String url) throws FileNotFoundException {
+    public void updateList() throws FileNotFoundException {
+        String url = "salary-checker/core/src/main/resources/salarychecker/core/SalesReport.csv";
         saleslist = salaryCSVReader.csvToBean(url);
-
     }
 
-    public void removeUnwanted() {
+    private void removeUnwanted() {
         saleslist = saleslist.stream()
                     .filter(s->s.getAnleggStatus().equals("23-Etablert"))
                     .collect(Collectors.toList());
     }
 
-    public void updateElectricityCommission() {
+    private void updateElectricityCommission() {
         for (Sale s : saleslist) {
 
             if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")){
@@ -174,41 +176,43 @@ public class Calculation {
         }
     }
 
-    public void calculateElectricityCommission() {
+    private void calculateElectricityCommission() {
         for (Sale s : saleslist) {
             calculated += s.getProvisjon();
         }
     }
 
-    public void addMobile(int amount) {
+    private void addMobile(int amount) {
         int per = 200;
         int mobcommission = per * amount;
         calculated += mobcommission;
     }
 
-    public void hourSalary(int hours) {
-        User user = new User();
-        int hoursal = user.getTimesats() * hours;
+    private void hourSalary(double hours) {
+        double hoursal = user.getTimesats() * hours;
         calculated += hoursal;
     }
 
-    public int getCalculated() {
+    private double getCalculated() {
         return calculated;
     }
 
-    // public int taxDeduction(double tax) {
+    private void setCalculated(double calculated){
+        this.calculated = calculated;
+    }
 
-    // }
-    public static void main(String[] args) throws FileNotFoundException {
-        String url = "salary-checker/core/src/main/resources/salarychecker/core/SalesReport.csv";
-        Calculation calculation = new Calculation();
-        calculation.updateList(url);
-        calculation.removeUnwanted();
-        calculation.updateElectricityCommission();
-        calculation.calculateElectricityCommission();
-        calculation.addMobile(5);
-        System.out.println(calculation.getCalculated());
+    private void taxDeduction() {
+        calculated = (calculated * ((100-user.getTaxCount())/100));
+    }
 
+    public void doCalculation(double hours, int mobileamount) throws FileNotFoundException{
+        updateList();
+        removeUnwanted();
+        updateElectricityCommission();
+        calculateElectricityCommission();
+        addMobile(mobileamount);
+        hourSalary(hours);
+        taxDeduction();
     }
 
 }
