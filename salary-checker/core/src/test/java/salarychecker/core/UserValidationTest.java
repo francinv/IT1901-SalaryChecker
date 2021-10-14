@@ -31,8 +31,7 @@ public class UserValidationTest {
         String password = testUser.getPassword();
         Assertions.assertDoesNotThrow(() -> userValidation.checkValidPassword(password));
         String socialNumber = testUser.getSocialNumber();
-        //Will throw exception since the socialNumber is encrytped
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.checkValidSocialNumber(socialNumber));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidSocialNumber(socialNumber));
         int employeeNumber = testUser.getEmployeeNumber();
         Assertions.assertDoesNotThrow(() -> userValidation.checkValidEmployeeNumber(employeeNumber));
         String employerEmail = testUser.getEmployerEmail();
