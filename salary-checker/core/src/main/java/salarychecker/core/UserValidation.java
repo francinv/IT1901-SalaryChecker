@@ -24,8 +24,10 @@ public class UserValidation {
      * @return
      * TODO
      */
-    public boolean isValidEmail(String email) {
-        return isValidRegex(EMAIL_REGEX, email);
+    public void isValidEmail(String email) {
+        if(! isValidRegex(EMAIL_REGEX, email)) {
+            throw new IllegalArgumentException(Errors.INVALID_EMAIL.getMessage());
+        }
     }
 
     /**
@@ -34,8 +36,10 @@ public class UserValidation {
      * @return
      * TODO
      */
-    public boolean isValidPassword(String password) {
-        return isValidRegex(PASSWORD_REGEX, password);
+    public void isValidPassword(String password) {
+        if(! isValidRegex(PASSWORD_REGEX, password)) {
+            throw new IllegalArgumentException(Errors.INVALID_PWD.getMessage());
+        }
     }
 
 
@@ -82,17 +86,16 @@ public class UserValidation {
     }
 
     public void isExistingUser(String email, String password, Accounts accounts) {
-        if(!accounts.checkValidUserLogin(email, password)){
+        if(accounts.getUser(email, password)==null){
             throw new IllegalArgumentException(Errors.NOT_REGISTERED.getMessage());
         }
     }
 
-    // public boolean isValidUser(String firstname, String lastname, String email, String password,
-    //     String socialNumber, int employeeNumber, String employerEmail, double taxCount) {
-    //         return checkValidFirstname(firstname) && checkValidLastname(lastname) &&
-    //                checkValidEmail(email) && checkValidPassword(password) && checkValidSocialNumber(socialNumber) &&
-    //                checkValidEmployeeNumber(employeeNumber) && checkValidEmail(employerEmail) && 
-    //                checkValidTaxCount(taxCount); 
-    // }
+    public void isValidLogIn(String email, String password, Accounts accounts) {
+        if(!accounts.checkValidUserLogin(email, password)) {
+            throw new IllegalArgumentException(Errors.INVALID_EMAIL_AND_OR_PWD.getMessage());
+        }
+    }
+
 
 }
