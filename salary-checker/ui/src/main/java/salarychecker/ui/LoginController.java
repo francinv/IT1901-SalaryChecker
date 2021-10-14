@@ -6,10 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
@@ -25,7 +25,8 @@ public class LoginController {
     @FXML private Button logIn;
 
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
-    public User user;
+    Accounts accounts = new Accounts();
+    public AbstractUser user;
 
     @FXML
     void initialize() throws IOException {
@@ -40,17 +41,30 @@ public class LoginController {
 
         UserValidation userval = new UserValidation();
 
+        User u = new User();
+        AdminUser a = new AdminUser();
+
         try {
             userval.isValidEmail(usernameField);
             userval.isValidPassword(passwordField);
             try {
-                Accounts accounts = SCP.loadAccounts();
                 userval.isExistingUser(usernameField, passwordField, accounts);
-                switchScene(event);
+                try {
+                    userval.isValidLogIn(usernameField, passwordField, accounts);
+                    if (accounts.getTypeOfUser(usernameField).equals(u.getClass())){
+                        user = (User) accounts.getUser(usernameField, passwordField);
+                        switchScene(event);
+                    }
+                    if (accounts.getTypeOfUser(usernameField).equals(a.getClass())){
+                        user = (AdminUser) accounts.getUser(usernameField, passwordField);
+                    }
+                }
+                catch (IllegalArgumentException e){
+                    System.out.println(e.getMessage());
+                }
             } catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
             }
-
         }
         catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -62,7 +76,7 @@ public class LoginController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = fxmlLoader.load();
             HomepageController homepageController = fxmlLoader.getController();
-            homepageController.setUser(user);
+            homepageController.setUser((User) user);
             homepageController.setAccounts(SCP.loadAccounts());
             homepageController.loadInfo();
             Scene homepageScene = new Scene(root);
@@ -82,15 +96,14 @@ public class LoginController {
         User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
         AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
 
-        Accounts accounts = new Accounts();
-        accounts.addUser(testuser1);
-        accounts.addUser(testuser2);
+        Accounts acc = new Accounts();
+        acc.addUser(testuser1);
+        acc.addUser(testuser2);
 
         SCP.setSaveFile("Accounts.json");
-        SCP.saveAccounts(accounts);
+        SCP.saveAccounts(acc);
 
-        Accounts accounts2 = SCP.loadAccounts();
-        System.out.println("The test users that were added: " + accounts2.getAccounts());
+        accounts = SCP.loadAccounts();
     }
 
 }
