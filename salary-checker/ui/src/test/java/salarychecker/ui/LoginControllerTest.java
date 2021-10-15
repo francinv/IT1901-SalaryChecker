@@ -27,13 +27,13 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LoginControllerTest extends ApplicationTest {
     
     private TextField emailField;
     private PasswordField passwordField;
     private Button logInButton;
-    private User testuser1;
 
 
     @Override
@@ -71,23 +71,19 @@ public class LoginControllerTest extends ApplicationTest {
         }
     }
 
+    //TODO
     @Test
     public void testInvalidEmail() {
-        writeInLoginFields("seran", "Password123!");
-        clickOn(logInButton);
-
     }
 
+    //TODO
     @Test
     public void testInvalidPwd() {
-        writeInLoginFields("seran@live.no", "t");
-        clickOn(logInButton);
     }
 
+    //TODO
     @Test
     public void testNonExistingUser() {
-        writeInLoginFields("fxtest@gmail.no", "FxTest123!");
-        clickOn(logInButton);
     }
 
     @AfterEach
