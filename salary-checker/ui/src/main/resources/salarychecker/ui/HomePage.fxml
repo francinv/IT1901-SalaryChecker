@@ -45,7 +45,7 @@
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
+                        <Text layoutX="98.0" layoutY="818.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timesats">
                            <font>
                               <Font size="48.0" />
                            </font>
@@ -55,17 +55,17 @@
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
+                        <Text layoutX="95.0" layoutY="704.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="834.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
+                        <Text fx:id="taxDisplay" layoutX="97.0" layoutY="754.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="206.0" layoutY="836.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
+                        <Text layoutX="206.0" layoutY="754.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
                            <font>
                               <Font size="34.0" />
                            </font>
@@ -75,32 +75,37 @@
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21.09.1999" wrappingWidth="189.205078125">
+                        <Text fx:id="fDatoDisplay" layoutX="100.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21.09.1999" wrappingWidth="189.205078125">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Button layoutX="788.0" layoutY="64.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="367.0" styleClass="0px" text="Endre profil">
+                        <Button fx:id="changeProfileSettingsAction" layoutX="788.0" layoutY="64.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="367.0" styleClass="0px" text="Endre profil">
                            <font>
                               <Font size="36.0" />
                            </font>
                         </Button>
-                        <Text layoutX="100.0" layoutY="942.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeidsgiver" wrappingWidth="277.720703125">
+                        <Text layoutX="92.0" layoutY="941.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeidsgiver E-post" wrappingWidth="404.596923828125">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="987.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn Navnesen" wrappingWidth="284.205078125">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="100.0" layoutY="1041.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sjef@firma.no" wrappingWidth="338.205078125">
+                        <Text fx:id="employeDisplay" layoutX="100.0" layoutY="985.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sjef@firma.no" wrappingWidth="338.205078125">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Text>
                         <ImageView fitHeight="367.0" fitWidth="367.0" layoutX="788.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text fx:id="hourDisplay" layoutX="99.0" layoutY="868.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="219.0" layoutY="866.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kr/t">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
             </content>

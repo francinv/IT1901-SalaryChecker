@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import salarychecker.core.Accounts;
 import salarychecker.core.AbstractUser;
-import salarychecker.core.User;
 
 import java.io.IOException;
 
