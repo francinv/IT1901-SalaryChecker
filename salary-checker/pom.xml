@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>gr2111</groupId>
     <artifactId>salary-checker</artifactId>
@@ -8,29 +9,42 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
-        <skipTests>false</skipTests>
+        <jupiter.version>5.8.1</jupiter.version>
+        <jackson.version>2.12.5</jackson.version>
+        <openscsv.version>5.5.2</openscsv.version>
     </properties>
 
     <dependencyManagement>
+
         <dependencies>
+
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-api</artifactId>
-                <version>5.7.2</version>
+                <version>${jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
-                <version>5.7.2</version>
+                <version>${jupiter.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params -->
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
-                <version>5.7.2</version>
+                <version>${jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.12.4</version>
                 <scope>test</scope>
             </dependency>
 
@@ -38,19 +52,22 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>2.12.2</version>
+                <version>${jackson.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.12.2</version>
+                <version>${jackson.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
             <dependency>
                 <groupId>com.opencsv</groupId>
                 <artifactId>opencsv</artifactId>
-                <version>5.5.2</version>
+                <version>${openscsv.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -58,10 +75,10 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
                     <configuration>
+                        <encoding>UTF-8</encoding>
                         <release>16</release>
                     </configuration>
                 </plugin>
@@ -70,9 +87,61 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
-                        <skipTests>${skipTests}</skipTests>
+                        <!-- 
+                            <argLine>dash dash enable-preview</argLine>
+                        -->
                     </configuration>
                 </plugin>
+                <!-- Run the checkstyle code quality tool -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>9.0</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <configLocation>google_checks.xml</configLocation>
+                        <encoding>UTF-8</encoding>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <linkXRef>false</linkXRef>
+                    </configuration>
+                    <executions>
+                        <execution>
+                        <id>checkstyle-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Run the spotbugs code quality tool -->
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.4.1</version>
+                    <configuration>
+                        <xmlOutput>false</xmlOutput>
+                        <htmlOutput>true</htmlOutput>
+                        <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
+                    </configuration>
+                    <executions>
+                        <execution>
+                        <id>spotbugs-check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <!-- Configure jacoco code coverage -->
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
@@ -89,12 +158,11 @@
                             <id>jacoco-report</id>
                             <phase>verify</phase>
                             <goals>
-                                <goal>report-aggregate</goal>
+                                <goal>report</goal>
                             </goals>
                         </execution>
                     </executions>
                 </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
