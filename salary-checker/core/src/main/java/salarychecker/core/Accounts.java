@@ -6,7 +6,7 @@ import java.lang.Iterable;
 import java.util.List;
 
 /**
- * Lists of items in a todo list.
+ * Lists of users.
  */
 public class Accounts implements Iterable<AbstractUser> {
 
