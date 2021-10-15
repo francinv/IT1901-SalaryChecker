@@ -14,8 +14,8 @@ public class UserValidationTest {
 
     @BeforeEach
     public void setUp() {
-        testUser = new User("Firstname", "Lastname", "email@email.com", "Password!12345",
-            "22010192834", 33333, "employeremail@email.com", 35.5);
+        testUser = new User("Firstname", "Lastname", "email@email.com", "Password!123", 
+            "22010192834", 33333, "employeremail@email.com", 35.5, 130.0);
         userValidation = new UserValidation();
         accounts = new Accounts();
     }
@@ -39,7 +39,7 @@ public class UserValidationTest {
         double taxCount = testUser.getTaxCount();
         Assertions.assertDoesNotThrow(() -> userValidation.checkValidTaxCount(taxCount));
 
-        // Assertions.assertTrue(userValidation.isValidUser(firstname, lastname, email, password, 
-        //     socialNumber, employeeNumber, employerEmail, taxCount));
+        Assertions.assertDoesNotThrow(() -> userValidation.checkValidUser(firstname, lastname, email, password, 
+            socialNumber, employeeNumber, employerEmail, taxCount));
     }
 }

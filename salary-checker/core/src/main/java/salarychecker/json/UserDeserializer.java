@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
@@ -19,10 +21,12 @@ import javax.crypto.NoSuchPaddingException;
 
 import salarychecker.core.EncryptDecrypt;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 
 public class UserDeserializer extends JsonDeserializer<User> {
 
     private EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
+    private UserSaleDeserializer userSaleDeserializer = new UserSaleDeserializer();
 
     @Override
     public User deserialize(JsonParser parser, DeserializationContext ctxt)
@@ -92,6 +96,16 @@ public class UserDeserializer extends JsonDeserializer<User> {
         JsonNode taxCountNode = objectNode.get("taxCount");
         if (taxCountNode instanceof TextNode) {
             user.setTaxCount(taxCountNode.intValue());
+        }
+
+        JsonNode userSaleNode = objectNode.get("userSaleNode");
+        if (userSaleNode instanceof ArrayNode) {
+            for (JsonNode elementNode : ((ArrayNode) userSaleNode)) {
+                UserSale userSale = userSaleDeserializer.deserialize(elementNode);
+                if (userSale != null) {
+                    user.addUserSale(userSale.getSalesperiod(), userSale.getExpected(), userSale.getPaid());
+                }
+            }
         }
         
         return user;

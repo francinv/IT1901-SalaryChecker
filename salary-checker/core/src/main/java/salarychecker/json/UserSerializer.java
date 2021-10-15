@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import salarychecker.core.EncryptDecrypt;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 
 public class UserSerializer extends JsonSerializer<User> {
 
@@ -29,6 +30,7 @@ format:
     "employeeNyumber": "...",
     "employerEmail": "...",
     "taxCount": "...",
+    "userSale": [...]
 }
 */
     EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
@@ -56,6 +58,15 @@ format:
         }
         jsonGen.writeNumberField("employeeNumber", user.getEmployeeNumber());
         jsonGen.writeStringField("employerEmail", user.getEmployerEmail());
+        jsonGen.writeNumberField("taxCount", user.getTaxCount());
+        
+        if (user.getUserSaleList() != null) {
+            jsonGen.writeArrayFieldStart("userSale");
+                for (UserSale userSale : user.getUserSaleList()) {
+                    jsonGen.writeObject(userSale);
+                }
+            jsonGen.writeEndArray();
+        }
 
         jsonGen.writeEndObject();
     }

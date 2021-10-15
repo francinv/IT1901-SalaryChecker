@@ -21,9 +21,9 @@ public class AccountsTest {
     @BeforeEach
     void setUp(){
         accounts = new Accounts();
-        user = new User("Jens", "Jensen", "jensen@salarychecker.com", "Jensen123!", "31129969420", 66638, "sjef@salarychecker.com", 22.0);
-        user1 = new User("Olav", "Olavson", "olavsen@salarychecker.com", "Olavson123!", "01018732455", 63789, "sjef@salarychecker.com", 22.0);
-        user2 = new User("Bro", "Fist", "fist@salarychecker.com", "Fist123!", "17051430730", 17051, "sjef@salarychecker.com", 42.5);
+        user = new User("Jens", "Jensen", "jensen@salarychecker.com", "Jensen123!", "31129969420", 66638, "sjef@salarychecker.com", 22.0, 131);
+        user1 = new User("Olav", "Olavson", "olavsen@salarychecker.com", "Olavson123!", "01018732455", 63789, "sjef@salarychecker.com", 22.0, 132);
+        user2 = new User("Bro", "Fist", "fist@salarychecker.com", "Fist123!", "17051430730", 17051, "sjef@salarychecker.com", 42.5, 133);
         accounts.addUser(user);
     }
 

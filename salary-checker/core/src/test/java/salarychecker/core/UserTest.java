@@ -11,7 +11,7 @@ public class UserTest {
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "password!123", 
-            "22019893456", 33333, "employer_email@email.com", 35.5);
+            "22019893456", 33333, "employer_email@email.com", 35.5, 132.0);
     }
 
     @Test

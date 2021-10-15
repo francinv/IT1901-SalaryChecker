@@ -66,7 +66,7 @@ public class Accounts implements Iterable<AbstractUser> {
         return accounts.stream().anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
-    EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
+    private EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
     public boolean checkValidUserLogin(String email, String password) {
         AbstractUser user = null;

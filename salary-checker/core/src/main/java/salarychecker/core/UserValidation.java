@@ -91,11 +91,22 @@ public class UserValidation {
         }
     }
 
+    public void checkValidUser(String firstname, String lastname, String email, String password,
+        String socialNumber, int employeeNumber, String employerEmail, double taxCount) {
+            
+        checkValidFirstname(firstname);
+        checkValidLastname(lastname);
+        checkValidEmail(email);
+        checkValidPassword(password);
+        checkValidSocialNumber(socialNumber);
+        checkValidEmployeeNumber(employeeNumber);
+        checkValidEmail(employerEmail);
+        checkValidTaxCount(taxCount);
+    }
+
     public void isValidLogIn(String email, String password, Accounts accounts) {
         if(!accounts.checkValidUserLogin(email, password)) {
             throw new IllegalArgumentException(Errors.INVALID_EMAIL_AND_OR_PWD.getMessage());
         }
     }
-
-
 }

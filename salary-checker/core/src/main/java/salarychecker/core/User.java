@@ -8,6 +8,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import java.util.ArrayList;
+
 /** 
  * Class for creating a user, and store their information.
  * This class inheritance from {@link AbstractUser}
@@ -18,10 +20,9 @@ public class User extends AbstractUser {
     private int employeeNumber;
     private String employerEmail;
     private double taxCount;
-    private UserValidation validation;
-    private int expectedsalary;
-    private int paidsalary;
-    private int timesats;
+    private double timesats;
+
+    private ArrayList<UserSale> userSales = new ArrayList<UserSale>();
 
     /**
      * Constructor
@@ -36,7 +37,7 @@ public class User extends AbstractUser {
      * @param taxCount
      */
     public User(String firstname, String lastname, String email, String password, String socialNumber,
-            int employeeNumber, String employerEmail, double taxCount) {
+            int employeeNumber, String employerEmail, double taxCount, double timesats) {
         super.firstname = firstname;
         super.lastname = lastname;
         super.email = email;
@@ -44,7 +45,8 @@ public class User extends AbstractUser {
         this.socialNumber = socialNumber;
         this.employeeNumber = employeeNumber;
         this.employerEmail = employerEmail;
-        this.taxCount = taxCount;    
+        this.taxCount = taxCount;
+        this.timesats = timesats;
     }
 
     /**
@@ -86,12 +88,27 @@ public class User extends AbstractUser {
         userValidation.checkValidTaxCount(taxCount);
         this.taxCount = taxCount;
     }
-    public int getTimesats(){
+    public double getTimesats(){
         return timesats;
     }
     public void setTimesats(int timesats){
         this.timesats = timesats;
     }
+
+    public ArrayList<UserSale> getUserSaleList(){
+        return userSales;
+    }
+
+    public void addUserSale(String salesperiod, double expected, double paid){
+        UserSale userSale = new UserSale();
+        userSale.setSalesperiod(salesperiod);
+        userSale.setExpected(expected);
+        userSale.setPaid(paid);
+        userSale.setDifference();
+
+        userSales.add(userSale);
+    }
+    
 
     @Override
     public String toString() {
@@ -100,11 +117,12 @@ public class User extends AbstractUser {
             ", lastname='" + getLastname() + "'" +
             ", email='" + getEmail() + "'" +
             ", password='" + getPassword() + "'" +
-            " socialNumber='" + getSocialNumber() + "'" +
+            ", socialNumber='" + getSocialNumber() + "'" +
             ", employeeNumber='" + getEmployeeNumber() + "'" +
             ", employerEmail='" + getEmployerEmail() + "'" +
             ", taxCount='" + getTaxCount() + "'" +
+            ", timesats='" + getTimesats() + "'" +
+            ", userSales='" + getUserSaleList() + "'" +
             "}";
     }
-    
 }

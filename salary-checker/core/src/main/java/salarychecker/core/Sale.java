@@ -2,26 +2,26 @@ package salarychecker.core;
 
 public class Sale {
 
-    private String salgsID, anleggStatus, salgsType, campaign, brand, TX3, rebate, NVK, product;
+    private String saleDate, anleggStatus, salgsType, campaign, brand, TX3, rebate, NVK, product;
 
-    private int provisjon;
+    private double provisjon;
 
-    public int getProvisjon() {
+    public double getProvisjon() {
         return this.provisjon;
     }
-    public void setProvisjon(int provisjon) {
+    public void setProvisjon(double provisjon) {
         this.provisjon = provisjon;
     }
 
     public void updateProvisjon(int number) {
         this.provisjon += number;
     }
-    public String getSalgsID() {
-        return this.salgsID;
+    public String getSalesDate() {
+        return this.saleDate;
     }
 
-    public void setSalgsID(String salgsID) {
-        this.salgsID = salgsID;
+    public void setSaleDate(String salgsDato) {
+        this.saleDate = salgsDato;
     }
 
     public String getAnleggStatus() {
@@ -91,7 +91,7 @@ public class Sale {
     @Override
     public String toString() {
         return "{" +
-            " Salgs-ID='" + getSalgsID() + "'" +
+            " Salgs-ID='" + getSalesDate() + "'" +
             ", Anlegg Status='" + getAnleggStatus() + "'" +
             ", Salgs Type='" + getSalgsType() + "'" +
             ", Kampanje='" + getCampaign() + "'" +
