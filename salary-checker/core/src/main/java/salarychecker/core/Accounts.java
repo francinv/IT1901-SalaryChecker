@@ -3,14 +3,7 @@ package salarychecker.core;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.lang.Iterable;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 /**
  * Lists of items in a todo list.
@@ -70,26 +63,18 @@ public class Accounts implements Iterable<AbstractUser> {
 
     public boolean checkValidUserLogin(String email, String password) {
         AbstractUser user = null;
-        String passwordDecrypted = null;
 
         for (AbstractUser ab : accounts) {
             if (ab.getEmail().equals(email)) {
                 user = ab;
-            } 
+            }
         }
-        try {
-            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname() + user.getLastname());
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
-        }
-        return passwordDecrypted.equals(password);
+        return user.getPassword().equals(password);
     }
 
 
     public AbstractUser getUser(String email, String password) {
         AbstractUser user = null;
-        String passwordDecrypted = null;
 
         User u = new User();
         AdminUser a = new AdminUser();
@@ -107,15 +92,8 @@ public class Accounts implements Iterable<AbstractUser> {
         }
         if (user == null) {
             return null;
-        } 
-        try {
-            passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname() + user.getLastname());
-            
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
         }
-        if (passwordDecrypted.equals(password)) {
+        if (user.getPassword().equals(password)) {
             return user;
         }
         return null;

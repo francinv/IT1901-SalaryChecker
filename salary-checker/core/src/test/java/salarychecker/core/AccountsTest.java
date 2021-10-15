@@ -60,15 +60,15 @@ public class AccountsTest {
         assertTrue(accounts.contains(user));
     }
 
-    // @Test
-    // public void getUserTest(){
-    //     assertEquals(user, accounts.getUser("jensen@salarychecker.com", "Jensen123!"));
-    // }
-    
-    // @Test
-    // public void checkValidUserLoginTest(){
-    //     assertEquals(user, accounts.checkValidUserLogin("jensen@salarychecker.com", "Jensen123!"));
-    // }
+    @Test
+     public void getUserTest(){
+        assertEquals(user, accounts.getUser("jensen@salarychecker.com", "Jensen123!"));
+    }
+
+    @Test
+    public void checkValidUserLoginTest(){
+        assertTrue(accounts.checkValidUserLogin("jensen@salarychecker.com", "Jensen123!"));
+    }
 
 
     @Test
