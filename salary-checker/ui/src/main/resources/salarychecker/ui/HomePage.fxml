@@ -35,19 +35,72 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="idTitle" layoutX="100.0" layoutY="604.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt ID">
+                        <Text fx:id="idTitle" layoutX="100.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt ID">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="658.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
+                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="newPassword" layoutX="100.0" layoutY="478.0" promptText="Bekreft Nytt Passord" />
-                        <TextField fx:id="confirmNewPessword" layoutX="100.0" layoutY="421.0" promptText="Nytt Passord" />
-                        <Button fx:id="changebutton" layoutX="100.0" layoutY="360.0" mnemonicParsing="false" onAction="#passwordAction" prefHeight="39.0" prefWidth="222.0" text="Endre passord" />
+                        <Text layoutX="100.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="834.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="206.0" layoutY="836.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fødselsdato">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21.09.1999" wrappingWidth="189.205078125">
+                           <font>
+                              <Font size="34.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="788.0" layoutY="64.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="367.0" styleClass="0px" text="Endre profil">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Button>
+                        <Text layoutX="100.0" layoutY="942.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeidsgiver" wrappingWidth="277.720703125">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="987.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn Navnesen" wrappingWidth="284.205078125">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="100.0" layoutY="1041.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sjef@firma.no" wrappingWidth="338.205078125">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="367.0" fitWidth="367.0" layoutX="788.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true" />
                      </children>
                   </AnchorPane>
             </content>
@@ -110,7 +163,16 @@
           </Tab>
             <Tab text="Timelister">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="100.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timeliste for">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
+                        <ComboBox editable="true" layoutX="583.0" layoutY="95.0" prefHeight="66.0" prefWidth="257.0" promptText="Måned" />
+                        <TextField layoutX="888.0" layoutY="95.0" prefHeight="64.0" prefWidth="237.0" promptText="Årstall" />
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Mine Lønninger ">
@@ -140,11 +202,6 @@
                           <TextField fx:id="emailField" layoutX="160.0" layoutY="127.0" prefHeight="40.0" prefWidth="349.0" promptText="Enter Email" />
                           <Button fx:id="sendButton" layoutX="160.0" layoutY="694.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="37.0" prefWidth="105.0" text="Send" />
                       </children></AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Innstillinger">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
         </tabs>

@@ -1,5 +1,6 @@
 package salarychecker.core;
 
+
 import java.util.regex.Pattern;
 
 public class UserValidation {
@@ -13,47 +14,88 @@ public class UserValidation {
     private final Pattern TAX_COUNT_REGEX = Pattern.compile("(^100(\\.0{1,2})?$)|(^([1-9]([0-9])?|0)(\\.[0-9]{1,2})?$)");
     
 
-    private boolean checkValidRegex(Pattern regex, String string) {
+    private boolean isValidRegex(Pattern regex, String string) {
         return regex.matcher(string).matches();
     }
 
-    public boolean isValidFirstname(String firstname) {
-        return checkValidRegex(FIRSTNAME_REGEX, firstname);
+    /**
+     * Will be delete later
+     * @param email
+     * @return
+     * TODO
+     */
+    public void isValidEmail(String email) {
+        if(! isValidRegex(EMAIL_REGEX, email)) {
+            throw new IllegalArgumentException(Errors.INVALID_EMAIL.getMessage());
+        }
     }
 
-    public boolean isValidLastname(String lastname) {
-        return checkValidRegex(LASTNAME_REGEX, lastname);
+    /**
+     * Will be delete later
+     * @param password
+     * @return
+     * TODO
+     */
+    public void isValidPassword(String password) {
+        if(! isValidRegex(PASSWORD_REGEX, password)) {
+            throw new IllegalArgumentException(Errors.INVALID_PWD.getMessage());
+        }
     }
 
-    public boolean isValidPassword(String password) {
-        return checkValidRegex(PASSWORD_REGEX, password);
+
+    public void checkValidFirstname(String firstname) {
+        if (!isValidRegex(FIRSTNAME_REGEX, firstname)) {
+            throw new IllegalArgumentException(Errors.INVALID_NAME.getMessage());
+        }
     }
 
-    public boolean isValidSocialNumber(Long socialNumber) {
-        return checkValidRegex(SOCIAL_NUMBER_REGEX, String.valueOf(socialNumber));
+    public void checkValidLastname(String lastname) {
+        if (!isValidRegex(LASTNAME_REGEX, lastname)) {
+            throw new IllegalArgumentException(Errors.INVALID_NAME.getMessage());
+        }
     }
 
-    public boolean isValidEmployeeNumber(int employeeNumber) {
-        return checkValidRegex(EMPLOYEE_NUMBER_REGEX, String.valueOf(employeeNumber));
+    public void checkValidPassword(String password) {
+        if (!isValidRegex(PASSWORD_REGEX, password)) {
+            throw new IllegalArgumentException(Errors.INVALID_PWD.getMessage());
+        }
     }
 
-    public boolean isValidEmail(String email) {
-        return checkValidRegex(EMAIL_REGEX, email);
+    public void checkValidSocialNumber(String socialNumber) {
+        if (!isValidRegex(SOCIAL_NUMBER_REGEX, socialNumber)) {
+            throw new IllegalArgumentException(Errors.INVALID_SOCIAL_NUMBER.getMessage());
+        }
+    }
+
+    public void checkValidEmployeeNumber(int employeeNumber) {
+        if (!isValidRegex(EMPLOYEE_NUMBER_REGEX, String.valueOf(employeeNumber))) {
+            throw new IllegalArgumentException(Errors.INVALID_EMPLOYEE_NUMBER.getMessage());
+        }
+    }
+
+    public void checkValidEmail(String email) {
+        if (!isValidRegex(EMAIL_REGEX, email)) {
+            throw new IllegalArgumentException(Errors.INVALID_EMAIL.getMessage());
+        }
     }
     
-    public boolean isValidTaxCount(double taxCount) {
-        return checkValidRegex(TAX_COUNT_REGEX, String.valueOf(taxCount));
+    public void checkValidTaxCount(double taxCount) throws IllegalArgumentException {
+        if (!isValidRegex(TAX_COUNT_REGEX, String.valueOf(taxCount))) {
+            throw new IllegalArgumentException(Errors.INVALID_TAX_COUNT.getMessage());
+        }
     }
 
-    public boolean isValidUser(String firstname, String lastname, String email, String password,
-        long socialNumber, int employeeNumber, String employerEmail, double taxCount) {
-            return isValidFirstname(firstname) && isValidLastname(lastname) &&
-                   isValidEmail(email) && isValidPassword(password) && isValidSocialNumber(socialNumber) &&
-                   isValidEmployeeNumber(employeeNumber) && isValidEmail(employerEmail) && 
-                   isValidTaxCount(taxCount); 
+    public void isExistingUser(String email, String password, Accounts accounts) {
+        if(accounts.getUser(email, password)==null){
+            throw new IllegalArgumentException(Errors.NOT_REGISTERED.getMessage());
+        }
     }
 
-    public boolean isExistingUser(String email, String password) {
-        return false;
+    public void isValidLogIn(String email, String password, Accounts accounts) {
+        if(!accounts.checkValidUserLogin(email, password)) {
+            throw new IllegalArgumentException(Errors.INVALID_EMAIL_AND_OR_PWD.getMessage());
+        }
     }
+
+
 }

@@ -13,10 +13,10 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+import salarychecker.core.AdminUser;
 import salarychecker.core.EncryptDecrypt;
-import salarychecker.core.User;
 
-public class UserSerializer extends JsonSerializer<User> {
+public class AdminUserSerializer extends JsonSerializer<AdminUser> {
 
 /*
 format: 
@@ -25,16 +25,14 @@ format:
     "lastname": "...", 
     "email": "...",
     "password": "...",
-    "socialNumber": "...",
-    "employeeNyumber": "...",
-    "employerEmail": "...",
-    "taxCount": "...",
+
 }
 */
-    EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
+
+EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
     @Override
-    public void serialize(User user, JsonGenerator jsonGen, SerializerProvider serializerProvider)
+    public void serialize(AdminUser user, JsonGenerator jsonGen, SerializerProvider serializerProvider)
         throws IOException {
             
         jsonGen.writeStartObject();
@@ -43,19 +41,12 @@ format:
         jsonGen.writeStringField("lastname", user.getLastname());
         jsonGen.writeStringField("email", user.getEmail());
         try {
-            jsonGen.writeStringField("password", encryptDecrypt.encrypt(user.getPassword(), user.getFirstname()+user.getLastname()));
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e1) {
-            e1.printStackTrace();
-        }
-        try {
-            jsonGen.writeStringField("socialNumber", encryptDecrypt.encrypt(user.getSocialNumber(), user.getLastname()+user.getFirstname()));
+            jsonGen.writeStringField("password", encryptDecrypt.encrypt(user.getPassword(), user.getFirstname()+user.getLastname()) );
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        jsonGen.writeNumberField("employeeNumber", user.getEmployeeNumber());
-        jsonGen.writeStringField("employerEmail", user.getEmployerEmail());
 
         jsonGen.writeEndObject();
     }

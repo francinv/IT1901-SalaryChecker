@@ -33,10 +33,6 @@ public class HomepageController {
     label to show the calculated salary
     * */
     @FXML private Label salaryLabel;
-    /*
-    * Text field to get the reciepent email
-    * */
-    @FXML private TextField emailField;
 
     Alert a = new Alert(Alert.AlertType.NONE);
 
@@ -51,6 +47,7 @@ public class HomepageController {
     EmailSender emailSender = new EmailSender();
 
 
+
     User user = new User();
     Accounts existingaccounts = new Accounts();
 
@@ -61,32 +58,11 @@ public class HomepageController {
         idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
     }
 
-    /*
-    * calling the method to read and print the csv data
-    * */
+    //TODO complete method for sendEmail
     @FXML
-    private void readCSV(){
-        csvReader.readCSV();
-        csvReader.printCSV();
+    void sendEmail(ActionEvent event) {
+        System.out.println("Test");
     }
-
-    /*
-    * method to do the core calculation logic
-    * add the logic inside the method
-    * */
-    @FXML
-    private void calculateSalary(){
-        salaryLabel.setText("Salary is: 769999$");
-    }
-
-    /*
-    * method to call the send email from email sender class
-    * */
-    @FXML
-    private void sendEmail() throws Exception {
-        emailSender.sendMail(emailField.getText());
-    }
-
 
     @FXML
     void passwordAction(ActionEvent event) throws IOException {
@@ -129,4 +105,5 @@ public class HomepageController {
     public void setAccounts(Accounts accounts) {
         this.existingaccounts = accounts;
     }
+
 }

@@ -58,7 +58,6 @@ public class LoginControllerTest extends ApplicationTest {
         writeInLoginFields("seran@live.no", "Password123!");
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
-        alertDialogPopsUp("You are logged in!");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml")); // load same anchorpane that currentWindow contains
             AnchorPane pane = loader.load();
@@ -76,12 +75,6 @@ public class LoginControllerTest extends ApplicationTest {
     public void testInvalidEmail() {
         writeInLoginFields("seran", "Password123!");
         clickOn(logInButton);
-        alertDialogPopsUp("Password or e-mail is not valid.");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            writeInLoginFields("seran", "Password123!");
-            clickOn(logInButton);
-            }
-        );
 
     }
 
@@ -89,37 +82,18 @@ public class LoginControllerTest extends ApplicationTest {
     public void testInvalidPwd() {
         writeInLoginFields("seran@live.no", "t");
         clickOn(logInButton);
-        alertDialogPopsUp("Password or e-mail is not valid.");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            writeInLoginFields("seran@live.no", "t");
-            clickOn(logInButton);
-        });
     }
 
     @Test
     public void testNonExistingUser() {
         writeInLoginFields("fxtest@gmail.no", "FxTest123!");
         clickOn(logInButton);
-        alertDialogPopsUp("No user of this kind registered.");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            writeInLoginFields("fxtest@gmail.no", "FxTest123!");
-            clickOn(logInButton);
-        });
     }
 
     @AfterEach
     public void clearLoginFields() {
         emailField.clear();
         passwordField.clear();
-    }
-
-
-    private void alertDialogPopsUp(final String expectedContent) {
-        final Stage actualAlertDialog = getTopModalStage();
-        Assertions.assertNotNull(actualAlertDialog);
-
-        final DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
-        assertEquals(expectedContent, dialogPane.getContentText());
     }
 
 
