@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="81.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Innstillinger" wrappingWidth="333.546875" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="80.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Text>
+      <TextField fx:id="changeFirstNameField" layoutX="80.0" layoutY="201.0" text="Fornavn" AnchorPane.leftAnchor="80.0" />
+      <TextField fx:id="changeLastNameField" layoutX="80.0" layoutY="252.0" text="Etternavn" />
+      <Text layoutX="80.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn:" wrappingWidth="224.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="80.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Post:" wrappingWidth="156.205078125">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="changeEmailField" layoutX="80.0" layoutY="354.0" text="E-Post" />
+      <TextField fx:id="changeConfirmedEmailField" layoutX="80.0" layoutY="405.0" text="Bekreft E-Post" />
+      <Text layoutX="80.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeidsgivers E-Post:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="changeEmployerField" layoutX="79.0" layoutY="504.0" text="Arbeidsgivers E-Post" />
+      <TextField fx:id="changeConfirmedEmployerField" layoutX="79.0" layoutY="552.0" text="Bekreft Arbeidsgivers epost" />
+      <Text layoutX="594.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="594.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text layoutX="594.0" layoutY="493.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansattnummer:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="changePasswordField" layoutX="594.0" layoutY="201.0" text="Passord" />
+      <TextField fx:id="changeConfirmedPasswordField" layoutX="594.0" layoutY="252.0" text="Bekreft Passord" />
+      <TextField fx:id="changeTaxBracketField" layoutX="594.0" layoutY="354.0" text="Skattesats" />
+      <TextField fx:id="changeEmployeeNumberField" layoutX="594.0" layoutY="504.0" text="Ansattnummer" />
+      <Button fx:id="closeButton" layoutX="1007.0" layoutY="22.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="62.0" text="Lukk" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <Button fx:id="saveChangesButton" layoutX="594.0" layoutY="647.0" mnemonicParsing="false" prefHeight="131.0" prefWidth="222.0" text="Lagre Endringer" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Text layoutX="80.0" layoutY="641.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timesats:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField fx:id="hourWageField" layoutX="79.0" layoutY="647.0" text="Timesats (NOK)" />
+   </children>
+</AnchorPane>
