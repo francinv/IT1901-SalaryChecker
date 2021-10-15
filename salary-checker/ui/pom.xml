@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ui</artifactId>
+    <artifactId>salary-ui</artifactId>
 
     <properties>
         <skipUiTests>false</skipUiTests>
