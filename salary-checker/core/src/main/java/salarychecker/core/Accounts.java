@@ -112,5 +112,14 @@ public class Accounts implements Iterable<AbstractUser> {
         accounts.stream().filter(u->u.getEmail().equals(email)).findAny().ifPresent(u->u.setPassword(newpassword));
     }
 
+
+    @Override
+    public String toString() {
+        return "{" +
+            " accounts='" + getAccounts() + "'" +
+            "}";
+    }
+
+
 }
 

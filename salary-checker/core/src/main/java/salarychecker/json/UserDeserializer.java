@@ -3,11 +3,13 @@ package salarychecker.json;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
+import com.fasterxml.jackson.core.JsonParser.NumberType;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.BooleanNode;
+import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
@@ -84,18 +86,24 @@ public class UserDeserializer extends JsonDeserializer<User> {
         }
 
         JsonNode employeeNumberNode = objectNode.get("employeeNumber");
-        if (employeeNumberNode instanceof TextNode) {
-            user.setEmployeeNumber(employeeNumberNode.intValue());
+        if (employeeNumberNode instanceof NumericNode) {
+            user.setEmployeeNumber(employeeNumberNode.asInt());
         }
 
+        
         JsonNode employerEmailNode = objectNode.get("employerEmail");
         if (employerEmailNode instanceof TextNode) {
             user.setEmployerEmail(employerEmailNode.asText());
         }
 
         JsonNode taxCountNode = objectNode.get("taxCount");
-        if (taxCountNode instanceof TextNode) {
-            user.setTaxCount(taxCountNode.intValue());
+        if (taxCountNode instanceof NumericNode) {
+            user.setTaxCount(taxCountNode.asDouble());
+        }
+
+        JsonNode hourSalNode = objectNode.get("hourRate");
+        if (hourSalNode instanceof NumericNode){
+            user.setTimesats(hourSalNode.asInt());
         }
 
         JsonNode userSaleNode = objectNode.get("userSaleNode");
@@ -103,7 +111,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
             for (JsonNode elementNode : ((ArrayNode) userSaleNode)) {
                 UserSale userSale = userSaleDeserializer.deserialize(elementNode);
                 if (userSale != null) {
-                    user.addUserSale(userSale.getSalesperiod(), userSale.getExpected(), userSale.getPaid());
+                    user.addUserSale(userSale);
                 }
             }
         }
