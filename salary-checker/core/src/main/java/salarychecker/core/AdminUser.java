@@ -1,13 +1,4 @@
 package salarychecker.core;
-
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 /**
  * This class makes it possible to use the app with admin privileges 
  */

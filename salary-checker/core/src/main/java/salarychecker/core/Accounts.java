@@ -17,10 +17,10 @@ import javax.crypto.NoSuchPaddingException;
  */
 public class Accounts implements Iterable<AbstractUser> {
 
-    public List<AbstractUser> accounts = new ArrayList<>();
+    private List<AbstractUser> accounts = new ArrayList<>();
 
     public List<AbstractUser> getAccounts() {
-        return accounts;
+        return new ArrayList<>(accounts);
     }
 
     /**
@@ -81,7 +81,6 @@ public class Accounts implements Iterable<AbstractUser> {
             passwordDecrypted = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname() + user.getLastname());
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return passwordDecrypted.equals(password);
@@ -114,7 +113,6 @@ public class Accounts implements Iterable<AbstractUser> {
             
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (passwordDecrypted.equals(password)) {
