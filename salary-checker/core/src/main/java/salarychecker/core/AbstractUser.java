@@ -50,7 +50,6 @@ public abstract class AbstractUser {
             this.password = encryptDecrypt.encrypt(password, firstname + lastname);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

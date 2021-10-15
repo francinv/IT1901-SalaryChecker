@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 
 /**

@@ -63,7 +63,6 @@ public class User extends AbstractUser {
             this.socialNumber = encryptDecrypt.encrypt(socialNumber, lastname + firstname);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
