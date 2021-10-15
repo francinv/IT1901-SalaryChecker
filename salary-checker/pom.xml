@@ -12,6 +12,7 @@
         <jupiter.version>5.8.1</jupiter.version>
         <jackson.version>2.12.5</jackson.version>
         <openscsv.version>5.5.2</openscsv.version>
+        <sunmail.version>1.5.5</sunmail.version>
     </properties>
 
     <dependencyManagement>
@@ -66,6 +67,13 @@
                 <groupId>com.opencsv</groupId>
                 <artifactId>opencsv</artifactId>
                 <version>${openscsv.version}</version>
+            </dependency>
+
+            <!--Email sending dependency-->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                    <artifactId>javax.mail</artifactId>
+                    <version>${sunmail.version}</version>
             </dependency>
 
         </dependencies>
