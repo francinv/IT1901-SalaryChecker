@@ -70,6 +70,12 @@ public class HomepageController {
         System.out.println("Test");
     }
 
+    //TODO
+    @FXML
+    void changeProfileSettingsAction(ActionEvent event){
+        System.out.println("Test");
+    }
+
     private void changePasswordPersistence(String email, String password) throws IOException {
         existingaccounts.updatePassword(email, password);
         SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
