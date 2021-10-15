@@ -2,7 +2,6 @@ package salarychecker.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,12 +33,6 @@ public class HomepageController {
     * */
     @FXML private Label salaryLabel;
 
-    Alert a = new Alert(Alert.AlertType.NONE);
-
-    /*
-    * Object of CSV Reader
-    * */
-    CSVReader csvReader = new CSVReader();
 
     /*
     * Object of email sender class
@@ -75,9 +68,6 @@ public class HomepageController {
             changePasswordPersistence(email, password1);
         }
         else {
-            a.setAlertType(Alert.AlertType.ERROR);
-            a.setContentText("Passwords does not match");
-            a.show();
             throw new IllegalArgumentException("Passwords does not match.");
         }
     }
@@ -87,16 +77,10 @@ public class HomepageController {
         SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
         SCP.setSaveFile("Accounts.json");
         SCP.saveAccounts(existingaccounts);
-        Success();
         newPassword.clear();
         confirmNewPessword.clear();
     }
 
-    private void Success() {
-        a.setAlertType(Alert.AlertType.INFORMATION);
-        a.setContentText("Password changed!");
-        a.show();
-    }
 
     public void setUser(User user) {
         this.user=user;
