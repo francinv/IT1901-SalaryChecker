@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1300.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salarychecker.ui.HomepageController">
    <children>
@@ -102,33 +107,58 @@
           </Tab>
           <Tab text="Lønnsutregninger">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ComboBox editable="true" layoutX="583.0" layoutY="95.0" prefHeight="66.0" prefWidth="257.0" promptText="Velg måned" />
-                        <Text layoutX="100.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lønnsutregning for" wrappingWidth="420.205078125">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="readButton" layoutX="110.0" layoutY="471.0" mnemonicParsing="false" onAction="#readCSV" prefHeight="47.0" prefWidth="187.0" text="Last opp CSV" />
+                        <Button fx:id="calculateButton" layoutX="363.0" layoutY="567.0" mnemonicParsing="false" onAction="#calculateSalary" prefHeight="45.0" prefWidth="297.0" text="Beregn Lønn" />
+                        <Label fx:id="salaryLabel" layoutX="145.0" layoutY="658.0" prefHeight="64.0" prefWidth="311.0" text="Forventet lønn:">
+                            <font>
+                                <Font size="27.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="monthDropdown" layoutX="390.0" layoutY="145.0" prefHeight="39.0" prefWidth="222.0" promptText="Velg Måned" />
+                        <TextField fx:id="calculationYearInput" layoutX="627.0" layoutY="151.0" promptText="årstall (åååå)" />
+                        <Text layoutX="111.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beregn lønn for:" wrappingWidth="350.41015625">
                            <font>
-                              <Font size="48.0" />
+                              <Font size="36.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="861.0" layoutY="95.0" prefHeight="64.0" prefWidth="237.0" promptText="Årstall" />
-                        <TextField layoutX="100.0" layoutY="258.0" promptText="Utebtalt Nettolønn" />
-                        <Text layoutX="344.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kr" wrappingWidth="58.205078125">
+                        <Text layoutX="112.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last opp salgsrapport:" wrappingWidth="332.2734375">
                            <font>
-                              <Font size="29.0" />
+                              <Font size="24.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="100.0" layoutY="345.0" promptText="Antall timer arbeidet" />
-                        <Button layoutX="583.0" layoutY="258.0" mnemonicParsing="false" prefHeight="123.0" prefWidth="145.0" text="Last opp salgsrapport" textAlignment="CENTER" wrapText="true">
+                        <TextField fx:id="filenameDisplay" editable="false" layoutX="383.0" layoutY="473.0" prefHeight="39.0" prefWidth="377.0" promptText="Opplastet fil:" />
+                        <Text layoutX="128.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall timer arbeidet:" wrappingWidth="260.2734375">
                            <font>
-                              <Font size="21.0" />
+                              <Font size="24.0" />
                            </font>
-                        </Button>
-                        <TextArea layoutX="751.0" layoutY="257.0" prefHeight="127.0" prefWidth="348.0">
+                        </Text>
+                        <TextField fx:id="hoursInput" layoutX="395.0" layoutY="249.0" promptText="Antall timer:" />
+                        <Text layoutX="128.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utbetalt Lønn (fra arbeidsgiver):" wrappingWidth="238.2734375">
                            <font>
-                              <Font size="64.0" />
+                              <Font size="24.0" />
                            </font>
-                        </TextArea>
-                     </children></AnchorPane>
+                        </Text>
+                        <TextField fx:id="recievedSalaryInput" layoutX="396.0" layoutY="286.0" promptText="Utbetalt Lønn:" />
+                        <Text layoutX="130.0" layoutY="370.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall mobil:" wrappingWidth="238.2734375">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="amountOfMobile" layoutX="398.0" layoutY="348.0" promptText="Utbetalt Lønn:" />
+                        <Label fx:id="nettoLabel" layoutX="146.0" layoutY="715.0" prefHeight="64.0" prefWidth="311.0" text="Utbetalt lønn:">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="salaryDiff" layoutX="146.0" layoutY="772.0" prefHeight="64.0" prefWidth="311.0" text="Differanse:">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Label>
+                    </children></AnchorPane>
+
             </content>
           </Tab>
             <Tab text="Timelister">
@@ -149,19 +179,19 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Text layoutX="100.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lønninger" wrappingWidth="228.205078125">
-                           <font>
-                              <Font size="48.0" />
-                           </font>
-                        </Text>
-                        <TableView layoutX="100.0" layoutY="205.0" prefHeight="935.0" prefWidth="1086.0">
+                        <TableView layoutX="105.0" layoutY="139.0" prefHeight="1078.0" prefWidth="1099.0">
                           <columns>
-                            <TableColumn prefWidth="226.0" text="Måned/År (mm.åååå)" />
-                            <TableColumn minWidth="0.0" prefWidth="276.0" text="Utbetalt lønn i NOK" />
-                              <TableColumn minWidth="0.0" prefWidth="308.0" text="Forventet lønn" />
-                              <TableColumn minWidth="0.0" prefWidth="275.0" text="Differanse" />
+                            <TableColumn prefWidth="230.0" text="Måned , År" />
+                            <TableColumn fx:id="salariesTable" prefWidth="321.0" text="Utbetalt av arbeidsgiver" />
+                              <TableColumn prefWidth="340.0" text="Forventet lønn" />
+                              <TableColumn minWidth="0.0" prefWidth="207.0" text="Differanse" />
                           </columns>
                         </TableView>
+                        <Text layoutX="105.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mine Lønninger:" wrappingWidth="474.41015625">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Text>
                      </children></AnchorPane>
               </content>
             </Tab>
@@ -170,7 +200,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                           <TextField fx:id="emailField" layoutX="160.0" layoutY="127.0" prefHeight="40.0" prefWidth="349.0" promptText="Enter Email" />
-                          <Button fx:id="sendButton" layoutX="381.0" layoutY="211.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="37.0" prefWidth="105.0" text="Send" />
+                          <Button fx:id="sendButton" layoutX="160.0" layoutY="694.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="37.0" prefWidth="105.0" text="Send" />
                       </children></AnchorPane>
               </content>
             </Tab>
