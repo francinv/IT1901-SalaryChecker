@@ -32,7 +32,6 @@ public class EncryptDecryptTest {
 
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
            e.printStackTrace();
         }
     }
@@ -53,7 +52,6 @@ public class EncryptDecryptTest {
             assertEquals(stringToEncrypt, encryptDecrypt.decrypt(encryptedString, alias));
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             fail();
         }
     }
