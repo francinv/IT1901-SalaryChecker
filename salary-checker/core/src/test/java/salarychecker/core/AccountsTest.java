@@ -5,11 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import javafx.scene.control.Accordion;
 
 public class AccountsTest {
 
@@ -62,13 +59,12 @@ public class AccountsTest {
     public void containsTest(){
         assertTrue(accounts.contains(user));
     }
-    // //TODO Decryption needs to be fixed!
+
     // @Test
     // public void getUserTest(){
     //     assertEquals(user, accounts.getUser("jensen@salarychecker.com", "Jensen123!"));
     // }
     
-    // //TODO Decryption needs to be fixed!
     // @Test
     // public void checkValidUserLoginTest(){
     //     assertEquals(user, accounts.checkValidUserLogin("jensen@salarychecker.com", "Jensen123!"));
