@@ -18,31 +18,6 @@ public class UserValidation {
         return regex.matcher(string).matches();
     }
 
-    /**
-     * Will be delete later
-     * @param email
-     * @return
-     * TODO
-     */
-    public void isValidEmail(String email) {
-        if(! isValidRegex(EMAIL_REGEX, email)) {
-            throw new IllegalArgumentException(Errors.INVALID_EMAIL.getMessage());
-        }
-    }
-
-    /**
-     * Will be delete later
-     * @param password
-     * @return
-     * TODO
-     */
-    public void isValidPassword(String password) {
-        if(! isValidRegex(PASSWORD_REGEX, password)) {
-            throw new IllegalArgumentException(Errors.INVALID_PWD.getMessage());
-        }
-    }
-
-
     public void checkValidFirstname(String firstname) {
         if (!isValidRegex(FIRSTNAME_REGEX, firstname)) {
             throw new IllegalArgumentException(Errors.INVALID_NAME.getMessage());
