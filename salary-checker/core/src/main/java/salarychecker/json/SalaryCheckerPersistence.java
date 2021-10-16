@@ -39,7 +39,7 @@ public class SalaryCheckerPersistence {
   private Path saveFilePath = null;
 
   public void setSaveFile(String saveFile) {
-    this.saveFilePath = Paths.get(System.getProperty("user.home" + "/Downloads"), saveFile);
+    this.saveFilePath = Paths.get(System.getProperty("user.home"), saveFile);
   }
 
   /**

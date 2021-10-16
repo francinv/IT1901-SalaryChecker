@@ -25,7 +25,6 @@ public class LoginController {
     @FXML private Button logIn;
 
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
-    Accounts accounts = new Accounts();
     public AbstractUser user;
 
     @FXML
@@ -38,6 +37,8 @@ public class LoginController {
     void userLogIn(ActionEvent event) throws IOException {
         String usernameField = email.getText();
         String passwordField = password.getText();
+        Accounts accounts = new Accounts();
+        accounts = SCP.loadAccounts();
 
         UserValidation userval = new UserValidation();
 
@@ -102,8 +103,6 @@ public class LoginController {
 
         SCP.setSaveFile("Accounts.json");
         SCP.saveAccounts(acc);
-
-        accounts = SCP.loadAccounts();
     }
 
 }

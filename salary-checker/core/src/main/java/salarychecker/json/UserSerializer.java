@@ -59,6 +59,7 @@ format:
         jsonGen.writeNumberField("employeeNumber", user.getEmployeeNumber());
         jsonGen.writeStringField("employerEmail", user.getEmployerEmail());
         jsonGen.writeNumberField("taxCount", user.getTaxCount());
+        jsonGen.writeNumberField("hourRate", user.getTimesats());
         
         if (user.getUserSaleList() != null) {
             jsonGen.writeArrayFieldStart("userSale");

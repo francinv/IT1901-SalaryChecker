@@ -46,12 +46,7 @@ public abstract class AbstractUser {
     }
     public void setPassword(String password) {
         userValidation.checkValidPassword(password);
-        try {
-            this.password = encryptDecrypt.encrypt(password, firstname + lastname);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
-        }
+        this.password = password;
     }
 
     @Override

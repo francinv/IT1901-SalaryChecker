@@ -1,13 +1,5 @@
 package salarychecker.core;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import java.util.ArrayList;
 
 /** 
@@ -59,12 +51,7 @@ public class User extends AbstractUser {
     }
     public void setSocialNumber(String socialNumber) {
         userValidation.checkValidSocialNumber(socialNumber);
-        try {
-            this.socialNumber = encryptDecrypt.encrypt(socialNumber, lastname + firstname);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
-        }
+        this.socialNumber = socialNumber;
     }
     public int getEmployeeNumber() {
         return employeeNumber;
@@ -98,13 +85,7 @@ public class User extends AbstractUser {
         return userSales;
     }
 
-    public void addUserSale(String salesperiod, double expected, double paid){
-        UserSale userSale = new UserSale();
-        userSale.setSalesperiod(salesperiod);
-        userSale.setExpected(expected);
-        userSale.setPaid(paid);
-        userSale.setDifference();
-
+    public void addUserSale(UserSale userSale){
         userSales.add(userSale);
     }
     
