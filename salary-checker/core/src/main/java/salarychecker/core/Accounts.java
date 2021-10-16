@@ -10,10 +10,10 @@ import java.util.List;
  */
 public class Accounts implements Iterable<AbstractUser> {
 
-    public List<AbstractUser> accounts = new ArrayList<>();
+    private List<AbstractUser> accounts = new ArrayList<>();
 
     public List<AbstractUser> getAccounts() {
-        return accounts;
+        return new ArrayList<>(accounts);
     }
 
     /**

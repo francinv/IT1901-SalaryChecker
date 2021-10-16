@@ -1,7 +1,5 @@
 package salarychecker.core;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,14 +8,12 @@ public class UserValidationTest {
 
     private User testUser;
     private UserValidation userValidation;
-    private Accounts accounts;
 
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "Password!123", 
             "22010192834", 33333, "employeremail@email.com", 35.5, 130.0);
         userValidation = new UserValidation();
-        accounts = new Accounts();
     }
 
     @Test

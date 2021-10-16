@@ -7,7 +7,6 @@ import salarychecker.core.*;
 /**
  * A Jackson module for configuring JSON serialization of User instances.
  */
-@SuppressWarnings("serial")
 public class SalaryCheckerModule extends SimpleModule {
 
     private static final String NAME = "UserModule";

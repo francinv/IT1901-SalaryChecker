@@ -46,8 +46,8 @@ public class LoginController {
         AdminUser a = new AdminUser();
 
         try {
-            userval.isValidEmail(usernameField);
-            userval.isValidPassword(passwordField);
+            userval.checkValidEmail(usernameField);
+            userval.checkValidPassword(passwordField);
             try {
                 userval.isExistingUser(usernameField, passwordField, accounts);
                 try {

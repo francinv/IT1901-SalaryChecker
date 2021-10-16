@@ -5,9 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import salarychecker.core.User;
-
-import java.net.URL;
 
 /**
  * JavaFX App

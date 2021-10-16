@@ -10,9 +10,7 @@ import javafx.stage.Window;
 import org.junit.jupiter.api.Assertions;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
@@ -117,7 +115,6 @@ public class HomePageControllerTest extends ApplicationTest {
             Assertions.assertEquals(newPassword, password);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         alertDialogPopsUp("Password changed!");
