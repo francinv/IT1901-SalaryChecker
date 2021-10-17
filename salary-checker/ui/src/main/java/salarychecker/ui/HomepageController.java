@@ -66,7 +66,7 @@ public class HomepageController {
     EmailSender emailSender = new EmailSender();
 
 
-    String url = null; 
+    private String url;
 
 
     User user = new User();
@@ -128,11 +128,13 @@ public class HomepageController {
     void calculateSalary(ActionEvent event) {
         UserSale userSale = new UserSale();
         Calculation calculation = new Calculation(user);
-
+        String temp = getURL();
+        System.out.println("Printer ut url");
+        System.out.println(temp);
         double hours = Double.parseDouble(hoursInput.getText());
         int mobileamount = Integer.parseInt(amountOfMobile.getText());
         try {
-            calculation.doCalculation(url, hours, mobileamount);
+            calculation.doCalculation(getURL(), hours, mobileamount);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -145,9 +147,12 @@ public class HomepageController {
         userSale.setDifference();
         userSale.setSalesperiod(salesperiod);
 
-        salaryLabel.setText(String.valueOf(userSale.getExpected()));
-        nettoLabel.setText(String.valueOf(userSale.getPaid()));
-        salaryDiff.setText(String.valueOf(userSale.getDifference()));
+        String expected = String.valueOf(userSale.getExpected());
+        String paid = String.valueOf(userSale.getPaid());
+        String diff = String.valueOf(userSale.getDifference());
+        salaryLabel.setText("Forventet lønn: " + expected);
+        nettoLabel.setText("Utbetalt lønn: " + paid);
+        salaryDiff.setText("Differanse: " + diff);
 
         user.addUserSale(userSale);
         
@@ -168,10 +173,15 @@ public class HomepageController {
         Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
-        url = file.getAbsolutePath();
+        setURL(file.getAbsolutePath());
         filenameDisplay.setText(file.getName());
+    }
 
-
+    public void setURL(String url){
+        this.url = url;
+    }
+    public String getURL() {
+        return this.url;
     }
 
     public void setUser(User user) {
