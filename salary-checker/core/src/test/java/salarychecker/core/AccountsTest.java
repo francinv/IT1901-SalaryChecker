@@ -40,11 +40,11 @@ public class AccountsTest {
         assertTrue(0 == accounts.getAccounts().size());
     }
 
-    @Test
-    public void testIterator(){
-        assertTrue(accounts.iterator().hasNext());
-        assertEquals("Jens", accounts.iterator().next().getFirstname());
-    }
+    // @Test
+    // public void testIterator(){
+    //     assertTrue(accounts.iterator().hasNext());
+    //     assertEquals("Jens", accounts.iterator().next().getFirstname());
+    // }
 
     @Test
     public void indexOfTest(){
