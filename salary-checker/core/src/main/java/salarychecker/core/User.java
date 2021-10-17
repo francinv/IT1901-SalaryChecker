@@ -100,11 +100,11 @@ public class User extends AbstractUser {
     public void addUserSale(UserSale userSale){
         if (!(isExistingUserSale(userSale))){
             userSales.add(userSale);
-            somethingChanged(userSale);
+            fireStateChange(userSale);
         }
     }
 
-    private void somethingChanged(UserSale userSale){
+    private void fireStateChange(UserSale userSale){
         for (UserSaleObserver uObserver : userSaleObs ){
             uObserver.usersaleAdded(this, userSale);
         }
