@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
@@ -23,6 +24,7 @@ public class LoginController {
     @FXML private TextField email;
     @FXML private TextField password;
     @FXML private Button logIn;
+    @FXML private Text errorDisplay;
 
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
     public AbstractUser user;
@@ -61,14 +63,14 @@ public class LoginController {
                     }
                 }
                 catch (IllegalArgumentException e){
-                    System.out.println(e.getMessage());
+                    errorDisplay.setText(e.getMessage());
                 }
             } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
+                errorDisplay.setText(e.getMessage());
             }
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            errorDisplay.setText(e.getMessage());
         }
     }
 
