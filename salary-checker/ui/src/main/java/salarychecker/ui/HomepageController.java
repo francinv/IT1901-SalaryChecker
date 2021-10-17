@@ -1,14 +1,11 @@
 package salarychecker.ui;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -21,9 +18,11 @@ import salarychecker.core.Calculation;
 import salarychecker.core.EmailSender;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
+import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HomepageController {
@@ -79,7 +78,6 @@ public class HomepageController {
         if(!tempdata.isEmpty()){
             updateTableView();
         }
-        
     }
 
     void updateTableView() {
@@ -136,7 +134,6 @@ public class HomepageController {
         try {
             calculation.doCalculation(url, hours, mobileamount);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -155,6 +152,14 @@ public class HomepageController {
         user.addUserSale(userSale);
         
         tempdata = user.getUserSaleList();
+        
+        SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
+        SCP.setSaveFile("Accounts.json");
+        try {
+            SCP.saveAccounts(existingaccounts);
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
         updateTableView();
     }
 
