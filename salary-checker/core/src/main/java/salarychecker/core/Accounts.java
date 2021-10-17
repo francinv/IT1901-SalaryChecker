@@ -2,13 +2,16 @@ package salarychecker.core;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.io.IOException;
 import java.lang.Iterable;
 import java.util.List;
+
+import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * Lists of users.
  */
-public class Accounts implements Iterable<AbstractUser> {
+public class Accounts implements UserSaleObserver {
 
     private List<AbstractUser> accounts = new ArrayList<>();
 
@@ -42,10 +45,10 @@ public class Accounts implements Iterable<AbstractUser> {
         this.accounts.remove(user);
     }
 
-    @Override
-    public Iterator<AbstractUser> iterator() {
-        return accounts.iterator();
-    }
+    // @Override
+    // public Iterator<AbstractUser> iterator() {
+    //     return accounts.iterator();
+    // }
 
     /**
      * Finds the index of the user in list
@@ -112,6 +115,14 @@ public class Accounts implements Iterable<AbstractUser> {
         accounts.stream().filter(u->u.getEmail().equals(email)).findAny().ifPresent(u->u.setPassword(newpassword));
     }
 
+    private void addUserSale(User user, UserSale usale){
+        accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->((User) u).addUserSale(usale));
+    }
+
+    public void usersaleAdded(User user, UserSale uSale) {
+        this.addUserSale(user, uSale);
+        System.out.println("User Sale added");
+    }
 
     @Override
     public String toString() {
@@ -119,6 +130,8 @@ public class Accounts implements Iterable<AbstractUser> {
             " accounts='" + getAccounts() + "'" +
             "}";
     }
+
+    
 
 
 }
