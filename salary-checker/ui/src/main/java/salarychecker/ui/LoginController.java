@@ -73,13 +73,16 @@ public class LoginController {
     }
 
     private void switchScene(ActionEvent event) {
+        Accounts accounts = new Accounts();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = fxmlLoader.load();
             HomepageController homepageController = fxmlLoader.getController();
             homepageController.setUser((User) user);
-            homepageController.setAccounts(SCP.loadAccounts());
+            accounts = SCP.loadAccounts();
+            homepageController.setAccounts(accounts);
             homepageController.loadInfo();
+            ((User) user).addObserver(accounts);
             Scene homepageScene = new Scene(root);
             Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
             window.setScene(homepageScene);
