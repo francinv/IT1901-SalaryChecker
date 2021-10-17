@@ -85,8 +85,21 @@ public class User extends AbstractUser {
         return userSales;
     }
 
+    public boolean isExistingUserSale (UserSale userSale){
+        for (UserSale u: userSales){
+            if(u.getSalesperiod().equals(userSale.getSalesperiod())){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public void addUserSale(UserSale userSale){
-        userSales.add(userSale);
+        System.out.println(isExistingUserSale(userSale));
+        if (!(isExistingUserSale(userSale))){
+            userSales.add(userSale);
+        }
     }
     
 
