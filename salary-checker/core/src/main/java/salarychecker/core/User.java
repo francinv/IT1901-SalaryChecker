@@ -1,7 +1,6 @@
 package salarychecker.core;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /** 
  * Class for creating a user, and store their information.
@@ -16,7 +15,6 @@ public class User extends AbstractUser {
     private double timesats;
 
     private ArrayList<UserSale> userSales = new ArrayList<UserSale>();
-    private Collection<UserSaleObserver> userSaleObs = new ArrayList<UserSaleObserver>();
 
     /**
      * Constructor
@@ -61,6 +59,9 @@ public class User extends AbstractUser {
     public void setEmployeeNumber(int employeeNumber) {
         userValidation.checkValidEmployeeNumber(employeeNumber);
         this.employeeNumber = employeeNumber;
+        for(IUserObserver IUserObserver :userObs){
+            IUserObserver.userInfoIntChanged(this, employeeNumber);
+        }
     }
     public String getEmployerEmail() {
         return employerEmail;
@@ -68,19 +69,29 @@ public class User extends AbstractUser {
     public void setEmployerEmail(String employerEmail) {
         userValidation.checkValidEmail(email);
         this.employerEmail = employerEmail;
+        for (IUserObserver IUserObserver : userObs){
+            IUserObserver.userInfoStringChanged(this, employerEmail);
+        }
     }
+
     public double getTaxCount() {
         return taxCount;
     }
     public void setTaxCount(double taxCount) {
         userValidation.checkValidTaxCount(taxCount);
         this.taxCount = taxCount;
+        for (IUserObserver IUserObserver : userObs){
+            IUserObserver.userInfoDoubleChanged(this, taxCount);
+        }
     }
     public double getTimesats(){
         return timesats;
     }
-    public void setTimesats(int timesats){
+    public void setTimesats(double timesats){
         this.timesats = timesats;
+        for (IUserObserver IUserObserver : userObs){
+            IUserObserver.userInfoDoubleChanged(this, timesats);
+        }
     }
 
     public ArrayList<UserSale> getUserSaleList(){
@@ -100,23 +111,12 @@ public class User extends AbstractUser {
     public void addUserSale(UserSale userSale){
         if (!(isExistingUserSale(userSale))){
             userSales.add(userSale);
-            fireStateChange(userSale);
+            for (IUserObserver IUserObserver : userObs){
+                IUserObserver.usersaleAdded(this, userSale);
+            }
         }
     }
 
-    private void fireStateChange(UserSale userSale){
-        for (UserSaleObserver uObserver : userSaleObs ){
-            uObserver.usersaleAdded(this, userSale);
-        }
-    }
-
-    public void addObserver(UserSaleObserver uObserver){
-        userSaleObs.add(uObserver);
-    }
-
-    public void removeObserver(UserSaleObserver uObserver){
-        userSaleObs.remove(uObserver);
-    }
     
 
     @Override
