@@ -46,7 +46,7 @@ public class AdminUserTest{
         Assertions.assertEquals("etternavn@salarychecker.com", adminUser.getEmail());
 
         adminUser.setPassword("Passord123!");
-        Assertions.assertNotEquals("Passord123!", adminUser.getPassword());
+        Assertions.assertEquals("Passord123!", adminUser.getPassword());
 
     }
 

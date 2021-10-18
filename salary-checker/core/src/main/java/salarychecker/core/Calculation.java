@@ -41,8 +41,7 @@ public class Calculation {
 
     SalaryCSVReader salaryCSVReader = new SalaryCSVReader();
 
-    public void updateList() throws FileNotFoundException {
-        String url = "salary-checker/core/src/main/resources/salarychecker/core/SalesReport.csv";
+    public void updateList(String url) throws FileNotFoundException {
         saleslist = salaryCSVReader.csvToBean(url);
     }
 
@@ -193,7 +192,7 @@ public class Calculation {
         calculated += hoursal;
     }
 
-    private double getCalculated() {
+    public double getCalculated() {
         return calculated;
     }
 
@@ -205,8 +204,8 @@ public class Calculation {
         calculated = (calculated * ((100-user.getTaxCount())/100));
     }
 
-    public void doCalculation(double hours, int mobileamount) throws FileNotFoundException{
-        updateList();
+    public void doCalculation(String url, double hours, int mobileamount) throws FileNotFoundException{
+        updateList(url);
         removeUnwanted();
         updateElectricityCommission();
         calculateElectricityCommission();

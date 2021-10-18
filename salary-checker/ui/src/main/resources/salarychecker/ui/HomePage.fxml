@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -50,11 +52,6 @@
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
-                           <font>
-                              <Font size="34.0" />
-                           </font>
-                        </Text>
                         <Text layoutX="95.0" layoutY="704.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
                            <font>
                               <Font size="48.0" />
@@ -95,7 +92,6 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <ImageView fitHeight="367.0" fitWidth="367.0" layoutX="788.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true" />
                         <Text fx:id="hourDisplay" layoutX="99.0" layoutY="868.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
                            <font>
                               <Font size="34.0" />
@@ -121,7 +117,24 @@
                                 <Font size="27.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="monthDropdown" layoutX="390.0" layoutY="145.0" prefHeight="39.0" prefWidth="222.0" promptText="Velg Måned" />
+                        <ComboBox fx:id="monthDropdown" layoutX="390.0" layoutY="145.0" prefHeight="39.0" prefWidth="222.0" promptText="Velg Måned">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:id="jan" fx:value="Januar" />
+                                    <String fx:id="feb" fx:value="Februar" />
+                                    <String fx:id="mar" fx:value="Mars" />
+                                    <String fx:id="apr" fx:value="April" />
+                                    <String fx:id="mai" fx:value="Mai" />
+                                    <String fx:id="jun" fx:value="Juni" />
+                                    <String fx:id="jul" fx:value="Juli" />
+                                    <String fx:id="aug" fx:value="August" />
+                                    <String fx:id="sep" fx:value="September" />
+                                    <String fx:id="okt" fx:value="Oktober" />
+                                    <String fx:id="nov" fx:value="November" />
+                                    <String fx:id="des" fx:value="Desember" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
                         <TextField fx:id="calculationYearInput" layoutX="627.0" layoutY="151.0" promptText="årstall (åååå)" />
                         <Text layoutX="111.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beregn lønn for:" wrappingWidth="350.41015625">
                            <font>
@@ -184,12 +197,12 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="105.0" layoutY="139.0" prefHeight="1078.0" prefWidth="1099.0">
+                        <TableView fx:id="salaryTableView" layoutX="105.0" layoutY="139.0" prefHeight="1078.0" prefWidth="1099.0">
                           <columns>
-                            <TableColumn prefWidth="230.0" text="Måned , År" />
-                            <TableColumn fx:id="salariesTable" prefWidth="321.0" text="Utbetalt av arbeidsgiver" />
-                              <TableColumn prefWidth="340.0" text="Forventet lønn" />
-                              <TableColumn minWidth="0.0" prefWidth="207.0" text="Differanse" />
+                            <TableColumn fx:id="tableSaleData" prefWidth="230.0" text="Måned , År" />
+                            <TableColumn fx:id="paidColTable" prefWidth="321.0" text="Utbetalt av arbeidsgiver" />
+                            <TableColumn fx:id="expectedColTable" prefWidth="340.0" text="Forventet lønn" />
+                            <TableColumn fx:id="diffColTable" minWidth="0.0" prefWidth="207.0" text="Differanse" />
                           </columns>
                         </TableView>
                         <Text layoutX="105.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mine Lønninger:" wrappingWidth="474.41015625">

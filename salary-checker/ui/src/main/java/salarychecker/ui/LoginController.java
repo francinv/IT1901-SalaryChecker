@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
@@ -23,9 +24,9 @@ public class LoginController {
     @FXML private TextField email;
     @FXML private TextField password;
     @FXML private Button logIn;
+    @FXML private Text errorDisplay;
 
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
-    Accounts accounts = new Accounts();
     public AbstractUser user;
 
     @FXML
@@ -38,6 +39,8 @@ public class LoginController {
     void userLogIn(ActionEvent event) throws IOException {
         String usernameField = email.getText();
         String passwordField = password.getText();
+        Accounts accounts = new Accounts();
+        accounts = SCP.loadAccounts();
 
         UserValidation userval = new UserValidation();
 
@@ -45,8 +48,8 @@ public class LoginController {
         AdminUser a = new AdminUser();
 
         try {
-            userval.isValidEmail(usernameField);
-            userval.isValidPassword(passwordField);
+            userval.checkValidEmail(usernameField);
+            userval.checkValidPassword(passwordField);
             try {
                 userval.isExistingUser(usernameField, passwordField, accounts);
                 try {
@@ -60,25 +63,28 @@ public class LoginController {
                     }
                 }
                 catch (IllegalArgumentException e){
-                    System.out.println(e.getMessage());
+                    errorDisplay.setText(e.getMessage());
                 }
             } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
+                errorDisplay.setText(e.getMessage());
             }
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            errorDisplay.setText(e.getMessage());
         }
     }
 
     private void switchScene(ActionEvent event) {
+        Accounts accounts = new Accounts();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = fxmlLoader.load();
             HomepageController homepageController = fxmlLoader.getController();
             homepageController.setUser((User) user);
-            homepageController.setAccounts(SCP.loadAccounts());
+            accounts = SCP.loadAccounts();
+            homepageController.setAccounts(accounts);
             homepageController.loadInfo();
+            ((User) user).addObserver(accounts);
             Scene homepageScene = new Scene(root);
             Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
             window.setScene(homepageScene);
@@ -102,8 +108,6 @@ public class LoginController {
 
         SCP.setSaveFile("Accounts.json");
         SCP.saveAccounts(acc);
-
-        accounts = SCP.loadAccounts();
     }
 
 }

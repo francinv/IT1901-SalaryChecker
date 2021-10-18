@@ -1,14 +1,7 @@
 package salarychecker.core;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 import java.util.ArrayList;
+import java.util.Collection;
 
 /** 
  * Class for creating a user, and store their information.
@@ -23,6 +16,7 @@ public class User extends AbstractUser {
     private double timesats;
 
     private ArrayList<UserSale> userSales = new ArrayList<UserSale>();
+    private Collection<UserSaleObserver> userSaleObs = new ArrayList<UserSaleObserver>();
 
     /**
      * Constructor
@@ -59,13 +53,7 @@ public class User extends AbstractUser {
     }
     public void setSocialNumber(String socialNumber) {
         userValidation.checkValidSocialNumber(socialNumber);
-        try {
-            this.socialNumber = encryptDecrypt.encrypt(socialNumber, lastname + firstname);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        this.socialNumber = socialNumber;
     }
     public int getEmployeeNumber() {
         return employeeNumber;
@@ -99,14 +87,35 @@ public class User extends AbstractUser {
         return userSales;
     }
 
-    public void addUserSale(String salesperiod, double expected, double paid){
-        UserSale userSale = new UserSale();
-        userSale.setSalesperiod(salesperiod);
-        userSale.setExpected(expected);
-        userSale.setPaid(paid);
-        userSale.setDifference();
+    public boolean isExistingUserSale (UserSale userSale){
+        for (UserSale u: userSales){
+            if(u.getSalesperiod().equals(userSale.getSalesperiod())){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 
-        userSales.add(userSale);
+    public void addUserSale(UserSale userSale){
+        if (!(isExistingUserSale(userSale))){
+            userSales.add(userSale);
+            fireStateChange(userSale);
+        }
+    }
+
+    private void fireStateChange(UserSale userSale){
+        for (UserSaleObserver uObserver : userSaleObs ){
+            uObserver.usersaleAdded(this, userSale);
+        }
+    }
+
+    public void addObserver(UserSaleObserver uObserver){
+        userSaleObs.add(uObserver);
+    }
+
+    public void removeObserver(UserSaleObserver uObserver){
+        userSaleObs.remove(uObserver);
     }
     
 
