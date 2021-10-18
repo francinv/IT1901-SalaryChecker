@@ -40,12 +40,6 @@ public class AccountsTest {
         assertTrue(0 == accounts.getAccounts().size());
     }
 
-    // @Test
-    // public void testIterator(){
-    //     assertTrue(accounts.iterator().hasNext());
-    //     assertEquals("Jens", accounts.iterator().next().getFirstname());
-    // }
-
     @Test
     public void indexOfTest(){
         accounts.addUser(user1);
@@ -70,10 +64,9 @@ public class AccountsTest {
         assertTrue(accounts.checkValidUserLogin("jensen@salarychecker.com", "Jensen123!"));
     }
 
-
     @Test
     public void updatePasswordTest(){
-        accounts.updatePassword("jensen@salarychecker.com", "Jensen1234!");
+        accounts.updatePassword(user, "Jensen1234!");
         assertNotEquals("Jensen123!", user.getPassword());
     }
 }
