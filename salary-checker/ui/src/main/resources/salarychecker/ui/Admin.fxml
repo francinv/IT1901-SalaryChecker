@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="964.0" prefWidth="1052.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="964.0" prefWidth="1052.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab text="Opprett Bruker">
       <content>
@@ -76,7 +76,7 @@
                         <TextField fx:id="createSocialNumberField" layoutX="727.0" layoutY="300.0" promptText="ddmmååxxxxx" />
                         <TextField fx:id="createTaxField" layoutX="727.0" layoutY="354.0" promptText="xx" />
                         <TextField fx:id="createWageField" layoutX="727.0" layoutY="402.0" promptText="Lønn i NOK" />
-                        <Button fx:id="cancelButton" layoutX="873.0" layoutY="41.0" mnemonicParsing="false" text="Avbryt" />
+                        <Button fx:id="logOutButton" layoutX="863.0" layoutY="41.0" mnemonicParsing="false" text="Logg Ut" />
                         <Button fx:id="createUserButton" layoutX="727.0" layoutY="638.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="224.0" text="Opprett ny bruker" />
                      </children>
                   </AnchorPane>
