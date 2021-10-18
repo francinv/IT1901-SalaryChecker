@@ -2,7 +2,10 @@ package salarychecker.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -118,10 +121,23 @@ public class HomepageController {
         System.out.println("Test");
     }
 
-    //TODO
     @FXML
-    void changeProfileSettingsAction(ActionEvent event){
-        System.out.println("Test");
+    private void changeProfileSettingsAction(ActionEvent event){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+            Parent root = fxmlLoader.load();
+            SettingsController settingsController = fxmlLoader.getController();
+            settingsController.setUser((User) user);
+            settingsController.setAccounts(existingaccounts);
+            settingsController.loadInfo();
+            Scene homepageScene = new Scene(root);
+            Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
+            window.setScene(homepageScene);
+            window.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
