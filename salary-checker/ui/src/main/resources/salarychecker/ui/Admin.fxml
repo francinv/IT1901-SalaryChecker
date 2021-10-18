@@ -5,73 +5,97 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="997.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Text layoutX="59.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin:" wrappingWidth="167.205078125" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="80.0">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Text>
-      <Text layoutX="247.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Name" wrappingWidth="255.205078125">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
-      <Text layoutX="75.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opprett ny bruker:" wrappingWidth="343.205078125">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
-      <Text layoutX="75.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fornavn:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="75.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Etternavn:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="75.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Post:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="75.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="540.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansattnummer:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="540.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fødselsnummer:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="540.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <Text layoutX="540.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timelønn:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-      <TextField fx:id="createFirstNameField" layoutX="218.0" layoutY="248.0" promptText="Navn" />
-      <TextField fx:id="createLastNameField" layoutX="218.0" layoutY="300.0" promptText="Etternavn" />
-      <TextField fx:id="createEmailField" layoutX="218.0" layoutY="354.0" promptText="E-post" />
-      <TextField fx:id="createPasswordField" layoutX="218.0" layoutY="402.0" promptText="Passord" />
-      <TextField fx:id="createEmployeeNumberField" layoutX="727.0" layoutY="245.0" promptText="XXXXX" />
-      <TextField fx:id="createSocialNumberField" layoutX="727.0" layoutY="300.0" promptText="ddmmååxxxxx" />
-      <TextField fx:id="createTaxField" layoutX="727.0" layoutY="354.0" promptText="xx" />
-      <TextField fx:id="createWageField" layoutX="727.0" layoutY="402.0" promptText="Lønn i NOK" />
-      <Button fx:id="cancelButton" layoutX="873.0" layoutY="41.0" mnemonicParsing="false" text="Avbryt" />
-      <Button fx:id="createUserButton" layoutX="727.0" layoutY="638.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="224.0" text="Opprett ny bruker" />
-   </children>
-</AnchorPane>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="964.0" prefWidth="1052.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+  <tabs>
+    <Tab text="Opprett Bruker">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <AnchorPane layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="910.0" prefWidth="1052.0">
+                     <children>
+                        <Text layoutX="59.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin:" wrappingWidth="167.205078125" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="80.0">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="adminName" layoutX="247.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Name" wrappingWidth="255.205078125">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="75.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opprett ny bruker:" wrappingWidth="343.205078125">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="75.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fornavn:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="75.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Etternavn:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="75.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Post:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="75.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="540.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansattnummer:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="540.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fødselsnummer:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="540.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="540.0" layoutY="427.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timelønn:">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="createFirstNameField" layoutX="218.0" layoutY="248.0" promptText="Navn" />
+                        <TextField fx:id="createLastNameField" layoutX="218.0" layoutY="300.0" promptText="Etternavn" />
+                        <TextField fx:id="createEmailField" layoutX="218.0" layoutY="354.0" promptText="E-post" />
+                        <TextField fx:id="createPasswordField" layoutX="218.0" layoutY="402.0" promptText="Passord" />
+                        <TextField fx:id="createEmployeeNumberField" layoutX="727.0" layoutY="245.0" promptText="XXXXX" />
+                        <TextField fx:id="createSocialNumberField" layoutX="727.0" layoutY="300.0" promptText="ddmmååxxxxx" />
+                        <TextField fx:id="createTaxField" layoutX="727.0" layoutY="354.0" promptText="xx" />
+                        <TextField fx:id="createWageField" layoutX="727.0" layoutY="402.0" promptText="Lønn i NOK" />
+                        <Button fx:id="cancelButton" layoutX="873.0" layoutY="41.0" mnemonicParsing="false" text="Avbryt" />
+                        <Button fx:id="createUserButton" layoutX="727.0" layoutY="638.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="224.0" text="Opprett ny bruker" />
+                     </children>
+                  </AnchorPane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Brukere">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="45.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brukere:" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="60.0">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <ListView fx:id="userList" editable="true" layoutX="60.0" layoutY="113.0" prefHeight="777.0" prefWidth="955.0" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="113.0" />
+               </children>
+            </AnchorPane>
+         </content>
+    </Tab>
+  </tabs>
+</TabPane>
