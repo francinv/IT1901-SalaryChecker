@@ -1,17 +1,12 @@
 package salarychecker.core;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.io.IOException;
-import java.lang.Iterable;
 import java.util.List;
-
-import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * Lists of users.
  */
-public class Accounts implements UserSaleObserver {
+public class Accounts implements IUserObserver {
 
     private List<AbstractUser> accounts = new ArrayList<>();
 
@@ -111,8 +106,56 @@ public class Accounts implements UserSaleObserver {
         }
         return user.getClass();
     }
-    public void updatePassword(String email, String newpassword) {
-        accounts.stream().filter(u->u.getEmail().equals(email)).findAny().ifPresent(u->u.setPassword(newpassword));
+    protected void updatePassword(User user, String password) {
+        accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setPassword(password));
+    }
+
+    private void updateEmail(User user, String email) {
+        accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setEmail(email));
+    }
+
+    private void updateFirstname(User user, String firstname) {
+        accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setFirstname(firstname));
+    }
+
+    private void updateLastname(User user, String lastname) {
+        accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setLastname(lastname));
+    }
+
+    private void updateEmployerEmail(User user, String employermail){
+        for (AbstractUser u : accounts){
+            if(u.getEmail().equals(user.getEmail())){
+                user = (User) u;
+            }
+        }
+        user.setEmployerEmail(employermail);
+    }
+
+    private void updateHourSal(User user, Double hoursal){
+        for (AbstractUser u: accounts){
+            if(u.getEmail().equals(user.getEmail())){
+                user = (User) u;
+            }
+        }
+        user.setTimesats(hoursal);
+    }
+
+    private void updateTaxCount(User user, Double taxcount){
+        for (AbstractUser u: accounts){
+            if(u.getEmail().equals(user.getEmail())){
+                user = (User) u;
+            }
+        }
+        user.setTimesats(taxcount);
+    }
+
+    private void updateEmployeeNumber(User user, int employeenumber){
+        for (AbstractUser u: accounts){
+            if(u.getEmail().equals(user.getEmail())){
+                user = (User) u;
+            }
+        }
+        user.setTimesats(employeenumber);
     }
 
     private void addUserSale(User user, UserSale usale){
@@ -121,7 +164,40 @@ public class Accounts implements UserSaleObserver {
 
     public void usersaleAdded(User user, UserSale uSale) {
         this.addUserSale(user, uSale);
-        System.out.println("User Sale added");
+    }
+
+    public void userInfoDoubleChanged(User user, Double changeddouble) {
+        if (changeddouble.equals(user.getTaxCount())){
+            updateTaxCount(user, changeddouble);
+        }
+        else if (changeddouble.equals(user.getTimesats())){
+            updateHourSal(user, changeddouble);
+        }
+
+    }
+
+    public void userInfoIntChanged(User user, Integer changedint) {
+        if(changedint.equals(user.getEmployeeNumber())){
+            updateEmployeeNumber(user, changedint);
+        }
+    }
+
+    public void userInfoStringChanged(User user, String changedstring) {
+        if(changedstring.equals(user.getEmail())){
+            updateEmail(user, changedstring);
+        }
+        else if (changedstring.equals(user.getEmployerEmail())){
+            updateEmployerEmail(user, changedstring);
+        }
+        else if (changedstring.equals(user.getPassword())){
+            updatePassword(user, changedstring);
+        }
+        else if (changedstring.equals(user.getFirstname())){
+            updateFirstname(user, changedstring);
+        }
+        else if (changedstring.equals(user.getLastname())) {
+            updateLastname(user, changedstring);
+        }
     }
 
     @Override
