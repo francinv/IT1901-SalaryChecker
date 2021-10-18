@@ -6,7 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -15,9 +18,12 @@ import salarychecker.core.Calculation;
 import salarychecker.core.EmailSender;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
+import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class HomepageController {
 
@@ -45,18 +51,46 @@ public class HomepageController {
     @FXML private ComboBox<String> monthDropdown;
     @FXML private TextField calculationYearInput;
 
+
+    @FXML private TableView<UserSale> salaryTableView;
+    @FXML private TableColumn tableSaleData;
+    @FXML private TableColumn paidColTable;
+    @FXML private TableColumn expectedColTable;
+    @FXML private TableColumn diffColTable;
+
+    
+
     /*
     * Object of email sender class
     * */
     EmailSender emailSender = new EmailSender();
 
 
-    String url = null; 
+    private String url;
 
 
     User user = new User();
+    ArrayList<UserSale> tempdata = user.getUserSaleList();
     Accounts existingaccounts = new Accounts();
 
+    @FXML
+    private void initialize() {
+        if(!tempdata.isEmpty()){
+            updateTableView();
+        }
+    }
+
+    void updateTableView() {
+        salaryTableView.getItems().clear();
+        tableSaleData.setCellValueFactory(new PropertyValueFactory<UserSale, String>("salesperiod"));
+        paidColTable.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("expected"));
+        expectedColTable.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("paid"));
+        diffColTable.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("difference"));
+
+        for (UserSale uSale : tempdata ){
+            salaryTableView.getItems().add(uSale);
+        }
+    }
 
     public void loadInfo() {
         navnDisplay.setText(user.getFirstname()+ " " + user.getLastname());
@@ -94,13 +128,14 @@ public class HomepageController {
     void calculateSalary(ActionEvent event) {
         UserSale userSale = new UserSale();
         Calculation calculation = new Calculation(user);
-
+        String temp = getURL();
+        System.out.println("Printer ut url");
+        System.out.println(temp);
         double hours = Double.parseDouble(hoursInput.getText());
         int mobileamount = Integer.parseInt(amountOfMobile.getText());
         try {
-            calculation.doCalculation(url, hours, mobileamount);
+            calculation.doCalculation(getURL(), hours, mobileamount);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -112,11 +147,25 @@ public class HomepageController {
         userSale.setDifference();
         userSale.setSalesperiod(salesperiod);
 
-        salaryLabel.setText(String.valueOf(userSale.getExpected()));
-        nettoLabel.setText(String.valueOf(userSale.getPaid()));
-        salaryDiff.setText(String.valueOf(userSale.getDifference()));
+        String expected = String.valueOf(userSale.getExpected());
+        String paid = String.valueOf(userSale.getPaid());
+        String diff = String.valueOf(userSale.getDifference());
+        salaryLabel.setText("Forventet lønn: " + expected);
+        nettoLabel.setText("Utbetalt lønn: " + paid);
+        salaryDiff.setText("Differanse: " + diff);
 
         user.addUserSale(userSale);
+        
+        tempdata = user.getUserSaleList();
+        
+        SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
+        SCP.setSaveFile("Accounts.json");
+        try {
+            SCP.saveAccounts(existingaccounts);
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
+        updateTableView();
     }
 
     @FXML
@@ -124,10 +173,15 @@ public class HomepageController {
         Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(stage);
-        url = file.getAbsolutePath();
+        setURL(file.getAbsolutePath());
         filenameDisplay.setText(file.getName());
+    }
 
-
+    public void setURL(String url){
+        this.url = url;
+    }
+    public String getURL() {
+        return this.url;
     }
 
     public void setUser(User user) {

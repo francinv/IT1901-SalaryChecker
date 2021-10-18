@@ -1,6 +1,7 @@
 package salarychecker.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /** 
  * Class for creating a user, and store their information.
@@ -15,6 +16,7 @@ public class User extends AbstractUser {
     private double timesats;
 
     private ArrayList<UserSale> userSales = new ArrayList<UserSale>();
+    private Collection<UserSaleObserver> userSaleObs = new ArrayList<UserSaleObserver>();
 
     /**
      * Constructor
@@ -85,8 +87,35 @@ public class User extends AbstractUser {
         return userSales;
     }
 
+    public boolean isExistingUserSale (UserSale userSale){
+        for (UserSale u: userSales){
+            if(u.getSalesperiod().equals(userSale.getSalesperiod())){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public void addUserSale(UserSale userSale){
-        userSales.add(userSale);
+        if (!(isExistingUserSale(userSale))){
+            userSales.add(userSale);
+            somethingChanged(userSale);
+        }
+    }
+
+    private void somethingChanged(UserSale userSale){
+        for (UserSaleObserver uObserver : userSaleObs ){
+            uObserver.usersaleAdded(this, userSale);
+        }
+    }
+
+    public void addObserver(UserSaleObserver uObserver){
+        userSaleObs.add(uObserver);
+    }
+
+    public void removeObserver(UserSaleObserver uObserver){
+        userSaleObs.remove(uObserver);
     }
     
 

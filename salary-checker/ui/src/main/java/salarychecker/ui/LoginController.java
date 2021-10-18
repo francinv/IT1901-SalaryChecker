@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
@@ -23,6 +24,7 @@ public class LoginController {
     @FXML private TextField email;
     @FXML private TextField password;
     @FXML private Button logIn;
+    @FXML private Text errorDisplay;
 
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
     public AbstractUser user;
@@ -61,25 +63,28 @@ public class LoginController {
                     }
                 }
                 catch (IllegalArgumentException e){
-                    System.out.println(e.getMessage());
+                    errorDisplay.setText(e.getMessage());
                 }
             } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
+                errorDisplay.setText(e.getMessage());
             }
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            errorDisplay.setText(e.getMessage());
         }
     }
 
     private void switchScene(ActionEvent event) {
+        Accounts accounts = new Accounts();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = fxmlLoader.load();
             HomepageController homepageController = fxmlLoader.getController();
             homepageController.setUser((User) user);
-            homepageController.setAccounts(SCP.loadAccounts());
+            accounts = SCP.loadAccounts();
+            homepageController.setAccounts(accounts);
             homepageController.loadInfo();
+            ((User) user).addObserver(accounts);
             Scene homepageScene = new Scene(root);
             Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
             window.setScene(homepageScene);

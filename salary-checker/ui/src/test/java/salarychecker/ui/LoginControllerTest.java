@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -24,12 +25,14 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class LoginControllerTest extends ApplicationTest {
     
     private TextField emailField;
     private PasswordField passwordField;
     private Button logInButton;
+    private Text errorDisplay;
 
 
     @Override
@@ -47,6 +50,7 @@ public class LoginControllerTest extends ApplicationTest {
         emailField = lookup("#email").query();
         passwordField = lookup("#password").query();
         logInButton = lookup("#logIn").query();
+        errorDisplay = lookup("#errorDisplay").query();
     }
 
     @Test
@@ -67,19 +71,26 @@ public class LoginControllerTest extends ApplicationTest {
         }
     }
 
-    //TODO
     @Test
     public void testInvalidEmail() {
+        writeInLoginFields("s", "Password123!");
+        clickOn(logInButton);
+        assertEquals("Invalid email, must be of format: name-part@domain, e.g. example@example.com.", errorDisplay.getText());
     }
 
     //TODO
     @Test
     public void testInvalidPwd() {
+        writeInLoginFields("seran@live.no", "P");
+        clickOn(logInButton);
+        assertEquals("Invalid password, must be at least 8 characters and contain at least 1 digit and 1 lower and uppercase letter.", errorDisplay.getText());
     }
 
-    //TODO
     @Test
     public void testNonExistingUser() {
+        writeInLoginFields("fxtest@gmail.no", "Test123!");
+        clickOn(logInButton);
+        assertEquals("This user is not registered.", errorDisplay.getText());
     }
 
     @AfterEach
