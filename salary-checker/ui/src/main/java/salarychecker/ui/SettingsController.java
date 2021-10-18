@@ -49,34 +49,65 @@ public class SettingsController {
 
 
     public void loadInfo() {
-        changeFirstNameField.setText(user.getFirstname());
-        changeLastNameField.setText(user.getLastname());
-        changeEmailField.setText(user.getEmail());
-        changeEmployerField.setText(user.getEmployerEmail());
-        hourWageField.setText(String.valueOf(user.getTimesats()));
-        changeTaxBracketField.setText(String.valueOf(user.getTaxCount()));
-        changeEmployeeNumberField.setText(String.valueOf(user.getEmployeeNumber()));
+        changeFirstNameField.setPromptText(user.getFirstname());
+        changeLastNameField.setPromptText(user.getLastname());
+        changeEmailField.setPromptText(user.getEmail());
+        changeConfirmedEmailField.setPromptText(user.getEmail());
+        changeEmployerField.setPromptText(user.getEmployerEmail());
+        changeConfirmedEmployerField.setPromptText(user.getEmployerEmail());
+        hourWageField.setPromptText(String.valueOf(user.getTimesats()));
+        changeTaxBracketField.setPromptText(String.valueOf(user.getTaxCount()));
+        changeEmployeeNumberField.setPromptText(String.valueOf(user.getEmployeeNumber()));
     }
 
     @FXML
     public void saveChangesAction(ActionEvent event){
         try{
-            user.setFirstname(changeFirstNameField.getText());
-            user.setLastname(changeLastNameField.getText());
-            userValidation.isEqualEmail(changeEmailField.getText(), changeConfirmedEmailField.getText());
-            user.setEmail(changeEmailField.getText());
-            userValidation.isEqualEmail(changeEmployerField.getText(), changeConfirmedEmployerField.getText());
-            user.setEmployerEmail(changeEmployerField.getText());
-            user.setTimesats(Integer.valueOf(hourWageField.getText()));
-            userValidation.isEqualPassword(changePasswordField.getText(), changeConfirmedPasswordField.getText());
-            user.setPassword(changePasswordField.getText());
-            user.setTaxCount(Double.valueOf(changeTaxBracketField.getText()));
-            user.setEmployeeNumber(Integer.valueOf(changeEmployeeNumberField.getText()));
-            successMessageDisplay.setText("Changes successfully saved.");
+            if (!(changeFirstNameField.getText().equals("") && changeLastNameField.getText().equals(""))){
+                user.setFirstname(changeFirstNameField.getText());
+                user.setLastname(changeLastNameField.getText());
+                successMessageDisplay.setText("Changes successfully saved.");
+            }
+
+            if(!(changeEmailField.getText().equals("") && changeConfirmedEmailField.getText().equals(""))){
+                userValidation.isEqualEmail(changeEmailField.getText(), changeConfirmedEmailField.getText());
+                user.setEmail(changeEmailField.getText());
+                successMessageDisplay.setText("Changes successfully saved.");
+            }
+
+            if(!(changeEmployerField.getText().equals("") && changeConfirmedEmployerField.getText().equals(""))){
+                userValidation.isEqualEmail(changeEmployerField.getText(), changeConfirmedEmployerField.getText());
+                user.setEmployerEmail(changeEmployerField.getText());
+                successMessageDisplay.setText("Changes successfully saved.");
+            }
+
+            if(!(hourWageField.getText().equals(""))){
+                user.setTimesats(Double.valueOf(hourWageField.getText()));
+                successMessageDisplay.setText("Changes successfully saved.");
+            }
+
+            if(!(changePasswordField.getText().equals("") && changeConfirmedPasswordField.getText().equals(""))){
+                userValidation.isEqualPassword(changePasswordField.getText(), changeConfirmedPasswordField.getText());
+                user.setPassword(changePasswordField.getText());
+                successMessageDisplay.setText("Changes successfully saved.");
+            }
+
+            if(!(changeTaxBracketField.getText().equals(""))){
+                user.setTaxCount(Double.valueOf(changeTaxBracketField.getText()));
+                successMessageDisplay.setText("Changes successfully saved.");
+            }
+
+            if(!(changeEmployeeNumberField.getText().equals(""))){
+                user.setEmployeeNumber(Integer.valueOf(changeEmployeeNumberField.getText()));
+                successMessageDisplay.setText("Changes successfully saved.");
+            }
+
             SCP.setSaveFile("Accounts.json");
             SCP.saveAccounts(accounts);
         } catch (IllegalArgumentException e){
             errorTextDisplay.setText(e.getMessage());
+            successMessageDisplay.setText(null);
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
