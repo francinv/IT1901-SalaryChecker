@@ -1,12 +1,7 @@
 package salarychecker.core;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public abstract class AbstractUser {
 
@@ -18,7 +13,7 @@ public abstract class AbstractUser {
     
 
     protected UserValidation userValidation = new UserValidation();
-    protected static EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
+    protected Collection<IUserObserver> userObs = new ArrayList<IUserObserver>();
 
     public String getFirstname() {
         return firstname;
@@ -26,6 +21,9 @@ public abstract class AbstractUser {
     public void setFirstname(String firstname) {
         userValidation.checkValidFirstname(firstname);
         this.firstname = firstname;
+        for (IUserObserver IUserObserver : userObs) {
+            IUserObserver.userInfoStringChanged((User) this, firstname);
+        }
     }
     public String getLastname() {
         return lastname;
@@ -33,6 +31,9 @@ public abstract class AbstractUser {
     public void setLastname(String lastname) {
         userValidation.checkValidLastname(lastname);
         this.lastname = lastname;
+        for (IUserObserver IUserObserver : userObs) {
+            IUserObserver.userInfoStringChanged((User) this, lastname);
+        }
     }
     public String getEmail() {
         return email;
@@ -40,6 +41,9 @@ public abstract class AbstractUser {
     public void setEmail(String email) {
         userValidation.checkValidEmail(email);
         this.email = email;
+        for (IUserObserver IUserObserver : userObs) {
+            IUserObserver.userInfoStringChanged((User) this, email);
+        }
     }
     public String getPassword() {
         return password;
@@ -47,7 +51,21 @@ public abstract class AbstractUser {
     public void setPassword(String password) {
         userValidation.checkValidPassword(password);
         this.password = password;
+        for (IUserObserver IUserObserver : userObs) {
+            IUserObserver.userInfoStringChanged((User) this, password);
+        }
     }
+
+
+    public void addObserver(IUserObserver uObserver){
+        userObs.add(uObserver);
+    }
+
+    public void removeObserver(IUserObserver uObserver){
+        userObs.remove(uObserver);
+    }
+
+
 
     @Override
     public String toString() {

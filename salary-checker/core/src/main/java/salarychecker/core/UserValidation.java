@@ -84,4 +84,16 @@ public class UserValidation {
             throw new IllegalArgumentException(Errors.INVALID_EMAIL_AND_OR_PWD.getMessage());
         }
     }
+
+    public void isEqualPassword(String password1, String password2){
+        if(!(password1.equals(password2))){
+            throw new IllegalArgumentException(Errors.NOT_EQUAL_PASSWORD.getMessage());
+        }
+    }
+
+    public void isEqualEmail(String email1, String email2){
+        if(!(email1.equals(email2))){
+            throw new IllegalArgumentException(Errors.NOT_EQUAL_EMAIL.getMessage());
+        }
+    }
 }

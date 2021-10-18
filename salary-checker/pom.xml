@@ -9,10 +9,15 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
         <jupiter.version>5.8.1</jupiter.version>
         <jackson.version>2.12.5</jackson.version>
         <openscsv.version>5.5.2</openscsv.version>
         <sunmail.version>1.5.5</sunmail.version>
+        <skipTests>false</skipTests>
+        <skipSpotBugs>true</skipSpotBugs>
+        <skipCheckstyle>true</skipCheckstyle>
     </properties>
 
     <dependencyManagement>
@@ -98,6 +103,7 @@
                         <!-- 
                             <argLine>dash dash enable-preview</argLine>
                         -->
+                        <skipTests>${skipTests}</skipTests>
                     </configuration>
                 </plugin>
                 <!-- Run the checkstyle code quality tool -->
@@ -118,6 +124,7 @@
                         <consoleOutput>true</consoleOutput>
                         <failsOnError>true</failsOnError>
                         <linkXRef>false</linkXRef>
+                        <skip>${skipCheckstyle}</skip>
                     </configuration>
                     <executions>
                         <execution>
@@ -138,6 +145,7 @@
                         <xmlOutput>false</xmlOutput>
                         <htmlOutput>true</htmlOutput>
                         <excludeFilterFile>config/spotbugs/exclude.xml</excludeFilterFile>
+                        <skip>${skipSpotBugs}</skip>
                     </configuration>
                     <executions>
                         <execution>
