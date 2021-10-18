@@ -13,8 +13,8 @@
             <Font size="48.0" />
          </font>
       </Text>
-      <TextField fx:id="changeFirstNameField" layoutX="80.0" layoutY="201.0" text="Fornavn" AnchorPane.leftAnchor="80.0" />
-      <TextField fx:id="changeLastNameField" layoutX="80.0" layoutY="252.0" text="Etternavn" />
+      <TextField fx:id="changeFirstNameField" layoutX="80.0" layoutY="201.0" AnchorPane.leftAnchor="80.0" />
+      <TextField fx:id="changeLastNameField" layoutX="80.0" layoutY="252.0" />
       <Text layoutX="80.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn:" wrappingWidth="224.0">
          <font>
             <Font size="24.0" />
@@ -25,15 +25,15 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <TextField fx:id="changeEmailField" layoutX="80.0" layoutY="354.0" text="E-Post" />
-      <TextField fx:id="changeConfirmedEmailField" layoutX="80.0" layoutY="405.0" text="Bekreft E-Post" />
+      <TextField fx:id="changeEmailField" layoutX="80.0" layoutY="354.0" />
+      <TextField fx:id="changeConfirmedEmailField" layoutX="80.0" layoutY="405.0" />
       <Text layoutX="80.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeidsgivers E-Post:">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <TextField fx:id="changeEmployerField" layoutX="79.0" layoutY="504.0" text="Arbeidsgivers E-Post" />
-      <TextField fx:id="changeConfirmedEmployerField" layoutX="79.0" layoutY="552.0" text="Bekreft Arbeidsgivers epost" />
+      <TextField fx:id="changeEmployerField" layoutX="79.0" layoutY="504.0" />
+      <TextField fx:id="changeConfirmedEmployerField" layoutX="79.0" layoutY="552.0" />
       <Text layoutX="594.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord:">
          <font>
             <Font size="24.0" />
@@ -49,10 +49,10 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <TextField fx:id="changePasswordField" layoutX="594.0" layoutY="201.0" text="Passord" />
-      <TextField fx:id="changeConfirmedPasswordField" layoutX="594.0" layoutY="252.0" text="Bekreft Passord" />
-      <TextField fx:id="changeTaxBracketField" layoutX="594.0" layoutY="354.0" text="Skattesats" />
-      <TextField fx:id="changeEmployeeNumberField" layoutX="594.0" layoutY="504.0" text="Ansattnummer" />
+      <TextField fx:id="changePasswordField" layoutX="594.0" layoutY="201.0" promptText="Password" />
+      <TextField fx:id="changeConfirmedPasswordField" layoutX="594.0" layoutY="252.0" promptText="Confirm Password" />
+      <TextField fx:id="changeTaxBracketField" layoutX="594.0" layoutY="354.0" />
+      <TextField fx:id="changeEmployeeNumberField" layoutX="594.0" layoutY="504.0" />
       <Button fx:id="closeButton" layoutX="1007.0" layoutY="22.0" mnemonicParsing="false" onAction="#closeButtonAction" prefHeight="39.0" prefWidth="62.0" text="Lukk" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
       <Button fx:id="saveChangesButton" layoutX="594.0" layoutY="647.0" mnemonicParsing="false" onAction="#saveChangesAction" prefHeight="131.0" prefWidth="222.0" text="Lagre Endringer" textAlignment="CENTER" wrapText="true">
          <font>
@@ -64,7 +64,7 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <TextField fx:id="hourWageField" layoutX="79.0" layoutY="647.0" text="Timesats (NOK)" />
+      <TextField fx:id="hourWageField" layoutX="79.0" layoutY="647.0" />
       <Text fx:id="errorTextDisplay" fill="RED" layoutX="80.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="333.546875">
          <font>
             <Font size="20.0" />
