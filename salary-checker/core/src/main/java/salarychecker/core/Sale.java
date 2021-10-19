@@ -6,6 +6,20 @@ public class Sale {
 
     private double provisjon;
 
+    public Sale(String saleDate, String anleggStatus, String salgsType, String campaign, 
+    String brand, String TX3, String rebate, String NVK, String product, Double provisjon){
+        this.saleDate = saleDate;
+        this.anleggStatus = anleggStatus;
+        this.salgsType = salgsType;
+        this.campaign = campaign;
+        this.brand = brand;
+        this.TX3 = TX3;
+        this.rebate = rebate;
+        this.NVK = NVK;
+        this.product = product;
+        this.provisjon = provisjon;
+    }
+
     public double getProvisjon() {
         return this.provisjon;
     }
