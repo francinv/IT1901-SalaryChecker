@@ -1,5 +1,6 @@
 package salarychecker.core;
 
+
 import java.util.regex.Pattern;
 
 public class UserValidation {
@@ -16,27 +17,6 @@ public class UserValidation {
     private boolean isValidRegex(Pattern regex, String string) {
         return regex.matcher(string).matches();
     }
-
-    /**
-     * Will be delete later
-     * @param email
-     * @return
-     * TODO
-     */
-    public boolean isValidEmail(String email) {
-        return isValidRegex(EMAIL_REGEX, email);
-    }
-
-    /**
-     * Will be delete later
-     * @param password
-     * @return
-     * TODO
-     */
-    public boolean isValidPassword(String password) {
-        return isValidRegex(PASSWORD_REGEX, password);
-    }
-
 
     public void checkValidFirstname(String firstname) {
         if (!isValidRegex(FIRSTNAME_REGEX, firstname)) {
@@ -80,15 +60,40 @@ public class UserValidation {
         }
     }
 
-    // public boolean isValidUser(String firstname, String lastname, String email, String password,
-    //     String socialNumber, int employeeNumber, String employerEmail, double taxCount) {
-    //         return checkValidFirstname(firstname) && checkValidLastname(lastname) &&
-    //                checkValidEmail(email) && checkValidPassword(password) && checkValidSocialNumber(socialNumber) &&
-    //                checkValidEmployeeNumber(employeeNumber) && checkValidEmail(employerEmail) && 
-    //                checkValidTaxCount(taxCount); 
-    // }
+    public void isExistingUser(String email, String password, Accounts accounts) {
+        if(accounts.getUser(email, password)==null){
+            throw new IllegalArgumentException(Errors.NOT_REGISTERED.getMessage());
+        }
+    }
 
-    public boolean isExistingUser(String email, String password) {
-        return false;
+    public void checkValidUser(String firstname, String lastname, String email, String password,
+        String socialNumber, int employeeNumber, String employerEmail, double taxCount) {
+            
+        checkValidFirstname(firstname);
+        checkValidLastname(lastname);
+        checkValidEmail(email);
+        checkValidPassword(password);
+        checkValidSocialNumber(socialNumber);
+        checkValidEmployeeNumber(employeeNumber);
+        checkValidEmail(employerEmail);
+        checkValidTaxCount(taxCount);
+    }
+
+    public void isValidLogIn(String email, String password, Accounts accounts) {
+        if(!accounts.checkValidUserLogin(email, password)) {
+            throw new IllegalArgumentException(Errors.INVALID_EMAIL_AND_OR_PWD.getMessage());
+        }
+    }
+
+    public void isEqualPassword(String password1, String password2){
+        if(!(password1.equals(password2))){
+            throw new IllegalArgumentException(Errors.NOT_EQUAL_PASSWORD.getMessage());
+        }
+    }
+
+    public void isEqualEmail(String email1, String email2){
+        if(!(email1.equals(email2))){
+            throw new IllegalArgumentException(Errors.NOT_EQUAL_EMAIL.getMessage());
+        }
     }
 }

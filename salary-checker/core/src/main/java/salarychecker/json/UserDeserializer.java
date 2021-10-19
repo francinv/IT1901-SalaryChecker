@@ -6,8 +6,8 @@ import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.DoubleNode;
-import com.fasterxml.jackson.databind.node.IntNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
@@ -21,10 +21,12 @@ import javax.crypto.NoSuchPaddingException;
 
 import salarychecker.core.EncryptDecrypt;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 
 public class UserDeserializer extends JsonDeserializer<User> {
 
     private EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
+    private UserSaleDeserializer userSaleDeserializer = new UserSaleDeserializer();
 
     @Override
     public User deserialize(JsonParser parser, DeserializationContext ctxt)
@@ -57,12 +59,12 @@ public class UserDeserializer extends JsonDeserializer<User> {
         if (passwordNode instanceof TextNode) {
 
             try {
-                String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(), firstnameNode.asText());
+                String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(), firstnameNode.asText() + lastnameNode.asText());
                 user.setPassword(decryptedPassword);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
                 // TODO Auto-generated catch block
-                //e.printStackTrace();
+                e.printStackTrace();
             }
     
         }
@@ -71,7 +73,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
         if (socialNumberNode instanceof TextNode) {
 
             try {
-                String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(), firstnameNode.asText());
+                String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(), lastnameNode.asText() + firstnameNode.asText());
                 user.setSocialNumber(decryptedSocialNumber);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
@@ -82,18 +84,34 @@ public class UserDeserializer extends JsonDeserializer<User> {
         }
 
         JsonNode employeeNumberNode = objectNode.get("employeeNumber");
-        if (employeeNumberNode instanceof IntNode) {
-            user.setEmployeeNumber(employeeNumberNode.intValue());
+        if (employeeNumberNode instanceof NumericNode) {
+            user.setEmployeeNumber(employeeNumberNode.asInt());
         }
 
+        
         JsonNode employerEmailNode = objectNode.get("employerEmail");
         if (employerEmailNode instanceof TextNode) {
             user.setEmployerEmail(employerEmailNode.asText());
         }
 
         JsonNode taxCountNode = objectNode.get("taxCount");
-        if (taxCountNode instanceof DoubleNode) {
-            user.setTaxCount(taxCountNode.doubleValue());
+        if (taxCountNode instanceof NumericNode) {
+            user.setTaxCount(taxCountNode.asDouble());
+        }
+
+        JsonNode hourSalNode = objectNode.get("hourRate");
+        if (hourSalNode instanceof NumericNode){
+            user.setTimesats(hourSalNode.asInt());
+        }
+
+        JsonNode userSaleNode = objectNode.get("userSaleNode");
+        if (userSaleNode instanceof ArrayNode) {
+            for (JsonNode elementNode : ((ArrayNode) userSaleNode)) {
+                UserSale userSale = userSaleDeserializer.deserialize(elementNode);
+                if (userSale != null) {
+                    user.addUserSale(userSale);
+                }
+            }
         }
         
         return user;

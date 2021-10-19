@@ -6,7 +6,18 @@ Many people are employed in the sales industry, and a lot of companies reward th
 ## Userstories
 #### Userstories for later releases will be added as functionality improves during later releases
 ### Userstory release 1:
-    - "An employee at a salesfirm implementing the Salarychecker application wants to check his userprofile, and verify that his personal information is correct. He therefore loggs in to Salarychecker and looks at his profile page to view his personal information."
+    "An employee at a salesfirm implementing the Salarychecker application wants to check his userprofile, and verify that his personal information is correct. He therefore loggs in to Salarychecker and looks at his profile page to view his personal information."
+### Userstory release 2:
+#### Story 1:
+    "The previously logged in employee wishes to verify that his last paycheck was indeed correct. He opens the "Lønnsutregniger" tab and enters the amount he/she was payed. The employee proceeds to enter her total hours worked and uploads his/her sales report for the previous month.
+
+    The employee notices a difference in amount that has been payed and what he/she is really owed. The employee wants to notify his/her employer via email. The employee navigates to the E-Mail tab, enters what month the complaint is about, and sends an E-Mail to the employer."
+#### Story 2:
+    "An emplyee feels like he/she is on a positive trend in terms of salary. He/She wishes to compare her last months sales to previous ones. She navigates to the "Tidligere lønninger" tab and examines the overview of her previous paychecks.
+
+    The emplye wishes to figure out wether this trend is caused by her selling more products, working more hours, or a combination of the two. The employee proceeds to navigate to the "Timelister" tab where she can se an overview of her working hours."
+#### Story 3: 
+    "After realising the positive trend in salary the emplyee notices she will enter a different tax bracket than he/she was previously in. He/She wishes to update his/her profile accordingly. The employee also realizes his/her password has not been changed in a while and wishes to update this as well. The employee opens the settings window where he/she can make the previously mentioned changes."   
 
 ## Intended functionality at final release:
 ### For employee (User): 
@@ -14,7 +25,7 @@ Many people are employed in the sales industry, and a lot of companies reward th
     - Full name
     - E-mail
     - Employee-number/id 
-    - Partially encrypted social security number
+    - Birthdate
     - His/her current tax-bracket 
     - Possibility to change password/e-mail
 
@@ -39,7 +50,7 @@ Many people are employed in the sales industry, and a lot of companies reward th
 
 ### For Employer (Admin):
 #### - Create and delete profiles for employees.
-    - Admin wil initiate profile with Name, E-mail, Password, taxbracket, and Social security number (Can be changed by user later, except for Social securitynumber.).
+    - Admin will initiate profile with Name, E-mail, Password, taxbracket, and Social security number (Can be changed by user later, except for Social securitynumber.).
 
 
 ## Project structure:

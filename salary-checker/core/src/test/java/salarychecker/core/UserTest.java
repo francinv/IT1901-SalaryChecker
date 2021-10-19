@@ -11,7 +11,7 @@ public class UserTest {
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "password!123", 
-            "22019893456", 33333, "employer_email@email.com", 35.5);
+            "22019893456", 33333, "employer_email@email.com", 35.5, 132.0);
     }
 
     @Test
@@ -25,8 +25,8 @@ public class UserTest {
         Assertions.assertEquals("Firstname", testUser.getFirstname());
         Assertions.assertEquals("Lastname", testUser.getLastname());
         Assertions.assertEquals("email@email.com", testUser.getEmail());
-        Assertions.assertNotEquals("password!123", testUser.getPassword());
-        Assertions.assertNotEquals("22019893456", testUser.getSocialNumber());
+        Assertions.assertEquals("password!123", testUser.getPassword());
+        Assertions.assertEquals("22019893456", testUser.getSocialNumber());
         Assertions.assertEquals(33333, testUser.getEmployeeNumber());
         Assertions.assertEquals("employer_email@email.com", testUser.getEmployerEmail());
         Assertions.assertEquals(35.5, testUser.getTaxCount());

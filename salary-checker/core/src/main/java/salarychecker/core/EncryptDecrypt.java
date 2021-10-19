@@ -129,7 +129,7 @@ public class EncryptDecrypt {
             .encodeToString(cipherText);
     }
 
-    public  String decrypt(String cipherText, String alias) 
+    public String decrypt(String cipherText, String alias) 
         throws NoSuchPaddingException, NoSuchAlgorithmException,
         InvalidAlgorithmParameterException, InvalidKeyException,
         BadPaddingException, IllegalBlockSizeException {

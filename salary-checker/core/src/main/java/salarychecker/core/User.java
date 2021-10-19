@@ -1,12 +1,6 @@
 package salarychecker.core;
 
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import java.util.ArrayList;
 
 /** 
  * Class for creating a user, and store their information.
@@ -18,6 +12,9 @@ public class User extends AbstractUser {
     private int employeeNumber;
     private String employerEmail;
     private double taxCount;
+    private double timesats;
+
+    private ArrayList<UserSale> userSales = new ArrayList<UserSale>();
 
     /**
      * Constructor
@@ -32,20 +29,16 @@ public class User extends AbstractUser {
      * @param taxCount
      */
     public User(String firstname, String lastname, String email, String password, String socialNumber,
-            int employeeNumber, String employerEmail, double taxCount) {
+            int employeeNumber, String employerEmail, double taxCount, double timesats) {
         super.firstname = firstname;
         super.lastname = lastname;
         super.email = email;
-        try {
-            super.password = encryptDecrypt.encrypt(password, firstname);
-            this.socialNumber = encryptDecrypt.encrypt(socialNumber, firstname);
-        } catch (NumberFormatException | InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            e.printStackTrace();
-        }
+        super.password = password;
+        this.socialNumber = socialNumber;
         this.employeeNumber = employeeNumber;
         this.employerEmail = employerEmail;
-        this.taxCount = taxCount;    
+        this.taxCount = taxCount;
+        this.timesats = timesats;
     }
 
     /**
@@ -58,13 +51,7 @@ public class User extends AbstractUser {
     }
     public void setSocialNumber(String socialNumber) {
         userValidation.checkValidSocialNumber(socialNumber);
-        try {
-            this.socialNumber = encryptDecrypt.encrypt(socialNumber, firstname);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        this.socialNumber = socialNumber;
     }
     public int getEmployeeNumber() {
         return employeeNumber;
@@ -72,6 +59,9 @@ public class User extends AbstractUser {
     public void setEmployeeNumber(int employeeNumber) {
         userValidation.checkValidEmployeeNumber(employeeNumber);
         this.employeeNumber = employeeNumber;
+        for(IUserObserver IUserObserver :userObs){
+            IUserObserver.userInfoIntChanged(this, employeeNumber);
+        }
     }
     public String getEmployerEmail() {
         return employerEmail;
@@ -79,21 +69,69 @@ public class User extends AbstractUser {
     public void setEmployerEmail(String employerEmail) {
         userValidation.checkValidEmail(email);
         this.employerEmail = employerEmail;
+        for (IUserObserver IUserObserver : userObs){
+            IUserObserver.userInfoStringChanged(this, employerEmail);
+        }
     }
+
     public double getTaxCount() {
         return taxCount;
     }
     public void setTaxCount(double taxCount) {
         userValidation.checkValidTaxCount(taxCount);
         this.taxCount = taxCount;
+        for (IUserObserver IUserObserver : userObs){
+            IUserObserver.userInfoDoubleChanged(this, taxCount);
+        }
+    }
+    public double getTimesats(){
+        return timesats;
+    }
+    public void setTimesats(double timesats){
+        this.timesats = timesats;
+        for (IUserObserver IUserObserver : userObs){
+            IUserObserver.userInfoDoubleChanged(this, timesats);
+        }
     }
 
-    public static void main(String[] args) {
-        User user = new User();
-        try {
-            user.setFirstname("3");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public ArrayList<UserSale> getUserSaleList(){
+        return userSales;
+    }
+
+    public boolean isExistingUserSale (UserSale userSale){
+        for (UserSale u: userSales){
+            if(u.getSalesperiod().equals(userSale.getSalesperiod())){
+                return true;
+            }
+            return false;
         }
+        return false;
+    }
+
+    public void addUserSale(UserSale userSale){
+        if (!(isExistingUserSale(userSale))){
+            userSales.add(userSale);
+            for (IUserObserver IUserObserver : userObs){
+                IUserObserver.usersaleAdded(this, userSale);
+            }
+        }
+    }
+
+    
+
+    @Override
+    public String toString() {
+        return "{" +
+            " firstname='" + getFirstname() + "'" +
+            ", lastname='" + getLastname() + "'" +
+            ", email='" + getEmail() + "'" +
+            ", password='" + getPassword() + "'" +
+            ", socialNumber='" + getSocialNumber() + "'" +
+            ", employeeNumber='" + getEmployeeNumber() + "'" +
+            ", employerEmail='" + getEmployerEmail() + "'" +
+            ", taxCount='" + getTaxCount() + "'" +
+            ", timesats='" + getTimesats() + "'" +
+            ", userSales='" + getUserSaleList() + "'" +
+            "}";
     }
 }

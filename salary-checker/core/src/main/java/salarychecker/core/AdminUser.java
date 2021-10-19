@@ -1,13 +1,4 @@
 package salarychecker.core;
-
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-
 /**
  * This class makes it possible to use the app with admin privileges 
  */
@@ -26,13 +17,7 @@ public class AdminUser extends AbstractUser {
         super.firstname = firstname;
         super.lastname = lastname;
         super.email = email;
-        try {
-            super.password = encryptDecrypt.encrypt(password, firstname);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        super.password = password;
     }
 
     /**
@@ -46,10 +31,11 @@ public class AdminUser extends AbstractUser {
 
 
     public void createUser(String firstname, String lastname, String email, String password, String socialNumber,
-                           int employeeNumber, String employerEmail, double taxCount, char type) {
-        User user = new User(firstname, lastname, email, password, socialNumber, employeeNumber, employerEmail, taxCount);
+                           int employeeNumber, String employerEmail, double taxCount, double timesats) {
+        User user = new User(firstname, lastname, email, password, socialNumber, employeeNumber, employerEmail, taxCount, timesats);
         accounts.addUser(user);
     }
 
+    
 
 }

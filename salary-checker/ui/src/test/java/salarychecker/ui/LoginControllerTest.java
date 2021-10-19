@@ -6,20 +6,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
-import salarychecker.core.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,13 +25,14 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class LoginControllerTest extends ApplicationTest {
     
     private TextField emailField;
     private PasswordField passwordField;
     private Button logInButton;
-    private User testuser1;
+    private Text errorDisplay;
 
 
     @Override
@@ -51,6 +50,7 @@ public class LoginControllerTest extends ApplicationTest {
         emailField = lookup("#email").query();
         passwordField = lookup("#password").query();
         logInButton = lookup("#logIn").query();
+        errorDisplay = lookup("#errorDisplay").query();
     }
 
     @Test
@@ -58,7 +58,6 @@ public class LoginControllerTest extends ApplicationTest {
         writeInLoginFields("seran@live.no", "Password123!");
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
-        alertDialogPopsUp("You are logged in!");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml")); // load same anchorpane that currentWindow contains
             AnchorPane pane = loader.load();
@@ -74,52 +73,30 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Test
     public void testInvalidEmail() {
-        writeInLoginFields("seran", "Password123!");
+        writeInLoginFields("s", "Password123!");
         clickOn(logInButton);
-        alertDialogPopsUp("Password or e-mail is not valid.");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            writeInLoginFields("seran", "Password123!");
-            clickOn(logInButton);
-            }
-        );
-
+        assertEquals("Invalid email, must be of format: name-part@domain, e.g. example@example.com.", errorDisplay.getText());
     }
 
+    //TODO
     @Test
     public void testInvalidPwd() {
-        writeInLoginFields("seran@live.no", "t");
+        writeInLoginFields("seran@live.no", "P");
         clickOn(logInButton);
-        alertDialogPopsUp("Password or e-mail is not valid.");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            writeInLoginFields("seran@live.no", "t");
-            clickOn(logInButton);
-        });
+        assertEquals("Invalid password, must be at least 8 characters and contain at least 1 digit and 1 lower and uppercase letter.", errorDisplay.getText());
     }
 
     @Test
     public void testNonExistingUser() {
-        writeInLoginFields("fxtest@gmail.no", "FxTest123!");
+        writeInLoginFields("fxtest@gmail.no", "Test123!");
         clickOn(logInButton);
-        alertDialogPopsUp("No user of this kind registered.");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            writeInLoginFields("fxtest@gmail.no", "FxTest123!");
-            clickOn(logInButton);
-        });
+        assertEquals("This user is not registered.", errorDisplay.getText());
     }
 
     @AfterEach
     public void clearLoginFields() {
         emailField.clear();
         passwordField.clear();
-    }
-
-
-    private void alertDialogPopsUp(final String expectedContent) {
-        final Stage actualAlertDialog = getTopModalStage();
-        Assertions.assertNotNull(actualAlertDialog);
-
-        final DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
-        assertEquals(expectedContent, dialogPane.getContentText());
     }
 
 

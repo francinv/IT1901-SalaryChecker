@@ -1,18 +1,16 @@
 package salarychecker.ui;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.junit.jupiter.api.Assertions;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
@@ -20,11 +18,12 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
-import salarychecker.core.EncryptDecrypt;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -42,15 +41,29 @@ public class HomePageControllerTest extends ApplicationTest {
 
 
     //HOMEPAGE - VARIABLES
-    private Button changePasswordButton;
-    private TextField firstPasswordField;
-    private TextField secondPasswordField;
     private Text nameDisplay;
     private Text emailDisplay;
     private Text idDisplay;
+    private Text fDatoDisplay;
+    private Text taxDisplay;
+    private Text hourDisplay;
+    private Text employeDisplay;
+    private Node calcTab;
+    private Node salariesTab;
+    private ComboBox<String> monthDropdown;
+    private TextField calculationYearInput;
+    private TextField hoursInput;
+    private TextField recievedSalaryInput;
+    private TextField amountOfMobile;
+    private Button calculateButton;
+    private Label salaryLabel;
+    private Label nettoLabel;
+    private Label salaryDiff;
+
+
+
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
     User user;
-    EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
     @Override
     public void start(final Stage stage) throws Exception {
@@ -58,21 +71,23 @@ public class HomePageControllerTest extends ApplicationTest {
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
 
-        user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
+        user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
         createTestUsers();
         HomepageController homepageController = loader.getController();
         homepageController.setUser(user);
         homepageController.setAccounts(SCP.loadAccounts());
         homepageController.loadInfo();
-
+        URL url = getClass().getResource("SalesReport.csv");
+        File file = new File(url.getFile());
+        homepageController.setURL(file.getAbsolutePath());
         stage.setScene(scene);
         stage.show();
 
     }
 
     private void createTestUsers() throws IOException {
-        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
-        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "21010092234", 34567, "employeer2@gmail.com", 23.0);
+        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
+        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
 
         Accounts accounts = new Accounts();
         accounts.addUser(testuser1);
@@ -85,68 +100,72 @@ public class HomePageControllerTest extends ApplicationTest {
 
     @BeforeEach
     public void initFields() {
-        changePasswordButton = lookup("#changebutton").query();
-        firstPasswordField = lookup("#newPassword").query();
-        secondPasswordField = lookup("#confirmNewPessword").query();
         nameDisplay = lookup("#navnDisplay").query();
         emailDisplay = lookup("#epostDisplay").query();
         idDisplay = lookup("#idDisplay").query();
-
+        fDatoDisplay = lookup("#fDatoDisplay").query();
+        taxDisplay = lookup("#taxDisplay").query();
+        hourDisplay = lookup("#hourDisplay").query();
+        employeDisplay = lookup("#employeDisplay").query();
+        calcTab = lookup(".tab-pane > .tab-header-area > .headers-region > .tab").nth(1).query();
+        salariesTab = lookup(".tab-pane > .tab-header-area > .headers-region > .tab").nth(3).query();
+        monthDropdown = lookup("#monthDropdown").query();
+        calculationYearInput = lookup("#calculationYearInput").query();
+        hoursInput = lookup("#hoursInput").query();
+        recievedSalaryInput = lookup("#recievedSalaryInput").query();
+        amountOfMobile = lookup("#amountOfMobile").query();
+        calculateButton = lookup("#calculateButton").query();
+        salaryLabel = lookup("#salaryLabel").query();
+        nettoLabel = lookup("#nettoLabel").query();
+        salaryDiff = lookup("#salaryDiff").query();
     }
 
     @Test
     public void checkCorrectInfoShown() {
         String name = user.getFirstname() + " " + user.getLastname();
         String id = Integer.toString(user.getEmployeeNumber());
-        Assertions.assertEquals(name, nameDisplay.getText());
-        Assertions.assertEquals(user.getEmail(), emailDisplay.getText());
-        Assertions.assertEquals(id, idDisplay.getText());
+        String sub = user.getSocialNumber().substring(0, 6);
+        String newSocial = sub.substring(0,2) +"."+sub.substring(2, 4) + "." +sub.substring(4, 6);
+        String tax = String.valueOf(user.getTaxCount());
+        String hour = String.valueOf(user.getTimesats());
+        assertEquals(name, nameDisplay.getText());
+        assertEquals(user.getEmail(), emailDisplay.getText());
+        assertEquals(id, idDisplay.getText());
+        assertEquals(newSocial, fDatoDisplay.getText());
+        assertEquals(tax, taxDisplay.getText());
+        assertEquals(hour, hourDisplay.getText());
+        assertEquals(user.getEmployerEmail(), employeDisplay.getText());
     }
 
     @Test
-    public void testNewPassword() throws IOException {
-        String newPassword = "Seran123!";
-        writeInPasswordFields("Seran123!", "Seran123!");
-        clickOn(changePasswordButton);
-        SCP.setSaveFile("Accounts.json");
-        Accounts account = SCP.loadAccounts();
-        AbstractUser user = account.getUser(emailDisplay.getText(), newPassword);
-        
+    public void testCalc(){
+        writeCalculation();
         try {
-            String password = encryptDecrypt.decrypt(user.getPassword(), user.getFirstname());
-            Assertions.assertEquals(newPassword, password);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Thread.sleep(2 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
         }
-        alertDialogPopsUp("Password changed!");
+        assertEquals("Forventet lønn: 13237.0", salaryLabel.getText());
+        assertEquals("Utbetalt lønn: 10000.0", nettoLabel.getText());
+        assertEquals("Differanse: 3237.0", salaryDiff.getText());
     }
 
     @Test
-    public void testInvalidPassword() {
-        writeInPasswordFields("Seran123!", "Test123!");
-        clickOn(changePasswordButton);
-        alertDialogPopsUp("Passwords does not match");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            writeInPasswordFields("Seran123!", "Test123!");
-            clickOn(changePasswordButton);
-        });
+    public void checkIfCalculatedShown(){
 
     }
 
 
-    private void writeInPasswordFields(String pwdfirst, String pwdsecond) {
-        clickOn(firstPasswordField).write(pwdfirst);
-        clickOn(secondPasswordField).write(pwdsecond);
-    }
-
-    private void alertDialogPopsUp(final String expectedContent) {
-        final Stage actualAlertDialog = getTopModalStage();
-        Assertions.assertNotNull(actualAlertDialog);
-
-        final DialogPane dialogPane = (DialogPane) actualAlertDialog.getScene().getRoot();
-        assertEquals(expectedContent, dialogPane.getContentText());
+    private void writeCalculation(){
+        clickOn(salariesTab);
+        clickOn(monthDropdown);
+        type(KeyCode.DOWN);
+        type(KeyCode.ENTER);
+        clickOn(calculationYearInput).write("2021");
+        clickOn(hoursInput).write("100");
+        clickOn(recievedSalaryInput).write("10000");
+        clickOn(amountOfMobile).write("5");
+        clickOn(calculateButton);
     }
 
     private Stage getTopModalStage() {

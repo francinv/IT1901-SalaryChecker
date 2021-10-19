@@ -6,11 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.json.SalaryCheckerPersistence;
@@ -22,10 +24,10 @@ public class LoginController {
     @FXML private TextField email;
     @FXML private TextField password;
     @FXML private Button logIn;
+    @FXML private Text errorDisplay;
 
     SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
-    public User user;
-    Alert a = new Alert(Alert.AlertType.NONE);
+    public AbstractUser user;
 
     @FXML
     void initialize() throws IOException {
@@ -37,53 +39,52 @@ public class LoginController {
     void userLogIn(ActionEvent event) throws IOException {
         String usernameField = email.getText();
         String passwordField = password.getText();
+        Accounts accounts = new Accounts();
+        accounts = SCP.loadAccounts();
 
         UserValidation userval = new UserValidation();
 
-        if (userval.isValidEmail(usernameField) && userval.isValidPassword(passwordField)){
-            Accounts accounts = SCP.loadAccounts();
-            boolean valid = accounts.checkValidUserLogin(usernameField, passwordField);
-            if (valid){
-                user = (User) accounts.getUser(usernameField, passwordField);
-                System.out.println(user.getFirstname());
-                success();
-                switchScene(event);
-            }
-            else {
-                a.setAlertType(Alert.AlertType.ERROR);
-                a.setContentText("No user of this kind registered.");
-                a.show();
-                throw new IllegalStateException("No user of this kind registered.");
-            }
-        } else {
-            pwdemailNValid();
-            throw new IllegalArgumentException("Password or e-mail is not valid.");
+        User u = new User();
+        AdminUser a = new AdminUser();
 
-
+        try {
+            userval.checkValidEmail(usernameField);
+            userval.checkValidPassword(passwordField);
+            try {
+                userval.isExistingUser(usernameField, passwordField, accounts);
+                try {
+                    userval.isValidLogIn(usernameField, passwordField, accounts);
+                    if (accounts.getTypeOfUser(usernameField).equals(u.getClass())){
+                        user = (User) accounts.getUser(usernameField, passwordField);
+                        switchScene(event);
+                    }
+                    if (accounts.getTypeOfUser(usernameField).equals(a.getClass())){
+                        user = (AdminUser) accounts.getUser(usernameField, passwordField);
+                    }
+                }
+                catch (IllegalArgumentException e){
+                    errorDisplay.setText(e.getMessage());
+                }
+            } catch (IllegalArgumentException e){
+                errorDisplay.setText(e.getMessage());
+            }
+        }
+        catch (IllegalArgumentException e) {
+            errorDisplay.setText(e.getMessage());
         }
     }
 
-    private void pwdemailNValid() {
-        a.setAlertType(Alert.AlertType.ERROR);
-        a.setContentText("Password or e-mail is not valid.");
-        a.show();
-    }
-
-    private void success() {
-        a.setAlertType(Alert.AlertType.INFORMATION);
-        a.setContentText("You are logged in!");
-        a.showAndWait();
-    }
-
-
     private void switchScene(ActionEvent event) {
+        Accounts accounts = new Accounts();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = fxmlLoader.load();
             HomepageController homepageController = fxmlLoader.getController();
-            homepageController.setUser(user);
-            homepageController.setAccounts(SCP.loadAccounts());
+            homepageController.setUser((User) user);
+            accounts = SCP.loadAccounts();
+            homepageController.setAccounts(accounts);
             homepageController.loadInfo();
+            ((User) user).addObserver(accounts);
             Scene homepageScene = new Scene(root);
             Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
             window.setScene(homepageScene);
@@ -98,18 +99,15 @@ public class LoginController {
     private void createTestUser() throws IOException {
         System.out.println("Creating two test users to show functionality...");
 
-        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0);
-        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "21010092234", 34567, "employeer2@gmail.com", 23.0);
+        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
+        AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
 
-        Accounts accounts = new Accounts();
-        accounts.addUser(testuser1);
-        accounts.addUser(testuser2);
+        Accounts acc = new Accounts();
+        acc.addUser(testuser1);
+        acc.addUser(testuser2);
 
         SCP.setSaveFile("Accounts.json");
-        SCP.saveAccounts(accounts);
-
-        Accounts accounts2 = SCP.loadAccounts();
-        System.out.println("The test users that were added: " + accounts2.getAccounts());
+        SCP.saveAccounts(acc);
     }
 
 }
