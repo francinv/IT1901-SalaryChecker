@@ -193,6 +193,21 @@ public class HomepageController {
         filenameDisplay.setText(file.getName());
     }
 
+    @FXML
+    private void logOutAction(ActionEvent event){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
+            Parent root = fxmlLoader.load();
+            Scene homepageScene = new Scene(root);
+            Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
+            window.setScene(homepageScene);
+            window.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void setURL(String url){
         this.url = url;
     }
