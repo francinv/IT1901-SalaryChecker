@@ -102,7 +102,7 @@
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Button fx:id="logOutUserButton" layoutX="790.0" layoutY="253.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="367.0" text="Logg Ut">
+                        <Button fx:id="logOutUserButton" layoutX="790.0" layoutY="253.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="63.0" prefWidth="367.0" text="Logg Ut">
                            <font>
                               <Font size="36.0" />
                            </font>
