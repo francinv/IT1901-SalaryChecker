@@ -101,7 +101,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
         JsonNode hourSalNode = objectNode.get("hourRate");
         if (hourSalNode instanceof NumericNode){
-            user.setTimesats(hourSalNode.asInt());
+            user.setTimesats(hourSalNode.asDouble());
         }
 
         JsonNode userSaleNode = objectNode.get("userSaleNode");
