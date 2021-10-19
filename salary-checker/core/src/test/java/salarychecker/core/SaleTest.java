@@ -10,7 +10,7 @@ public class SaleTest {
 
     @BeforeEach
     public void setUp(){
-        Sale testSale = new Sale("17. Mai, 2021" , "anleggStatusString", "salgsTypeString", "campaignString", "brandString", "TX3String", "rebateString", "NVKString", "productString", 50.0);
+        testSale = new Sale("17. Mai, 2021" , "anleggStatusString", "salgsTypeString", "campaignString", "brandString", "TX3String", "rebateString", "NVKString", "productString", 50.0);
     }
 
     @Test
