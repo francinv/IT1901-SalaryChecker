@@ -56,10 +56,11 @@ public class LoginController {
                     userval.isValidLogIn(usernameField, passwordField, accounts);
                     if (accounts.getTypeOfUser(usernameField).equals(u.getClass())){
                         user = (User) accounts.getUser(usernameField, passwordField);
-                        switchScene(event);
+                        switchtoHomepageScene(event);
                     }
                     if (accounts.getTypeOfUser(usernameField).equals(a.getClass())){
                         user = (AdminUser) accounts.getUser(usernameField, passwordField);
+                        switchToAdminScene(event);
                     }
                 }
                 catch (IllegalArgumentException e){
@@ -74,7 +75,28 @@ public class LoginController {
         }
     }
 
-    private void switchScene(ActionEvent event) {
+    private void switchToAdminScene(ActionEvent event) {
+        Accounts accounts = new Accounts();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Admin.fxml"));
+            Parent root = fxmlLoader.load();
+            AdminController adminController = fxmlLoader.getController();
+            adminController.setAdminUser((AdminUser) user);
+            accounts = SCP.loadAccounts();
+            adminController.setAccounts(accounts);
+            adminController.loadInfo();
+            ((AdminUser) user).addObserver(accounts);
+            Scene homepageScene = new Scene(root);
+            Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
+            window.setScene(homepageScene);
+            window.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void switchtoHomepageScene(ActionEvent event) {
         Accounts accounts = new Accounts();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
@@ -89,7 +111,6 @@ public class LoginController {
             Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
             window.setScene(homepageScene);
             window.show();
-
         }
         catch (Exception e){
             e.printStackTrace();
