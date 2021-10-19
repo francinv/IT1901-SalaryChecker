@@ -1,39 +1,33 @@
 package salarychecker.ui;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import org.junit.jupiter.api.Assertions;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -59,6 +53,9 @@ public class HomePageControllerTest extends ApplicationTest {
     private Label salaryLabel;
     private Label nettoLabel;
     private Label salaryDiff;
+    private TableView salaryTableView;
+    private Button changeProfileSettingsButton;
+    private Button logOutUserButton;
 
 
 
@@ -118,6 +115,9 @@ public class HomePageControllerTest extends ApplicationTest {
         salaryLabel = lookup("#salaryLabel").query();
         nettoLabel = lookup("#nettoLabel").query();
         salaryDiff = lookup("#salaryDiff").query();
+        salaryTableView = lookup("#salaryTableView").query();
+        changeProfileSettingsButton = lookup("#changeProfileSettingsButton").query();
+        logOutUserButton = lookup("#logOutUserButton").query();
     }
 
     @Test
@@ -152,12 +152,51 @@ public class HomePageControllerTest extends ApplicationTest {
 
     @Test
     public void checkIfCalculatedShown(){
-
+        writeCalculation();
+        clickOn(salariesTab);
+        UserSale userSale = (UserSale) salaryTableView.getItems().get(0);
+        assertEquals("Januar 2021", userSale.getSalesperiod());
+        assertEquals(13237.0, userSale.getExpected());
+        assertEquals(10000.0, userSale.getPaid());
+        assertEquals(3237.0, userSale.getDifference());
     }
 
+    @Test
+    public void openSettings(){
+        clickOn(changeProfileSettingsButton);
+        Window currentWindow = window(getTopModalStage().getScene());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml")); // load same anchorpane that currentWindow contains
+            AnchorPane pane = loader.load();
+            ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
+            ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();
+            for (int i = 0; i < unmodNodeListCurrentWindow.size(); i++) {
+                assertEquals(unmodNodeListCurrentWindow.get(i).getId(), unmodNodeListLoadedWindow.get(i).getId()); // verify that they're identical by ID
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void logOut(){
+        clickOn(logOutUserButton);
+        Window currentWindow = window(getTopModalStage().getScene());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml")); // load same anchorpane that currentWindow contains
+            AnchorPane pane = loader.load();
+            ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
+            ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();
+            for (int i = 0; i < unmodNodeListCurrentWindow.size(); i++) {
+                assertEquals(unmodNodeListCurrentWindow.get(i).getId(), unmodNodeListLoadedWindow.get(i).getId()); // verify that they're identical by ID
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void writeCalculation(){
-        clickOn(salariesTab);
+        clickOn(calcTab);
         clickOn(monthDropdown);
         type(KeyCode.DOWN);
         type(KeyCode.ENTER);
