@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.DoubleNode;
+import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
@@ -32,17 +33,17 @@ public class UserSaleDeserializer extends JsonDeserializer<UserSale> {
         }
 
         JsonNode expectedNode = objectNode.get("expected");
-        if (expectedNode instanceof DoubleNode) {
+        if (expectedNode instanceof NumericNode) {
             userSale.setExpected(expectedNode.asDouble());
         }
 
         JsonNode paidNode = objectNode.get("paid");
-        if (paidNode instanceof DoubleNode) {
+        if (paidNode instanceof NumericNode) {
             userSale.setPaid(paidNode.asDouble());
         }
 
         JsonNode diffenceNode = objectNode.get("difference");
-        if (diffenceNode instanceof TextNode) {
+        if (diffenceNode instanceof NumericNode) {
             userSale.setDifference();
         }
         
