@@ -34,8 +34,8 @@ public class UserValidationTest {
         Assertions.assertDoesNotThrow(() -> userValidation.checkValidEmail(employerEmail));
         double taxCount = testUser.getTaxCount();
         Assertions.assertDoesNotThrow(() -> userValidation.checkValidTaxCount(taxCount));
-
+        double hourRate = testUser.getTimesats();
         Assertions.assertDoesNotThrow(() -> userValidation.checkValidUser(firstname, lastname, email, password, 
-            socialNumber, employeeNumber, employerEmail, taxCount));
+            socialNumber, employeeNumber, employerEmail, taxCount, hourRate ));
     }
 }

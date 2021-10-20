@@ -19,56 +19,83 @@ public class UserValidation {
     }
 
     public void checkValidFirstname(String firstname) {
+        if (firstname.equals("")){
+            throw new IllegalArgumentException(Errors.NAME_FIELD_EMPTY.getMessage());
+        }
         if (!isValidRegex(FIRSTNAME_REGEX, firstname)) {
             throw new IllegalArgumentException(Errors.INVALID_NAME.getMessage());
         }
     }
 
     public void checkValidLastname(String lastname) {
+        if (lastname.equals("")){
+            throw new IllegalArgumentException(Errors.NAME_FIELD_EMPTY.getMessage());
+        }
         if (!isValidRegex(LASTNAME_REGEX, lastname)) {
             throw new IllegalArgumentException(Errors.INVALID_NAME.getMessage());
         }
     }
 
     public void checkValidPassword(String password) {
+        if (password.equals("")){
+            throw new IllegalArgumentException(Errors.PWD_FIELD_EMPTY.getMessage());
+        }
         if (!isValidRegex(PASSWORD_REGEX, password)) {
             throw new IllegalArgumentException(Errors.INVALID_PWD.getMessage());
         }
     }
 
     public void checkValidSocialNumber(String socialNumber) {
+        if (socialNumber.equals("")){
+            throw new IllegalArgumentException(Errors.SOCIAL_NUMBER_EMPTY.getMessage());
+        }
         if (!isValidRegex(SOCIAL_NUMBER_REGEX, socialNumber)) {
             throw new IllegalArgumentException(Errors.INVALID_SOCIAL_NUMBER.getMessage());
         }
     }
 
     public void checkValidEmployeeNumber(int employeeNumber) {
+        if (employeeNumber == 0){
+            throw new IllegalArgumentException(Errors.EMPLOYEE_NUMBER_EMPTY.getMessage());
+        }
         if (!isValidRegex(EMPLOYEE_NUMBER_REGEX, String.valueOf(employeeNumber))) {
             throw new IllegalArgumentException(Errors.INVALID_EMPLOYEE_NUMBER.getMessage());
         }
     }
 
     public void checkValidEmail(String email) {
+        if (email.equals("")){
+            throw new IllegalArgumentException(Errors.EMAIL_FIELD_EMPTY.getMessage());
+        }
         if (!isValidRegex(EMAIL_REGEX, email)) {
             throw new IllegalArgumentException(Errors.INVALID_EMAIL.getMessage());
         }
     }
     
     public void checkValidTaxCount(double taxCount) throws IllegalArgumentException {
+        if (taxCount == 0.0){
+            throw new IllegalArgumentException(Errors.TAX_COUNT_EMPTY.getMessage());
+        }
         if (!isValidRegex(TAX_COUNT_REGEX, String.valueOf(taxCount))) {
             throw new IllegalArgumentException(Errors.INVALID_TAX_COUNT.getMessage());
         }
     }
 
-    public void isExistingUser(String email, String password, Accounts accounts) {
+    public void checkValidHourRate(double hourRate) throws IllegalArgumentException {
+        if (hourRate == 0.0){
+            throw new IllegalArgumentException(Errors.HOUR_RATE_EMPTY.getMessage());
+        }
+    }
+
+    public void isNotExistingUser(String email, String password, Accounts accounts) {
         if(accounts.getUser(email, password)==null){
             throw new IllegalArgumentException(Errors.NOT_REGISTERED.getMessage());
         }
     }
 
     public void checkValidUser(String firstname, String lastname, String email, String password,
-        String socialNumber, int employeeNumber, String employerEmail, double taxCount) {
-            
+        String socialNumber, int employeeNumber, String employerEmail, double taxCount, double hourRate){
+        allFieldsEmpty(firstname, lastname, email, password, socialNumber, employeeNumber, taxCount, hourRate);
         checkValidFirstname(firstname);
         checkValidLastname(lastname);
         checkValidEmail(email);
@@ -77,8 +104,14 @@ public class UserValidation {
         checkValidEmployeeNumber(employeeNumber);
         checkValidEmail(employerEmail);
         checkValidTaxCount(taxCount);
+        checkValidHourRate(hourRate);
     }
 
+    public void allFieldsEmpty(String firstname, String lastname, String email, String password, String socialNumber, int employeeNumber, double taxCount, double hourRate){
+        if (firstname.equals("") && lastname.equals("") && email.equals("") && password.equals("") && socialNumber.equals("") && employeeNumber == 0 && taxCount == 0.0 && hourRate == 0.0){
+            throw new IllegalArgumentException(Errors.EVERYTHING_EMPTY.getMessage());
+        }
+    }
     public void isValidLogIn(String email, String password, Accounts accounts) {
         if(!accounts.checkValidUserLogin(email, password)) {
             throw new IllegalArgumentException(Errors.INVALID_EMAIL_AND_OR_PWD.getMessage());
@@ -96,4 +129,11 @@ public class UserValidation {
             throw new IllegalArgumentException(Errors.NOT_EQUAL_EMAIL.getMessage());
         }
     }
+
+    public static void main(String[] args) {
+        UserValidation userValidation = new UserValidation();
+        userValidation.checkValidUser("", "", "", "", "", 0, "", 0.0, 0.0);
+        // userValidation.allFieldsEmpty("", "", "", "", "", 0, "", 0.0, 0.0);
+    }
+
 }

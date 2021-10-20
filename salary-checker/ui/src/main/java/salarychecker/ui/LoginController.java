@@ -51,7 +51,7 @@ public class LoginController {
             userval.checkValidEmail(usernameField);
             userval.checkValidPassword(passwordField);
             try {
-                userval.isExistingUser(usernameField, passwordField, accounts);
+                userval.isNotExistingUser(usernameField, passwordField, accounts);
                 try {
                     userval.isValidLogIn(usernameField, passwordField, accounts);
                     if (accounts.getTypeOfUser(usernameField).equals(u.getClass())){
@@ -85,6 +85,7 @@ public class LoginController {
             accounts = SCP.loadAccounts();
             adminController.setAccounts(accounts);
             adminController.loadInfo();
+            adminController.loadListView();
             ((AdminUser) user).addObserver(accounts);
             Scene homepageScene = new Scene(root);
             Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
