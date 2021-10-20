@@ -104,7 +104,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
             user.setTimesats(hourSalNode.asDouble());
         }
 
-        JsonNode userSaleNode = objectNode.get("userSaleNode");
+        JsonNode userSaleNode = objectNode.get("userSale");
         if (userSaleNode instanceof ArrayNode) {
             for (JsonNode elementNode : ((ArrayNode) userSaleNode)) {
                 UserSale userSale = userSaleDeserializer.deserialize(elementNode);
@@ -118,4 +118,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
     }
         return null;
     }   
+
+    
 }
