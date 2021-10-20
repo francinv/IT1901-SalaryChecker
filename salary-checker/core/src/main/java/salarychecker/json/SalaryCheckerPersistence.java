@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import salarychecker.core.Accounts;
-import salarychecker.core.User;
 
 /**
  * Class for persistence using jackson serializer and deserializer
@@ -28,14 +27,6 @@ public class SalaryCheckerPersistence {
     mapper.registerModule(new SalaryCheckerModule());
   }
 
-  public User readUser(Reader reader) throws IOException {
-    return mapper.readValue(reader, User.class);
-  }
-
-  public void writeUser(User user, Writer writer) throws IOException {
-    mapper.writerWithDefaultPrettyPrinter().writeValue(writer, user);
-  }
-
   private Path saveFilePath = null;
 
   public void setSaveFile(String saveFile) {
@@ -43,33 +34,24 @@ public class SalaryCheckerPersistence {
   }
 
   /**
-   * Loads a User from the saved file (saveFilePath) in the user.home folder.
+   * Loads Accounts from the saved file (saveFilePath) in the user.home folder.
    *
-   * @return the loaded User
+   * @return the loaded Accounts
    */
-  public User loadUser() throws IOException, IllegalStateException {
+  public Accounts loadAccounts() throws IOException, IllegalStateException {
     if (saveFilePath == null) {
       throw new IllegalStateException("Save file path is not set, yet");
     }
     try (Reader reader = new FileReader(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
-      return readUser(reader);
+      return readAccounts(reader);
     }
   }
-
+  
   /**
    * Saves a User to the saveFilePath in the user.home folder.
    *
    * @param user the User to save
    */
-  public void saveUser(User user) throws IOException, IllegalStateException {
-    if (saveFilePath == null) {
-      throw new IllegalStateException("Save file path is not set, yet");
-    }
-    try (Writer writer = new FileWriter(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
-      writeUser(user, writer);
-    }
-  }
-
   public void saveAccounts(Accounts accounts) throws IOException, IllegalStateException {
     if (saveFilePath == null) {
       throw new IllegalStateException("Save file path is not set, yet");
@@ -81,15 +63,6 @@ public class SalaryCheckerPersistence {
 
   public void writeAccounts(Accounts accounts, Writer writer) throws IOException {
     mapper.writerWithDefaultPrettyPrinter().writeValue(writer, accounts);
-  }
-
-  public Accounts loadAccounts() throws IOException, IllegalStateException {
-    if (saveFilePath == null) {
-      throw new IllegalStateException("Save file path is not set, yet");
-    }
-    try (Reader reader = new FileReader(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
-      return readAccounts(reader);
-    }
   }
 
   public Accounts readAccounts(Reader reader) throws IOException {

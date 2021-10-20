@@ -1,6 +1,7 @@
 package salarychecker.core;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -40,10 +41,9 @@ public class Accounts implements IUserObserver {
         this.accounts.remove(user);
     }
 
-    // @Override
-    // public Iterator<AbstractUser> iterator() {
-    //     return accounts.iterator();
-    // }
+    public Iterator<AbstractUser> iterator() {
+        return accounts.iterator();
+    }
 
     /**
      * Finds the index of the user in list
