@@ -20,6 +20,8 @@ public class Sale {
         this.provisjon = provisjon;
     }
 
+    public Sale(){}
+
     public double getProvisjon() {
         return this.provisjon;
     }
