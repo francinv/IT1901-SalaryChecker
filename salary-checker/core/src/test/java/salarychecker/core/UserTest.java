@@ -30,6 +30,7 @@ public class UserTest {
         Assertions.assertEquals(33333, testUser.getEmployeeNumber());
         Assertions.assertEquals("employer_email@email.com", testUser.getEmployerEmail());
         Assertions.assertEquals(35.5, testUser.getTaxCount());
+        Assertions.assertEquals(132.0, testUser.getTimesats());
     }
 
     @Test
@@ -50,5 +51,9 @@ public class UserTest {
         Assertions.assertNotEquals("employer_email@email.com", testUser.getEmployerEmail());
         testUser.setTaxCount(34.5);
         Assertions.assertNotEquals(35.5, testUser.getTaxCount());
+        testUser.setTimesats(145);
+        Assertions.assertEquals(145, testUser.getTimesats());
     }
+
+    
 }
