@@ -32,14 +32,12 @@ public class Calculation {
     private List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
     private double calculated;
-
-    User user;
+    private User user;
+    private SalaryCSVReader salaryCSVReader = new SalaryCSVReader();
 
     public Calculation(User user){
         this.user = user;
     }
-
-    SalaryCSVReader salaryCSVReader = new SalaryCSVReader();
 
     public List<Sale> getSaleslist() {
         return new ArrayList<>(saleslist);
@@ -49,13 +47,13 @@ public class Calculation {
         saleslist = salaryCSVReader.csvToBean(url);
     }
 
-    private void removeUnwanted() {
+    public void removeUnwanted() {
         saleslist = saleslist.stream()
                     .filter(s->s.getAnleggStatus().equals("23-Etablert"))
                     .collect(Collectors.toList());
     }
 
-    private void updateElectricityCommission() {
+    public void updateElectricityCommission() {
         for (Sale s : saleslist) {
 
             if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")){
@@ -179,19 +177,19 @@ public class Calculation {
         }
     }
 
-    private void calculateElectricityCommission() {
+    public void calculateElectricityCommission() {
         for (Sale s : saleslist) {
             calculated += s.getProvisjon();
         }
     }
 
-    private void addMobile(int amount) {
+    public void addMobile(int amount) {
         int per = 200;
         int mobcommission = per * amount;
         calculated += mobcommission;
     }
 
-    private void hourSalary(double hours) {
+    public void hourSalary(double hours) {
         double hoursal = user.getTimesats() * hours;
         calculated += hoursal;
     }
@@ -200,11 +198,7 @@ public class Calculation {
         return calculated;
     }
 
-    private void setCalculated(double calculated){
-        this.calculated = calculated;
-    }
-
-    private void taxDeduction() {
+    public void taxDeduction() {
         calculated = (calculated * ((100-user.getTaxCount())/100));
     }
 
@@ -217,5 +211,4 @@ public class Calculation {
         hourSalary(hours);
         taxDeduction();
     }
-
 }
