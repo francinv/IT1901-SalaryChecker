@@ -14,9 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1300.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salarychecker.ui.HomepageController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salarychecker.ui.HomepageController">
    <children>
-      <TabPane prefHeight="1300.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="1200.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Profil">
             <content>
@@ -32,77 +32,77 @@
                               <Font size="49.0" />
                            </font>
                         </Text>
-                        <Text fx:id="epostDisplay" layoutX="100.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="navn.navnesen@firma.no">
+                        <Text fx:id="epostDisplay" layoutX="101.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="navn.navnesen@firma.no">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="idTitle" layoutX="100.0" layoutY="376.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt ID">
+                        <Text fx:id="idTitle" layoutX="100.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt ID">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
+                        <Text fx:id="idDisplay" layoutX="100.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="987654">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="98.0" layoutY="818.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timesats">
+                        <Text layoutX="93.0" layoutY="689.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timesats">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text layoutX="95.0" layoutY="704.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
+                        <Text layoutX="95.0" layoutY="569.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="taxDisplay" layoutX="97.0" layoutY="754.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
+                        <Text fx:id="taxDisplay" layoutX="98.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="206.0" layoutY="754.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
+                        <Text layoutX="204.0" layoutY="621.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\%">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="100.0" layoutY="559.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fødselsdato">
+                        <Text layoutX="100.0" layoutY="454.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fødselsdato">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="fDatoDisplay" layoutX="100.0" layoutY="625.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21.09.1999" wrappingWidth="189.205078125">
+                        <Text fx:id="fDatoDisplay" layoutX="100.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21.09.1999" wrappingWidth="189.205078125">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Button fx:id="changeProfileSettingsButton" layoutX="788.0" layoutY="64.0" mnemonicParsing="false" onAction="#changeProfileSettingsAction" prefHeight="63.0" prefWidth="367.0" styleClass="0px" text="Endre profil">
+                        <Button fx:id="changeProfileSettingsButton" layoutX="771.0" layoutY="631.0" mnemonicParsing="false" onAction="#changeProfileSettingsAction" prefHeight="63.0" prefWidth="367.0" styleClass="0px" text="Endre profil">
                            <font>
                               <Font size="36.0" />
                            </font>
                         </Button>
-                        <Text layoutX="90.0" layoutY="945.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeidsgiver E-post" wrappingWidth="434.596923828125">
+                        <Text layoutX="574.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arbeidsgiver E-post" wrappingWidth="434.596923828125">
                            <font>
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="employeDisplay" layoutX="100.0" layoutY="985.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sjef@firma.no" wrappingWidth="338.205078125">
+                        <Text fx:id="employeDisplay" layoutX="579.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="sjef@firma.no" wrappingWidth="338.205078125">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="hourDisplay" layoutX="99.0" layoutY="868.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
+                        <Text fx:id="hourDisplay" layoutX="105.0" layoutY="734.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00.00">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="219.0" layoutY="866.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kr/t">
+                        <Text layoutX="215.0" layoutY="732.0" strokeType="OUTSIDE" strokeWidth="0.0" text="kr/t">
                            <font>
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Button fx:id="logOutUserButton" layoutX="790.0" layoutY="253.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="63.0" prefWidth="367.0" text="Logg Ut">
+                        <Button fx:id="logOutUserButton" layoutX="755.0" layoutY="51.0" mnemonicParsing="false" onAction="#logOutAction" prefHeight="63.0" prefWidth="367.0" text="Logg Ut">
                            <font>
                               <Font size="36.0" />
                            </font>
