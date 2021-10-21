@@ -88,6 +88,7 @@ public class User extends AbstractUser {
         return timesats;
     }
     public void setTimesats(double timesats){
+        userValidation.checkValidHourRate(timesats);
         this.timesats = timesats;
         for (IUserObserver IUserObserver : userObs){
             IUserObserver.userInfoDoubleChanged(this, timesats);
@@ -116,7 +117,6 @@ public class User extends AbstractUser {
             }
         }
     }
-
     
 
     @Override
