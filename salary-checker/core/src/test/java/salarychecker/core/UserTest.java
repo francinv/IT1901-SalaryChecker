@@ -1,6 +1,9 @@
 package salarychecker.core;
 
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,6 +77,16 @@ public class UserTest {
         Assertions.assertTrue(1 == testUser.getUserSaleList().size());
         testUser.addUserSale(testPeriod);
         Assertions.assertTrue(1 == testUser.getUserSaleList().size());
+    }
+
+    @Test
+    public void testObserver(){
+        Accounts accounts = new Accounts();
+        accounts.addUser(testUser);
+        testUser.addObserver(accounts);
+        assertTrue(testUser.getUserObs().size() == 1);
+        testUser.removeObserver(accounts);
+        assertFalse(testUser.getUserObs().size() == 1);
     }
 
 }

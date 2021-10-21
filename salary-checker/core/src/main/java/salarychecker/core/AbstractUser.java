@@ -117,6 +117,15 @@ public abstract class AbstractUser {
         userObs.remove(uObserver);
     }
 
+    /**
+     * Access method for userObs
+     * 
+     * @return the userObs
+     */
+    public Collection<IUserObserver> getUserObs() {
+        return new ArrayList<>(userObs);
+    }
+
     @Override
     public String toString() {
         return "{" +
