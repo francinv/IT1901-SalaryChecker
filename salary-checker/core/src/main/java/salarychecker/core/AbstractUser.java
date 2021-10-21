@@ -65,6 +65,10 @@ public abstract class AbstractUser {
         userObs.remove(uObserver);
     }
 
+    public Collection<IUserObserver> getUserObs() {
+        return new ArrayList<>(userObs);
+    }
+
 
 
     @Override
