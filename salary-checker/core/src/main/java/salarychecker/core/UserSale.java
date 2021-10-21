@@ -58,8 +58,4 @@ public class UserSale {
             ", difference='" + getDifference() + "'" +
             "}";
     }
-
-
-
-
 }
