@@ -29,7 +29,6 @@ public class AdminUser extends AbstractUser {
         this.accounts = accounts;
     }
 
-
     public void createUser(String firstname, String lastname, String email, String password, String socialNumber,
                            int employeeNumber, String employerEmail, double taxCount, double timesats) {
         UserValidation userValidation = new UserValidation();
@@ -37,7 +36,4 @@ public class AdminUser extends AbstractUser {
         User user = new User(firstname, lastname, email, password, socialNumber, employeeNumber, employerEmail, taxCount, timesats);
         accounts.addUser(user);
     }
-
-    
-
 }
