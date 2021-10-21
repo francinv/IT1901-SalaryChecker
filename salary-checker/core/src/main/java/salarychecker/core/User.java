@@ -12,7 +12,7 @@ public class User extends AbstractUser {
     private int employeeNumber;
     private String employerEmail;
     private double taxCount;
-    private double timesats;
+    private double hourRate;
 
     private ArrayList<UserSale> userSales = new ArrayList<UserSale>();
 
@@ -29,7 +29,7 @@ public class User extends AbstractUser {
      * @param taxCount
      */
     public User(String firstname, String lastname, String email, String password, String socialNumber,
-            int employeeNumber, String employerEmail, double taxCount, double timesats) {
+            int employeeNumber, String employerEmail, double taxCount, double hourRate) {
         super.firstname = firstname;
         super.lastname = lastname;
         super.email = email;
@@ -38,7 +38,7 @@ public class User extends AbstractUser {
         this.employeeNumber = employeeNumber;
         this.employerEmail = employerEmail;
         this.taxCount = taxCount;
-        this.timesats = timesats;
+        this.hourRate = hourRate;
     }
 
     /**
@@ -87,15 +87,15 @@ public class User extends AbstractUser {
         }
     }
 
-    public double getTimesats(){
-        return timesats;
+    public double getHourRate(){
+        return hourRate;
     }
     
-    public void setTimesats(double timesats){
-        userValidation.checkValidHourRate(timesats);
-        this.timesats = timesats;
+    public void setHourRate(double hourRate){
+        userValidation.checkValidHourRate(hourRate);
+        this.hourRate = hourRate;
         for (IUserObserver IUserObserver : userObs){
-            IUserObserver.userInfoDoubleChanged(this, timesats);
+            IUserObserver.userInfoDoubleChanged(this, hourRate);
         }
     }
 
@@ -134,7 +134,7 @@ public class User extends AbstractUser {
             ", employeeNumber='" + getEmployeeNumber() + "'" +
             ", employerEmail='" + getEmployerEmail() + "'" +
             ", taxCount='" + getTaxCount() + "'" +
-            ", timesats='" + getTimesats() + "'" +
+            ", hourRate='" + getHourRate() + "'" +
             ", userSales='" + getUserSaleList() + "'" +
             "}";
     }

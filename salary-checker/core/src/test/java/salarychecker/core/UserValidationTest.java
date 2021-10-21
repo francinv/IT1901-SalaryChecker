@@ -35,8 +35,8 @@ public class UserValidationTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setEmployerEmail("employerEmail"));
         double taxCount = testUser.getTaxCount();
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setTaxCount(22222));
-        double hourRate = testUser.getTimesats();
-        Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setTimesats(0.0));
+        double hourRate = testUser.getHourRate();
+        Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setHourRate(0.0));
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setFirstname(""));
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setLastname(""));
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setEmail(""));

@@ -37,7 +37,7 @@ public class SalaryCheckerModuleTest {
     }
 
     static void checkUser(User user, String firstname, String lastname, String email, int employeeNumber, 
-        String employerEmail, double taxCount, double timesats) {
+        String employerEmail, double taxCount, double hourRate) {
 
         Assertions.assertEquals(firstname, user.getFirstname());
         Assertions.assertEquals(lastname, user.getLastname());
@@ -45,7 +45,7 @@ public class SalaryCheckerModuleTest {
         Assertions.assertEquals(employeeNumber, user.getEmployeeNumber());
         Assertions.assertEquals(employerEmail, user.getEmployerEmail());
         Assertions.assertEquals(taxCount, user.getTaxCount());
-        Assertions.assertEquals(timesats, user.getTimesats());
+        Assertions.assertEquals(hourRate, user.getHourRate());
     }
 
     static void checkAdminUser(AdminUser adminUser, String firstname, String lastname, String email) {

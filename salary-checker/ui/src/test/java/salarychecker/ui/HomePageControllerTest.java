@@ -127,7 +127,7 @@ public class HomePageControllerTest extends ApplicationTest {
         String sub = user.getSocialNumber().substring(0, 6);
         String newSocial = sub.substring(0,2) +"."+sub.substring(2, 4) + "." +sub.substring(4, 6);
         String tax = String.valueOf(user.getTaxCount());
-        String hour = String.valueOf(user.getTimesats());
+        String hour = String.valueOf(user.getHourRate());
         assertEquals(name, nameDisplay.getText());
         assertEquals(user.getEmail(), emailDisplay.getText());
         assertEquals(id, idDisplay.getText());

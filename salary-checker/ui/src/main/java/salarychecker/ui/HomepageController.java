@@ -100,7 +100,7 @@ public class HomepageController {
         epostDisplay.setText(user.getEmail());
         idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
         taxDisplay.setText(String.valueOf(user.getTaxCount()));
-        hourDisplay.setText(String.valueOf(user.getTimesats()));
+        hourDisplay.setText(String.valueOf(user.getHourRate()));
         employeDisplay.setText(String.valueOf(user.getEmployerEmail()));
         String socialnumber = user.getSocialNumber();
         fDatoDisplay.setText(splitSocialAddDot(socialnumber));

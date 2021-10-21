@@ -158,7 +158,7 @@ public class Accounts implements IUserObserver {
                 user = (User) u;
             }
         }
-        user.setTimesats(hoursal);
+        user.setHourRate(hoursal);
     }
 
     public void updateTaxCount(User user, Double taxcount){
@@ -167,7 +167,7 @@ public class Accounts implements IUserObserver {
                 user = (User) u;
             }
         }
-        user.setTimesats(taxcount);
+        user.setHourRate(taxcount);
     }
 
     public void updateEmployeeNumber(User user, int employeenumber){
@@ -176,7 +176,7 @@ public class Accounts implements IUserObserver {
                 user = (User) u;
             }
         }
-        user.setTimesats(employeenumber);
+        user.setHourRate(employeenumber);
     }
 
     public void addUserSale(User user, UserSale usale){
@@ -191,7 +191,7 @@ public class Accounts implements IUserObserver {
         if (changeddouble.equals(user.getTaxCount())){
             updateTaxCount(user, changeddouble);
         }
-        else if (changeddouble.equals(user.getTimesats())){
+        else if (changeddouble.equals(user.getHourRate())){
             updateHourSal(user, changeddouble);
         }
 

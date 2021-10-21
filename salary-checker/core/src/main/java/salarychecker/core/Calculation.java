@@ -190,7 +190,7 @@ public class Calculation {
     }
 
     public void hourSalary(double hours) {
-        double hoursal = user.getTimesats() * hours;
+        double hoursal = user.getHourRate() * hours;
         calculated += hoursal;
     }
 
