@@ -59,13 +59,14 @@ public class User extends AbstractUser {
     public void setEmployeeNumber(int employeeNumber) {
         userValidation.checkValidEmployeeNumber(employeeNumber);
         this.employeeNumber = employeeNumber;
-        for(IUserObserver IUserObserver :userObs){
+        for(IUserObserver IUserObserver : userObs){
             IUserObserver.userInfoIntChanged(this, employeeNumber);
         }
     }
     public String getEmployerEmail() {
         return employerEmail;
     }
+
     public void setEmployerEmail(String employerEmail) {
         userValidation.checkValidEmail(employerEmail);
         this.employerEmail = employerEmail;
@@ -77,6 +78,7 @@ public class User extends AbstractUser {
     public double getTaxCount() {
         return taxCount;
     }
+
     public void setTaxCount(double taxCount) {
         userValidation.checkValidTaxCount(taxCount);
         this.taxCount = taxCount;
@@ -84,9 +86,11 @@ public class User extends AbstractUser {
             IUserObserver.userInfoDoubleChanged(this, taxCount);
         }
     }
+
     public double getTimesats(){
         return timesats;
     }
+    
     public void setTimesats(double timesats){
         userValidation.checkValidHourRate(timesats);
         this.timesats = timesats;
