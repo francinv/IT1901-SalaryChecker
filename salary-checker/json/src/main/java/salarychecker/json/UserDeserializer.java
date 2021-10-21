@@ -3,12 +3,10 @@ package salarychecker.json;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
-import com.fasterxml.jackson.core.JsonParser.NumberType;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
@@ -103,10 +101,10 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
         JsonNode hourSalNode = objectNode.get("hourRate");
         if (hourSalNode instanceof NumericNode){
-            user.setTimesats(hourSalNode.asInt());
+            user.setTimesats(hourSalNode.asDouble());
         }
 
-        JsonNode userSaleNode = objectNode.get("userSaleNode");
+        JsonNode userSaleNode = objectNode.get("userSale");
         if (userSaleNode instanceof ArrayNode) {
             for (JsonNode elementNode : ((ArrayNode) userSaleNode)) {
                 UserSale userSale = userSaleDeserializer.deserialize(elementNode);
@@ -120,4 +118,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
     }
         return null;
     }   
+
+    
 }

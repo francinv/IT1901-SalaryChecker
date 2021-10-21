@@ -67,7 +67,7 @@ public class User extends AbstractUser {
         return employerEmail;
     }
     public void setEmployerEmail(String employerEmail) {
-        userValidation.checkValidEmail(email);
+        userValidation.checkValidEmail(employerEmail);
         this.employerEmail = employerEmail;
         for (IUserObserver IUserObserver : userObs){
             IUserObserver.userInfoStringChanged(this, employerEmail);

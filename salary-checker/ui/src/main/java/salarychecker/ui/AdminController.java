@@ -12,10 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.User;
+import salarychecker.core.*;
 import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.IOException;
@@ -42,13 +39,9 @@ public class AdminController {
     @FXML private Text errorMessageDisplay;
     @FXML private ListView<String> userList;
 
-    @FXML
-    private void initialize(){
-        loadListView();
-    }
-
-    private void loadListView() {
-        List<AbstractUser> tempuserlist = new ArrayList<AbstractUser>();
+    public void loadListView() {
+        userList.getItems().clear();
+        List<AbstractUser> tempuserlist;
         tempuserlist = accounts.getAccounts().stream().filter(u-> u instanceof User).collect(Collectors.toList());
         for (AbstractUser u : tempuserlist) {
             String name = u.getFirstname() + " " + u.getLastname();
@@ -72,37 +65,44 @@ public class AdminController {
 
     @FXML
     private void createUserAction(ActionEvent event) throws IOException {
-        if (createFirstNameField.getText().equals("") || createLastNameField.getText().equals("") || createEmailField.getText().equals("") || createPasswordField.getText().equals("") || createEmployeeNumberField.getText().equals("") || createSocialNumberField.getText().equals("") || createTaxField.getText().equals("") || createWageField.getText().equals("")){
-            errorMessageDisplay.setText("All fields must be filled out.");
-        }
         String firstname = createFirstNameField.getText();
         String lastname = createLastNameField.getText();
         String email = createEmailField.getText();
         String password = createPasswordField.getText();
-        int employeenumber = Integer.parseInt(createEmployeeNumberField.getText());
+        String tempemployeeN = createEmployeeNumberField.getText();
+        int employeenumber = 0;
+        if (! tempemployeeN.isEmpty()){
+                employeenumber = Integer.parseInt(tempemployeeN);
+        }
         String socialnumber = createSocialNumberField.getText();
-        Double taxcount = Double.valueOf(createTaxField.getText());
-        Double hourwage = Double.valueOf(createWageField.getText());
-
+        String temptaxcount = createTaxField.getText();
+        Double taxcount = 0.0;
+        if (! temptaxcount.isEmpty()){
+            taxcount = Double.valueOf(temptaxcount);
+        }
+        String temphourwage = createWageField.getText();
+        Double hourwage = 0.0;
+        if (! temphourwage.isEmpty()){
+            hourwage = Double.valueOf(temphourwage);
+        }
         try {
             adminUser.setAccounts(accounts);
             adminUser.createUser(firstname, lastname, email, password, socialnumber, employeenumber, adminUser.getEmail(), taxcount, hourwage);
+            createFirstNameField.clear();
+            createLastNameField.clear();
+            createEmailField.clear();
+            createPasswordField.clear();
+            createEmployeeNumberField.clear();
+            createSocialNumberField.clear();
+            createTaxField.clear();
+            createWageField.clear();
         }
         catch (IllegalArgumentException e){
             errorMessageDisplay.setText(e.getMessage());
         }
-        createFirstNameField.clear();
-        createLastNameField.clear();
-        createEmailField.clear();
-        createPasswordField.clear();
-        createEmployeeNumberField.clear();
-        createSocialNumberField.clear();
-        createTaxField.clear();
-        createWageField.clear();
         loadListView();
         SCP.setSaveFile("Accounts.json");
         SCP.saveAccounts(accounts);
-
     }
 
     @FXML

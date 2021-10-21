@@ -32,16 +32,9 @@ public class AdminUser extends AbstractUser {
 
     public void createUser(String firstname, String lastname, String email, String password, String socialNumber,
                            int employeeNumber, String employerEmail, double taxCount, double timesats) {
-        User user = new User();
-        user.setFirstname(firstname);
-        user.setLastname(lastname);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setSocialNumber(socialNumber);
-        user.setEmployeeNumber(employeeNumber);
-        user.setEmployerEmail(employerEmail);
-        user.setTaxCount(taxCount);
-        user.setTimesats(timesats);
+        UserValidation userValidation = new UserValidation();
+        userValidation.checkValidUser(firstname, lastname, email, password, socialNumber, employeeNumber, employerEmail, taxCount, timesats);
+        User user = new User(firstname, lastname, email, password, socialNumber, employeeNumber, employerEmail, taxCount, timesats);
         accounts.addUser(user);
     }
 
