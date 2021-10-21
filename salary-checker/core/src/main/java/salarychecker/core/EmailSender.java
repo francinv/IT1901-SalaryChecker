@@ -56,8 +56,8 @@ public class EmailSender {
             String htmlCode = "<h1> Hi, your salary is ready! </h1> <br/> <h2><b>Get it! </b></h2>";
             message.setContent(htmlCode, "text/html");
             return message;
-        } catch (Exception ex) {
-            System.out.println("Exception in mail");
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
         return null;
     }
