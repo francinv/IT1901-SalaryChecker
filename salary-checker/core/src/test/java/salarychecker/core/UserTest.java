@@ -1,5 +1,6 @@
 package salarychecker.core;
 
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,11 +8,15 @@ import org.junit.jupiter.api.Test;
 public class UserTest {
 
     private User testUser;
+    private UserSale testPeriod, notTestPeriod;
 
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "password!123", 
             "22019893456", 33333, "employer_email@email.com", 35.5, 132.0);
+
+        testPeriod = new UserSale("PeriodString" , 1000.0, 500.0);
+        testPeriod.setDifference();
     }
 
     @Test
@@ -30,7 +35,7 @@ public class UserTest {
         Assertions.assertEquals(33333, testUser.getEmployeeNumber());
         Assertions.assertEquals("employer_email@email.com", testUser.getEmployerEmail());
         Assertions.assertEquals(35.5, testUser.getTaxCount());
-        Assertions.assertEquals(132.0, testUser.getTimesats());
+        Assertions.assertTrue( 0 == testUser.getUserSaleList().size());
     }
 
     @Test
@@ -55,5 +60,20 @@ public class UserTest {
         Assertions.assertEquals(145, testUser.getTimesats());
     }
 
-    
+    @Test
+    public void testIsExistingUserSale(){
+        UserSale notTestPeriod = new UserSale("notUserString", 1, 1);
+        testUser.addUserSale(testPeriod);
+        Assertions.assertTrue(testUser.isExistingUserSale(testPeriod));
+        Assertions.assertFalse(testUser.isExistingUserSale(notTestPeriod));
+    } 
+
+    @Test
+    public void testAddUserSale(){
+        testUser.addUserSale(testPeriod);
+        Assertions.assertTrue(1 == testUser.getUserSaleList().size());
+        testUser.addUserSale(testPeriod);
+        Assertions.assertTrue(1 == testUser.getUserSaleList().size());
+    }
+
 }
