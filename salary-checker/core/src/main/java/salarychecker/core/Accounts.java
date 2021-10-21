@@ -5,12 +5,19 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Lists of users.
+ * Class which contains a list of all registred Users.
+ * This class implements IUserObserver, this is needed to 
+ * observe changes in User object
  */
 public class Accounts implements IUserObserver {
 
     private List<AbstractUser> accounts = new ArrayList<>();
 
+    /**
+     * Access method for accounts
+     * 
+     * @return the accounts
+     */
     public List<AbstractUser> getAccounts() {
         return new ArrayList<>(accounts);
     }
@@ -41,6 +48,10 @@ public class Accounts implements IUserObserver {
         this.accounts.remove(user);
     }
 
+    /**
+     * Iterator to easilly move between objects in list
+     * @return iterator of accounts 
+     */
     public Iterator<AbstractUser> iterator() {
         return accounts.iterator();
     }
@@ -53,12 +64,21 @@ public class Accounts implements IUserObserver {
         return accounts.indexOf(user);
     }
 
+    /**
+     * Checks if the given user exists in the list of users.
+     * @param user to check
+     * @return true or false based on if the user exists 
+     */
     public boolean contains(AbstractUser user) {
         return accounts.stream().anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
-    private EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
-
+    /**
+     * Checks if the user login is valid
+     * @param email
+     * @param password
+     * @return boolean
+     */
     public boolean checkValidUserLogin(String email, String password) {
         AbstractUser user = null;
 
@@ -206,9 +226,4 @@ public class Accounts implements IUserObserver {
             " accounts='" + getAccounts() + "'" +
             "}";
     }
-
-    
-
-
 }
-
