@@ -126,23 +126,24 @@ public class Accounts implements IUserObserver {
         }
         return user.getClass();
     }
-    protected void updatePassword(User user, String password) {
+
+    public void updatePassword(User user, String password) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setPassword(password));
     }
 
-    private void updateEmail(User user, String email) {
+    public void updateEmail(User user, String email) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setEmail(email));
     }
 
-    private void updateFirstname(User user, String firstname) {
+    public void updateFirstname(User user, String firstname) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setFirstname(firstname));
     }
 
-    private void updateLastname(User user, String lastname) {
+    public void updateLastname(User user, String lastname) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setLastname(lastname));
     }
 
-    private void updateEmployerEmail(User user, String employermail){
+    public void updateEmployerEmail(User user, String employermail){
         for (AbstractUser u : accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
@@ -151,7 +152,7 @@ public class Accounts implements IUserObserver {
         user.setEmployerEmail(employermail);
     }
 
-    private void updateHourSal(User user, Double hoursal){
+    public void updateHourSal(User user, Double hoursal){
         for (AbstractUser u: accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
@@ -160,7 +161,7 @@ public class Accounts implements IUserObserver {
         user.setTimesats(hoursal);
     }
 
-    private void updateTaxCount(User user, Double taxcount){
+    public void updateTaxCount(User user, Double taxcount){
         for (AbstractUser u: accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
@@ -169,7 +170,7 @@ public class Accounts implements IUserObserver {
         user.setTimesats(taxcount);
     }
 
-    private void updateEmployeeNumber(User user, int employeenumber){
+    public void updateEmployeeNumber(User user, int employeenumber){
         for (AbstractUser u: accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
@@ -178,7 +179,7 @@ public class Accounts implements IUserObserver {
         user.setTimesats(employeenumber);
     }
 
-    private void addUserSale(User user, UserSale usale){
+    public void addUserSale(User user, UserSale usale){
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->((User) u).addUserSale(usale));
     }
 
