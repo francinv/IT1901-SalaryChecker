@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class Calculation {
 
-    public List<Sale> saleslist = new ArrayList<Sale>();
+    private List<Sale> saleslist = new ArrayList<Sale>();
 
     private List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
     private List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
@@ -40,6 +40,10 @@ public class Calculation {
     }
 
     SalaryCSVReader salaryCSVReader = new SalaryCSVReader();
+
+    public List<Sale> getSaleslist() {
+        return new ArrayList<>(saleslist);
+    }
 
     public void updateList(String url) throws FileNotFoundException {
         saleslist = salaryCSVReader.csvToBean(url);
