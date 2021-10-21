@@ -15,7 +15,7 @@
         <jackson.version>2.12.5</jackson.version>
         <openscsv.version>5.5.2</openscsv.version>
         <sunmail.version>1.5.5</sunmail.version>
-        <skipTests>false</skipTests>
+        <skipTests>true</skipTests>
         <skipSpotBugs>true</skipSpotBugs>
         <skipCheckstyle>true</skipCheckstyle>
     </properties>
@@ -186,5 +186,6 @@
     <modules>
         <module>core</module>
         <module>ui</module>
+        <module>json</module>
     </modules>
 </project>

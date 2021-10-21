@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import salarychecker.core.*;
@@ -37,19 +39,19 @@ public class SalaryCheckerModuleTest {
     static void checkUser(User user, String firstname, String lastname, String email, int employeeNumber, 
         String employerEmail, double taxCount, double timesats) {
 
-        assertEquals(firstname, user.getFirstname());
-        assertEquals(lastname, user.getLastname());
-        assertEquals(email, user.getEmail());
-        assertEquals(employeeNumber, user.getEmployeeNumber());
-        assertEquals(employerEmail, user.getEmployerEmail());
-        assertEquals(taxCount, user.getTaxCount());
-        assertEquals(timesats, user.getTimesats());
+        Assertions.assertEquals(firstname, user.getFirstname());
+        Assertions.assertEquals(lastname, user.getLastname());
+        Assertions.assertEquals(email, user.getEmail());
+        Assertions.assertEquals(employeeNumber, user.getEmployeeNumber());
+        Assertions.assertEquals(employerEmail, user.getEmployerEmail());
+        Assertions.assertEquals(taxCount, user.getTaxCount());
+        Assertions.assertEquals(timesats, user.getTimesats());
     }
 
     static void checkAdminUser(AdminUser adminUser, String firstname, String lastname, String email) {
-        assertEquals(firstname, adminUser.getFirstname());
-        assertEquals(lastname, adminUser.getLastname());
-        assertEquals(email, adminUser.getEmail());
+        Assertions.assertEquals(firstname, adminUser.getFirstname());
+        Assertions.assertEquals(lastname, adminUser.getLastname());
+        Assertions.assertEquals(email, adminUser.getEmail());
     }
 
     @Test
@@ -64,15 +66,15 @@ public class SalaryCheckerModuleTest {
         try {
             String jsonAsString = mapper.writeValueAsString(accounts);
             Accounts accounts2 = mapper.readValue(jsonAsString, Accounts.class);
-            assertEquals(2, accounts2.getAccounts().size());
+            Assertions.assertEquals(2, accounts2.getAccounts().size());
             Iterator<AbstractUser> it = accounts.iterator();
             AbstractUser user = it.next();
-            assertEquals("Hammad", user.getFirstname());
-            assertTrue(it.hasNext());
+            Assertions.assertEquals("Hammad", user.getFirstname());
+            Assertions.assertTrue(it.hasNext());
             checkAdminUser((AdminUser)it.next(), "Francin", "Vincent", "francin@vincent.no");
-            assertFalse(it.hasNext());
+            Assertions.assertFalse(it.hasNext());
         } catch (JsonProcessingException e) {
-            fail();
+            Assertions.fail();
         }
     }
 }
