@@ -66,53 +66,72 @@ public class SettingsController {
             if (!(changeFirstNameField.getText().equals("") && changeLastNameField.getText().equals(""))){
                 user.setFirstname(changeFirstNameField.getText());
                 user.setLastname(changeLastNameField.getText());
+                errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
+                clearFields(changeFirstNameField);
+                clearFields(changeLastNameField);
             }
 
             if(!(changeEmailField.getText().equals("") && changeConfirmedEmailField.getText().equals(""))){
                 userValidation.isEqualEmail(changeEmailField.getText(), changeConfirmedEmailField.getText());
                 user.setEmail(changeEmailField.getText());
+                errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
+                clearFields(changeEmailField);
+                clearFields(changeConfirmedEmailField);
             }
 
             if(!(changeEmployerField.getText().equals("") && changeConfirmedEmployerField.getText().equals(""))){
                 userValidation.isEqualEmail(changeEmployerField.getText(), changeConfirmedEmployerField.getText());
                 user.setEmployerEmail(changeEmployerField.getText());
+                errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
+                clearFields(changeEmployerField);
+                clearFields(changeConfirmedEmployerField);
             }
 
             if(!(hourWageField.getText().equals(""))){
                 user.setTimesats(Double.valueOf(hourWageField.getText()));
+                errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
+                clearFields(hourWageField);
             }
 
             if(!(changePasswordField.getText().equals("") && changeConfirmedPasswordField.getText().equals(""))){
                 userValidation.isEqualPassword(changePasswordField.getText(), changeConfirmedPasswordField.getText());
                 user.setPassword(changePasswordField.getText());
+                errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
+                clearFields(changePasswordField);
+                clearFields(changeConfirmedPasswordField);
             }
 
             if(!(changeTaxBracketField.getText().equals(""))){
                 user.setTaxCount(Double.valueOf(changeTaxBracketField.getText()));
+                errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
+                clearFields(changeTaxBracketField);
             }
 
             if(!(changeEmployeeNumberField.getText().equals(""))){
                 user.setEmployeeNumber(Integer.valueOf(changeEmployeeNumberField.getText()));
+                errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
+                clearFields(changeEmployeeNumberField);
             }
-
             SCP.setSaveFile("Accounts.json");
             SCP.saveAccounts(accounts);
+            loadInfo();
         } catch (IllegalArgumentException e){
             errorTextDisplay.setText(e.getMessage());
             successMessageDisplay.setText(null);
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    void clearFields(TextField wantedField){
+        wantedField.clear();
+    }
     @FXML
     public void closeButtonAction(ActionEvent event){
         try {

@@ -130,6 +130,7 @@ public class HomepageController {
             settingsController.setUser((User) user);
             settingsController.setAccounts(existingaccounts);
             settingsController.loadInfo();
+            user.addObserver(existingaccounts);
             Scene homepageScene = new Scene(root);
             Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
             window.setScene(homepageScene);
