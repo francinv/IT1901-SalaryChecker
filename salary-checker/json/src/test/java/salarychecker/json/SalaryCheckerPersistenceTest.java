@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import salarychecker.core.*;
 
@@ -39,23 +41,23 @@ public class SalaryCheckerPersistenceTest {
       SCP.setSaveFile("AccountsTest.json");
       SCP.saveAccounts(accounts);
       Accounts accounts2 = SCP.loadAccounts();
-      assertTrue(accounts2.iterator().hasNext());
+      Assertions.assertTrue(accounts2.iterator().hasNext());
       User hammad2 = ((User)accounts2.iterator().next());
-      assertNotEquals("Brage", hammad2.getFirstname());
+      Assertions.assertNotEquals("Brage", hammad2.getFirstname());
       Iterator<AbstractUser> it = accounts2.iterator();
-      assertTrue(it.hasNext());
+      Assertions.assertTrue(it.hasNext());
       SalaryCheckerModuleTest.checkUser((User) it.next(), "Hammad", "Siddiqui", "ham@mad.no", 12345, "employer@gmail.com", 30, 152.50);
-      assertTrue(it.hasNext());
+      Assertions.assertTrue(it.hasNext());
       SalaryCheckerModuleTest.checkAdminUser((AdminUser) it.next(), "Francin", "Vincent", "francin@vincent.no");
-      assertFalse(it.hasNext());
-      assertTrue(hammad2.getUserSaleList().size() == 1);
-      assertTrue(hammad2.getUserSaleList().get(0).getDifference() == 5000);
-      assertTrue(hammad2.getUserSaleList().get(0).getPaid() == 10000);
-      assertTrue(hammad2.getUserSaleList().get(0).getExpected() == 15000);
-      assertEquals("Januar 2021", hammad2.getUserSaleList().get(0).getSalesperiod());
+      Assertions.assertFalse(it.hasNext());
+      Assertions.assertTrue(hammad2.getUserSaleList().size() == 1);
+      Assertions.assertTrue(hammad2.getUserSaleList().get(0).getDifference() == 5000);
+      Assertions.assertTrue(hammad2.getUserSaleList().get(0).getPaid() == 10000);
+      Assertions.assertTrue(hammad2.getUserSaleList().get(0).getExpected() == 15000);
+      Assertions.assertEquals("Januar 2021", hammad2.getUserSaleList().get(0).getSalesperiod());
       
     } catch (IOException e) {
-      fail();
+      Assertions.fail();
     }
   }
 }
