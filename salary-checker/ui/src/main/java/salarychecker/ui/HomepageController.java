@@ -60,9 +60,6 @@ public class HomepageController {
     @FXML private TableColumn<UserSale, Double> expectedColTable;
     @FXML private TableColumn<UserSale, Double> diffColTable;
 
-    
-
-
 
     private String url;
 
