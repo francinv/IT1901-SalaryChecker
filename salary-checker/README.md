@@ -60,31 +60,58 @@ Many people are employed in the sales industry, and a lot of companies reward th
 - [docs](../../docs)
     - [release1](../../docs/release1)
         - [README.md](../../docs/release1/README.md) :point_right: Documentation for release 1
+    - [release2](../../docs/release2)
+        - [README.md](../../docs/release2/README.md) :point_right: Documentation for release 2
 
 
 - [salary-checker](../salary-checker)
     - [core](./core)
         - [salarychecker/core](./core/src/main/java/salarychecker/core)
+            - [AbstractUser](.cor/src/main/java/salarychecker/core/AbstractUser.java)
             - [User](./core/src/main/java/salarychecker/core/User.java) :point_right: Creates a new user, get and set methods for all User-attributes.
+            - [AdminUser](./core/src/main/java/salarychecker/core/AdminUser.java) :point_right: Creates new admin user.
+            - [Calculation](./core/src/main/java/salarychecker/core/Calculation.java) :point_right: Calculates salary for a given user and sales period.
+            - [EmailSender](./core/src/main/java/salarychecker/core/EmailSender.java) :point_right: Sending e-maul to employer.
+            - [EncryptDecrypt](./core/src/main/java/salarychecker/core/EncryptDecrypt.java) :point_right: Encryption and decryption of passwords.
+            - [Errors](./core/src/main/java/salarychecker/core/Errors.java) :point_right: Errors being displayed for different invalid user-inputs.
+            - [IUserObserver](./core/src/main/java/salarychecker/coreIUserObserver.java) 
+            - [SalaryCSVReader.java](./core/src/main/java/salarychecker/core/SalaryCSVReader.java) :point_right: Reades sales information from csv-file.
+            - [Sale.java](./core/src/main/java/salarychecker/core/Sale.java) :point_right: Creates a new sale, get and set methods for all sale attributes.
+            - [UserSale](./core/src/main/java/salarychecker/core/UserSale.java) :point_right: Creates a new sales period for a given user.
             - [UserValidation](./core/src/main/java/salarychecker/core/UserValidation.java) :point_right: Validates user attributes according to predefined parameters.
             - [Accounts](./core/src/main/java/salarychecker/core/Accounts.java) :point_right: Adds users to a list called Accounts. Methods for retrieving users and updating password.
         - [salarychecker/json](./core/src/main/java/salarychecker/json/)
-            - Serializers: [UserSerializers](./core/src/main/java/salarychecker/json/UserSerializer.java) and [AccountsSerializer](./core/src/main/java/salarychecker/json/AccountsSerializer.java) :point_right: These classes serializes the objects to JSON-nodes. This is needed to write a JSON file.
-            - Deserializers: [UserDeserializer](./core/src/main/java/salarychecker/json/UserDeserializer.java) and [AccountsDeserializer](./core/src/main/java/salarychecker/json/AccountsDeserializer.java) :point_right: These classes deserializes the JSON nodes to Java objects.
+            - Serializers: [UserSerializers](./core/src/main/java/salarychecker/json/UserSerializer.java) , [AccountsSerializer](./core/src/main/java/salarychecker/json/AccountsSerializer.java) , [AdminUserSerializer](./core/src/main/java/salarychecker/json/AdminUserSerializer.java) and [UserSaleSerializer](./core/src/main/java/salarychecker/json/UserSaleSerializer.java) :point_right: These classes serializes the objects to JSON-nodes. This is needed to write a JSON file.
+            - Deserializers: [UserDeserializer](./core/src/main/java/salarychecker/json/UserDeserializer.java) ,  [AccountsDeserializer](./core/src/main/java/salarychecker/json/AccountsDeserializer.java) , [AdminUserDeserializer](./core/src/main/java/salarychecker/json/AdminUserDeserializer.java) and [UserSaleDeserializer](./core/src/main/java/salarychecker/json/UserSaleDeserializer.java) :point_right: These classes deserializes the JSON nodes to Java objects.
             - [SalaryCheckerModule](./core/src/main/java/salarychecker/json/SalaryCheckerModule.java)
             - [SalaryCheckerPersistence](./core/src/main/java/salarychecker/json/SalaryCheckerPersistence.java) :point_right: Class with methods for reading, writing and loading classes. 
         - [tests](./core/src/test)
+                - [AccountsTest](./core/src/test/java/salarychecker/core/AccountsTest.java) :point_right: Test for Accounts.java
+                - [AdminUserTest](./core/src/test/java/salarychecker/core/AdminUserTest.java) :point_right: Test for AdminUser.Java
+                - [CalculationTest](./core/src/test/java/salarychecker/core/CalculationTest.java) :point_right: Test for Calculation.java
+                - [EncryptDecryptTest](./core/src/test/java/salarychecker/core/EncryptDecryptTest.java) :point_right: Test for EncryptDecrypt.java. 
+                - [SalaryCSVReaderTest](./core/src/test/java/salarychecker/core/SalaryCSVReaderTest.java) :point_right: Test for CalaryCSVReader.java.
+                - [SaleTest](./core/src/test/java/salarychecker/core/SaleTest.java) :point_right: Test for Sale.java
+                - [UserSaleTest](./core/src/test/java/salarychecker/core/UserSaleTest.java) :point_right: Test for UserSale.Java
                 - [UserTest](./core/src/test/java/salarychecker/core/UserTest.java) :point_right: Test for User.java
                 - [UserValidationTest](./core/src/test/java/salarychecker/core/UserValidationTest.java) :point_right: Test for UserValidation.java
+                
     - [ui](./ui)
         - [salarychecker/ui](./ui/src/main/java/salarychecker/ui)
             - [SalaryCheckerApp](./ui/src/main/java/salarychecker/ui/SalaryCheckerApp.java) :point_right: App class.
             - [LoginController](./ui/src/main/java/salarychecker/ui/LoginController.java) :point_right: Controller for the login scene.
-            - [HomepageController](./ui/src/main/java/salarychecker/ui/HomepageController.java) :point_right Controller for the user homepage.
+            - [AdminController](./ui/src/main/java/salarychecker/ui/AdminController.java) :point_right: Controller for the admin scene.
+            - [HomepageController](./ui/src/main/java/salarychecker/ui/HomepageController.java) :point_right: Controller for the user homepage.
+            - [SettingsController](./ui/src/main/java/salarychecker/ui/SettingsController.java) :point_right: Controller for the settings scene.
         - [resources](./ui/src/main/resources)
             - [LogIn.fxml](./ui/src/main/resources/LogIn.fxml) :point_right: FXML-file for login page.
             - [HomePage.fxml](./ui/src/main/resources/HomePage.fxml) :point_right: FXML-file for homepage.
+            - [Admin.fxml](./ui/src/main/resources/Admin.fxml) :point_right: FXML-file for admin page.
+            - [Settings.fxml](./ui/src/main/resources/Settings.fxml) :point_right: FXML-file for settings page.
         - [tests](./ui/src/test)
+            - [AdminControllerTest](./ui/src/test/AdminControllerTest.java) :point_right: Test for AdminController.java
+            - [HomePageControllerTest](./ui/src/test/HomePageControllerTest.java) :point_right: Test for HomePageController.java
+            - [LogInControllerTest](./ui/src/test/LogInControllerTest.java) :point_right: Test for LogInController.java
                     
 
 
