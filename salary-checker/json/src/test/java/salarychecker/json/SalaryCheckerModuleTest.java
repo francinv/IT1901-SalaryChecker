@@ -3,15 +3,12 @@ package salarychecker.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Iterator;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import salarychecker.core.*;
+import salarychecker.json.internal.SalaryCheckerModule;
 
 public class SalaryCheckerModuleTest {
     
@@ -37,7 +34,7 @@ public class SalaryCheckerModuleTest {
     }
 
     static void checkUser(User user, String firstname, String lastname, String email, int employeeNumber, 
-        String employerEmail, double taxCount, double timesats) {
+        String employerEmail, double taxCount, double hourRate) {
 
         Assertions.assertEquals(firstname, user.getFirstname());
         Assertions.assertEquals(lastname, user.getLastname());
@@ -45,7 +42,7 @@ public class SalaryCheckerModuleTest {
         Assertions.assertEquals(employeeNumber, user.getEmployeeNumber());
         Assertions.assertEquals(employerEmail, user.getEmployerEmail());
         Assertions.assertEquals(taxCount, user.getTaxCount());
-        Assertions.assertEquals(timesats, user.getTimesats());
+        Assertions.assertEquals(hourRate, user.getHourRate());
     }
 
     static void checkAdminUser(AdminUser adminUser, String firstname, String lastname, String email) {

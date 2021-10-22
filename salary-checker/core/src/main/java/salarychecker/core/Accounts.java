@@ -5,12 +5,19 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Lists of users.
+ * Class which contains a list of all registred Users.
+ * This class implements IUserObserver, this is needed to 
+ * observe changes in User object
  */
 public class Accounts implements IUserObserver {
 
     private List<AbstractUser> accounts = new ArrayList<>();
 
+    /**
+     * Access method for accounts
+     * 
+     * @return the accounts
+     */
     public List<AbstractUser> getAccounts() {
         return new ArrayList<>(accounts);
     }
@@ -41,6 +48,10 @@ public class Accounts implements IUserObserver {
         this.accounts.remove(user);
     }
 
+    /**
+     * Iterator to easilly move between objects in list
+     * @return iterator of accounts 
+     */
     public Iterator<AbstractUser> iterator() {
         return accounts.iterator();
     }
@@ -53,12 +64,21 @@ public class Accounts implements IUserObserver {
         return accounts.indexOf(user);
     }
 
+    /**
+     * Checks if the given user exists in the list of users.
+     * @param user to check
+     * @return true or false based on if the user exists 
+     */
     public boolean contains(AbstractUser user) {
         return accounts.stream().anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
-    private EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
-
+    /**
+     * Checks if the user login is valid
+     * @param email
+     * @param password
+     * @return boolean
+     */
     public boolean checkValidUserLogin(String email, String password) {
         AbstractUser user = null;
 
@@ -74,18 +94,9 @@ public class Accounts implements IUserObserver {
     public AbstractUser getUser(String email, String password) {
         AbstractUser user = null;
 
-        User u = new User();
-        AdminUser a = new AdminUser();
-
         for (AbstractUser ab : accounts) {
             if (ab.getEmail().equals(email)) {
-                if (getTypeOfUser(email).equals(u.getClass())){
-                    user = (User) ab;
-                } 
-                if (getTypeOfUser(email).equals(a.getClass())){
-                    user = (AdminUser) ab;
-                }
-                user = ab;
+                user = ab instanceof User ? (User) ab : (AdminUser) ab;
             } 
         }
         if (user == null) {
@@ -97,32 +108,23 @@ public class Accounts implements IUserObserver {
         return null;
     }
 
-    public Class getTypeOfUser(String email){
-        AbstractUser user = null;
-        for (AbstractUser ab: accounts){
-            if (ab.getEmail().equals(email)){
-                user = ab;
-            }
-        }
-        return user.getClass();
-    }
-    protected void updatePassword(User user, String password) {
+    public void updatePassword(User user, String password) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setPassword(password));
     }
 
-    private void updateEmail(User user, String email) {
+    public void updateEmail(User user, String email) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setEmail(email));
     }
 
-    private void updateFirstname(User user, String firstname) {
+    public void updateFirstname(User user, String firstname) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setFirstname(firstname));
     }
 
-    private void updateLastname(User user, String lastname) {
+    public void updateLastname(User user, String lastname) {
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->u.setLastname(lastname));
     }
 
-    private void updateEmployerEmail(User user, String employermail){
+    public void updateEmployerEmail(User user, String employermail){
         for (AbstractUser u : accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
@@ -131,34 +133,34 @@ public class Accounts implements IUserObserver {
         user.setEmployerEmail(employermail);
     }
 
-    private void updateHourSal(User user, Double hoursal){
+    public void updateHourSal(User user, Double hoursal){
         for (AbstractUser u: accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
             }
         }
-        user.setTimesats(hoursal);
+        user.setHourRate(hoursal);
     }
 
-    private void updateTaxCount(User user, Double taxcount){
+    public void updateTaxCount(User user, Double taxcount){
         for (AbstractUser u: accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
             }
         }
-        user.setTimesats(taxcount);
+        user.setHourRate(taxcount);
     }
 
-    private void updateEmployeeNumber(User user, int employeenumber){
+    public void updateEmployeeNumber(User user, int employeenumber){
         for (AbstractUser u: accounts){
             if(u.getEmail().equals(user.getEmail())){
                 user = (User) u;
             }
         }
-        user.setTimesats(employeenumber);
+        user.setHourRate(employeenumber);
     }
 
-    private void addUserSale(User user, UserSale usale){
+    public void addUserSale(User user, UserSale usale){
         accounts.stream().filter(u->u.getEmail().equals(user.getEmail())).findAny().ifPresent(u->((User) u).addUserSale(usale));
     }
 
@@ -170,7 +172,7 @@ public class Accounts implements IUserObserver {
         if (changeddouble.equals(user.getTaxCount())){
             updateTaxCount(user, changeddouble);
         }
-        else if (changeddouble.equals(user.getTimesats())){
+        else if (changeddouble.equals(user.getHourRate())){
             updateHourSal(user, changeddouble);
         }
 
@@ -206,9 +208,4 @@ public class Accounts implements IUserObserver {
             " accounts='" + getAccounts() + "'" +
             "}";
     }
-
-    
-
-
 }
-

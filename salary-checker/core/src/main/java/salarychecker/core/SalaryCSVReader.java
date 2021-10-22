@@ -14,9 +14,12 @@ import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 
 public class SalaryCSVReader {
 
+    private Map<String, String> mapping;
+    private HeaderColumnNameTranslateMappingStrategy<Sale> strategy;
+    private CsvToBean<Sale> csvReader;
+
     public List<Sale> csvToBean(String url) throws FileNotFoundException {
-        Map<String, String> mapping = new 
-                      HashMap<String, String>();
+        mapping = new HashMap<String, String>();
         mapping.put("SalgsID", "salgsID");
         mapping.put("AnleggsStatus", "anleggStatus");
         mapping.put("Salgstype", "salgsType");
@@ -27,19 +30,18 @@ public class SalaryCSVReader {
         mapping.put("Norsk Vannkraft", "NVK");
         mapping.put("ProductHubNavn", "product");
 
-        HeaderColumnNameTranslateMappingStrategy<Sale> strategy = new HeaderColumnNameTranslateMappingStrategy<Sale>();
+        strategy = new HeaderColumnNameTranslateMappingStrategy<Sale>();
         strategy.setType(Sale.class);
         strategy.setColumnMapping(mapping);
 
         Reader reader = new BufferedReader(new FileReader(url));
 
-        CsvToBean<Sale> csvReader = new CsvToBeanBuilder(reader)
-                .withType(Sale.class)
-                .withSeparator(';')
-                .withIgnoreLeadingWhiteSpace(true)
-                .withIgnoreEmptyLine(true)
-                .withMappingStrategy(strategy)
-                .build();
+        csvReader = new CsvToBeanBuilder<Sale>(reader).withType(Sale.class)
+                                                .withSeparator(';')
+                                                .withIgnoreLeadingWhiteSpace(true)
+                                                .withIgnoreEmptyLine(true)
+                                                .withMappingStrategy(strategy)
+                                                .build();
 
         List<Sale> results = csvReader.parse();
 

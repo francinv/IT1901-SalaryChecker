@@ -26,8 +26,9 @@ public class LoginController {
     @FXML private Button logIn;
     @FXML private Text errorDisplay;
 
-    SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
-    public AbstractUser user;
+    private AbstractUser user;
+    private UserValidation userval = new UserValidation();
+    private SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
 
     @FXML
     void initialize() throws IOException {
@@ -42,32 +43,17 @@ public class LoginController {
         Accounts accounts = new Accounts();
         accounts = SCP.loadAccounts();
 
-        UserValidation userval = new UserValidation();
-
-        User u = new User();
-        AdminUser a = new AdminUser();
-
         try {
             userval.checkValidEmail(usernameField);
             userval.checkValidPassword(passwordField);
-            try {
-                userval.isNotExistingUser(usernameField, passwordField, accounts);
-                try {
-                    userval.isValidLogIn(usernameField, passwordField, accounts);
-                    if (accounts.getTypeOfUser(usernameField).equals(u.getClass())){
-                        user = (User) accounts.getUser(usernameField, passwordField);
-                        switchtoHomepageScene(event);
-                    }
-                    if (accounts.getTypeOfUser(usernameField).equals(a.getClass())){
-                        user = (AdminUser) accounts.getUser(usernameField, passwordField);
-                        switchToAdminScene(event);
-                    }
-                }
-                catch (IllegalArgumentException e){
-                    errorDisplay.setText(e.getMessage());
-                }
-            } catch (IllegalArgumentException e){
-                errorDisplay.setText(e.getMessage());
+            userval.isNotExistingUser(usernameField, passwordField, accounts);
+            userval.isValidLogIn(usernameField, passwordField, accounts);
+            user = accounts.getUser(usernameField, passwordField);
+            if (user instanceof User) {
+                switchtoHomepageScene(event);
+            }
+            else {
+                switchToAdminScene(event);
             }
         }
         catch (IllegalArgumentException e) {

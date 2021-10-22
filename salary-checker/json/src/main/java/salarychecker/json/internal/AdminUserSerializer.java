@@ -1,4 +1,4 @@
-package salarychecker.json;
+package salarychecker.json.internal;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -44,7 +44,6 @@ EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
             jsonGen.writeStringField("password", encryptDecrypt.encrypt(user.getPassword(), user.getFirstname()+user.getLastname()) );
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

@@ -55,7 +55,7 @@ public class SettingsController {
         changeConfirmedEmailField.setPromptText(user.getEmail());
         changeEmployerField.setPromptText(user.getEmployerEmail());
         changeConfirmedEmployerField.setPromptText(user.getEmployerEmail());
-        hourWageField.setPromptText(String.valueOf(user.getTimesats()));
+        hourWageField.setPromptText(String.valueOf(user.getHourRate()));
         changeTaxBracketField.setPromptText(String.valueOf(user.getTaxCount()));
         changeEmployeeNumberField.setPromptText(String.valueOf(user.getEmployeeNumber()));
     }
@@ -91,7 +91,7 @@ public class SettingsController {
             }
 
             if(!(hourWageField.getText().equals(""))){
-                user.setTimesats(Double.valueOf(hourWageField.getText()));
+                user.setHourRate(Double.valueOf(hourWageField.getText()));
                 errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
                 clearFields(hourWageField);

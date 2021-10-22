@@ -3,11 +3,11 @@ package salarychecker.core;
 public class Sale {
 
     private String saleDate, anleggStatus, salgsType, campaign, brand, TX3, rebate, NVK, product;
-
     private double provisjon;
 
     public Sale(String saleDate, String anleggStatus, String salgsType, String campaign, 
-    String brand, String TX3, String rebate, String NVK, String product, Double provisjon){
+            String brand, String TX3, String rebate, String NVK, String product, Double provisjon){
+
         this.saleDate = saleDate;
         this.anleggStatus = anleggStatus;
         this.salgsType = salgsType;
@@ -119,5 +119,4 @@ public class Sale {
             ", Provisjon='" + getProvisjon() + "'" +
             "}";
     }
-    
 }

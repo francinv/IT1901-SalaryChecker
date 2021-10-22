@@ -1,4 +1,4 @@
-package salarychecker.json;
+package salarychecker.json.internal;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -59,7 +59,7 @@ format:
         jsonGen.writeNumberField("employeeNumber", user.getEmployeeNumber());
         jsonGen.writeStringField("employerEmail", user.getEmployerEmail());
         jsonGen.writeNumberField("taxCount", user.getTaxCount());
-        jsonGen.writeNumberField("hourRate", user.getTimesats());
+        jsonGen.writeNumberField("hourRate", user.getHourRate());
         
         if (user.getUserSaleList() != null) {
             jsonGen.writeArrayFieldStart("userSale");

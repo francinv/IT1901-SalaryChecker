@@ -1,6 +1,9 @@
 package salarychecker.core;
 
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public class UserTest {
 
     private User testUser;
-    private UserSale testPeriod, notTestPeriod;
+    private UserSale testPeriod;
 
     @BeforeEach
     public void setUp() {
@@ -56,8 +59,8 @@ public class UserTest {
         Assertions.assertNotEquals("employer_email@email.com", testUser.getEmployerEmail());
         testUser.setTaxCount(34.5);
         Assertions.assertNotEquals(35.5, testUser.getTaxCount());
-        testUser.setTimesats(145);
-        Assertions.assertEquals(145, testUser.getTimesats());
+        testUser.setHourRate(145);
+        Assertions.assertEquals(145, testUser.getHourRate());
     }
 
     @Test
@@ -74,6 +77,16 @@ public class UserTest {
         Assertions.assertTrue(1 == testUser.getUserSaleList().size());
         testUser.addUserSale(testPeriod);
         Assertions.assertTrue(1 == testUser.getUserSaleList().size());
+    }
+
+    @Test
+    public void testObserver(){
+        Accounts accounts = new Accounts();
+        accounts.addUser(testUser);
+        testUser.addObserver(accounts);
+        assertTrue(testUser.getUserObs().size() == 1);
+        testUser.removeObserver(accounts);
+        assertFalse(testUser.getUserObs().size() == 1);
     }
 
 }

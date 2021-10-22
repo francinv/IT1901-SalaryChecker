@@ -53,7 +53,7 @@ public class HomePageControllerTest extends ApplicationTest {
     private Label salaryLabel;
     private Label nettoLabel;
     private Label salaryDiff;
-    private TableView salaryTableView;
+    private TableView<UserSale> salaryTableView;
     private Button changeProfileSettingsButton;
     private Button logOutUserButton;
 
@@ -127,7 +127,7 @@ public class HomePageControllerTest extends ApplicationTest {
         String sub = user.getSocialNumber().substring(0, 6);
         String newSocial = sub.substring(0,2) +"."+sub.substring(2, 4) + "." +sub.substring(4, 6);
         String tax = String.valueOf(user.getTaxCount());
-        String hour = String.valueOf(user.getTimesats());
+        String hour = String.valueOf(user.getHourRate());
         assertEquals(name, nameDisplay.getText());
         assertEquals(user.getEmail(), emailDisplay.getText());
         assertEquals(id, idDisplay.getText());
@@ -154,7 +154,7 @@ public class HomePageControllerTest extends ApplicationTest {
     public void checkIfCalculatedShown(){
         writeCalculation();
         clickOn(salariesTab);
-        UserSale userSale = (UserSale) salaryTableView.getItems().get(0);
+        UserSale userSale = salaryTableView.getItems().get(0);
         assertEquals("Januar 2021", userSale.getSalesperiod());
         assertEquals(13237.0, userSale.getExpected());
         assertEquals(10000.0, userSale.getPaid());

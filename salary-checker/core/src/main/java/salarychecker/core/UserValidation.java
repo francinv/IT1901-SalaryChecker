@@ -129,11 +129,4 @@ public class UserValidation {
             throw new IllegalArgumentException(Errors.NOT_EQUAL_EMAIL.getMessage());
         }
     }
-
-    public static void main(String[] args) {
-        UserValidation userValidation = new UserValidation();
-        userValidation.checkValidUser("", "", "", "", "", 0, "", 0.0, 0.0);
-        // userValidation.allFieldsEmpty("", "", "", "", "", 0, "", 0.0, 0.0);
-    }
-
 }

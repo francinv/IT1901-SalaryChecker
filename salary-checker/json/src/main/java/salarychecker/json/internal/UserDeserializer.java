@@ -1,4 +1,4 @@
-package salarychecker.json;
+package salarychecker.json.internal;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -63,7 +63,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
                 user.setPassword(decryptedPassword);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
     
@@ -77,7 +76,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
                 user.setSocialNumber(decryptedSocialNumber);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             
@@ -101,7 +99,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
         JsonNode hourSalNode = objectNode.get("hourRate");
         if (hourSalNode instanceof NumericNode){
-            user.setTimesats(hourSalNode.asDouble());
+            user.setHourRate(hourSalNode.asDouble());
         }
 
         JsonNode userSaleNode = objectNode.get("userSale");

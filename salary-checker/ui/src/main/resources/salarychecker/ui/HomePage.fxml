@@ -47,7 +47,7 @@
                               <Font size="34.0" />
                            </font>
                         </Text>
-                        <Text layoutX="93.0" layoutY="689.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timesats">
+                        <Text layoutX="93.0" layoutY="689.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HourRate">
                            <font>
                               <Font size="48.0" />
                            </font>
