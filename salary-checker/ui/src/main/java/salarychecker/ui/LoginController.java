@@ -48,8 +48,8 @@ public class LoginController {
             userval.checkValidPassword(passwordField);
             userval.isNotExistingUser(usernameField, passwordField, accounts);
             userval.isValidLogIn(usernameField, passwordField, accounts);
-
-            if (accounts.getUser(usernameField, passwordField) instanceof User) {
+            user = accounts.getUser(usernameField, passwordField);
+            if (user instanceof User) {
                 switchtoHomepageScene(event);
             }
             else {
