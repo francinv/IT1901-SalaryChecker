@@ -1,4 +1,4 @@
-package salarychecker.json;
+package salarychecker.json.internal;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;

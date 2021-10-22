@@ -1,4 +1,4 @@
-package salarychecker.json;
+package salarychecker.json.internal;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;

@@ -2,6 +2,7 @@ package salarychecker.json;
 
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import salarychecker.core.Accounts;
+import salarychecker.json.internal.SalaryCheckerModule;
 
 /**
  * Class for persistence using jackson serializer and deserializer
@@ -21,11 +23,18 @@ public class SalaryCheckerPersistence {
   private ObjectMapper mapper;
 
   public SalaryCheckerPersistence() {
-    mapper = new ObjectMapper();
-    //mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    mapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-    mapper.registerModule(new SalaryCheckerModule());
+    createJacksonModule();
   }
+
+  public static SimpleModule createJacksonModule() {
+    return new SalaryCheckerModule();
+  }
+
+  public static ObjectMapper createObjectMapper() {
+    return new ObjectMapper()
+      .registerModule(createJacksonModule());
+  }
+
 
   private Path saveFilePath = null;
 

@@ -1,4 +1,4 @@
-package salarychecker.json;
+package salarychecker.json.internal;
 
 import java.io.IOException;
 
@@ -6,7 +6,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import salarychecker.core.User;
 import salarychecker.core.UserSale;
 
 public class UserSaleSerializer extends JsonSerializer<UserSale> {
