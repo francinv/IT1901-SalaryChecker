@@ -1,5 +1,7 @@
 # Salary Checker
 
+Note: just before delivery time we found out that, spotbugs wasnt corrected. Will fix this to next release.
+
 ## Motivation and purpose for the project:
 Many people are employed in the sales industry, and a lot of companies reward their sales-employees based on a bonus scheeme. Payouts can vary based on what products were sold, the employees rank within the company, if the costumer was a new or previous costumer etc. All these factors can make it har to keep track of what is owed to an employee at the end of the month. The SalaryChecker application attempts to solve this problem for the employee.
 
