@@ -62,7 +62,7 @@ public class Calculation {
             if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")){
                 s.setProvisjon(50);
             }
-            if (s.getTX3().equals("Ja") && s.getTX3().equals("Ja")){
+            if (s.getNVK().equals("Ja") && s.getTX3().equals("Ja")){
                 s.setProvisjon(125);
             }
 
@@ -202,6 +202,13 @@ public class Calculation {
         calculated = (calculated * ((100-user.getTaxCount())/100));
     }
 
+    /**
+     * 
+     * @param url
+     * @param hours
+     * @param mobileamount
+     * @throws FileNotFoundException
+     */
     public void doCalculation(String url, double hours, int mobileamount) throws FileNotFoundException{
         updateList(url);
         removeUnwanted();

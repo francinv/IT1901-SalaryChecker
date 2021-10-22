@@ -48,16 +48,17 @@ public class EmailSender {
     }
 
     private Message prepareMessage(Session session, String myAccountEmail, String recepient) {
+       
+        Message message = new MimeMessage(session);
         try {
-            Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
             message.setSubject("Email From Salary Checker App");
             String htmlCode = "<h1> Hi, your salary is ready! </h1> <br/> <h2><b>Get it! </b></h2>";
             message.setContent(htmlCode, "text/html");
             return message;
-        } catch (Exception ex) {
-            System.out.println("Exception in mail");
+        } catch (MessagingException e) {
+            System.out.println("Message was not sent");
         }
         return null;
     }

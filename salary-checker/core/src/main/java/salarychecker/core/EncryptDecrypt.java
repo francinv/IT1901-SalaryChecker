@@ -31,7 +31,7 @@ import javax.crypto.SecretKey;
 public class EncryptDecrypt {
 
     private KeyStore keyStore;
-    private final String ALGORTIHM = "AES/ECB/PKCS5Padding";
+    private final static String ALGORTIHM = "AES/ECB/PKCS5Padding";
     
     public EncryptDecrypt() {
        try {
@@ -68,11 +68,14 @@ public class EncryptDecrypt {
         } else {
             InputStream readCert = new FileInputStream(path);
             keyStore.load(readCert, jksPassword);
+            readCert.close();
         }
 
         keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
         OutputStream writStream = new FileOutputStream(path);
         keyStore.store(writStream, jksPassword);
+        writStream.flush();
+        writStream.close();
     }
 
     public SecretKey loadFromKeyStore(String alias) {
@@ -84,6 +87,7 @@ public class EncryptDecrypt {
 
             InputStream readStream = new FileInputStream(path);
             keyStore.load(readStream, jksPassword);
+            readStream.close();
             SecretKey secretKey = (SecretKey) keyStore.getKey(alias, jksPassword);
             return secretKey;
             

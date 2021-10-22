@@ -15,8 +15,8 @@
         <jackson.version>2.12.5</jackson.version>
         <openscsv.version>5.5.2</openscsv.version>
         <sunmail.version>1.5.5</sunmail.version>
-        <skipTests>false</skipTests>
-        <skipSpotBugs>true</skipSpotBugs>
+        <skipTests>true</skipTests>
+        <skipSpotBugs>false</skipSpotBugs>
         <skipCheckstyle>true</skipCheckstyle>
     </properties>
 
