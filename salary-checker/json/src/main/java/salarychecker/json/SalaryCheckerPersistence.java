@@ -12,6 +12,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
+import salarychecker.core.User;
 import salarychecker.json.internal.SalaryCheckerModule;
 
 /**
@@ -22,7 +24,7 @@ public class SalaryCheckerPersistence {
   private ObjectMapper mapper;
 
   public SalaryCheckerPersistence() {
-    createJacksonModule();
+    mapper = createObjectMapper();
   }
 
   public static SimpleModule createJacksonModule() {
@@ -30,15 +32,13 @@ public class SalaryCheckerPersistence {
   }
 
   public static ObjectMapper createObjectMapper() {
-    return new ObjectMapper()
-      .registerModule(createJacksonModule());
+    return new ObjectMapper().registerModule(createJacksonModule());
   }
-
 
   private Path saveFilePath = null;
 
   public void setSaveFile(String saveFile) {
-    this.saveFilePath = Paths.get(System.getProperty("user.home"), saveFile);
+    this.saveFilePath = Paths.get(System.getProperty("user.home") + "/Downloads/", saveFile);
   }
 
   /**
@@ -75,5 +75,24 @@ public class SalaryCheckerPersistence {
 
   public Accounts readAccounts(Reader reader) throws IOException {
     return mapper.readValue(reader, Accounts.class);
+  }
+
+  public static void main(String[] args) {
+
+    Accounts accounts = new Accounts();
+    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
+    AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
+    accounts.addUser(testuser1);
+    accounts.addUser(testuser2);
+
+    SalaryCheckerPersistence scp = new SalaryCheckerPersistence();
+    scp.setSaveFile("Accounts.json");
+    try {
+      scp.saveAccounts(accounts);
+    } catch (IllegalStateException | IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
   }
 }
