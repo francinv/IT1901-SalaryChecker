@@ -1,6 +1,7 @@
 package salarychecker.core;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,7 @@ public class Calculation {
         return new ArrayList<>(saleslist);
     }
 
-    public void updateList(String url) throws FileNotFoundException {
+    public void updateList(String url) throws IOException {
         saleslist = salaryCSVReader.csvToBean(url);
     }
 
@@ -62,7 +63,7 @@ public class Calculation {
             if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")){
                 s.setProvisjon(50);
             }
-            if (s.getTX3().equals("Ja") && s.getTX3().equals("Ja")){
+            if (s.getTX3().equals("Ja") && s.getNVK().equals("Ja")){
                 s.setProvisjon(125);
             }
 
@@ -202,7 +203,14 @@ public class Calculation {
         calculated = (calculated * ((100-user.getTaxCount())/100));
     }
 
-    public void doCalculation(String url, double hours, int mobileamount) throws FileNotFoundException{
+    /**
+     *
+     * @param url
+     * @param hours
+     * @param mobileamount
+     * @throws FileNotFoundException
+     */
+    public void doCalculation(String url, double hours, int mobileamount) throws IOException {
         updateList(url);
         removeUnwanted();
         updateElectricityCommission();

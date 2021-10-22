@@ -91,7 +91,7 @@ public class SettingsController {
             }
 
             if(!(hourWageField.getText().equals(""))){
-                user.setHourRate(Double.valueOf(hourWageField.getText()));
+                user.setHourRate(Double.parseDouble(hourWageField.getText()));
                 errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
                 clearFields(hourWageField);
@@ -107,14 +107,14 @@ public class SettingsController {
             }
 
             if(!(changeTaxBracketField.getText().equals(""))){
-                user.setTaxCount(Double.valueOf(changeTaxBracketField.getText()));
+                user.setTaxCount(Double.parseDouble(changeTaxBracketField.getText()));
                 errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
                 clearFields(changeTaxBracketField);
             }
 
             if(!(changeEmployeeNumberField.getText().equals(""))){
-                user.setEmployeeNumber(Integer.valueOf(changeEmployeeNumberField.getText()));
+                user.setEmployeeNumber(Integer.parseInt(changeEmployeeNumberField.getText()));
                 errorTextDisplay.setText(null);
                 successMessageDisplay.setText("Changes successfully saved.");
                 clearFields(changeEmployeeNumberField);

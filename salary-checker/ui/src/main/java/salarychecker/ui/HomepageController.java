@@ -134,7 +134,7 @@ public class HomepageController {
     }
 
     @FXML
-    void calculateSalary(ActionEvent event) {
+    void calculateSalary(ActionEvent event) throws IOException {
         UserSale userSale = new UserSale();
         Calculation calculation = new Calculation(user);
         String temp = getURL();

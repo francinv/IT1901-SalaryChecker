@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
@@ -31,7 +33,7 @@ import javax.crypto.SecretKey;
 public class EncryptDecrypt {
 
     private KeyStore keyStore;
-    private final String ALGORTIHM = "AES/ECB/PKCS5Padding";
+    private final static String ALGORTIHM = "AES/ECB/PKCS5Padding";
     
     public EncryptDecrypt() {
        try {
@@ -56,23 +58,45 @@ public class EncryptDecrypt {
      * @throws NoSuchAlgorithmException
      * @throws Exception
      */
-    public void storeToKeyStore(String alias, SecretKey secretKey) throws KeyStoreException, 
+    public void storeToKeyStore(String alias, SecretKey secretKey) throws KeyStoreException,
         NoSuchAlgorithmException, CertificateException, IOException {
 
         String path = System.getProperty("user.home") + "/Downloads/SalarycheckerKeystore.jks";
         File file = new File(path);
         char[] jksPassword = "changeit".toCharArray();
+        InputStream readCert = null;
+        OutputStream writStream = null;
 
-       if (!file.exists()) {
-            keyStore.load(null, null);
-        } else {
-            InputStream readCert = new FileInputStream(path);
-            keyStore.load(readCert, jksPassword);
+        try {
+            if (!file.exists()) {
+                keyStore.load(null, null);
+            } else {
+                readCert = new FileInputStream(path);
+                keyStore.load(readCert, jksPassword);
+            }
+
+            keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
+            writStream = new FileOutputStream(path);
+            keyStore.store(writStream, jksPassword);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (readCert != null) {
+                    readCert.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (writStream != null) {
+                    writStream.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
-        OutputStream writStream = new FileOutputStream(path);
-        keyStore.store(writStream, jksPassword);
     }
 
     public SecretKey loadFromKeyStore(String alias) {
@@ -81,10 +105,10 @@ public class EncryptDecrypt {
         char[] jksPassword = "changeit".toCharArray();
 
         try {
-
             InputStream readStream = new FileInputStream(path);
             keyStore.load(readStream, jksPassword);
             SecretKey secretKey = (SecretKey) keyStore.getKey(alias, jksPassword);
+            readStream.close();
             return secretKey;
             
         } catch (UnrecoverableKeyException | CertificateException |
@@ -124,7 +148,7 @@ public class EncryptDecrypt {
         } catch (KeyStoreException | CertificateException | IOException e) {
             e.printStackTrace();
         }
-        byte[] cipherText = cipher.doFinal(strToEncrypt.getBytes());
+        byte[] cipherText = cipher.doFinal(strToEncrypt.getBytes(Charset.forName("UTF-8")));
         return Base64.getEncoder()
             .encodeToString(cipherText);
     }
@@ -140,6 +164,6 @@ public class EncryptDecrypt {
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
         byte[] plainText = cipher.doFinal(Base64.getDecoder()
             .decode(cipherText));
-        return new String(plainText);
+        return new String(plainText, StandardCharsets.UTF_8);
     }
 }

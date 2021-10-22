@@ -1,9 +1,7 @@
 package salarychecker.core;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +16,7 @@ public class SalaryCSVReader {
     private HeaderColumnNameTranslateMappingStrategy<Sale> strategy;
     private CsvToBean<Sale> csvReader;
 
-    public List<Sale> csvToBean(String url) throws FileNotFoundException {
+    public List<Sale> csvToBean(String url) throws IOException {
         mapping = new HashMap<String, String>();
         mapping.put("SalgsID", "salgsID");
         mapping.put("AnleggsStatus", "anleggStatus");
@@ -34,7 +32,7 @@ public class SalaryCSVReader {
         strategy.setType(Sale.class);
         strategy.setColumnMapping(mapping);
 
-        Reader reader = new BufferedReader(new FileReader(url));
+        Reader reader = new BufferedReader(new FileReader(url, StandardCharsets.UTF_8));
 
         csvReader = new CsvToBeanBuilder<Sale>(reader).withType(Sale.class)
                                                 .withSeparator(';')

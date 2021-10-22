@@ -40,7 +40,7 @@ public class LoginController {
     void userLogIn(ActionEvent event) throws IOException {
         String usernameField = email.getText();
         String passwordField = password.getText();
-        Accounts accounts = new Accounts();
+        Accounts accounts;
         accounts = SCP.loadAccounts();
 
         try {
@@ -62,7 +62,7 @@ public class LoginController {
     }
 
     private void switchToAdminScene(ActionEvent event) {
-        Accounts accounts = new Accounts();
+        Accounts accounts;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Admin.fxml"));
             Parent root = fxmlLoader.load();
@@ -84,7 +84,7 @@ public class LoginController {
     }
 
     private void switchtoHomepageScene(ActionEvent event) {
-        Accounts accounts = new Accounts();
+        Accounts accounts;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
             Parent root = fxmlLoader.load();
