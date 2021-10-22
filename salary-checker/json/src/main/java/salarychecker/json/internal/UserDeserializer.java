@@ -63,7 +63,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
                 user.setPassword(decryptedPassword);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
     
@@ -77,7 +76,6 @@ public class UserDeserializer extends JsonDeserializer<User> {
                 user.setSocialNumber(decryptedSocialNumber);
             } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                     | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             
