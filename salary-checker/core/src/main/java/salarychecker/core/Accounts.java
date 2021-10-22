@@ -94,18 +94,9 @@ public class Accounts implements IUserObserver {
     public AbstractUser getUser(String email, String password) {
         AbstractUser user = null;
 
-        User u = new User();
-        AdminUser a = new AdminUser();
-
         for (AbstractUser ab : accounts) {
             if (ab.getEmail().equals(email)) {
-                if (getTypeOfUser(email).equals(u.getClass())){
-                    user = (User) ab;
-                } 
-                if (getTypeOfUser(email).equals(a.getClass())){
-                    user = (AdminUser) ab;
-                }
-                user = ab;
+                user = ab instanceof User ? (User) ab : (AdminUser) ab;
             } 
         }
         if (user == null) {
@@ -115,16 +106,6 @@ public class Accounts implements IUserObserver {
             return user;
         }
         return null;
-    }
-
-    public Class getTypeOfUser(String email){
-        AbstractUser user = null;
-        for (AbstractUser ab: accounts){
-            if (ab.getEmail().equals(email)){
-                user = ab;
-            }
-        }
-        return user.getClass();
     }
 
     public void updatePassword(User user, String password) {
