@@ -203,7 +203,14 @@ public class Calculation {
         calculated = (calculated * ((100-user.getTaxCount())/100));
     }
 
-    public void doCalculation(String url, double hours, int mobileamount) throws IOException {
+    /**
+     *
+     * @param url
+     * @param hours
+     * @param mobileamount
+     * @throws FileNotFoundException
+     */
+    public void doCalculation(String url, double hours, int mobileamount) throws FileNotFoundException{
         updateList(url);
         removeUnwanted();
         updateElectricityCommission();
