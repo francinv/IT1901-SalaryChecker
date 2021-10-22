@@ -56,10 +56,10 @@ public class HomepageController {
 
 
     @FXML private TableView<UserSale> salaryTableView;
-    @FXML private TableColumn tableSaleData;
-    @FXML private TableColumn paidColTable;
-    @FXML private TableColumn expectedColTable;
-    @FXML private TableColumn diffColTable;
+    @FXML private TableColumn<UserSale, String> tableSaleData;
+    @FXML private TableColumn<UserSale, Double> paidColTable;
+    @FXML private TableColumn<UserSale, Double> expectedColTable;
+    @FXML private TableColumn<UserSale, Double> diffColTable;
 
     
 

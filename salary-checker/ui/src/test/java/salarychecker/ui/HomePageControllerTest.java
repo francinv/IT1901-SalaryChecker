@@ -53,7 +53,7 @@ public class HomePageControllerTest extends ApplicationTest {
     private Label salaryLabel;
     private Label nettoLabel;
     private Label salaryDiff;
-    private TableView salaryTableView;
+    private TableView<UserSale> salaryTableView;
     private Button changeProfileSettingsButton;
     private Button logOutUserButton;
 
@@ -154,7 +154,7 @@ public class HomePageControllerTest extends ApplicationTest {
     public void checkIfCalculatedShown(){
         writeCalculation();
         clickOn(salariesTab);
-        UserSale userSale = (UserSale) salaryTableView.getItems().get(0);
+        UserSale userSale = salaryTableView.getItems().get(0);
         assertEquals("Januar 2021", userSale.getSalesperiod());
         assertEquals(13237.0, userSale.getExpected());
         assertEquals(10000.0, userSale.getPaid());
