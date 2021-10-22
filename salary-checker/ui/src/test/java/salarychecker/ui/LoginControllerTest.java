@@ -71,13 +71,30 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
+    public void testLogInAdminUser() {
+        writeInLoginFields("francin.vinc@gmail.com", "Vandre333!");
+        clickOn(logInButton);
+        Window currentWindow = window(getTopModalStage().getScene());
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin.fxml")); // load same anchorpane that currentWindow contains
+            AnchorPane pane = loader.load();
+            ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
+            ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();
+            for (int i = 0; i < unmodNodeListCurrentWindow.size(); i++) {
+                assertEquals(unmodNodeListCurrentWindow.get(i).getId(), unmodNodeListLoadedWindow.get(i).getId()); // verify that they're identical by ID
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testInvalidEmail() {
         writeInLoginFields("s", "Password123!");
         clickOn(logInButton);
         assertEquals("Invalid email, must be of format: name-part@domain, e.g. example@example.com.", errorDisplay.getText());
     }
 
-    //TODO
     @Test
     public void testInvalidPwd() {
         writeInLoginFields("seran@live.no", "P");
