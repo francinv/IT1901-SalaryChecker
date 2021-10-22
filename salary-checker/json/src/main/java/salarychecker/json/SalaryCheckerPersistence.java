@@ -22,6 +22,7 @@ import salarychecker.json.internal.SalaryCheckerModule;
 public class SalaryCheckerPersistence {
 
   private ObjectMapper mapper;
+  private Path saveFilePath;
 
   public SalaryCheckerPersistence() {
     mapper = createObjectMapper();
@@ -34,8 +35,6 @@ public class SalaryCheckerPersistence {
   public static ObjectMapper createObjectMapper() {
     return new ObjectMapper().registerModule(createJacksonModule());
   }
-
-  private Path saveFilePath = null;
 
   public void setSaveFile(String saveFile) {
     this.saveFilePath = Paths.get(System.getProperty("user.home") + "/Downloads/", saveFile);
