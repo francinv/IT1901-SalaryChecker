@@ -210,7 +210,7 @@ public class Calculation {
      * @param mobileamount
      * @throws FileNotFoundException
      */
-    public void doCalculation(String url, double hours, int mobileamount) throws FileNotFoundException{
+    public void doCalculation(String url, double hours, int mobileamount) throws IOException {
         updateList(url);
         removeUnwanted();
         updateElectricityCommission();
