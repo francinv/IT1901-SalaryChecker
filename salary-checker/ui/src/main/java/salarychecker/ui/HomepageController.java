@@ -18,7 +18,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import salarychecker.core.Accounts;
 import salarychecker.core.Calculation;
-import salarychecker.core.EmailSender;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
@@ -60,13 +59,6 @@ public class HomepageController {
     @FXML private TableColumn<UserSale, Double> paidColTable;
     @FXML private TableColumn<UserSale, Double> expectedColTable;
     @FXML private TableColumn<UserSale, Double> diffColTable;
-
-    
-
-    /*
-    * Object of email sender class
-    * */
-    EmailSender emailSender = new EmailSender();
 
 
     private String url;
