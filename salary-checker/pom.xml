@@ -16,8 +16,8 @@
         <openscsv.version>5.5.2</openscsv.version>
         <sunmail.version>1.5.5</sunmail.version>
         <skipTests>false</skipTests>
-        <skipSpotBugs>true</skipSpotBugs>
-        <skipCheckstyle>true</skipCheckstyle>
+        <skipSpotBugs>false</skipSpotBugs>
+        <skipCheckstyle>false</skipCheckstyle>
     </properties>
 
     <dependencyManagement>
