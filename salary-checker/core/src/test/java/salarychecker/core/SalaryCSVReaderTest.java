@@ -2,6 +2,7 @@ package salarychecker.core;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class SalaryCSVReaderTest {
     private SalaryCSVReader testReader;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() throws IOException {
         testReader = new SalaryCSVReader();
         try {
             someRead = testReader.csvToBean(new File(getClass().getResource("SalesReport.csv").getFile()).getAbsolutePath());

@@ -18,7 +18,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import salarychecker.core.Accounts;
 import salarychecker.core.Calculation;
-import salarychecker.core.EmailSender;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
@@ -63,10 +62,6 @@ public class HomepageController {
 
     
 
-    /*
-    * Object of email sender class
-    * */
-    EmailSender emailSender = new EmailSender();
 
 
     private String url;
@@ -142,7 +137,7 @@ public class HomepageController {
     }
 
     @FXML
-    void calculateSalary(ActionEvent event) {
+    void calculateSalary(ActionEvent event) throws IOException {
         UserSale userSale = new UserSale();
         Calculation calculation = new Calculation(user);
         String temp = getURL();
