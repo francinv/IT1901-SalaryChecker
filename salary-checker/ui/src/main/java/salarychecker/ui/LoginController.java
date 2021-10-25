@@ -32,6 +32,11 @@ public class LoginController {
     private SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
 
     @FXML
+    void initialize(){
+        SCP.setSaveFile("Accounts.json");
+    }
+
+    @FXML
     void userLogIn(ActionEvent event) throws IOException {
         String usernameField = email.getText();
         String passwordField = password.getText();
@@ -108,7 +113,6 @@ public class LoginController {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        SCP.setSaveFile("Accounts.json");
         SCP.saveAccounts(acc);
         createButton.setText("Test users created!");
         createButton.setTextFill(Paint.valueOf("#008000"));
