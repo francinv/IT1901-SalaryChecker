@@ -145,9 +145,9 @@ public class HomePageControllerTest extends ApplicationTest {
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
         }
-        assertEquals("Forventet lønn: 13237.0", salaryLabel.getText());
+        assertEquals("Forventet lønn: 15169.0", salaryLabel.getText());
         assertEquals("Utbetalt lønn: 10000.0", nettoLabel.getText());
-        assertEquals("Differanse: 3237.0", salaryDiff.getText());
+        assertEquals("Differanse: 5169.0", salaryDiff.getText());
     }
 
     @Test
@@ -156,9 +156,9 @@ public class HomePageControllerTest extends ApplicationTest {
         clickOn(salariesTab);
         UserSale userSale = salaryTableView.getItems().get(0);
         assertEquals("Januar 2021", userSale.getSalesperiod());
-        assertEquals(13237.0, userSale.getExpected());
+        assertEquals(15169.0, userSale.getExpected());
         assertEquals(10000.0, userSale.getPaid());
-        assertEquals(3237.0, userSale.getDifference());
+        assertEquals(5169, userSale.getDifference());
     }
 
     @Test
