@@ -105,8 +105,6 @@ public class LoginController {
     }
 
     private void createTestUser() throws IOException {
-        System.out.println("Creating two test users to show functionality...");
-
         User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
         AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
 
