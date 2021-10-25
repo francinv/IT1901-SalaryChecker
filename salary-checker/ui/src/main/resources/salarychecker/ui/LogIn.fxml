@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salarychecker.ui.LoginController">
    <children>
       <TextField fx:id="email" layoutX="200.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" promptText="USERNAME" />
-      <Button fx:id="logIn" layoutX="326.0" layoutY="250.0" mnemonicParsing="false" onAction="#userLogIn" text="Log In" />
+      <Button fx:id="logIn" layoutX="270.0" layoutY="248.0" mnemonicParsing="false" onAction="#userLogIn" text="Log In" />
       <Text layoutX="147.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SALARY CHECKER">
          <font>
             <Font name="Lucida Sans Regular" size="36.0" />
@@ -22,5 +22,6 @@
             <Font size="15.0" />
          </font>
       </Text>
+      <Button fx:id="createButton" layoutX="239.0" layoutY="306.0" mnemonicParsing="false" onAction="#createUsersAction" text="Create test users" />
    </children>
 </AnchorPane>

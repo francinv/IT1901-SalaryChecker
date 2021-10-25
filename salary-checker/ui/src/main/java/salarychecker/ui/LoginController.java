@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
@@ -23,7 +24,7 @@ public class LoginController {
 
     @FXML private TextField email;
     @FXML private TextField password;
-    @FXML private Button logIn;
+    @FXML private Button createButton;
     @FXML private Text errorDisplay;
 
     private AbstractUser user;
@@ -31,10 +32,9 @@ public class LoginController {
     private SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
 
     @FXML
-    void initialize() throws IOException {
-        createTestUser();
+    void initialize(){
+        SCP.setSaveFile("Accounts.json");
     }
-
 
     @FXML
     void userLogIn(ActionEvent event) throws IOException {
@@ -104,7 +104,8 @@ public class LoginController {
         }
     }
 
-    private void createTestUser() throws IOException {
+    @FXML
+    private void createUsersAction(ActionEvent event) throws IOException {
         User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
         AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
 
@@ -112,8 +113,10 @@ public class LoginController {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        SCP.setSaveFile("Accounts.json");
         SCP.saveAccounts(acc);
+        createButton.setText("Test users created!");
+        createButton.setTextFill(Paint.valueOf("#008000"));
+
     }
 
 }
