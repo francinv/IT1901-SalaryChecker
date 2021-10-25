@@ -15,6 +15,7 @@ import javafx.stage.Window;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -32,6 +33,7 @@ public class LoginControllerTest extends ApplicationTest {
     private PasswordField passwordField;
     private Button logInButton;
     private Text errorDisplay;
+    private Button createButton;
 
 
     @Override
@@ -50,9 +52,19 @@ public class LoginControllerTest extends ApplicationTest {
         passwordField = lookup("#password").query();
         logInButton = lookup("#logIn").query();
         errorDisplay = lookup("#errorDisplay").query();
+        createButton = lookup("#createButton").query();
     }
 
     @Test
+    @Order(1)
+    public void testCreateUsersButtonWorks(){
+        clickOn(createButton);
+        assertEquals("Test users created!", createButton.getText());
+        assertEquals("0x008000ff", createButton.getTextFill().toString());
+    }
+
+    @Test
+    @Order(2)
     public void testLoginUser() {
         writeInLoginFields("seran@live.no", "Password123!");
         clickOn(logInButton);
@@ -71,6 +83,7 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
+    @Order(3)
     public void testLogInAdminUser() {
         writeInLoginFields("francin.vinc@gmail.com", "Vandre333!");
         clickOn(logInButton);
@@ -89,6 +102,7 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
+    @Order(4)
     public void testInvalidEmail() {
         writeInLoginFields("s", "Password123!");
         clickOn(logInButton);
@@ -96,6 +110,7 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
+    @Order(5)
     public void testInvalidPwd() {
         writeInLoginFields("seran@live.no", "P");
         clickOn(logInButton);
@@ -103,6 +118,7 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
+    @Order(6)
     public void testNonExistingUser() {
         writeInLoginFields("fxtest@gmail.no", "Test123!");
         clickOn(logInButton);
