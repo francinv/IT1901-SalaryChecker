@@ -173,8 +173,7 @@ public class Calculation {
                         s.updateProvisjon(-50);
                     }
                 }
-            } 
-            System.out.println(s.getProvisjon());
+            }
         }
     }
 

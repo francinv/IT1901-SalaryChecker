@@ -137,9 +137,6 @@ public class HomepageController {
     void calculateSalary(ActionEvent event) throws IOException {
         UserSale userSale = new UserSale();
         Calculation calculation = new Calculation(user);
-        String temp = getURL();
-        System.out.println("Printer ut url");
-        System.out.println(temp);
         double hours = Double.parseDouble(hoursInput.getText());
         int mobileamount = Integer.parseInt(amountOfMobile.getText());
         try {
@@ -150,8 +147,8 @@ public class HomepageController {
 
         String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
         String salesperiod = chosenmonth + " " + calculationYearInput.getText();
-
-        userSale.setExpected(calculation.getCalculated());
+        Double expectedCalc = Math.round(calculation.getCalculated() * 10) / 10.0;
+        userSale.setExpected(expectedCalc);
         userSale.setPaid(Double.parseDouble(recievedSalaryInput.getText()));
         userSale.setDifference();
         userSale.setSalesperiod(salesperiod);

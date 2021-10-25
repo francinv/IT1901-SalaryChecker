@@ -19,7 +19,10 @@ import javafx.stage.Window;
 import org.junit.jupiter.api.*;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
+
+import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
+import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.IOException;
@@ -54,6 +57,7 @@ public class AdminControllerTest extends ApplicationTest {
         final Scene scene = new Scene(parent);
 
         adminUser = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
+        createTestUser();
         AdminController adminController = loader.getController();
         adminController.setAdminUser(adminUser);
         SCP.setSaveFile("Accounts.json");
@@ -165,6 +169,18 @@ public class AdminControllerTest extends ApplicationTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createTestUser() throws IOException {
+        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
+        AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
+
+        Accounts acc = new Accounts();
+        acc.addUser(testuser1);
+        acc.addUser(testuser2);
+
+        SCP.setSaveFile("Accounts.json");
+        SCP.saveAccounts(acc);
     }
 
     private void clearFields(){
