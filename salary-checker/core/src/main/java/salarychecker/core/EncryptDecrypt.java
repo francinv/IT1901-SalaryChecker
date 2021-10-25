@@ -61,7 +61,7 @@ public class EncryptDecrypt {
     public void storeToKeyStore(String alias, SecretKey secretKey) throws KeyStoreException,
         NoSuchAlgorithmException, CertificateException, IOException {
 
-        String path = System.getProperty("user.home") + "/Downloads/SalarycheckerKeystore.jks";
+        String path = System.getProperty("user.home") + "/SalarycheckerKeystore.jks";
         File file = new File(path);
         char[] jksPassword = "changeit".toCharArray();
         InputStream readCert = null;
@@ -101,7 +101,7 @@ public class EncryptDecrypt {
 
     public SecretKey loadFromKeyStore(String alias) {
 
-        String path = System.getProperty("user.home") + "/Downloads/SalarycheckerKeystore.jks";
+        String path = System.getProperty("user.home") + "/SalarycheckerKeystore.jks";
         char[] jksPassword = "changeit".toCharArray();
 
         try {
