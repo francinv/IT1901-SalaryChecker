@@ -38,7 +38,7 @@ public class HomePageControllerTest extends ApplicationTest {
     private Text nameDisplay;
     private Text emailDisplay;
     private Text idDisplay;
-    private Text fDatoDisplay;
+    private Text birthdayDisplay;
     private Text taxDisplay;
     private Text hourDisplay;
     private Text employeDisplay;
@@ -100,7 +100,7 @@ public class HomePageControllerTest extends ApplicationTest {
         nameDisplay = lookup("#navnDisplay").query();
         emailDisplay = lookup("#epostDisplay").query();
         idDisplay = lookup("#idDisplay").query();
-        fDatoDisplay = lookup("#fDatoDisplay").query();
+        birthdayDisplay = lookup("#birthdayDisplay").query();
         taxDisplay = lookup("#taxDisplay").query();
         hourDisplay = lookup("#hourDisplay").query();
         employeDisplay = lookup("#employeDisplay").query();
@@ -131,7 +131,7 @@ public class HomePageControllerTest extends ApplicationTest {
         assertEquals(name, nameDisplay.getText());
         assertEquals(user.getEmail(), emailDisplay.getText());
         assertEquals(id, idDisplay.getText());
-        assertEquals(newSocial, fDatoDisplay.getText());
+        assertEquals(newSocial, birthdayDisplay.getText());
         assertEquals(tax, taxDisplay.getText());
         assertEquals(hour, hourDisplay.getText());
         assertEquals(user.getEmployerEmail(), employeDisplay.getText());
