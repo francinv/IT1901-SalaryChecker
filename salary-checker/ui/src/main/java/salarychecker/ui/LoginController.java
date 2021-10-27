@@ -33,11 +33,24 @@ public class LoginController {
   private final UserValidation userval = new UserValidation();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
+  /**
+   * We use the initialize method to create test users.
+   * This method will be deleted when server and API is ready.
+   */
   @FXML
   void initialize() {
     persistence.setSaveFile("Accounts.json");
   }
 
+  /**
+   * This is the method that handles the log-in.
+   * It first loads the accounts that are save in "Accounts.json".
+   * It checks if the input is valid, then checks if the User exists.
+   * If something is wrong it will display it in the UI.
+   *
+   * @param event when clicked on 'Logg inn'
+   * @throws IOException if something goes wrong when reading from file.
+   */
   @FXML
   void userLogIn(ActionEvent event) throws IOException {
     String usernameField = email.getText();
@@ -61,6 +74,12 @@ public class LoginController {
     }
   }
 
+  /**
+   * This function loads the AdminScene, if the logged in user is an Admin-user.
+   * It also calls some methods in AdminController.
+   *
+   * @param event when clicked 'Logg inn'
+   */
   private void switchToAdminScene(ActionEvent event) {
     Accounts accounts;
     try {
@@ -82,6 +101,12 @@ public class LoginController {
     }
   }
 
+  /**
+   * This function loads the HomePageScene, if the logged in user is a regular user.
+   * It also calls some methods in LoginController.
+   *
+   * @param event when clicked on 'Logged in'
+   */
   private void switchtoHomepageScene(ActionEvent event) {
     Accounts accounts;
     try {
@@ -102,6 +127,11 @@ public class LoginController {
     }
   }
 
+  /**
+   * Method that creates two test users.
+   *
+   * @throws IOException if something goes wrong when saving users to file.
+   */
   @FXML
   private void createUsersAction(ActionEvent event) throws IOException {
     User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no",
