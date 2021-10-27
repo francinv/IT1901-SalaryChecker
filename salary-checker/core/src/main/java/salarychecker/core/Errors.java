@@ -18,7 +18,7 @@ public enum Errors {
   INVALID_NAME("Name should only contain letters, and be atleast two letters.."),
   INVALID_EMAIL("Invalid email, must be of format: name-part@domain, e.g. example@example.com."),
   INVALID_PWD("Invalid password, must be at least 8 characters"
-    + "and contain at least 1 digit and 1 lower and uppercase letter."),
+    + " and contain at least 1 digit and 1 lower and uppercase letter."),
   INVALID_SOCIAL_NUMBER("The entered social number, is not valid."),
   INVALID_EMPLOYEE_NUMBER("Employee number should be exactly 5 numbers."),
   INVALID_TAX_COUNT("Tax count should be a decimal number between 0 and 100."),
