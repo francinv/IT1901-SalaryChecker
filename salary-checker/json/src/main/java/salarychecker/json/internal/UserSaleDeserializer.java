@@ -26,7 +26,7 @@ public class UserSaleDeserializer extends JsonDeserializer<UserSale> {
     return deserialize((JsonNode) treeNode);
   }
 
-  private UserSale deserialize(JsonNode jsonNode) {
+  UserSale deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode objectNode) {
       UserSale userSale = new UserSale();
 

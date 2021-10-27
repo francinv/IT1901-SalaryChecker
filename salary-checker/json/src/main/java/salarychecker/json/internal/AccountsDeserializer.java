@@ -32,7 +32,7 @@ public class AccountsDeserializer extends JsonDeserializer<Accounts> {
     return deserialize((JsonNode) treeNode);
   }
 
-  private Accounts deserialize(JsonNode treeNode) {
+  Accounts deserialize(JsonNode treeNode) {
     if (treeNode instanceof ObjectNode objectNode) {
       JsonNode accountsNode = objectNode.get("Accounts");
       if (! (accountsNode instanceof ArrayNode)) {

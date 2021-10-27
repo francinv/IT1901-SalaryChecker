@@ -32,7 +32,7 @@ public class AdminUserDeserializer extends JsonDeserializer<AdminUser> {
     return deserialize((JsonNode) treeNode);
   }
 
-  private AdminUser deserialize(JsonNode jsonNode) {
+  AdminUser deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode objectNode) {
       AdminUser user = new AdminUser();
       JsonNode firstnameNode = objectNode.get("firstname");

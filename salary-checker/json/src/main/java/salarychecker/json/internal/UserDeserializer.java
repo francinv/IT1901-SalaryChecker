@@ -36,7 +36,7 @@ public class UserDeserializer extends JsonDeserializer<User> {
     return deserialize((JsonNode) treeNode);
   }
 
-  private User deserialize(JsonNode jsonNode) {
+  User deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode objectNode) {
       User user = new User();
       JsonNode firstnameNode = objectNode.get("firstname");
