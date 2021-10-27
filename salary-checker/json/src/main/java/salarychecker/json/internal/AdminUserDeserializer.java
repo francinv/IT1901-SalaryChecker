@@ -27,7 +27,7 @@ public class AdminUserDeserializer extends JsonDeserializer<AdminUser> {
 
   @Override
   public AdminUser deserialize(JsonParser parser, DeserializationContext ctxt)
-      throws IOException, JsonProcessingException {
+      throws IOException {
 
     TreeNode treeNode = parser.getCodec().readTree(parser);
     return deserialize((JsonNode) treeNode);
@@ -56,8 +56,8 @@ public class AdminUserDeserializer extends JsonDeserializer<AdminUser> {
       if (passwordNode instanceof TextNode) {
 
         try {
-          String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(), firstnameNode.asText()
-              + lastnameNode.asText());
+          String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(),
+              firstnameNode.asText() + lastnameNode.asText());
           user.setPassword(decryptedPassword);
         } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidAlgorithmParameterException | BadPaddingException
