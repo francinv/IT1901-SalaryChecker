@@ -1,5 +1,6 @@
 package salarychecker.ui;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,53 +15,55 @@ import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.json.SalaryCheckerPersistence;
 
-import java.io.IOException;
-
+/**
+ * This is the class that controls the Settings-scene.
+ * We have methods that changes the profile information of a specific user.
+ */
 public class SettingsController {
 
-  User user = new User();
-  Accounts accounts = new Accounts();
-  UserValidation userValidation = new UserValidation();
-  SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+  private User user = new User();
+  private Accounts accounts = new Accounts();
+  private final UserValidation userValidation = new UserValidation();
+  private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
   //FXML VARIABLES
-  @FXML
-  private TextField changeFirstNameField;
-  @FXML
-  private TextField changeLastNameField;
-  @FXML
-  private TextField changeEmailField;
-  @FXML
-  private TextField changeConfirmedEmailField;
-  @FXML
-  private TextField changeEmployerField;
-  @FXML
-  private TextField changeConfirmedEmployerField;
-  @FXML
-  private TextField hourWageField;
-  @FXML
-  private TextField changePasswordField;
-  @FXML
-  private TextField changeConfirmedPasswordField;
-  @FXML
-  private TextField changeTaxBracketField;
-  @FXML
-  private TextField changeEmployeeNumberField;
-  @FXML
-  private Text successMessageDisplay;
-  @FXML
-  private Text errorTextDisplay;
+  @FXML private TextField changeFirstNameField;
+  @FXML private TextField changeLastNameField;
+  @FXML private TextField changeEmailField;
+  @FXML private TextField changeConfirmedEmailField;
+  @FXML private TextField changeEmployerField;
+  @FXML private TextField changeConfirmedEmployerField;
+  @FXML private TextField hourWageField;
+  @FXML private TextField changePasswordField;
+  @FXML private TextField changeConfirmedPasswordField;
+  @FXML private TextField changeTaxBracketField;
+  @FXML private TextField changeEmployeeNumberField;
+  @FXML private Text successMessageDisplay;
+  @FXML private Text errorTextDisplay;
 
-
+  /**
+   * This method is a setter for the user.
+   * We do this to have control of what user wants to change their information.
+   *
+   * @param user that needs to be set for the settings scene
+   */
   public void setUser(User user) {
     this.user = user;
   }
 
+  /**
+   * This method is a setter for the accounts.
+   *
+   * @param accounts that needs to be set for the settings scene.
+   */
   public void setAccounts(Accounts accounts) {
     this.accounts = accounts;
   }
 
-
+  /**
+   * Method that is called from HomepageController.
+   * We use this method to load existing user information as a prompt text to Text Fields.
+   */
   public void loadInfo() {
     changeFirstNameField.setPromptText(user.getFirstname());
     changeLastNameField.setPromptText(user.getLastname());
@@ -73,10 +76,18 @@ public class SettingsController {
     changeEmployeeNumberField.setPromptText(String.valueOf(user.getEmployeeNumber()));
   }
 
+  /**
+   * This is a method that saves the information that is changed.
+   * If the field is empty nothing happens to that variable.
+   * The form uses uservalidation to validate, if something is written.
+   *
+   * @param event when user clicks on 'Lagre endringer'
+   */
   @FXML
   public void saveChangesAction(ActionEvent event) {
     try {
-      if (!(changeFirstNameField.getText().equals("") && changeLastNameField.getText().equals(""))) {
+      if (!(changeFirstNameField.getText().equals("")
+          && changeLastNameField.getText().equals(""))) {
         user.setFirstname(changeFirstNameField.getText());
         user.setLastname(changeLastNameField.getText());
         errorTextDisplay.setText(null);
@@ -85,8 +96,10 @@ public class SettingsController {
         clearFields(changeLastNameField);
       }
 
-      if (!(changeEmailField.getText().equals("") && changeConfirmedEmailField.getText().equals(""))) {
-        userValidation.isEqualEmail(changeEmailField.getText(), changeConfirmedEmailField.getText());
+      if (!(changeEmailField.getText().equals("")
+          && changeConfirmedEmailField.getText().equals(""))) {
+        userValidation.isEqualEmail(changeEmailField.getText(),
+            changeConfirmedEmailField.getText());
         user.setEmail(changeEmailField.getText());
         errorTextDisplay.setText(null);
         successMessageDisplay.setText("Changes successfully saved.");
@@ -94,8 +107,10 @@ public class SettingsController {
         clearFields(changeConfirmedEmailField);
       }
 
-      if (!(changeEmployerField.getText().equals("") && changeConfirmedEmployerField.getText().equals(""))) {
-        userValidation.isEqualEmail(changeEmployerField.getText(), changeConfirmedEmployerField.getText());
+      if (!(changeEmployerField.getText().equals("")
+          && changeConfirmedEmployerField.getText().equals(""))) {
+        userValidation.isEqualEmail(changeEmployerField.getText(),
+            changeConfirmedEmployerField.getText());
         user.setEmployerEmail(changeEmployerField.getText());
         errorTextDisplay.setText(null);
         successMessageDisplay.setText("Changes successfully saved.");
@@ -110,8 +125,10 @@ public class SettingsController {
         clearFields(hourWageField);
       }
 
-      if (!(changePasswordField.getText().equals("") && changeConfirmedPasswordField.getText().equals(""))) {
-        userValidation.isEqualPassword(changePasswordField.getText(), changeConfirmedPasswordField.getText());
+      if (!(changePasswordField.getText().equals("")
+          && changeConfirmedPasswordField.getText().equals(""))) {
+        userValidation.isEqualPassword(changePasswordField.getText(),
+            changeConfirmedPasswordField.getText());
         user.setPassword(changePasswordField.getText());
         errorTextDisplay.setText(null);
         successMessageDisplay.setText("Changes successfully saved.");
@@ -143,10 +160,20 @@ public class SettingsController {
     }
   }
 
+  /**
+   * Helper method to clear fields.
+   *
+   * @param wantedField the field that needs to be cleared.
+   */
   void clearFields(TextField wantedField) {
     wantedField.clear();
   }
 
+  /**
+   * Method that closes the scene and goes back to HomePage.fxml with updated user information.
+   *
+   * @param event when clicked on 'Lukk'
+   */
   @FXML
   public void closeButtonAction(ActionEvent event) {
     try {
@@ -164,5 +191,4 @@ public class SettingsController {
       e.printStackTrace();
     }
   }
-
 }
