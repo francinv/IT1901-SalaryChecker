@@ -29,7 +29,7 @@ import java.util.List;
 public class SettingsControllerTest extends ApplicationTest {
 
     User user;
-    SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
+    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     Accounts accounts = new Accounts();
     SettingsController settingsController;
 
@@ -60,7 +60,7 @@ public class SettingsControllerTest extends ApplicationTest {
         createTestUsers();
         settingsController = loader.getController();
         settingsController.setUser(user);
-        accounts = SCP.loadAccounts();
+        accounts = persistence.loadAccounts();
         settingsController.setAccounts(accounts);
         settingsController.loadInfo();
         stage.setScene(scene);
@@ -220,8 +220,8 @@ public class SettingsControllerTest extends ApplicationTest {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        SCP.setSaveFile("Accounts.json");
-        SCP.saveAccounts(acc);
+        persistence.setSaveFile("Accounts.json");
+        persistence.saveAccounts(acc);
 
     }
 

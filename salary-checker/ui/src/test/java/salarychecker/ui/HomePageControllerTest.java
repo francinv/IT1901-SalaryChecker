@@ -38,7 +38,7 @@ public class HomePageControllerTest extends ApplicationTest {
     private Text nameDisplay;
     private Text emailDisplay;
     private Text idDisplay;
-    private Text fDatoDisplay;
+    private Text birthdayDisplay;
     private Text taxDisplay;
     private Text hourDisplay;
     private Text employeDisplay;
@@ -59,7 +59,7 @@ public class HomePageControllerTest extends ApplicationTest {
 
 
 
-    SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
+    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     User user;
 
     @Override
@@ -72,7 +72,7 @@ public class HomePageControllerTest extends ApplicationTest {
         createTestUsers();
         HomepageController homepageController = loader.getController();
         homepageController.setUser(user);
-        homepageController.setAccounts(SCP.loadAccounts());
+        homepageController.setAccounts(persistence.loadAccounts());
         homepageController.loadInfo();
         URL url = getClass().getResource("SalesReport.csv");
         File file = new File(url.getFile());
@@ -90,8 +90,8 @@ public class HomePageControllerTest extends ApplicationTest {
         accounts.addUser(testuser1);
         accounts.addUser(testuser2);
 
-        SCP.setSaveFile("Accounts.json");
-        SCP.saveAccounts(accounts);
+        persistence.setSaveFile("Accounts.json");
+        persistence.saveAccounts(accounts);
 
     }
 
@@ -100,7 +100,7 @@ public class HomePageControllerTest extends ApplicationTest {
         nameDisplay = lookup("#navnDisplay").query();
         emailDisplay = lookup("#epostDisplay").query();
         idDisplay = lookup("#idDisplay").query();
-        fDatoDisplay = lookup("#fDatoDisplay").query();
+        birthdayDisplay = lookup("#birthdayDisplay").query();
         taxDisplay = lookup("#taxDisplay").query();
         hourDisplay = lookup("#hourDisplay").query();
         employeDisplay = lookup("#employeDisplay").query();
@@ -131,7 +131,7 @@ public class HomePageControllerTest extends ApplicationTest {
         assertEquals(name, nameDisplay.getText());
         assertEquals(user.getEmail(), emailDisplay.getText());
         assertEquals(id, idDisplay.getText());
-        assertEquals(newSocial, fDatoDisplay.getText());
+        assertEquals(newSocial, birthdayDisplay.getText());
         assertEquals(tax, taxDisplay.getText());
         assertEquals(hour, hourDisplay.getText());
         assertEquals(user.getEmployerEmail(), employeDisplay.getText());

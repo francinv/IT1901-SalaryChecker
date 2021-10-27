@@ -12,42 +12,46 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
 import salarychecker.core.UserSale;
 
+
+/**
+ * Class to Deserialize {@link UserSale}.
+ */
 public class UserSaleDeserializer extends JsonDeserializer<UserSale> {
 
-    @Override
-    public UserSale deserialize(JsonParser parser, DeserializationContext ctxt)
-        throws IOException, JsonProcessingException {
+  @Override
+  public UserSale deserialize(JsonParser parser, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
 
-        TreeNode treeNode = parser.getCodec().readTree(parser);
-        return deserialize((JsonNode) treeNode);
-    }
+    TreeNode treeNode = parser.getCodec().readTree(parser);
+    return deserialize((JsonNode) treeNode);
+  }
 
-    UserSale deserialize(JsonNode jsonNode) {
+  UserSale deserialize(JsonNode jsonNode) {
     if (jsonNode instanceof ObjectNode objectNode) {
-        UserSale userSale = new UserSale();
-        
-        JsonNode salesperiodNode = objectNode.get("salesperiod");
-        if (salesperiodNode instanceof TextNode) {
-            userSale.setSalesperiod(salesperiodNode.asText());
-        }
+      UserSale userSale = new UserSale();
 
-        JsonNode expectedNode = objectNode.get("expected");
-        if (expectedNode instanceof NumericNode) {
-            userSale.setExpected(expectedNode.asDouble());
-        }
+      JsonNode salesperiodNode = objectNode.get("salesperiod");
+      if (salesperiodNode instanceof TextNode) {
+        userSale.setSalesperiod(salesperiodNode.asText());
+      }
 
-        JsonNode paidNode = objectNode.get("paid");
-        if (paidNode instanceof NumericNode) {
-            userSale.setPaid(paidNode.asDouble());
-        }
+      JsonNode expectedNode = objectNode.get("expected");
+      if (expectedNode instanceof NumericNode) {
+        userSale.setExpected(expectedNode.asDouble());
+      }
 
-        JsonNode diffenceNode = objectNode.get("difference");
-        if (diffenceNode instanceof NumericNode) {
-            userSale.setDifference();
-        }
-        
-        return userSale;
+      JsonNode paidNode = objectNode.get("paid");
+      if (paidNode instanceof NumericNode) {
+        userSale.setPaid(paidNode.asDouble());
+      }
+
+      JsonNode diffenceNode = objectNode.get("difference");
+      if (diffenceNode instanceof NumericNode) {
+        userSale.setDifference();
+      }
+
+      return userSale;
     }
-        return null;
-    }   
+    return null;
+  }
 }

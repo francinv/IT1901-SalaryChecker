@@ -3,12 +3,13 @@ package salarychecker.json.internal;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-
-import salarychecker.core.Accounts;
-import salarychecker.core.AbstractUser;
-
 import java.io.IOException;
+import salarychecker.core.AbstractUser;
+import salarychecker.core.Accounts;
 
+/**
+ * Class to serialize {@link Accounts}.
+ */
 public class AccountsSerializer extends JsonSerializer<Accounts> {
 
   /*

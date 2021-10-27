@@ -87,7 +87,7 @@ public class AccountsTest {
         assertEquals(22.0, user.getTaxCount());
         accounts.userInfoDoubleChanged(user, 131.0);
         assertNotEquals(131.0, user.getHourRate());
-        accounts.userInfoIntChanged(user, 66638);
+        accounts.userInfoTaxCountChanged(user, 66638);
         assertEquals(66638, user.getEmployeeNumber());
     }
 }
