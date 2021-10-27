@@ -33,7 +33,7 @@ import javax.crypto.SecretKey;
 public class EncryptDecrypt {
 
   private KeyStore keyStore;
-  private final String ALGORITHM = "AES/ECB/PKCS5Padding";
+  private static final String ALGORITHM = "AES/ECB/PKCS5Padding";
 
   /**
    * Constructor initziate key store object.
