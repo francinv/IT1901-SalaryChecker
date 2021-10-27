@@ -10,16 +10,15 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import salarychecker.core.Accounts;
 import salarychecker.json.internal.SalaryCheckerModule;
 
 /**
- * Class for persistence using jackson serializer and deserializer
+ * Class for persistence using jackson serializer and deserializer.
  */
 public class SalaryCheckerPersistence {
 
-  private ObjectMapper mapper;
+  private final ObjectMapper mapper;
   private Path saveFilePath;
 
   public SalaryCheckerPersistence() {
@@ -55,7 +54,7 @@ public class SalaryCheckerPersistence {
   /**
    * Saves a User to the saveFilePath in the user.home folder.
    *
-   * @param user the User to save
+   * @param accounts the Accounts to save
    */
   public void saveAccounts(Accounts accounts) throws IOException, IllegalStateException {
     if (saveFilePath == null) {
