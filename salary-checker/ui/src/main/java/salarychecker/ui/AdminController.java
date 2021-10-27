@@ -88,12 +88,12 @@ public class AdminController {
     String temptaxcount = createTaxField.getText();
     double taxcount = 0.0;
     if (!temptaxcount.isEmpty()) {
-      taxcount = Double.valueOf(temptaxcount);
+      taxcount = Double.parseDouble(temptaxcount);
     }
     String temphourwage = createWageField.getText();
     double hourwage = 0.0;
     if (!temphourwage.isEmpty()) {
-      hourwage = Double.valueOf(temphourwage);
+      hourwage = Double.parseDouble(temphourwage);
     }
     try {
       adminUser.setAccounts(accounts);
