@@ -29,11 +29,11 @@ public class LoginController {
 
     private AbstractUser user;
     private UserValidation userval = new UserValidation();
-    private SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
+    private SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
     @FXML
     void initialize(){
-        SCP.setSaveFile("Accounts.json");
+        persistence.setSaveFile("Accounts.json");
     }
 
     @FXML
@@ -41,7 +41,7 @@ public class LoginController {
         String usernameField = email.getText();
         String passwordField = password.getText();
         Accounts accounts;
-        accounts = SCP.loadAccounts();
+        accounts = persistence.loadAccounts();
 
         try {
             userval.checkValidEmail(usernameField);
@@ -68,7 +68,7 @@ public class LoginController {
             Parent root = fxmlLoader.load();
             AdminController adminController = fxmlLoader.getController();
             adminController.setAdminUser((AdminUser) user);
-            accounts = SCP.loadAccounts();
+            accounts = persistence.loadAccounts();
             adminController.setAccounts(accounts);
             adminController.loadInfo();
             adminController.loadListView();
@@ -90,7 +90,7 @@ public class LoginController {
             Parent root = fxmlLoader.load();
             HomepageController homepageController = fxmlLoader.getController();
             homepageController.setUser((User) user);
-            accounts = SCP.loadAccounts();
+            accounts = persistence.loadAccounts();
             homepageController.setAccounts(accounts);
             homepageController.loadInfo();
             ((User) user).addObserver(accounts);
@@ -113,7 +113,7 @@ public class LoginController {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        SCP.saveAccounts(acc);
+        persistence.saveAccounts(acc);
         createButton.setText("Test users created!");
         createButton.setTextFill(Paint.valueOf("#008000"));
 
