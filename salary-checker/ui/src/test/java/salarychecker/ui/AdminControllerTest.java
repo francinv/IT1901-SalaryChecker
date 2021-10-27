@@ -87,7 +87,6 @@ public class AdminControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(2)
     public void correctNameLoaded(){
         String expected = adminUser.getFirstname() + " " + adminUser.getLastname();
         String notexpected = "Seran Shanmugathas";
@@ -96,7 +95,6 @@ public class AdminControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(3)
     public void createUser(){
         clickOn(createUserButton);
         assertEquals("All fields must be filled out.", errorMessageDisplay.getText());
@@ -134,7 +132,6 @@ public class AdminControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(1)
     public void existingUsersLoadedInListView(){
         clickOn(listViewTab);
         ObservableList<String> expected = FXCollections.observableArrayList("Seran Shanmugathas");
@@ -144,7 +141,6 @@ public class AdminControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(4)
     public void testCreateUserUpdatedListView(){
         writeInFields("Jakob", "Kessler", "test@mail.com", "Test123!", 12345, "28040112345", 32, 132);
         clickOn(listViewTab);
