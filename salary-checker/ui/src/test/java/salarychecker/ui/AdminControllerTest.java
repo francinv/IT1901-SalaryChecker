@@ -33,7 +33,7 @@ import java.util.List;
 public class AdminControllerTest extends ApplicationTest {
 
     AdminUser adminUser;
-    SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
+    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
     private static Text adminName;
     private static Button createUserButton;
@@ -60,8 +60,8 @@ public class AdminControllerTest extends ApplicationTest {
         createTestUser();
         AdminController adminController = loader.getController();
         adminController.setAdminUser(adminUser);
-        SCP.setSaveFile("Accounts.json");
-        adminController.setAccounts(SCP.loadAccounts());
+        persistence.setSaveFile("Accounts.json");
+        adminController.setAccounts(persistence.loadAccounts());
         adminController.loadInfo();
         adminController.loadListView();
         stage.setScene(scene);
@@ -179,8 +179,8 @@ public class AdminControllerTest extends ApplicationTest {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        SCP.setSaveFile("Accounts.json");
-        SCP.saveAccounts(acc);
+        persistence.setSaveFile("Accounts.json");
+        persistence.saveAccounts(acc);
     }
 
     private void clearFields(){

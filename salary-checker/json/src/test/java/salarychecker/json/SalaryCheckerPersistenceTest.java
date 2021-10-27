@@ -9,7 +9,7 @@ import salarychecker.core.*;
 
 public class SalaryCheckerPersistenceTest {
     
-    private SalaryCheckerPersistence SCP  = new SalaryCheckerPersistence();
+    private SalaryCheckerPersistence persistence  = new SalaryCheckerPersistence();
 
 
   @Test
@@ -25,9 +25,9 @@ public class SalaryCheckerPersistenceTest {
     accounts.addUser(francin);
 
     try {
-      SCP.setSaveFile("AccountsTest.json");
-      SCP.saveAccounts(accounts);
-      Accounts accounts2 = SCP.loadAccounts();
+      persistence.setSaveFile("AccountsTest.json");
+      persistence.saveAccounts(accounts);
+      Accounts accounts2 = persistence.loadAccounts();
       Assertions.assertTrue(accounts2.iterator().hasNext());
       User hammad2 = ((User)accounts2.iterator().next());
       Assertions.assertNotEquals("Brage", hammad2.getFirstname());

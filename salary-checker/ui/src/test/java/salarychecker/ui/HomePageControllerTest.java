@@ -59,7 +59,7 @@ public class HomePageControllerTest extends ApplicationTest {
 
 
 
-    SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
+    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     User user;
 
     @Override
@@ -72,7 +72,7 @@ public class HomePageControllerTest extends ApplicationTest {
         createTestUsers();
         HomepageController homepageController = loader.getController();
         homepageController.setUser(user);
-        homepageController.setAccounts(SCP.loadAccounts());
+        homepageController.setAccounts(persistence.loadAccounts());
         homepageController.loadInfo();
         URL url = getClass().getResource("SalesReport.csv");
         File file = new File(url.getFile());
@@ -90,8 +90,8 @@ public class HomePageControllerTest extends ApplicationTest {
         accounts.addUser(testuser1);
         accounts.addUser(testuser2);
 
-        SCP.setSaveFile("Accounts.json");
-        SCP.saveAccounts(accounts);
+        persistence.setSaveFile("Accounts.json");
+        persistence.saveAccounts(accounts);
 
     }
 

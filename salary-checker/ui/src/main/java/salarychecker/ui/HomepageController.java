@@ -164,10 +164,10 @@ public class HomepageController {
         
         tempdata = user.getUserSaleList();
         
-        SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
-        SCP.setSaveFile("Accounts.json");
+        SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+        persistence.setSaveFile("Accounts.json");
         try {
-            SCP.saveAccounts(existingaccounts);
+            persistence.saveAccounts(existingaccounts);
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }
