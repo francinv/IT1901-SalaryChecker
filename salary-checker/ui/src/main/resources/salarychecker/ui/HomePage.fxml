@@ -72,7 +72,7 @@
                               <Font size="48.0" />
                            </font>
                         </Text>
-                        <Text fx:id="fDatoDisplay" layoutX="100.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21.09.1999" wrappingWidth="189.205078125">
+                        <Text fx:id="birthdayDisplay" layoutX="100.0" layoutY="499.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21.09.1999" wrappingWidth="189.205078125">
                            <font>
                               <Font size="34.0" />
                            </font>
