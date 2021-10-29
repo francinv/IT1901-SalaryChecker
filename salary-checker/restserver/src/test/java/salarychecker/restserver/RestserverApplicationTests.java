@@ -1,4 +1,4 @@
-package gr2111.restserver;
+package salarychecker.restserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
