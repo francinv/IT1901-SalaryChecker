@@ -199,7 +199,7 @@ public class HomepageController {
     tempdata = user.getUserSaleList();
 
     SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
-    persistence.setSaveFile("Accounts.json");
+    persistence.setFilePath("Accounts.json");
     try {
       persistence.saveAccounts(existingaccounts);
     } catch (IllegalStateException | IOException e) {

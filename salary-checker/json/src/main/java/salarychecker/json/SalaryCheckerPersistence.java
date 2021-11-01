@@ -19,7 +19,7 @@ import salarychecker.json.internal.SalaryCheckerModule;
 public class SalaryCheckerPersistence {
 
   private final ObjectMapper mapper;
-  private Path saveFilePath;
+  private Path filePath;
 
   public SalaryCheckerPersistence() {
     mapper = createObjectMapper();
@@ -33,8 +33,8 @@ public class SalaryCheckerPersistence {
     return new ObjectMapper().registerModule(createJacksonModule());
   }
 
-  public void setSaveFile(String saveFile) {
-    this.saveFilePath = Paths.get(System.getProperty("user.home"), saveFile);
+  public void setFilePath(String fileName) {
+    this.filePath = Paths.get(System.getProperty("user.home"), fileName);
   }
 
   /**
@@ -43,10 +43,10 @@ public class SalaryCheckerPersistence {
    * @return the loaded Accounts
    */
   public Accounts loadAccounts() throws IOException, IllegalStateException {
-    if (saveFilePath == null) {
+    if (filePath == null) {
       throw new IllegalStateException("Save file path is not set, yet");
     }
-    try (Reader reader = new FileReader(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
+    try (Reader reader = new FileReader(filePath.toFile(), StandardCharsets.UTF_8)) {
       return readAccounts(reader);
     }
   }
@@ -57,10 +57,10 @@ public class SalaryCheckerPersistence {
    * @param accounts the Accounts to save
    */
   public void saveAccounts(Accounts accounts) throws IOException, IllegalStateException {
-    if (saveFilePath == null) {
+    if (filePath == null) {
       throw new IllegalStateException("Save file path is not set, yet");
     }
-    try (Writer writer = new FileWriter(saveFilePath.toFile(), StandardCharsets.UTF_8)) {
+    try (Writer writer = new FileWriter(filePath.toFile(), StandardCharsets.UTF_8)) {
       writeAccounts(accounts, writer);
     }
   }
