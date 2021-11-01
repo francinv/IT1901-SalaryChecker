@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import salarychecker.core.AbstractUser;
-
+/**
+ * Ensures that the server is capable of listening to HTTP-requests.
+ * Decides how these requests are managed and what to do with them.
+ */
 @RestController
 @RequestMapping(SalaryCheckerController.SALARY_CHECKER_SERVICE_PATH)
 public class SalaryCheckerController {

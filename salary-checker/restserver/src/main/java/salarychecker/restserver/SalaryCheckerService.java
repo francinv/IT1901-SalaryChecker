@@ -7,7 +7,10 @@ import salarychecker.core.AdminUser;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-
+/**
+ * This class is used by the controller to manage Tracker-objects that are sent or requested
+ * by the client.
+ */
 @Service
 public class SalaryCheckerService {
 
