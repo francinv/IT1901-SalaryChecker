@@ -22,14 +22,15 @@ import salarychecker.json.SalaryCheckerPersistence;
 /**
  * Controller class for the Login-scene.
  */
-public class LoginController {
+public class LoginController extends AbstractController{
 
   @FXML private TextField email;
   @FXML private TextField password;
   @FXML private Button createButton;
   @FXML private Text errorDisplay;
 
-  private AbstractUser user;
+  private AbstractUser user = super.user;
+  private Accounts accounts;
   private final UserValidation userval = new UserValidation();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
@@ -55,7 +56,6 @@ public class LoginController {
   void userLogIn(ActionEvent event) throws IOException {
     String usernameField = email.getText();
     String passwordField = password.getText();
-    Accounts accounts;
     accounts = persistence.loadAccounts();
 
     try {
@@ -65,65 +65,12 @@ public class LoginController {
       userval.isValidLogIn(usernameField, passwordField, accounts);
       user = accounts.getUser(usernameField, passwordField);
       if (user instanceof User) {
-        switchtoHomepageScene(event);
+        setScene(CONTROLLERS.HOME, event, user, accounts);
       } else {
-        switchToAdminScene(event);
+        setScene(CONTROLLERS.ADMIN, event, user, accounts);
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
-    }
-  }
-
-  /**
-   * This function loads the AdminScene, if the logged in user is an Admin-user.
-   * It also calls some methods in AdminController.
-   *
-   * @param event when clicked 'Logg inn'
-   */
-  private void switchToAdminScene(ActionEvent event) {
-    Accounts accounts;
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Admin.fxml"));
-      Parent root = fxmlLoader.load();
-      AdminController adminController = fxmlLoader.getController();
-      adminController.setAdminUser((AdminUser) user);
-      accounts = persistence.loadAccounts();
-      adminController.setAccounts(accounts);
-      adminController.loadInfo();
-      adminController.loadListView();
-      ((AdminUser) user).addObserver(accounts);
-      Scene homepageScene = new Scene(root);
-      Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-      window.setScene(homepageScene);
-      window.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  /**
-   * This function loads the HomePageScene, if the logged in user is a regular user.
-   * It also calls some methods in LoginController.
-   *
-   * @param event when clicked on 'Logged in'
-   */
-  private void switchtoHomepageScene(ActionEvent event) {
-    Accounts accounts;
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
-      Parent root = fxmlLoader.load();
-      HomepageController homepageController = fxmlLoader.getController();
-      homepageController.setUser((User) user);
-      accounts = persistence.loadAccounts();
-      homepageController.setAccounts(accounts);
-      homepageController.loadInfo();
-      ((User) user).addObserver(accounts);
-      Scene homepageScene = new Scene(root);
-      Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-      window.setScene(homepageScene);
-      window.show();
-    } catch (Exception e) {
-      e.printStackTrace();
     }
   }
 

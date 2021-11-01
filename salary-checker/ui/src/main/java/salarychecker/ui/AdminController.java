@@ -25,10 +25,10 @@ import salarychecker.json.SalaryCheckerPersistence;
  * This class is a controller for the Admin Scene.
  * It handles user creation and also displays a listview of all the users.
  */
-public class AdminController {
+public class AdminController extends AbstractController {
 
-  private AdminUser adminUser = new AdminUser();
-  private Accounts accounts = new Accounts();
+  private AdminUser adminUser;
+  private Accounts accounts;
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
   private final ObservableList<String> nameOfUsers = FXCollections.observableArrayList();
 
@@ -61,16 +61,11 @@ public class AdminController {
   }
 
   public void loadInfo() {
+    adminUser = (AdminUser) super.user;
+    accounts = super.accounts;
     String name = adminUser.getFirstname() + " " + adminUser.getLastname();
     adminName.setText(name);
-  }
-
-  public void setAdminUser(AdminUser adminUser) {
-    this.adminUser = adminUser;
-  }
-
-  public void setAccounts(Accounts accounts) {
-    this.accounts = accounts;
+    loadListView();
   }
 
   @FXML
@@ -117,15 +112,6 @@ public class AdminController {
 
   @FXML
   private void logOutAction(ActionEvent event) {
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-      Parent root = fxmlLoader.load();
-      Scene homepageScene = new Scene(root);
-      Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-      window.setScene(homepageScene);
-      window.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    setScene(CONTROLLERS.LOGIN, event, null, null);
   }
 }

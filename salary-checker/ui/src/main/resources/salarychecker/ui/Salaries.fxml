@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="salariesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="salariesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TableView fx:id="salariesTable" layoutX="3.0" layoutY="10.0" prefHeight="780.0" prefWidth="1277.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="periodColumn" prefWidth="335.0" sortType="DESCENDING" text="Måned, År" />
           <TableColumn fx:id="paidColumn" prefWidth="335.0" text="Utbetalt Nettolønn" />
             <TableColumn fx:id="expectedColumn" prefWidth="335.0" text="Forventet Lønn" />
-            <TableColumn fx:id="DifferenceColumn" prefWidth="335.0" text="Differanse" />
+            <TableColumn fx:id="differenceColumn" prefWidth="335.0" text="Differanse" />
         </columns>
       </TableView>
    </children>
