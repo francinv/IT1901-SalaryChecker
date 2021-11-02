@@ -1,5 +1,6 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111)
 [![pipeline status](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/badges/83-create-abstractcontroller/pipeline.svg)](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/-/commits/83-create-abstractcontroller)
+[![coverage report](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/badges/83-create-abstractcontroller/coverage.svg)](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/-/commits/83-create-abstractcontroller) 
 # Salary Checker :computer:
 
 This repo contains a multi-module, multi-package javafx project for checking salary. This application is mainly meant for people who work on commision. 
