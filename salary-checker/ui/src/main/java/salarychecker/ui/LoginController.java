@@ -3,15 +3,10 @@ package salarychecker.ui;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
@@ -22,7 +17,7 @@ import salarychecker.json.SalaryCheckerPersistence;
 /**
  * Controller class for the Login-scene.
  */
-public class LoginController extends AbstractController{
+public class LoginController extends AbstractController {
 
   @FXML private TextField email;
   @FXML private TextField password;
@@ -35,8 +30,7 @@ public class LoginController extends AbstractController{
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
   /**
-   * We use the initialize method to create test users.
-   * This method will be deleted when server and API is ready.
+   * We use the initialize method to set saveFile for persistence.
    */
   @FXML
   void initialize() {
@@ -45,7 +39,7 @@ public class LoginController extends AbstractController{
 
   /**
    * This is the method that handles the log-in.
-   * It first loads the accounts that are save in "Accounts.json".
+   * It first loads the accounts that are saved in "Accounts.json".
    * It checks if the input is valid, then checks if the User exists.
    * If something is wrong it will display it in the UI.
    *
@@ -75,8 +69,10 @@ public class LoginController extends AbstractController{
   }
 
   /**
-   * Method that creates two test users.
+   * Method that creates two test users if the user wants to.
+   * This is only for testing purposes.
    *
+   * @param event when user clicks "Opprett testbrukere"
    * @throws IOException if something goes wrong when saving users to file.
    */
   @FXML

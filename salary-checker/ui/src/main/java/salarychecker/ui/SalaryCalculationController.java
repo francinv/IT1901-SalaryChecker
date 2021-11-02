@@ -1,11 +1,13 @@
 package salarychecker.ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -18,14 +20,12 @@ import salarychecker.core.User;
 import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-public class SalaryCalculationController extends AbstractController{
+/**
+ * This is the class for controller that handles the SalaryCalculation-scene.
+ */
+public class SalaryCalculationController extends AbstractController {
 
   @FXML private Button calculateButton;
-
   @FXML private TextArea fileField;
   @FXML private TextField hoursField;
   @FXML private TextField mobileField;
@@ -42,10 +42,17 @@ public class SalaryCalculationController extends AbstractController{
   private Accounts accounts;
   private String url;
 
-  protected void setUserAndAccounts(){
+
+  /**
+   * Method that sets User and Accounts for this scene.
+   * Need this for updating User and Accounts when a calculation is done.
+   * This method is protected because it will be called outside this class.
+   */
+  protected void setUserAndAccounts() {
     user = (User) super.user;
     accounts = super.accounts;
   }
+
   /**
    * This method is used to check the salary.
    * The method use this classes from the core-module:
@@ -61,7 +68,7 @@ public class SalaryCalculationController extends AbstractController{
    *                     or interrupted I/O operations.
    */
   @FXML
-  void calculateSalary(ActionEvent event) throws IOException {
+  private void calculateSalary(ActionEvent event) throws IOException {
     UserSale userSale = new UserSale();
     Calculation calculation = new Calculation(user);
     double hours = Double.parseDouble(hoursField.getText());
@@ -106,7 +113,7 @@ public class SalaryCalculationController extends AbstractController{
    * @param event when user clicks on 'Last opp Salgsrapport'.
    */
   @FXML
-  void uploadAction(ActionEvent event) {
+  private void uploadAction(ActionEvent event) {
     Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showOpenDialog(stage);
@@ -114,23 +121,12 @@ public class SalaryCalculationController extends AbstractController{
     fileField.setText(file.getName());
   }
 
-  public void setURL(String url) {
+  protected void setURL(String url) {
     this.url = url;
   }
 
-  public String getURL() {
+  private String getURL() {
     return this.url;
   }
 
-  // @FXML
-  // private void goToProfileAction(ActionEvent event){
-  //   pageTitle.setText("Profil");
-  //   setAnchorPane(CONTROLLERS.PROFILE, calculationPane, user, accounts);
-  // }
-
-  // @FXML
-  // private void goToSalAction(ActionEvent event){
-  //   pageTitle.setText("Mine lønninger");
-  //   setAnchorPane(CONTROLLERS.SALARIES, calculationPane, user, accounts);
-  // }
 }

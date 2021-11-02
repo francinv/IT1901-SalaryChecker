@@ -1,19 +1,20 @@
 package salarychecker.ui;
 
-import javafx.event.ActionEvent;
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
 
-import java.util.ArrayList;
-
-public class SalariesController extends AbstractController{
+/**
+ * This is a class for the controller that handles
+ * the Salaries scene.
+ */
+public class SalariesController extends AbstractController {
 
   @FXML private TableView<UserSale> salariesTable;
   @FXML private TableColumn<UserSale, String> periodColumn;
@@ -23,13 +24,16 @@ public class SalariesController extends AbstractController{
   @FXML private Text pageTitle;
   @FXML private AnchorPane salariesPane;
 
-  private User user = (User) super.user;
-  private Accounts accounts = super.accounts;
+  private User user;
   private ArrayList<UserSale> tempdata;
 
-  protected void loadTableView(){
+  /**
+   * Method for loading TableView with UserSale.
+   * This method is protected because it will be called when
+   * scene is loaded.
+   */
+  protected void loadTableView() {
     user = (User) super.user;
-    accounts = super.accounts;
     tempdata = user.getUserSaleList();
     if (!tempdata.isEmpty()) {
       updateTableView();

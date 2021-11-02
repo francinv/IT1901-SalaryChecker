@@ -20,7 +20,7 @@ import salarychecker.json.SalaryCheckerPersistence;
  * This is the class that controls the Settings-scene.
  * We have methods that changes the profile information of a specific user.
  */
-public class SettingsController extends AbstractController{
+public class SettingsController extends AbstractController {
 
   private User user;
   private Accounts accounts;

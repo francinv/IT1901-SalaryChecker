@@ -2,17 +2,15 @@ package salarychecker.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
 
-public class ProfileController extends AbstractController{
+/**
+ * This is the class that handles controller for the Profile-scene.
+ */
+public class ProfileController extends AbstractController {
 
   @FXML private Text navnDisplay;
   @FXML private Text epostDisplay;
@@ -29,10 +27,10 @@ public class ProfileController extends AbstractController{
 
   /**
    * This is the method that loads info to the Profile page.
-   * This method is public because AbstractController calls it when a user goes
+   * This method is protected because AbstractController calls it when a user goes
    * to this scene.
    */
-  public void loadProfileInfo() {
+  protected void loadProfileInfo() {
     user = (User) super.user;
     accounts = super.accounts;
     navnDisplay.setText(user.getFirstname() + " " + user.getLastname());
@@ -67,16 +65,4 @@ public class ProfileController extends AbstractController{
     setAnchorPane(CONTROLLERS.SETTINGS, profilePane, user, accounts);
   }
 
-
-  // @FXML
-  // private void goToCalcAction(ActionEvent event){
-  //   pageTitle.setText("Utregning av lønn");
-  //   setAnchorPane(CONTROLLERS.SALARYCALC, profilePane, user, accounts);
-  // }
-
-  // @FXML
-  // private void goToSalAction(ActionEvent event){
-  //   pageTitle.setText("Mine lønninger");
-  //   setAnchorPane(CONTROLLERS.SALARIES, profilePane, user, accounts);
-  // }
 }
