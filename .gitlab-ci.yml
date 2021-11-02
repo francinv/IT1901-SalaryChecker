@@ -19,7 +19,7 @@ test:
   image: falkoschumann/javafx-ci
   stage: test
   script:
-    - mvn test
+    - xvfb-run ./mvn test
 
 checkstyle:
   stage: verify
@@ -34,9 +34,10 @@ spotbugs:
     - mvn spotbugs:check
 
 jacoco:
+  image: falkoschumann/javafx-ci
   stage: verify
   script:
-    - mvn jacoco:report
-    - mvn verify
+    - xvfb-run ./mvn jacoco:report
+    - xvfb-run ./tmvn verify
     - cat report/target/site/jacoco-aggregate/index.html | grep -o 'Total[^%]*%' | sed -e 's/Total/Jacoco-Test-Coverage:/g'
   coverage: '/Jacoco-Test-Coverage[^%]+[>](\d+.?\d*)%/'
