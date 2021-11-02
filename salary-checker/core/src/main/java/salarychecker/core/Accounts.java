@@ -118,6 +118,24 @@ public class Accounts implements IUserObserver {
     return null;
   }
 
+  public AbstractUser getUser(String email) {
+    return getAccounts().stream().filter(u -> u.getEmail().equals(email))
+                                 .findAny()
+                                 .orElse(null);
+  }
+
+  public List<AbstractUser> getUsersByEmployerEmail(String employerEmail) {
+    List<AbstractUser> usersWithSameEmployer = new ArrayList<>();
+    for (AbstractUser abstractUser : accounts) {
+      if (abstractUser instanceof User) {
+        if (((User)abstractUser).getEmployerEmail().equals(employerEmail)) {
+          usersWithSameEmployer.add(abstractUser);
+        }
+      }
+    }
+    return usersWithSameEmployer;
+  }
+
   /**
    * Updates password of a specific user.
    *
@@ -302,5 +320,12 @@ public class Accounts implements IUserObserver {
   @Override
   public String toString() {
     return "{ accounts='" + getAccounts() + "'}";
+  }
+
+  public static void main(String[] args) {
+    Accounts accounts = new Accounts();
+    accounts.addUser(new User("firstname", "lastname", "email@gmail.com", "password1P12!", "22020199324", 55555, "employerEmail@gmail.com", 33.3, 130.0));
+
+    System.out.println(accounts.getUsersByEmployerEmail("employerEmail@gmail.com"));
   }
 }

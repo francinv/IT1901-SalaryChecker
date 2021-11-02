@@ -39,7 +39,7 @@ public class LoginController {
    */
   @FXML
   void initialize() {
-    persistence.setSaveFile("Accounts.json");
+    persistence.setFilePath("Accounts.json");
   }
 
   /**
