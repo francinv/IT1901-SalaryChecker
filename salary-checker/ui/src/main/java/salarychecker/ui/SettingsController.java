@@ -149,7 +149,7 @@ public class SettingsController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      persistence.setSaveFile("Accounts.json");
+      persistence.setFilePath("Accounts.json");
       persistence.saveAccounts(accounts);
       loadInfo();
     } catch (IllegalArgumentException e) {

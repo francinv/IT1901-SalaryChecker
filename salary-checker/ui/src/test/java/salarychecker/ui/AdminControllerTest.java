@@ -60,7 +60,7 @@ public class AdminControllerTest extends ApplicationTest {
         createTestUser();
         AdminController adminController = loader.getController();
         adminController.setAdminUser(adminUser);
-        persistence.setSaveFile("Accounts.json");
+        persistence.setFilePath("Accounts.json");
         adminController.setAccounts(persistence.loadAccounts());
         adminController.loadInfo();
         adminController.loadListView();
@@ -175,7 +175,7 @@ public class AdminControllerTest extends ApplicationTest {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        persistence.setSaveFile("Accounts.json");
+        persistence.setFilePath("Accounts.json");
         persistence.saveAccounts(acc);
     }
 

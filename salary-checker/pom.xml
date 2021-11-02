@@ -121,7 +121,9 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
-                        <argLine>${argLine}</argLine>
+                        <!--
+                            <argLine>dash dash enable-preview</argLine>
+                        -->
                         <skipTests>${skipTests}</skipTests>
                     </configuration>
                 </plugin>

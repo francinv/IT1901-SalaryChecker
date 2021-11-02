@@ -111,7 +111,7 @@ public class AdminController {
       errorMessageDisplay.setText(e.getMessage());
     }
     loadListView();
-    persistence.setSaveFile("Accounts.json");
+    persistence.setFilePath("Accounts.json");
     persistence.saveAccounts(accounts);
   }
 
