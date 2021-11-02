@@ -14,15 +14,15 @@ public class Calculation {
 
   private List<Sale> saleslist = new ArrayList<>();
 
-  private final List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
-  private final List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
-  private final List<String> COMEBACK = Arrays.asList("FK lista", "Lokal lista");
-  private final List<String> LEADS = Arrays.asList("Bring Flytt", "Bring Prospect",
+  private static final List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
+  private static final List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
+  private static final List<String> COMEBACK = Arrays.asList("FK lista", "Lokal lista");
+  private static final List<String> LEADS = Arrays.asList("Bring Flytt", "Bring Prospect",
       "Diverese leads fjordkraft", "Flytt FK", "Posten", "Småbaser", "Strøm.com",
       "Strømleverandøren", "Diverese leads FK", "CPH leads", "Eiendomsregisteret TK",
       "Leads KS", "Småbaser", "Tjenestetorget.no", "Coop/Trumf");
 
-  private final List<String> ORG = Arrays.asList("Agrol Spotpris",
+  private static final List<String> ORG = Arrays.asList("Agrol Spotpris",
       "Bergen Huseierforening - Topp 5 Garanti", "BOB Garanti", "BOB Spotpris",
       "Bobilforeningen Spotpris", "Farmaceutene Spotpris", "Industri Energi - Garanti",
       "Industri Energi - Spotpris", "Innkjøpspris Borettslag", "Jordmorforeningen Spotpris",
@@ -32,23 +32,23 @@ public class Calculation {
       "LO Favør Spotpris", "LO Favør Topp 3 Garanti", "Ranheim Fotball", "Studentsamskipnaden",
       "TOBB Garanti", "TOBB Spotpris", "Garantipris", "Coop / Trumf");
 
-  private final List<String> VAR = Arrays.asList("Forutsigbar", "Garantistrøm",
+  private static final List<String> VAR = Arrays.asList("Forutsigbar", "Garantistrøm",
       "Garantistrøm Oktober-kampanje", "Garantistrøm September-kampanje",
       "Garantistrøm Kampanje Høst 2021", "Garantistrøm Kampanje Vår 2021", "Garantistrøm Standard",
       "Garantistrøm Nord", "Garantipris", "Garantistrøm Kampanje Høst");
 
-  private final List<String> NSPOT = Arrays.asList("Strøm til Spotpris",
+  private static final List<String> NSPOT = Arrays.asList("Strøm til Spotpris",
       "Strøm til Spotpris Kampanje", "Solstrøm", "Trønderspot", "Trønderspot Kampanje",
       "Elbil-avtalen");
 
-  private final List<String> RSPOT = Arrays.asList("Trønderspot Spesial",
+  private static final List<String> RSPOT = Arrays.asList("Trønderspot Spesial",
       "Strøm til Spotpris Spesial");
 
-  private final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
+  private static final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
   private double calculated;
   private final User user;
-  private final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
 
   public Calculation(User user) {
     this.user = user;

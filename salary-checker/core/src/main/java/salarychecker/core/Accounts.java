@@ -118,6 +118,24 @@ public class Accounts implements IUserObserver {
     return null;
   }
 
+  public AbstractUser getUser(String email) {
+    return getAccounts().stream().filter(u -> u.getEmail().equals(email))
+                                 .findAny()
+                                 .orElse(null);
+  }
+
+  public List<AbstractUser> getUsersByEmployerEmail(String employerEmail) {
+    List<AbstractUser> usersWithSameEmployer = new ArrayList<>();
+    for (AbstractUser abstractUser : accounts) {
+      if (abstractUser instanceof User) {
+        if (((User)abstractUser).getEmployerEmail().equals(employerEmail)) {
+          usersWithSameEmployer.add(abstractUser);
+        }
+      }
+    }
+    return usersWithSameEmployer;
+  }
+
   /**
    * Updates password of a specific user.
    *

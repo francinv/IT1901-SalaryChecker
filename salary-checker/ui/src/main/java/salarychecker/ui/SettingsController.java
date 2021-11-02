@@ -135,7 +135,7 @@ public class SettingsController extends AbstractController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      persistence.setSaveFile("Accounts.json");
+      persistence.setFilePath("Accounts.json");
       persistence.saveAccounts(accounts);
       loadSettingsInfo();
     } catch (IllegalArgumentException e) {

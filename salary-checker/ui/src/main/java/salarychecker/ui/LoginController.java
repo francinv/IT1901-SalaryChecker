@@ -34,7 +34,7 @@ public class LoginController extends AbstractController {
    */
   @FXML
   void initialize() {
-    persistence.setSaveFile("Accounts.json");
+    persistence.setFilePath("Accounts.json");
   }
 
   /**

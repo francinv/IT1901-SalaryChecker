@@ -79,7 +79,7 @@ public class HomePageControllerTest extends ApplicationTest {
         accounts.addUser(testuser1);
         accounts.addUser(testuser2);
 
-        persistence.setSaveFile("Accounts.json");
+        persistence.setFilePath("Accounts.json");
         persistence.saveAccounts(accounts);
 
     }

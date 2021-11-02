@@ -178,7 +178,7 @@ public class AdminControllerTest extends ApplicationTest {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        persistence.setSaveFile("Accounts.json");
+        persistence.setFilePath("Accounts.json");
         persistence.saveAccounts(acc);
     }
 

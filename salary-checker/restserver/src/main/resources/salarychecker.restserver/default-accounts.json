@@ -1,0 +1,24 @@
+{
+  "Accounts" : [ {
+    "firstname" : "Hammad",
+    "lastname" : "Siddiqui",
+    "email" : "ham@mad.no",
+    "password" : "pFKFyL5KjvLi5EOOzxKKmw==",
+    "socialNumber" : "/GLXzGwiLUq5IDMKujzr4A==",
+    "employeeNumber" : 12345,
+    "employerEmail" : "employer@gmail.com",
+    "taxCount" : 30.0,
+    "hourRate" : 152.5,
+    "userSale" : [ {
+      "salesperiod" : "Januar 2021",
+      "expected" : 15000.0,
+      "paid" : 10000.0,
+      "difference" : 5000.0
+    } ]
+  }, {
+    "firstname" : "Francin",
+    "lastname" : "Vincent",
+    "email" : "francin@vincent.no",
+    "password" : "qXkfb4z8RXvItNwh1Mh7vw=="
+  } ]
+}
