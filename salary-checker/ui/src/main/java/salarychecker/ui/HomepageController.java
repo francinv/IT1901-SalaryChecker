@@ -44,10 +44,10 @@ public class HomepageController extends AbstractController {
   private void hideMenuAction(ActionEvent event){
     if (menuNav.isVisible()){
       menuNav.setVisible(false);
-      hideMenuButton.setText("Vis meny");
+      hideMenuButton.setText("Vis Meny");
     } else{
       menuNav.setVisible(true);
-      hideMenuButton.setText("Skjul meny");
+      hideMenuButton.setText("Skjul Meny");
     }
   }
 

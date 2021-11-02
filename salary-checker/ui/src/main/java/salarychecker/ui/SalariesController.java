@@ -42,26 +42,15 @@ public class SalariesController extends AbstractController{
    */
   void updateTableView() {
     salariesTable.getItems().clear();
-    periodColumn.setCellValueFactory(new PropertyValueFactory<UserSale, String>("salesperiod"));
-    paidColumn.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("expected"));
-    expectedColumn.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("paid"));
-    differenceColumn.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("difference"));
+    periodColumn.setCellValueFactory(new PropertyValueFactory<>("salesperiod"));
+    paidColumn.setCellValueFactory(new PropertyValueFactory<>("expected"));
+    expectedColumn.setCellValueFactory(new PropertyValueFactory<>("paid"));
+    differenceColumn.setCellValueFactory(new PropertyValueFactory<>("difference"));
 
     for (UserSale userSale : tempdata) {
       salariesTable.getItems().add(userSale);
     }
   }
 
-  // @FXML
-  // private void goToCalcAction(ActionEvent event){
-  //   pageTitle.setText("Utregning av lønn");
-  //   setAnchorPane(CONTROLLERS.SALARYCALC, salariesPane, user, accounts);
-  // }
-
-  // @FXML
-  // private void goToProfileAction(ActionEvent event){
-  //   pageTitle.setText("Profil");
-  //   setAnchorPane(CONTROLLERS.PROFILE, salariesPane, user, accounts);
-  // }
 
 }

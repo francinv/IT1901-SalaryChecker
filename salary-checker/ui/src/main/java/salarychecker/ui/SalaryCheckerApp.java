@@ -24,9 +24,6 @@ public class SalaryCheckerApp extends Application {
     stage.show();
 
   }
-  private static void setStage(Stage stage) {
-    SalaryCheckerApp.stg = stage;
-  }
 
   public static void main(String[] args) {
     launch(args);
