@@ -1,5 +1,5 @@
 variables:
-  SKIP_UI_TESTS: -DfailIfNoTests=false
+  SKIP_UI_TESTS: -DskipUiTests -DfailIfNoTests=false
 
 image: maven:3-openjdk-16
 before_script:
