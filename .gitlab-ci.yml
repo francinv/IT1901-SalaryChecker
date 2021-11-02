@@ -37,5 +37,5 @@ jacoco:
   script:
     - mvn jacoco:report
     - mvn verify $SKIP_UI_TESTS
-    - cat report/target/site/jacoco-aggregate/index.html | grep -o 'Total[^%]*%' | sed -e 's/Total/Jacoco-Test-Coverage:/g'
+    - cat restserver/target/site/jacoco-aggregate/index.html | grep -o 'Total[^%]*%' | sed -e 's/Total/Jacoco-Test-Coverage:/g'
   coverage: '/Jacoco-Test-Coverage[^%]+[>](\d+.?\d*)%/'
