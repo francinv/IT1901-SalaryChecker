@@ -97,7 +97,7 @@ public class SalaryCalculationController extends AbstractController {
     user.addUserSale(userSale);
 
     SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
-    persistence.setSaveFile("Accounts.json");
+    persistence.setFilePath("Accounts.json");
     try {
       persistence.saveAccounts(accounts);
     } catch (IllegalStateException | IOException e) {
