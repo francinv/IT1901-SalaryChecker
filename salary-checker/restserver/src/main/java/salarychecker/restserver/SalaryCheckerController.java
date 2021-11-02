@@ -16,41 +16,41 @@ import salarychecker.core.Accounts;
  * Ensures that the server is capable of listening to HTTP-requests.
  * Decides how these requests are managed and what to do with them.
  */
+
 @RestController
 @RequestMapping(SalaryCheckerController.SALARY_CHECKER_SERVICE_PATH)
 public class SalaryCheckerController {
     
-    public static final String SALARY_CHECKER_SERVICE_PATH = "salarychecker";
+  public static final String SALARY_CHECKER_SERVICE_PATH = "salarychecker";  
+  private final SalaryCheckerService salaryCheckerService;  
+  
+  @Autowired
+  public SalaryCheckerController(final SalaryCheckerService salaryCheckerService) {
+    this.salaryCheckerService = salaryCheckerService;
+  }  
+  
+  @GetMapping
+  public List<AbstractUser> getAccounts() {
+    return salaryCheckerService.getAccounts();
+  }  
 
-    private final SalaryCheckerService salaryCheckerService;
+  @GetMapping(path = "user")
+  public AbstractUser getUser(@RequestParam("email") String email) {
+    return salaryCheckerService.getUserByEmail(email);
+  } 
 
-    @Autowired
-    public SalaryCheckerController(final SalaryCheckerService salaryCheckerService) {
-        this.salaryCheckerService = salaryCheckerService;
-    }
+  @GetMapping(path = "users")
+  public List<AbstractUser> getEmployersUser(@RequestParam("employerEmail") String employerEmail) {
+    return salaryCheckerService.getUsersByEmployerEmail(employerEmail);
+  } 
 
-    @GetMapping
-    public List<AbstractUser> getAccounts() {
-        return salaryCheckerService.getAccounts();
-    }
+  @PostMapping
+  public void registerNewAccounts(@RequestBody Accounts accounts) {
+    salaryCheckerService.setAccounts(accounts);
+  } 
 
-    @GetMapping(path = "user")
-    public AbstractUser getUser(@RequestParam("email") String email) {
-        return salaryCheckerService.getUserByEmail(email);
-    }
-
-    @GetMapping(path = "users")
-    public List<AbstractUser> getEmployersUser(@RequestParam("employerEmail") String employerEmail) {
-        return salaryCheckerService.getUsersByEmployerEmail(employerEmail);
-    }
-
-    @PostMapping
-    public void registerNewAccounts(@RequestBody Accounts accounts) {
-        salaryCheckerService.setAccounts(accounts);
-    }
-
-    @DeleteMapping
-    public void deleteAccounts() {
-        salaryCheckerService.setAccounts(null);
-    }
-}
+  @DeleteMapping
+  public void deleteAccounts() {
+    salaryCheckerService.setAccounts(null);
+  }
+}  
