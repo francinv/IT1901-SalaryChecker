@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField layoutX="245.0" layoutY="63.0" prefHeight="39.0" prefWidth="304.0" promptText="Navn" />
+      <TextField layoutX="788.0" layoutY="63.0" prefHeight="39.0" prefWidth="337.0" promptText="Etternavn" />
+      <Text fx:id="lastnameLabel" layoutX="670.0" layoutY="92.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Etternavn:" wrappingWidth="118.171875">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="nameLabel" layoutX="170.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Navn:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="confirmNameButton" layoutX="1137.0" layoutY="63.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="43.0" text="V" />
+      <TextField layoutX="245.0" layoutY="322.0" prefHeight="39.0" prefWidth="304.0" promptText="E-Post" />
+      <Text fx:id="emailLabel" layoutX="156.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-Post:" wrappingWidth="73.4453125">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <PasswordField layoutX="788.0" layoutY="318.0" prefHeight="39.0" prefWidth="337.0" promptText="Passord" />
+      <Text fx:id="passwordLabel" layoutX="685.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="confirmPasswordLabel" layoutX="603.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bekreft Passord:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <PasswordField layoutX="788.0" layoutY="371.0" prefHeight="39.0" prefWidth="337.0" promptText="Bekreft Passord" />
+      <Button fx:id="confirmPasswordButton" layoutX="1137.0" layoutY="318.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="43.0" text="V" />
+      <Text fx:id="securityNumberLabel" layoutX="603.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fødselsnummer:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField layoutX="788.0" layoutY="192.0" prefHeight="39.0" prefWidth="337.0" promptText="Fødselsnummer" />
+      <Button fx:id="confirmIDButton" layoutX="1137.0" layoutY="192.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="43.0" text="V" />
+      <TextField layoutX="245.0" layoutY="192.0" prefHeight="39.0" prefWidth="304.0" promptText="Ansatt-ID" />
+      <Text fx:id="idLabel" layoutX="123.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt-ID:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="wageLabel" layoutX="126.0" layoutY="506.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timelønn:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField layoutX="245.0" layoutY="480.0" prefHeight="39.0" prefWidth="304.0" promptText="Timelønn" />
+      <Text fx:id="taxLabel" layoutX="660.0" layoutY="509.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <TextField layoutX="788.0" layoutY="480.0" prefHeight="39.0" prefWidth="337.0" promptText="Skattesats %" />
+      <Button fx:id="confirmWageButton" layoutX="1137.0" layoutY="480.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="43.0" text="V" />
+      <Button fx:id="forwardButton" layoutX="1081.0" layoutY="589.0" mnemonicParsing="false" text="-&gt;" />
+      <Button fx:id="backButton" layoutX="969.0" layoutY="589.0" mnemonicParsing="false" text="&lt;-" />
+      <Button fx:id="createUserButton" layoutX="969.0" layoutY="674.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="159.0" text="Opprett Bruker" />
+   </children>
+</AnchorPane>
