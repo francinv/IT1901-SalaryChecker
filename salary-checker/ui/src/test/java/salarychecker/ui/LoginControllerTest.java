@@ -1,5 +1,6 @@
 package salarychecker.ui;
 
+import com.github.tomakehurst.wiremock.core.Admin;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -39,6 +40,8 @@ public class LoginControllerTest extends ApplicationTest {
     @Override
     public void start(final Stage stage) throws Exception {
         final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
+        LoginController loginController = new LoginController();
+        fxmlLoader.setController(loginController);
         final Parent parent = fxmlLoader.load();
         final Scene scene = new Scene(parent);
         stage.setScene(scene);
@@ -71,6 +74,8 @@ public class LoginControllerTest extends ApplicationTest {
         Window currentWindow = window(getTopModalStage().getScene());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml")); // load same anchorpane that currentWindow contains
+            HomepageController homepageController = new HomepageController();
+            loader.setController(homepageController);
             AnchorPane pane = loader.load();
             ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
             ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();
@@ -90,6 +95,8 @@ public class LoginControllerTest extends ApplicationTest {
         Window currentWindow = window(getTopModalStage().getScene());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin.fxml")); // load same anchorpane that currentWindow contains
+            AdminController adminController = new AdminController();
+            loader.setController(adminController);
             AnchorPane pane = loader.load();
             ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
             ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();

@@ -15,17 +15,14 @@ public class SalaryCheckerApp extends Application {
 
   @Override
   public void start(Stage stage) throws Exception {
-    setStage(stage);
-    Parent root = FXMLLoader.load(getClass().getResource("LogIn.fxml"));
-
-    Scene scene = new Scene(root);
-
-    stage.setScene(scene);
+    FXMLLoader loader = new FXMLLoader();
+    LoginController controller = new LoginController();
+    loader.setController(controller);
+    loader.setLocation(SalaryCheckerApp.class.getResource("LogIn.fxml"));
+    final Parent parent = loader.load();
+    stage.setScene(new Scene(parent));
     stage.show();
-  }
 
-  private static void setStage(Stage stage) {
-    SalaryCheckerApp.stg = stage;
   }
 
   public static void main(String[] args) {

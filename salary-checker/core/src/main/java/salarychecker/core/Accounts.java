@@ -321,11 +321,4 @@ public class Accounts implements IUserObserver {
   public String toString() {
     return "{ accounts='" + getAccounts() + "'}";
   }
-
-  public static void main(String[] args) {
-    Accounts accounts = new Accounts();
-    accounts.addUser(new User("firstname", "lastname", "email@gmail.com", "password1P12!", "22020199324", 55555, "employerEmail@gmail.com", 33.3, 130.0));
-
-    System.out.println(accounts.getUsersByEmployerEmail("employerEmail@gmail.com"));
-  }
 }

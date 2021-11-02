@@ -7,14 +7,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
@@ -25,10 +20,10 @@ import salarychecker.json.SalaryCheckerPersistence;
  * This class is a controller for the Admin Scene.
  * It handles user creation and also displays a listview of all the users.
  */
-public class AdminController {
+public class AdminController extends AbstractController {
 
-  private AdminUser adminUser = new AdminUser();
-  private Accounts accounts = new Accounts();
+  private AdminUser adminUser;
+  private Accounts accounts;
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
   private final ObservableList<String> nameOfUsers = FXCollections.observableArrayList();
 
@@ -46,9 +41,9 @@ public class AdminController {
 
   /**
    * This method is used to load the listview that displays all the users.
-   * This method is public because the listview will be loaded as the user logs in.
+   * This method is protected because the listview will be loaded as the user logs in.
    */
-  public void loadListView() {
+  protected void loadListView() {
     userList.getItems().clear();
     List<AbstractUser> tempuserlist;
     tempuserlist = accounts.getAccounts().stream().filter(u -> u instanceof User)
@@ -60,19 +55,25 @@ public class AdminController {
     userList.setItems(nameOfUsers);
   }
 
-  public void loadInfo() {
+  /**
+   * This is method is used to load info about the admin-user that is logged in.
+   * The method is protected because the method will be called as the user logs in.
+   */
+  protected void loadInfo() {
+    adminUser = (AdminUser) super.user;
+    accounts = super.accounts;
     String name = adminUser.getFirstname() + " " + adminUser.getLastname();
     adminName.setText(name);
+    loadListView();
   }
 
-  public void setAdminUser(AdminUser adminUser) {
-    this.adminUser = adminUser;
-  }
-
-  public void setAccounts(Accounts accounts) {
-    this.accounts = accounts;
-  }
-
+  /**
+   * This is a method that handles creating User.
+   * We use a try-catch, to catch eventual
+   *
+   * @param event that happens when user clicks on "Opprett bruker".
+   * @throws IOException if something goes wrong when reading from file.
+   */
   @FXML
   private void createUserAction(ActionEvent event) throws IOException {
     String firstname = createFirstNameField.getText();
@@ -115,17 +116,13 @@ public class AdminController {
     persistence.saveAccounts(accounts);
   }
 
+  /**
+   * Handles logout. Calls setScene in AbstractController.
+   *
+   * @param event that happens when user clicks "Logg ut".
+   */
   @FXML
   private void logOutAction(ActionEvent event) {
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-      Parent root = fxmlLoader.load();
-      Scene homepageScene = new Scene(root);
-      Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-      window.setScene(homepageScene);
-      window.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    setScene(CONTROLLERS.LOGIN, event, null, null);
   }
 }

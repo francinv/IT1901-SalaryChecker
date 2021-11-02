@@ -53,14 +53,15 @@ public class AdminControllerTest extends ApplicationTest {
     @Override
     public void start(final Stage stage) throws Exception {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin.fxml"));
+        AdminController adminController = new AdminController();
+        loader.setController(adminController);
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
 
         adminUser = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
         createTestUser();
-        AdminController adminController = loader.getController();
-        adminController.setAdminUser(adminUser);
-        persistence.setFilePath("Accounts.json");
+        adminController.setUser(adminUser);
+        persistence.setSaveFile("Accounts.json");
         adminController.setAccounts(persistence.loadAccounts());
         adminController.loadInfo();
         adminController.loadListView();
@@ -156,6 +157,8 @@ public class AdminControllerTest extends ApplicationTest {
         Window currentWindow = window(getTopModalStage().getScene());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml")); // load same anchorpane that currentWindow contains
+            LoginController loginController = new LoginController();
+            loader.setController(loginController);
             AnchorPane pane = loader.load();
             ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
             ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();

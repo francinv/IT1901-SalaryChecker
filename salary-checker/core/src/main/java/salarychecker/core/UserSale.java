@@ -23,6 +23,7 @@ public class UserSale {
     this.salesperiod = salesperiod;
     this.expected = expected;
     this.paid = paid;
+    this.difference = this.expected - this.paid;
   }
 
   /**
