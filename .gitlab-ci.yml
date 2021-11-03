@@ -33,7 +33,6 @@ spotbugs:
     - mvn spotbugs:check
 
 jacoco:
-  image: falkoschumann/javafx-ci
   stage: verify
   script:
     - mvn jacoco:report
