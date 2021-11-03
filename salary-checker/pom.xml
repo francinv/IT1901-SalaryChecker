@@ -191,13 +191,6 @@
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
-                        <execution>
-                            <id>jacoco-report</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
                     </executions>
                 </plugin>
 
@@ -217,5 +210,6 @@
         <module>ui</module>
         <module>json</module>
         <module>restserver</module>
+        <module>report</module>
     </modules>
 </project>

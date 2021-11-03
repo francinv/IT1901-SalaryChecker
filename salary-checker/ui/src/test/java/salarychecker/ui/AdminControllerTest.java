@@ -61,7 +61,7 @@ public class AdminControllerTest extends ApplicationTest {
         adminUser = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
         createTestUser();
         adminController.setUser(adminUser);
-        persistence.setSaveFile("Accounts.json");
+        persistence.setFilePath("Accounts.json");
         adminController.setAccounts(persistence.loadAccounts());
         adminController.loadInfo();
         adminController.loadListView();
