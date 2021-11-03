@@ -6,7 +6,7 @@
 
 #logOutButton:hover{
     -fx-transition-duration: 0.4s;
-    -fx-background-color: rgb(160, 53, 53);
+    -fx-background-color: rgb(112, 4, 4);
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
 }
