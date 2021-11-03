@@ -16,10 +16,9 @@ build:
     - mvn compile
 
 test:
-  image: falkoschumann/javafx-ci
   stage: test
   script:
-    - xvfb-run ./mvn test
+    - mvn test $SKIP_UI_TESTS
 
 checkstyle:
   stage: verify
@@ -37,7 +36,7 @@ jacoco:
   image: falkoschumann/javafx-ci
   stage: verify
   script:
-    - xvfb-run ./mvn jacoco:report
-    - xvfb-run ./tmvn verify
+    - mvn jacoco:report
+    - mvn verify $SKIP_UI_TESTS
     - cat report/target/site/jacoco-aggregate/index.html | grep -o 'Total[^%]*%' | sed -e 's/Total/Jacoco-Test-Coverage:/g'
   coverage: '/Jacoco-Test-Coverage[^%]+[>](\d+.?\d*)%/'
