@@ -73,25 +73,20 @@ public class SalaryCalculationController extends AbstractController {
     Calculation calculation = new Calculation(user);
     double hours = Double.parseDouble(hoursField.getText());
     int mobileamount = Integer.parseInt(mobileField.getText());
+    String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
+    String salesperiod = chosenmonth + " " + yearField.getText();
+    double paid = Double.parseDouble(paidField.getText());
     try {
-      calculation.doCalculation(getURL(), hours, mobileamount);
+      userSale = calculation.doCalculation(getURL(), hours, mobileamount, salesperiod, paid);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
 
-    String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
-    String salesperiod = chosenmonth + " " + yearField.getText();
-    Double expectedCalc = Math.round(calculation.getCalculated() * 10) / 10.0;
-    userSale.setExpected(expectedCalc);
-    userSale.setPaid(Double.parseDouble(paidField.getText()));
-    userSale.setDifference();
-    userSale.setSalesperiod(salesperiod);
-
     String expected = String.valueOf(userSale.getExpected());
-    String paid = String.valueOf(userSale.getPaid());
+    String displayPaid = String.valueOf(userSale.getPaid()).toString();
     String diff = String.valueOf(userSale.getDifference());
     expectedText.setText(expected);
-    paidText.setText(paid);
+    paidText.setText(displayPaid);
     differenceText.setText(diff);
 
     user.addUserSale(userSale);

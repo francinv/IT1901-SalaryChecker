@@ -47,11 +47,15 @@ public class Calculation {
   private static final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
   private double calculated;
-  private final User user;
-  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private User user;
+  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader(); 
 
   public Calculation(User user) {
     this.user = user;
+  }
+
+  public Calculation() {
+    
   }
 
   /**
@@ -246,6 +250,11 @@ public class Calculation {
     calculated += hoursal;
   }
 
+  public void hourSalary(double hours, double hourwage) {
+    double hoursal = hourwage * hours;
+    calculated += hoursal;
+  }
+
   /**
    * Access method for calculated.
    *
@@ -262,6 +271,10 @@ public class Calculation {
     calculated = (calculated * ((100 - user.getTaxCount()) / 100));
   }
 
+  public void taxDeduction(double taxCount){
+    calculated = (calculated * ((100 - taxCount) / 100));
+  }
+
   /**
    * Do the full calculation.
    *
@@ -271,7 +284,7 @@ public class Calculation {
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                               denoted by a specified pathname has failed.
    */
-  public void doCalculation(String url, double hours, int mobileamount) throws IOException {
+  public UserSale doCalculation(String url, double hours, int mobileamount, String salesperiod, double paid) throws IOException {
     updateList(url);
     removeUnwanted();
     updateElectricityCommission();
@@ -279,5 +292,23 @@ public class Calculation {
     addMobile(mobileamount);
     hourSalary(hours);
     taxDeduction();
+    double expectedCalc = Math.round(getCalculated() * 10 )/ 10.0;
+    UserSale userSale = new UserSale(salesperiod, expectedCalc, paid);
+    return userSale;
   }
+
+  public UserSale doCalculation(String url, double hours, double hourwage, double taxcount, int mobileamount, String salesperiod, double paid) throws IOException {
+    updateList(url);
+    removeUnwanted();
+    updateElectricityCommission();
+    calculateElectricityCommission();
+    addMobile(mobileamount);
+    hourSalary(hours, hourwage);
+    taxDeduction(taxcount);
+    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
+    UserSale userSale = new UserSale(salesperiod, expectedCalc, paid);
+    return userSale;
+  }
+
+  
 }
