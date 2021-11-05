@@ -93,7 +93,7 @@ public class LoginControllerTest extends ApplicationTest {
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin.fxml")); // load same anchorpane that currentWindow contains
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminStartPage.fxml")); // load same anchorpane that currentWindow contains
             AdminStartPageController adminStartPageController = new AdminStartPageController();
             loader.setController(adminStartPageController);
             AnchorPane pane = loader.load();

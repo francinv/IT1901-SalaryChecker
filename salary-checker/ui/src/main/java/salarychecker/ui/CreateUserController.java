@@ -19,7 +19,7 @@ public class CreateUserController extends AbstractController {
 
   private AdminUser adminUser;
   private Accounts accounts;
-  User creatinguser = new User();
+  User creatinguser;
 
   @FXML private AnchorPane firstLastPane;
   @FXML private AnchorPane empemailPane;
@@ -39,6 +39,15 @@ public class CreateUserController extends AbstractController {
   @FXML private Button goOnButton;
   @FXML private Button createUserButton;
 
+  private String firstname;
+  private String lastname;
+  private double wage;
+  private double tax;
+  private String password;
+  private int employeeNumber;
+  private String email;
+  private String socialNumber;
+
   protected void loadUserAndAccount(){
     adminUser = (AdminUser) super.user;
     accounts = super.accounts;
@@ -54,47 +63,38 @@ public class CreateUserController extends AbstractController {
     UserValidation userValidation = new UserValidation();
     if (firstLastPane.isVisible()) {
       try {
-        String firstname = nameField.getText();
-        String lastname = lastNameField.getText();
-        creatinguser.setFirstname(firstname);
-        creatinguser.setLastname(lastname);
+        firstname = nameField.getText();
+        lastname = lastNameField.getText();
         firstLastPane.setVisible(false);
         setLayout(empemailPane);
         empemailPane.setVisible(true);
         goBackButton.setVisible(true);
         errorMessageDisplay.setText("");
       } catch (IllegalArgumentException e) {
-        nameField.clear();
-        lastNameField.clear();
         errorMessageDisplay.setText(e.getMessage());
       }
     } else if (empemailPane.isVisible()) {
       try {
         String employeeid = employerIdField.getText();
-        int employeeID = 0;
+        employeeNumber = 0;
         if (!employeeid.isEmpty()){
-          employeeID = Integer.parseInt(employeeid);
+          employeeNumber = Integer.parseInt(employeeid);
         }
-        String email = emailField.getText();
-        creatinguser.setEmployeeNumber(employeeID);
-        creatinguser.setEmail(email);
+        email = emailField.getText();
         empemailPane.setVisible(false);
         setLayout(socialPassPane);
         socialPassPane.setVisible(true);
         errorMessageDisplay.setText("");
       } catch (IllegalArgumentException e) {
-        emailField.clear();
-        employerIdField.clear();
         errorMessageDisplay.setText(e.getMessage());
       }
     } else if (socialPassPane.isVisible()) {
       try {
-        String birth = socialField.getText();
-        String password = passwordField.getText();
+        socialNumber = socialField.getText();
+        String temppassword = passwordField.getText();
         String confirm = confirmPasswordField.getText();
-        creatinguser.setSocialNumber(birth);
-        userValidation.isEqualPassword(password, confirm);
-        creatinguser.setPassword(password);
+        userValidation.isEqualPassword(temppassword, confirm);
+        password = temppassword;
         socialPassPane.setVisible(false);
         setLayout(wageTaxPane);
         wageTaxPane.setVisible(true);
@@ -102,9 +102,6 @@ public class CreateUserController extends AbstractController {
         goOnButton.setVisible(false);
         errorMessageDisplay.setText("");
       } catch (IllegalArgumentException e) {
-        socialField.clear();
-        passwordField.clear();
-        confirmPasswordField.clear();
         errorMessageDisplay.setText(e.getMessage());
       }
     }
@@ -115,31 +112,26 @@ public class CreateUserController extends AbstractController {
     SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     if (wageTaxPane.isVisible()) {
       try {
-        String wage = wageField.getText();
-        String tax = taxField.getText();
-        double tempwage = 0.0;
-        double temptax = 0.0;
-        if (! wage.isEmpty()) {
-          tempwage = Double.parseDouble(wage);
+        String tempwage = wageField.getText();
+        String temptax = taxField.getText();
+        double wage = 0.0;
+        double tax = 0.0;
+        if (! tempwage.isEmpty()) {
+          wage = Double.parseDouble(tempwage);
         }
-        if (! tax.isEmpty()) {
-          temptax = Double.parseDouble(tax);
+        if (! temptax.isEmpty()) {
+          tax = Double.parseDouble(temptax);
         }
-        creatinguser.setHourRate(tempwage);
-        creatinguser.setTaxCount(temptax);
         adminUser.setAccounts(accounts);
-        adminUser.createUser(creatinguser);
+        adminUser.createUser(firstname, lastname, email, password,
+        socialNumber, employeeNumber, adminUser.getEmail(), tax, wage);
         errorMessageDisplay.setFill(Paint.valueOf("#008000"));
         errorMessageDisplay.setText("User created!");
       } catch (IllegalArgumentException e) {
-        wageField.clear();
-        taxField.clear();
         errorMessageDisplay.setText(e.getMessage());
-
       }
       persistence.setFilePath("Accounts.json");
       persistence.saveAccounts(accounts);
-      creatinguser = new User();
     }
   }
 
@@ -169,53 +161,4 @@ public class CreateUserController extends AbstractController {
     pane.setLayoutY(370.0);
   }
 
-
-
-
-
-
-
-  /**
-   * This is a method that handles creating User.
-   * We use a try-catch, to catch eventual
-   *
-   * @param event that happens when user clicks on "Opprett bruker".
-   * @throws IOException if something goes wrong when reading from file.
-   *//*
-  @FXML
-  private void createUserAction(ActionEvent event) throws IOException {
-    String tempemployeeN = createEmployeeNumberField.getText();
-    int employeenumber = 0;
-    if (!tempemployeeN.isEmpty()) {
-      employeenumber = Integer.parseInt(tempemployeeN);
-    }
-    String socialnumber = createSocialNumberField.getText();
-    String temptaxcount = createTaxField.getText();
-    double taxcount = 0.0;
-    if (!temptaxcount.isEmpty()) {
-      taxcount = Double.parseDouble(temptaxcount);
-    }
-    String temphourwage = createWageField.getText();
-    double hourwage = 0.0;
-    if (!temphourwage.isEmpty()) {
-      hourwage = Double.parseDouble(temphourwage);
-    }
-    try {
-      adminUser.setAccounts(accounts);
-      adminUser.createUser(firstname, lastname, email, password,
-          socialnumber, employeenumber, adminUser.getEmail(), taxcount, hourwage);
-      createFirstNameField.clear();
-      createLastNameField.clear();
-      createEmailField.clear();
-      createPasswordField.clear();
-      createEmployeeNumberField.clear();
-      createSocialNumberField.clear();
-      createTaxField.clear();
-      createWageField.clear();
-    } catch (IllegalArgumentException e) {
-      errorMessageDisplay.setText(e.getMessage());
-    }
-    persistence.setFilePath("Accounts.json");
-    persistence.saveAccounts(accounts);
-  }*/
 }
