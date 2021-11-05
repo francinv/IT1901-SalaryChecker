@@ -13,7 +13,6 @@ stages:
 build:
   stage: build
   script:
-    - mvn clean install $SKIP_UI_TESTS
     - mvn compile
 
 test:
@@ -21,15 +20,10 @@ test:
   script:
     - mvn test $SKIP_UI_TESTS
 
-checkstyle:
+verify:
   stage: verify
   script:
-    - mvn checkstyle:check
-
-spotbugs:
-  stage: verify
-  script:
-    - mvn spotbugs:check
+    - mvn verify $SKIP_UI_TESTS
 
 jacoco:
   stage: verify
