@@ -14,6 +14,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserValidation;
 import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class CreateUserControllerTest extends ApplicationTest {
 
   AdminUser adminUser;
   SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+  UserValidation userValidation = new UserValidation();
 
   private Button createUserButton;
   private Button goBackButton;

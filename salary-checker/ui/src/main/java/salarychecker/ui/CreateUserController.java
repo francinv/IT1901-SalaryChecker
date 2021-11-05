@@ -19,7 +19,7 @@ public class CreateUserController extends AbstractController {
 
   private AdminUser adminUser;
   private Accounts accounts;
-  User creatinguser;
+  UserValidation userValidation = new UserValidation();
 
   @FXML private AnchorPane firstLastPane;
   @FXML private AnchorPane empemailPane;
@@ -60,10 +60,11 @@ public class CreateUserController extends AbstractController {
 
   @FXML
   private void goFurtherAction(ActionEvent event) {
-    UserValidation userValidation = new UserValidation();
     if (firstLastPane.isVisible()) {
       try {
+        userValidation.checkValidFirstname(nameField.getText());
         firstname = nameField.getText();
+        userValidation.checkValidLastname(lastNameField.getText());
         lastname = lastNameField.getText();
         firstLastPane.setVisible(false);
         setLayout(empemailPane);
@@ -78,8 +79,12 @@ public class CreateUserController extends AbstractController {
         String employeeid = employerIdField.getText();
         employeeNumber = 0;
         if (!employeeid.isEmpty()){
+          userValidation.checkValidEmployeeNumber(Integer.parseInt(employeeid));
           employeeNumber = Integer.parseInt(employeeid);
+        } else {
+          userValidation.checkValidEmployeeNumber(employeeNumber);
         }
+        userValidation.checkValidEmail(emailField.getText());
         email = emailField.getText();
         empemailPane.setVisible(false);
         setLayout(socialPassPane);
@@ -90,10 +95,12 @@ public class CreateUserController extends AbstractController {
       }
     } else if (socialPassPane.isVisible()) {
       try {
+        userValidation.checkValidSocialNumber(socialField.getText());
         socialNumber = socialField.getText();
         String temppassword = passwordField.getText();
         String confirm = confirmPasswordField.getText();
         userValidation.isEqualPassword(temppassword, confirm);
+        userValidation.checkValidPassword(temppassword);
         password = temppassword;
         socialPassPane.setVisible(false);
         setLayout(wageTaxPane);
@@ -114,13 +121,19 @@ public class CreateUserController extends AbstractController {
       try {
         String tempwage = wageField.getText();
         String temptax = taxField.getText();
-        double wage = 0.0;
-        double tax = 0.0;
+        wage = 0.0;
+        tax = 0.0;
         if (! tempwage.isEmpty()) {
+          userValidation.checkValidHourRate(Double.parseDouble(wageField.getText()));
           wage = Double.parseDouble(tempwage);
+        } else {
+          userValidation.checkValidHourRate(wage);
         }
         if (! temptax.isEmpty()) {
+          userValidation.checkValidTaxCount(Double.parseDouble(taxField.getText()));
           tax = Double.parseDouble(temptax);
+        } else {
+          userValidation.checkValidTaxCount(tax);
         }
         adminUser.setAccounts(accounts);
         adminUser.createUser(firstname, lastname, email, password,
@@ -154,7 +167,6 @@ public class CreateUserController extends AbstractController {
       createUserButton.setVisible(false);
     }
   }
-
 
   private void setLayout(AnchorPane pane){
     pane.setLayoutX(40.0);
