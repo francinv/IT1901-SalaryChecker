@@ -1,5 +1,6 @@
 package salarychecker.ui;
 
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,12 +10,12 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
-import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.json.SalaryCheckerPersistence;
 
-import java.io.IOException;
-
+/**
+ * This is the class for controlling CreateUser scene.
+ */
 public class CreateUserController extends AbstractController {
 
   private AdminUser adminUser;
@@ -48,7 +49,11 @@ public class CreateUserController extends AbstractController {
   private String email;
   private String socialNumber;
 
-  protected void loadUserAndAccount(){
+  /**
+   * This is the method that both loads users and sets the first visible scene.
+   * The method is protected because it will be called from AbstractController.
+   */
+  protected void loadUserAndAccount() {
     adminUser = (AdminUser) super.user;
     accounts = super.accounts;
     empemailPane.setVisible(false);
@@ -58,6 +63,14 @@ public class CreateUserController extends AbstractController {
     createUserButton.setVisible(false);
   }
 
+  /**
+   * This is the method that sets new AnchorPane when user clicks on "->".
+   * The method checks what AnchorPane is visible and validates using
+   * UserValidation(). If somethings is throw this will be displayed in
+   * 'errorMessageDisplay'. After validation is run it sets new AnchorPane.
+   *
+   * @param event when user clicks on '->'.
+   */
   @FXML
   private void goFurtherAction(ActionEvent event) {
     if (firstLastPane.isVisible()) {
@@ -78,7 +91,7 @@ public class CreateUserController extends AbstractController {
       try {
         String employeeid = employerIdField.getText();
         employeeNumber = 0;
-        if (!employeeid.isEmpty()){
+        if (!employeeid.isEmpty()) {
           userValidation.checkValidEmployeeNumber(Integer.parseInt(employeeid));
           employeeNumber = Integer.parseInt(employeeid);
         } else {
@@ -114,21 +127,29 @@ public class CreateUserController extends AbstractController {
     }
   }
 
+  /**
+   * This is the method that creates the user and adds it to "Accounts.json"
+   * It checks if the last AnchorPane is visible and takes these arguments and validates
+   * them before creating User. The method use both UserValidation() and AdminUser().
+   *
+   * @param event when user clicks on "Opprett bruker".
+   * @throws IOException if something goes wrong when saving to Accounts.json.
+   */
   @FXML
   private void createUserAction(ActionEvent event) throws IOException {
     SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     if (wageTaxPane.isVisible()) {
       try {
         String tempwage = wageField.getText();
-        String temptax = taxField.getText();
         wage = 0.0;
-        tax = 0.0;
         if (! tempwage.isEmpty()) {
           userValidation.checkValidHourRate(Double.parseDouble(wageField.getText()));
           wage = Double.parseDouble(tempwage);
         } else {
           userValidation.checkValidHourRate(wage);
         }
+        String temptax = taxField.getText();
+        tax = 0.0;
         if (! temptax.isEmpty()) {
           userValidation.checkValidTaxCount(Double.parseDouble(taxField.getText()));
           tax = Double.parseDouble(temptax);
@@ -137,7 +158,7 @@ public class CreateUserController extends AbstractController {
         }
         adminUser.setAccounts(accounts);
         adminUser.createUser(firstname, lastname, email, password,
-        socialNumber, employeeNumber, adminUser.getEmail(), tax, wage);
+            socialNumber, employeeNumber, adminUser.getEmail(), tax, wage);
         errorMessageDisplay.setFill(Paint.valueOf("#008000"));
         errorMessageDisplay.setText("User created!");
       } catch (IllegalArgumentException e) {
@@ -148,6 +169,12 @@ public class CreateUserController extends AbstractController {
     }
   }
 
+  /**
+   * This is the method for handling "<-". It checks what AnchorPane is visible and
+   * sets new AnchorPane based on this.
+   *
+   * @param event when user clicks on "<-".
+   */
   @FXML
   private void goBackAction(ActionEvent event) {
     if (empemailPane.isVisible()) {
@@ -168,7 +195,13 @@ public class CreateUserController extends AbstractController {
     }
   }
 
-  private void setLayout(AnchorPane pane){
+
+  /**
+   * This is a helper method, for setting layout of AnchorPane that will be shown.
+   *
+   * @param pane that needs to change layout.
+   */
+  private void setLayout(AnchorPane pane) {
     pane.setLayoutX(40.0);
     pane.setLayoutY(370.0);
   }

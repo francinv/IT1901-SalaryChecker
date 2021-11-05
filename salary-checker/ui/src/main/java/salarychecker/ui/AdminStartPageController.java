@@ -46,7 +46,7 @@ public class AdminStartPageController extends AbstractController {
    */
   @FXML
   private void hideAction(ActionEvent event) {
-    if (menuPane.isVisible()){
+    if (menuPane.isVisible()) {
       hideMenuButton.setText("Vis meny");
       menuPane.setVisible(false);
     } else {
@@ -72,7 +72,7 @@ public class AdminStartPageController extends AbstractController {
    * @param event when user clicks on "Opprett Bruker".
    */
   @FXML
-  private void goToNewUAction(ActionEvent event){
+  private void goToNewUAction(ActionEvent event) {
     pageTitle.setText("Opprett bruker");
     setAnchorPane(CONTROLLERS.CREATEUSER, adminStartPane, adminUser, accounts);
   }
