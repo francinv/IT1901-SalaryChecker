@@ -20,17 +20,10 @@ test:
   script:
     - mvn test $SKIP_UI_TESTS
 
-checkstyle:
+verify:
   stage: verify
   script:
-    - mvn install $SKIP_UI_TESTS
-    - mvn checkstyle:check
-
-spotbugs:
-  stage: verify
-  script:
-    - mvn install $SKIP_UI_TESTS
-    - mvn spotbugs:check
+    - mvn verify $SKIP_UI_TESTS
 
 jacoco:
   stage: verify

@@ -48,6 +48,13 @@ public class User extends AbstractUser {
   public User() {
   }
 
+  public User(String firstname, String lastname, String email, int employeeNumber) {
+    super.firstname = firstname;
+    super.lastname = lastname;
+    super.email = email;
+    this.employeeNumber = employeeNumber;
+  }
+
   /**
    * Access method for social number.
    *
