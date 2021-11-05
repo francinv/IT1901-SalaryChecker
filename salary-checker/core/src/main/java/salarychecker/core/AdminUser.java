@@ -60,4 +60,8 @@ public class AdminUser extends AbstractUser {
         employeeNumber, employerEmail, taxCount, hourRate);
     accounts.addUser(user);
   }
+
+  public void createUser(User user){
+    accounts.addUser(user);
+  }
 }

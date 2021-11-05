@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch SalaryCheckerApp",
+            "request": "launch",
+            "mainClass": "salarychecker.ui/salarychecker.ui.SalaryCheckerApp",
+            "projectName": "salary-ui"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-RestServerApplication<salary-restserver>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

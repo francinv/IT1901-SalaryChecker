@@ -1,6 +1,5 @@
 package salarychecker.ui;
 
-import com.github.tomakehurst.wiremock.core.Admin;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -95,8 +94,8 @@ public class LoginControllerTest extends ApplicationTest {
         Window currentWindow = window(getTopModalStage().getScene());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Admin.fxml")); // load same anchorpane that currentWindow contains
-            AdminController adminController = new AdminController();
-            loader.setController(adminController);
+            AdminStartPageController adminStartPageController = new AdminStartPageController();
+            loader.setController(adminStartPageController);
             AnchorPane pane = loader.load();
             ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
             ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();
