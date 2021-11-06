@@ -68,7 +68,7 @@ const AdminNav = ({NavButton, LogoButton}) => {
         open={isMenuOpen}
         onClose={handleMenuClose}    
       >
-        <MenuItem onClick={handleMenuClose}>Logg out</MenuItem>
+        <MenuItem onClick={handleMenuClose}>Logg ut</MenuItem>
     </Menu>
     </Box>
     );
