@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import SignInSide from './components/signin';
+import CalculationPage from './pages/CalculationPage';
 import HomePage from './pages/HomePage';
 import Login from './pages/LoginPage';
 
@@ -10,7 +10,7 @@ function App() {
     <div className="App">
       {
         isLoggedIn 
-        ? <HomePage />
+        ? <CalculationPage />
         : <Login />
       }
     </div>
