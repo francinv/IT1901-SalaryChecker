@@ -3,6 +3,7 @@ import './App.css';
 import CalculationPage from './pages/CalculationPage';
 import HomePage from './pages/HomePage';
 import Login from './pages/LoginPage';
+import SalariesPage from './pages/SalariesPage';
 
 function App() {
   const isLoggedIn = true;
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
       {
         isLoggedIn 
-        ? <CalculationPage />
+        ? <SalariesPage />
         : <Login />
       }
     </div>
