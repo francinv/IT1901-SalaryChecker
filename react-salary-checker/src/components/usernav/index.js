@@ -70,7 +70,7 @@ const UserNav = ({NavButton, LogoButton}) => {
             onClose={handleMenuClose}
           >
             <MenuItem onClick={handleMenuClose}>Profil</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logg out </MenuItem>
+            <MenuItem onClick={handleMenuClose}>Logg ut </MenuItem>
           </Menu>
         </Box>
     );
