@@ -1,7 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
 import PrimaryNavBar from "../components/navbar";
-import UsersTable from "../components/users";
 import CreateUser from "../components/createform";
 
 const AdminCreateUser = () => {
