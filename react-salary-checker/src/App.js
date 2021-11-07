@@ -1,6 +1,6 @@
 import React from 'react';
+import { Route, Routes } from 'react-router';
 import './App.css';
-import CreateUser from './components/createform';
 import AdminOverview from './pages/AdminUserOverviewPage';
 import CalculationPage from './pages/CalculationPage';
 import AdminCreateUser from './pages/CreateUserPage';
@@ -10,14 +10,22 @@ import ProfilePage from './pages/ProfilePage';
 import SalariesPage from './pages/SalariesPage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   return (
     <div className="App">
-      {
-        isLoggedIn 
-        ? <AdminCreateUser isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
-        : <Login />
-      }
+      <Routes>
+        {
+          isLoggedIn 
+          ? <Route path="/" element={<HomePage/>} /> 
+          : <Route path="/" element={<Login />} />
+        }
+        <Route path="/calculation" element={<CalculationPage/>} /> 
+        <Route path="/profile" element={<ProfilePage/>} /> 
+        <Route path="/salaries" element={<SalariesPage/>} /> 
+        <Route path="/create-user" element={<AdminCreateUser/>} /> 
+        <Route path="/users" element={<AdminOverview/>} /> 
+      </Routes>
+      
     </div>
   );
 }
