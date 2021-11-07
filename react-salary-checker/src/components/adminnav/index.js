@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Box } from "@mui/system";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Link } from "react-router-dom";
 
 
 const AdminNav = ({NavButton, LogoButton}) => {
@@ -25,20 +26,26 @@ const AdminNav = ({NavButton, LogoButton}) => {
         bgcolor:'black',
       }}>
         <Toolbar>
-          <LogoButton
-            component="div"
-            sx={{ display: { sm: 'block' } }}
-          >
-            $alary Checker
-          </LogoButton>
+          <Link to="/" style={{textDecoration:'none'}}>
+            <LogoButton
+              component="div"
+              sx={{ display: { sm: 'block' } }}
+            >
+              $alary Checker
+            </LogoButton>
+          </Link>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex' }}>
-            <NavButton variant="outlined">
-              Opprett bruker
-            </NavButton>
-            <NavButton variant="outlined" sx={{margin:'0.5rem', color:'white'}}>
-              Brukere
-            </NavButton>
+            <Link to="/create-user">
+              <NavButton variant="outlined">
+                Opprett bruker
+              </NavButton>
+            </Link>
+            <Link to="/users">
+              <NavButton variant="outlined" sx={{margin:'0.5rem', color:'white'}}>
+                Brukere
+              </NavButton>
+            </Link>
           </Box>
           <IconButton
             size="large"
