@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
+import CreateUser from './components/createform';
 import AdminOverview from './pages/AdminUserOverviewPage';
 import CalculationPage from './pages/CalculationPage';
+import AdminCreateUser from './pages/CreateUserPage';
 import HomePage from './pages/HomePage';
 import Login from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
@@ -13,7 +15,7 @@ function App() {
     <div className="App">
       {
         isLoggedIn 
-        ? <AdminOverview isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
+        ? <AdminCreateUser isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
         : <Login />
       }
     </div>
