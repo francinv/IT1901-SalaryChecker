@@ -2,6 +2,7 @@ import React from "react";
 import { AppBar, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Box } from "@mui/system";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Link } from "react-router-dom";
 
 
 const UserNav = ({NavButton, LogoButton}) => { 
@@ -26,20 +27,28 @@ const UserNav = ({NavButton, LogoButton}) => {
             bgcolor:'black',
           }}>
             <Toolbar>
-              <LogoButton
-                component="div"
-                sx={{ display: { sm: 'block' } }}
-              >
-                $alary Checker
-              </LogoButton>
+              <Link to="/" style={{
+                textDecoration:'none',
+              }}>
+                <LogoButton
+                  component="div"
+                  sx={{ display: { sm: 'block' } }}
+                >
+                  $alary Checker
+                </LogoButton>
+              </Link>
               <Box sx={{ flexGrow: 1 }} />
               <Box sx={{ display: 'flex' }}>
-                <NavButton variant="outlined">
-                  Kalkuler lønning
-                </NavButton>
-                <NavButton variant="outlined" sx={{margin:'0.5rem', color:'white'}}>
-                  Mine lønninger
-                </NavButton>
+                <Link to="/calculation">
+                  <NavButton variant="outlined">
+                    Kalkuler lønning
+                  </NavButton>
+                </Link>
+                <Link to="/salaries">
+                  <NavButton variant="outlined" sx={{margin:'0.5rem', color:'white'}}>
+                    Mine lønninger
+                  </NavButton>
+                </Link>
                 <IconButton
                   size="large"
                   edge="end"
@@ -69,7 +78,10 @@ const UserNav = ({NavButton, LogoButton}) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
           >
-            <MenuItem onClick={handleMenuClose}>Profil</MenuItem>
+            <Link to="/profile" style={{
+              color:'black',
+              textDecoration:'none',
+            }}><MenuItem>Profil</MenuItem></Link>
             <MenuItem onClick={handleMenuClose}>Logg ut </MenuItem>
           </Menu>
         </Box>
