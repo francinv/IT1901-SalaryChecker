@@ -3,15 +3,10 @@ package salarychecker.ui;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
@@ -22,29 +17,29 @@ import salarychecker.json.SalaryCheckerPersistence;
 /**
  * Controller class for the Login-scene.
  */
-public class LoginController {
+public class LoginController extends AbstractController {
 
   @FXML private TextField email;
   @FXML private TextField password;
   @FXML private Button createButton;
   @FXML private Text errorDisplay;
 
-  private AbstractUser user;
+  private AbstractUser user = super.user;
+  private Accounts accounts;
   private final UserValidation userval = new UserValidation();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
   /**
-   * We use the initialize method to create test users.
-   * This method will be deleted when server and API is ready.
+   * We use the initialize method to set saveFile for persistence.
    */
   @FXML
   void initialize() {
-    persistence.setSaveFile("Accounts.json");
+    persistence.setFilePath("Accounts.json");
   }
 
   /**
    * This is the method that handles the log-in.
-   * It first loads the accounts that are save in "Accounts.json".
+   * It first loads the accounts that are saved in "Accounts.json".
    * It checks if the input is valid, then checks if the User exists.
    * If something is wrong it will display it in the UI.
    *
@@ -55,7 +50,6 @@ public class LoginController {
   void userLogIn(ActionEvent event) throws IOException {
     String usernameField = email.getText();
     String passwordField = password.getText();
-    Accounts accounts;
     accounts = persistence.loadAccounts();
 
     try {
@@ -65,9 +59,9 @@ public class LoginController {
       userval.isValidLogIn(usernameField, passwordField, accounts);
       user = accounts.getUser(usernameField, passwordField);
       if (user instanceof User) {
-        switchtoHomepageScene(event);
+        setScene(CONTROLLERS.HOME, event, user, accounts);
       } else {
-        switchToAdminScene(event);
+        setScene(CONTROLLERS.ADMIN, event, user, accounts);
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
@@ -75,61 +69,10 @@ public class LoginController {
   }
 
   /**
-   * This function loads the AdminScene, if the logged in user is an Admin-user.
-   * It also calls some methods in AdminController.
+   * Method that creates two test users if the user wants to.
+   * This is only for testing purposes.
    *
-   * @param event when clicked 'Logg inn'
-   */
-  private void switchToAdminScene(ActionEvent event) {
-    Accounts accounts;
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Admin.fxml"));
-      Parent root = fxmlLoader.load();
-      AdminController adminController = fxmlLoader.getController();
-      adminController.setAdminUser((AdminUser) user);
-      accounts = persistence.loadAccounts();
-      adminController.setAccounts(accounts);
-      adminController.loadInfo();
-      adminController.loadListView();
-      ((AdminUser) user).addObserver(accounts);
-      Scene homepageScene = new Scene(root);
-      Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-      window.setScene(homepageScene);
-      window.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  /**
-   * This function loads the HomePageScene, if the logged in user is a regular user.
-   * It also calls some methods in LoginController.
-   *
-   * @param event when clicked on 'Logged in'
-   */
-  private void switchtoHomepageScene(ActionEvent event) {
-    Accounts accounts;
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
-      Parent root = fxmlLoader.load();
-      HomepageController homepageController = fxmlLoader.getController();
-      homepageController.setUser((User) user);
-      accounts = persistence.loadAccounts();
-      homepageController.setAccounts(accounts);
-      homepageController.loadInfo();
-      ((User) user).addObserver(accounts);
-      Scene homepageScene = new Scene(root);
-      Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-      window.setScene(homepageScene);
-      window.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  /**
-   * Method that creates two test users.
-   *
+   * @param event when user clicks "Opprett testbrukere"
    * @throws IOException if something goes wrong when saving users to file.
    */
   @FXML

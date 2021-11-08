@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="createUserPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="createUserButton" layoutX="982.0" layoutY="456.0" mnemonicParsing="false" onAction="#createUserAction" prefHeight="85.0" prefWidth="159.0" text="Opprett Bruker" />
+      <AnchorPane fx:id="firstLastPane" layoutX="98.0" layoutY="374.0" prefHeight="90.0" prefWidth="1013.0">
+         <children>
+            <Text fx:id="nameLabel" layoutX="70.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fornavn:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="nameField" layoutX="162.0" layoutY="25.0" prefHeight="39.0" prefWidth="304.0" promptText="Fornavn" />
+            <Text fx:id="lastnameLabel" layoutX="550.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Etternavn:" wrappingWidth="118.171875">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="lastNameField" layoutX="660.0" layoutY="24.0" prefHeight="39.0" prefWidth="337.0" promptText="Etternavn" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="goBackButton" layoutX="300.0" layoutY="324.0" mnemonicParsing="false" onAction="#goBackAction" prefHeight="39.0" prefWidth="43.0" text="&lt;-" />
+      <Button fx:id="goOnButton" layoutX="938.0" layoutY="326.0" mnemonicParsing="false" onAction="#goFurtherAction" prefHeight="39.0" prefWidth="43.0" text="-&gt;" />
+      <AnchorPane fx:id="empemailPane" layoutX="102.0" layoutY="69.0" prefHeight="90.0" prefWidth="1143.0">
+         <children>
+            <Text fx:id="employerIDLabel" layoutX="51.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt-ID:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="employerIdField" layoutX="162.0" layoutY="25.0" prefHeight="39.0" prefWidth="304.0" promptText="Ansatt-ID" />
+            <Text fx:id="emailLabel" layoutX="657.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-post:" wrappingWidth="118.171875">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="emailField" layoutX="780.0" layoutY="24.0" prefHeight="39.0" prefWidth="337.0" promptText="E-post" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="socialPassPane" layoutX="100.0" layoutY="184.0" prefHeight="134.0" prefWidth="1143.0">
+         <children>
+            <Text fx:id="socialLabel" layoutX="51.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fødselsnummer:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="socialField" layoutX="230.0" layoutY="24.0" prefHeight="39.0" prefWidth="304.0" promptText="Fødselsnummer" />
+            <Text fx:id="passwordFieldLabel" layoutX="657.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passord:" wrappingWidth="118.171875">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="passwordField" layoutX="780.0" layoutY="24.0" prefHeight="39.0" prefWidth="337.0" promptText="Passord" />
+            <Text fx:id="confirmPasswordLabel" layoutX="602.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bekreft Passord:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="confirmPasswordField" layoutX="782.0" layoutY="82.0" prefHeight="36.0" prefWidth="334.0" promptText="Bekreft passord" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="wageTaxPane" layoutX="94.0" layoutY="694.0" prefHeight="90.0" prefWidth="1143.0">
+         <children>
+            <Text fx:id="wageLabel" layoutX="51.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Timelønn:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="wageField" layoutX="162.0" layoutY="25.0" prefHeight="39.0" prefWidth="304.0" promptText="Timelønn" />
+            <TextField fx:id="taxField" layoutX="698.0" layoutY="24.0" prefHeight="39.0" prefWidth="337.0" promptText="Skattesats %" />
+            <Text fx:id="taxLabel" layoutX="568.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Skattesats:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Text fx:id="errorMessageDisplay" fill="RED" layoutX="519.0" layoutY="507.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="262.46710205078125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

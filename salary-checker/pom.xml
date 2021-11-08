@@ -121,7 +121,9 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
-                        <argLine>${argLine}</argLine>
+                        <!--
+                            <argLine>dash dash enable-preview</argLine>
+                        -->
                         <skipTests>${skipTests}</skipTests>
                     </configuration>
                 </plugin>
@@ -189,13 +191,6 @@
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
-                        <execution>
-                            <id>jacoco-report</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
                     </executions>
                 </plugin>
 
@@ -215,5 +210,6 @@
         <module>ui</module>
         <module>json</module>
         <module>restserver</module>
+        <module>report</module>
     </modules>
 </project>

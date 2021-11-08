@@ -25,7 +25,7 @@ public class SalaryCheckerPersistenceTest {
     accounts.addUser(francin);
 
     try {
-      persistence.setSaveFile("AccountsTest.json");
+      persistence.setFilePath("AccountsTest.json");
       persistence.saveAccounts(accounts);
       Accounts accounts2 = persistence.loadAccounts();
       Assertions.assertTrue(accounts2.iterator().hasNext());

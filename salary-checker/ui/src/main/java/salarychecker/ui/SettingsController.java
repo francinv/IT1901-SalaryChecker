@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import salarychecker.core.Accounts;
@@ -19,10 +20,10 @@ import salarychecker.json.SalaryCheckerPersistence;
  * This is the class that controls the Settings-scene.
  * We have methods that changes the profile information of a specific user.
  */
-public class SettingsController {
+public class SettingsController extends AbstractController {
 
-  private User user = new User();
-  private Accounts accounts = new Accounts();
+  private User user;
+  private Accounts accounts;
   private final UserValidation userValidation = new UserValidation();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
@@ -40,31 +41,16 @@ public class SettingsController {
   @FXML private TextField changeEmployeeNumberField;
   @FXML private Text successMessageDisplay;
   @FXML private Text errorTextDisplay;
+  @FXML private AnchorPane settingsPane;
 
-  /**
-   * This method is a setter for the user.
-   * We do this to have control of what user wants to change their information.
-   *
-   * @param user that needs to be set for the settings scene
-   */
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  /**
-   * This method is a setter for the accounts.
-   *
-   * @param accounts that needs to be set for the settings scene.
-   */
-  public void setAccounts(Accounts accounts) {
-    this.accounts = accounts;
-  }
 
   /**
    * Method that is called from HomepageController.
    * We use this method to load existing user information as a prompt text to Text Fields.
    */
-  public void loadInfo() {
+  public void loadSettingsInfo() {
+    user = (User) super.user;
+    accounts = super.accounts;
     changeFirstNameField.setPromptText(user.getFirstname());
     changeLastNameField.setPromptText(user.getLastname());
     changeEmailField.setPromptText(user.getEmail());
@@ -84,7 +70,7 @@ public class SettingsController {
    * @param event when user clicks on 'Lagre endringer'
    */
   @FXML
-  public void saveChangesAction(ActionEvent event) {
+  public void saveChangesAction(ActionEvent event) throws IOException {
     try {
       if (!(changeFirstNameField.getText().equals("")
           && changeLastNameField.getText().equals(""))) {
@@ -149,15 +135,16 @@ public class SettingsController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      persistence.setSaveFile("Accounts.json");
+      persistence.setFilePath("Accounts.json");
       persistence.saveAccounts(accounts);
-      loadInfo();
+      loadSettingsInfo();
     } catch (IllegalArgumentException e) {
       errorTextDisplay.setText(e.getMessage());
       successMessageDisplay.setText(null);
     } catch (IOException e) {
       e.printStackTrace();
     }
+
   }
 
   /**
@@ -176,19 +163,6 @@ public class SettingsController {
    */
   @FXML
   public void closeButtonAction(ActionEvent event) {
-    try {
-      FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HomePage.fxml"));
-      Parent root = fxmlLoader.load();
-      HomepageController homepageController = fxmlLoader.getController();
-      homepageController.setUser((User) user);
-      homepageController.setAccounts(accounts);
-      homepageController.loadInfo();
-      Scene homepageScene = new Scene(root);
-      Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-      window.setScene(homepageScene);
-      window.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    setAnchorPane(CONTROLLERS.PROFILE, settingsPane, user, accounts);
   }
 }

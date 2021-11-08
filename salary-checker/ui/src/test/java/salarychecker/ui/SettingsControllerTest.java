@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +32,6 @@ public class SettingsControllerTest extends ApplicationTest {
     User user;
     SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     Accounts accounts = new Accounts();
-    SettingsController settingsController;
 
     private Button closeButton;
     private TextField changeFirstNameField;
@@ -53,16 +53,17 @@ public class SettingsControllerTest extends ApplicationTest {
     @Override
     public void start(final Stage stage) throws Exception {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+        SettingsController settingsController = new SettingsController();
+        loader.setController(settingsController);
         final Parent parent = loader.load();
         final Scene scene = new Scene(parent);
 
         user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
         createTestUsers();
-        settingsController = loader.getController();
         settingsController.setUser(user);
         accounts = persistence.loadAccounts();
         settingsController.setAccounts(accounts);
-        settingsController.loadInfo();
+        settingsController.loadSettingsInfo();
         stage.setScene(scene);
         stage.show();
     }
@@ -88,7 +89,7 @@ public class SettingsControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void testUpdateName() throws IOException {
+    public void testUpdateName() {
         writeInFields(changeFirstNameField, "Ser");
         writeInFields(changeLastNameField, "Shanmugathas");
         clickOn(saveChangesButton);
@@ -130,6 +131,7 @@ public class SettingsControllerTest extends ApplicationTest {
         writeInFields(changeTaxBracketField, "22.3");
         clickOn(saveChangesButton);
         assertEquals("Changes successfully saved.", successMessageDisplay.getText());
+        assertEquals("22.3", changeTaxBracketField.getPromptText());
     }
 
     @Test
@@ -137,17 +139,19 @@ public class SettingsControllerTest extends ApplicationTest {
         writeInFields(hourWageField, "150");
         clickOn(saveChangesButton);
         assertEquals("Changes successfully saved.", successMessageDisplay.getText());
+        assertEquals("150.0", hourWageField.getPromptText());
     }
 
     @Test
     public void testUpdateEmployeeNumber(){
-        writeInFields(changeEmployeeNumberField, "12345");
+        writeInFields(changeEmployeeNumberField, "54321");
         clickOn(saveChangesButton);
         assertEquals("Changes successfully saved.", successMessageDisplay.getText());
+        assertEquals("54321", changeEmployeeNumberField.getPromptText());
     }
 
     @Test
-    public void testInvalidInfo() throws IOException {
+    public void testInvalidInfo() {
         writeInFields(changeFirstNameField, "S");
         writeInFields(changeLastNameField, "Shanmugathas");
         clickOn(saveChangesButton);
@@ -198,18 +202,8 @@ public class SettingsControllerTest extends ApplicationTest {
     @Test
     public void testCloseButton(){
         clickOn(closeButton);
-        Window currentWindow = window(getTopModalStage().getScene());
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml")); // load same anchorpane that currentWindow contains
-            AnchorPane pane = loader.load();
-            ObservableList<Node> unmodNodeListCurrentWindow = currentWindow.getScene().getRoot().getChildrenUnmodifiable(); // get the children of both
-            ObservableList<Node> unmodNodeListLoadedWindow = pane.getChildrenUnmodifiable();
-            for (int i = 0; i < unmodNodeListCurrentWindow.size(); i++) {
-                assertEquals(unmodNodeListCurrentWindow.get(i).getId(), unmodNodeListLoadedWindow.get(i).getId()); // verify that they're identical by ID
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        AnchorPane profilePane = lookup("#profilePane").query();
+        assertTrue(profilePane.isVisible());
     }
 
     private void createTestUsers() throws IOException {
@@ -220,9 +214,8 @@ public class SettingsControllerTest extends ApplicationTest {
         acc.addUser(testuser1);
         acc.addUser(testuser2);
 
-        persistence.setSaveFile("Accounts.json");
+        persistence.setFilePath("Accounts.json");
         persistence.saveAccounts(acc);
-
     }
 
     private void writeInFields(TextField typeField, String text) {
@@ -233,17 +226,5 @@ public class SettingsControllerTest extends ApplicationTest {
         typeField.clear();
     }
 
-    private Stage getTopModalStage() {
-        // Get a list of windows but ordered from top[0] to bottom[n] ones.
-        // It is needed to get the first found modal window.
-        final List<Window> allWindows = new ArrayList<>(new FxRobot().robotContext().getWindowFinder().listWindows());
-        Collections.reverse(allWindows);
-
-        return (Stage) allWindows
-                .stream()
-                .filter(window -> window instanceof Stage)
-                .findFirst()
-                .orElse(null);
-    }
 
 }

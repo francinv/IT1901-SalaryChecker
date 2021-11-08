@@ -14,15 +14,15 @@ public class Calculation {
 
   private List<Sale> saleslist = new ArrayList<>();
 
-  private final List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
-  private final List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
-  private final List<String> COMEBACK = Arrays.asList("FK lista", "Lokal lista");
-  private final List<String> LEADS = Arrays.asList("Bring Flytt", "Bring Prospect",
+  private static final List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
+  private static final List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
+  private static final List<String> COMEBACK = Arrays.asList("FK lista", "Lokal lista");
+  private static final List<String> LEADS = Arrays.asList("Bring Flytt", "Bring Prospect",
       "Diverese leads fjordkraft", "Flytt FK", "Posten", "Småbaser", "Strøm.com",
       "Strømleverandøren", "Diverese leads FK", "CPH leads", "Eiendomsregisteret TK",
       "Leads KS", "Småbaser", "Tjenestetorget.no", "Coop/Trumf");
 
-  private final List<String> ORG = Arrays.asList("Agrol Spotpris",
+  private static final List<String> ORG = Arrays.asList("Agrol Spotpris",
       "Bergen Huseierforening - Topp 5 Garanti", "BOB Garanti", "BOB Spotpris",
       "Bobilforeningen Spotpris", "Farmaceutene Spotpris", "Industri Energi - Garanti",
       "Industri Energi - Spotpris", "Innkjøpspris Borettslag", "Jordmorforeningen Spotpris",
@@ -32,26 +32,30 @@ public class Calculation {
       "LO Favør Spotpris", "LO Favør Topp 3 Garanti", "Ranheim Fotball", "Studentsamskipnaden",
       "TOBB Garanti", "TOBB Spotpris", "Garantipris", "Coop / Trumf");
 
-  private final List<String> VAR = Arrays.asList("Forutsigbar", "Garantistrøm",
+  private static final List<String> VAR = Arrays.asList("Forutsigbar", "Garantistrøm",
       "Garantistrøm Oktober-kampanje", "Garantistrøm September-kampanje",
       "Garantistrøm Kampanje Høst 2021", "Garantistrøm Kampanje Vår 2021", "Garantistrøm Standard",
       "Garantistrøm Nord", "Garantipris", "Garantistrøm Kampanje Høst");
 
-  private final List<String> NSPOT = Arrays.asList("Strøm til Spotpris",
+  private static final List<String> NSPOT = Arrays.asList("Strøm til Spotpris",
       "Strøm til Spotpris Kampanje", "Solstrøm", "Trønderspot", "Trønderspot Kampanje",
       "Elbil-avtalen");
 
-  private final List<String> RSPOT = Arrays.asList("Trønderspot Spesial",
+  private static final List<String> RSPOT = Arrays.asList("Trønderspot Spesial",
       "Strøm til Spotpris Spesial");
 
-  private final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
+  private static final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
   private double calculated;
-  private final User user;
-  private final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private User user;
+  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader(); 
 
   public Calculation(User user) {
     this.user = user;
+  }
+
+  public Calculation() {
+    
   }
 
   /**
@@ -247,6 +251,17 @@ public class Calculation {
   }
 
   /**
+   * Calculates just the hour salary.
+   *
+   * @param hours number of worked hours
+   * @param hourwage the hourly salary for the User.
+   */
+  public void hourSalary(double hours, double hourwage) {
+    double hoursal = hourwage * hours;
+    calculated += hoursal;
+  }
+
+  /**
    * Access method for calculated.
    *
    * @return the calculated
@@ -263,15 +278,29 @@ public class Calculation {
   }
 
   /**
+   * Removes tax from calculated.
+   *
+   * @param taxCount for the User.
+   */
+  public void taxDeduction(double taxCount) {
+    calculated = (calculated * ((100 - taxCount) / 100));
+  }
+
+  /**
    * Do the full calculation.
    *
    * @param url to the file
    * @param hours total hours of working
    * @param mobileamount amount of mobile
+   * @param salesperiod the period the sales are done.
+   * @param paid the amount that were paid by employer.
+   * @return UserSale for the calculation.
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                               denoted by a specified pathname has failed.
    */
-  public void doCalculation(String url, double hours, int mobileamount) throws IOException {
+  public UserSale doCalculation(
+      String url, double hours, int mobileamount, String salesperiod, double paid)
+      throws IOException {
     updateList(url);
     removeUnwanted();
     updateElectricityCommission();
@@ -279,5 +308,38 @@ public class Calculation {
     addMobile(mobileamount);
     hourSalary(hours);
     taxDeduction();
+    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
+    return new UserSale(salesperiod, expectedCalc, paid);
   }
+
+  /**
+   * This method do the full calculation. This method is needed by API.
+   *
+   * @param url to the SalesReport.
+   * @param hours total hours of working.
+   * @param hourwage salary per hour.
+   * @param taxcount the tax that need to be subtracted.
+   * @param mobileamount amount of mobile.
+   * @param salesperiod the period the sales are done.
+   * @param paid the amount that were paid by employer.
+   * @return UserSale for the calculation.
+   * @throws FileNotFoundException Signals that an attempt to open the file
+   *                                denoted by a specified pathname has failed.
+   */
+  public UserSale doCalculation(
+      String url, double hours, double hourwage, double taxcount,
+      int mobileamount, String salesperiod, double paid)
+      throws IOException {
+    updateList(url);
+    removeUnwanted();
+    updateElectricityCommission();
+    calculateElectricityCommission();
+    addMobile(mobileamount);
+    hourSalary(hours, hourwage);
+    taxDeduction(taxcount);
+    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
+    return new UserSale(salesperiod, expectedCalc, paid);
+  }
+
+  
 }
