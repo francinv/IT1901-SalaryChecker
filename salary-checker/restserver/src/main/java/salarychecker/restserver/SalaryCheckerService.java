@@ -122,11 +122,12 @@ public class SalaryCheckerService {
     return accounts.getUsersByEmployerEmail(employerEmail);
   }
 
-  public UserSale calculateUsersUserSale(String url, double hours, int mobileamount, String salesperiod, double paid) 
+  public UserSale calculateUsersUserSale(String url, String hours, String mobileamount, 
+      String salesperiod, double paid) 
     throws NumberFormatException, IOException {
-    Calculation calculation = new Calculation(user);
-    calculation.doCalculation(url, hours, mobileamount, salesperiod, paid);
-    return new UserSale();
+    Calculation calculation = new Calculation();
+    return calculation.doCalculation(url, Double.parseDouble(hours), 
+        Integer.parseInt(mobileamount), salesperiod, paid);
   }
 
   /**

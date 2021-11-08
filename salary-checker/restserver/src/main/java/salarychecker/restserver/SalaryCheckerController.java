@@ -62,12 +62,12 @@ public class SalaryCheckerController {
     salaryCheckerService.setAccounts(accounts);
   }
 
-  @GetMapping("createUser")
+  @GetMapping("create-user")
   public User createUser() {
     return salaryCheckerService.createUser();
   }
   
-  @PutMapping(path = "user")
+  @PutMapping(path = "user/calculate-sale")
   public void calculateUsersUserSale(@RequestBody User user, @RequestParam("hours") String hours, 
       @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url) {
 
