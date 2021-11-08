@@ -1,17 +1,20 @@
 import React from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAccounts } from "../features/accounts/accountsSlice";
 
-export const FetchProject = () => {
-    const [tempacc, setTempAcc] = React.useState([]);
-    axios
-        .get("http://localhost:8080/salarychecker")
-        .then(response => {
-            if (response.data != null){
-                setTempAcc(response.data);
-            }
-        });
 
-    console.log(tempacc);
-    return tempacc;
-};
+
+export const fetchProject = async () => {
+    let url = `http://localhost:8080/salarychecker/`;
+    const response = await (
+      await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    ).json();
+    return response;
+  };
+  
   

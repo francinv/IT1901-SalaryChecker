@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const AccountsSlice = createSlice({
     name: 'accounts',
     initialState: {
-        accountsList: [],
+        accountsList: [{}],
     },
     reducers: {
         addUser: (state, action) => {
