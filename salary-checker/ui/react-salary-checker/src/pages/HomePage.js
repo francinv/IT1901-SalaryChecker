@@ -6,7 +6,7 @@ import PrimaryNavBar from "../components/navbar";
 
 
 const HomePage = () => {
-    const [userType, setUserType] = "A";
+    const [userType, setUserType] = "U";
     return (
         <Box>
             <PrimaryNavBar userType={userType}/>
