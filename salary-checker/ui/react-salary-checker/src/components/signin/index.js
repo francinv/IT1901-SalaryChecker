@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAccounts, setAccounts } from '../../features/accounts/accountsSlice';
-import { fetchProject } from '../../core/APIfunctions';
+import { FetchProject, fetchProject } from '../../core/APIfunctions';
 
 
 const theme = createTheme();
@@ -29,9 +29,11 @@ export default function SignInComp() {
   }, [])
 
   function fetchAccounts() {
-    console.log(fetchProject());
-    dispatch(setAccounts(fetchProject()));
-    console.log(acc);
+    const something = fetchProject();
+    console.log(something);
+    
+    // dispatch(setAccounts(fetchProject()));
+    // console.log(acc);
   }
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -41,7 +43,6 @@ export default function SignInComp() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    
   };
 
   return (
