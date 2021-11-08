@@ -31,12 +31,14 @@ public abstract class AbstractController {
    */
   public enum CONTROLLERS {
     LOGIN("LogIn.fxml", new LoginController()),
-    ADMIN("Admin.fxml", new AdminController()),
+    ADMIN("AdminStartPage.fxml", new AdminStartPageController()),
     HOME("HomePage.fxml", new HomepageController()),
     PROFILE("Profile.fxml", new ProfileController()),
     SALARIES("Salaries.fxml", new SalariesController()),
     SALARYCALC("SalaryCalculation.fxml", new SalaryCalculationController()),
-    SETTINGS("Settings.fxml", new SettingsController());
+    SETTINGS("Settings.fxml", new SettingsController()),
+    ADMINOVERVIEW("AdminUserOverview.fxml", new AdminUserOverviewController()),
+    CREATEUSER("CreateUser.fxml", new CreateUserController());
 
     private final String fxml;
     private final AbstractController abstractController;
@@ -97,8 +99,8 @@ public abstract class AbstractController {
       Parent parent = loader.load();
       if (controller instanceof HomepageController) {
         ((HomepageController) controller).loadInfo();
-      } else if (controller instanceof  AdminController) {
-        ((AdminController) controller).loadInfo();
+      } else if (controller instanceof AdminStartPageController) {
+        ((AdminStartPageController) controller).loadAdminInfo();
       }
       Scene newScene = new Scene(parent);
       stage.setScene(newScene);
@@ -138,6 +140,10 @@ public abstract class AbstractController {
         ((SalaryCalculationController) controller).setUserAndAccounts();
       } else if (controller instanceof SalariesController) {
         ((SalariesController) controller).loadTableView();
+      } else if (controller instanceof AdminUserOverviewController) {
+        ((AdminUserOverviewController) controller).loadTableView();
+      } else if (controller instanceof CreateUserController) {
+        ((CreateUserController) controller).loadUserAndAccount();
       }
     } catch (IOException e) {
       e.printStackTrace();

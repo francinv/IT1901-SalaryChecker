@@ -47,11 +47,15 @@ public class Calculation {
   private static final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
   private double calculated;
-  private final User user;
-  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private User user;
+  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader(); 
 
   public Calculation(User user) {
     this.user = user;
+  }
+
+  public Calculation() {
+    
   }
 
   /**
@@ -247,6 +251,17 @@ public class Calculation {
   }
 
   /**
+   * Calculates just the hour salary.
+   *
+   * @param hours number of worked hours
+   * @param hourwage the hourly salary for the User.
+   */
+  public void hourSalary(double hours, double hourwage) {
+    double hoursal = hourwage * hours;
+    calculated += hoursal;
+  }
+
+  /**
    * Access method for calculated.
    *
    * @return the calculated
@@ -263,15 +278,29 @@ public class Calculation {
   }
 
   /**
+   * Removes tax from calculated.
+   *
+   * @param taxCount for the User.
+   */
+  public void taxDeduction(double taxCount) {
+    calculated = (calculated * ((100 - taxCount) / 100));
+  }
+
+  /**
    * Do the full calculation.
    *
    * @param url to the file
    * @param hours total hours of working
    * @param mobileamount amount of mobile
+   * @param salesperiod the period the sales are done.
+   * @param paid the amount that were paid by employer.
+   * @return UserSale for the calculation.
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                               denoted by a specified pathname has failed.
    */
-  public void doCalculation(String url, double hours, int mobileamount) throws IOException {
+  public UserSale doCalculation(
+      String url, double hours, int mobileamount, String salesperiod, double paid)
+      throws IOException {
     updateList(url);
     removeUnwanted();
     updateElectricityCommission();
@@ -279,5 +308,38 @@ public class Calculation {
     addMobile(mobileamount);
     hourSalary(hours);
     taxDeduction();
+    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
+    return new UserSale(salesperiod, expectedCalc, paid);
   }
+
+  /**
+   * This method do the full calculation. This method is needed by API.
+   *
+   * @param url to the SalesReport.
+   * @param hours total hours of working.
+   * @param hourwage salary per hour.
+   * @param taxcount the tax that need to be subtracted.
+   * @param mobileamount amount of mobile.
+   * @param salesperiod the period the sales are done.
+   * @param paid the amount that were paid by employer.
+   * @return UserSale for the calculation.
+   * @throws FileNotFoundException Signals that an attempt to open the file
+   *                                denoted by a specified pathname has failed.
+   */
+  public UserSale doCalculation(
+      String url, double hours, double hourwage, double taxcount,
+      int mobileamount, String salesperiod, double paid)
+      throws IOException {
+    updateList(url);
+    removeUnwanted();
+    updateElectricityCommission();
+    calculateElectricityCommission();
+    addMobile(mobileamount);
+    hourSalary(hours, hourwage);
+    taxDeduction(taxcount);
+    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
+    return new UserSale(salesperiod, expectedCalc, paid);
+  }
+
+  
 }
