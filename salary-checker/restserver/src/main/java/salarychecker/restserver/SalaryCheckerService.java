@@ -12,8 +12,9 @@ import org.springframework.stereotype.Service;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
+import salarychecker.core.Calculation;
 import salarychecker.core.User;
-
+import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
 
 
@@ -89,8 +90,8 @@ public class SalaryCheckerService {
   }
 
   /**
- * Method that saves accounts automatically.
- */
+   * Method that saves accounts automatically.
+   */
   public void autoSaveAccounts() {
     if (salaryCheckerPersistence != null) {
       try {
@@ -101,12 +102,53 @@ public class SalaryCheckerService {
     }
   }
 
+  /**
+   * Find user by email
+   * 
+   * @param email to get user by this email
+   * @return a abstractUser object
+   */
   public AbstractUser getUserByEmail(String email) {
     return accounts.getUser(email);
   }
 
+  /**
+   * Get all users with same employer
+   * 
+   * @param employerEmail
+   * @return a list with AbstractUser objects
+   */
   public List<AbstractUser> getUsersByEmployerEmail(String employerEmail) {
     return accounts.getUsersByEmployerEmail(employerEmail);
   }
-    
+
+  public UserSale calculateUsersUserSale(User user, String hours, String mobileamount, String url) 
+    throws NumberFormatException, IOException {
+    Calculation calculation = new Calculation(user);
+    calculation.doCalculation(url, Double.parseDouble(hours), Integer.parseInt(mobileamount));
+    return new UserSale();
+  }
+
+  /**
+   * Method to create a user object.
+   * Adds the user object to accounts.
+   *
+   * @return the user object
+   */
+  public User createUser() {
+    User user = new User();
+    accounts.addUser(user);
+    return user;
+  }
+
+  /**
+   * Method to check if the user exists.
+   *
+   * @param email email
+   * @param password password
+   * @return true if exists
+   */
+  public boolean userLogin(String email, String password) {
+    return accounts.checkValidUserLogin(email, password);
+  }
 }
