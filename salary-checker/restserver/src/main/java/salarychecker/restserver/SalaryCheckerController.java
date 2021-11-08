@@ -69,10 +69,11 @@ public class SalaryCheckerController {
   
   @PutMapping(path = "user/calculate-sale")
   public void calculateUsersUserSale(@RequestBody User user, @RequestParam("hours") String hours, 
-      @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url) {
+      @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url,
+      @RequestParam("salesPeriod") String salesPeriod, @RequestParam("paid") double paid) {
 
     try {
-      salaryCheckerService.calculateUsersUserSale(user, hours, mobileAmount, url);
+      salaryCheckerService.calculateUsersUserSale(url, hours, mobileAmount, salesPeriod, paid);
     } catch (NumberFormatException | IOException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
