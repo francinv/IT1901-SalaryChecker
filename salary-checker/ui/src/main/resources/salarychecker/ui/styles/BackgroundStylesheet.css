@@ -40,12 +40,13 @@
 #profileButton{
     -fx-background-color:  #313939;
     -fx-text-fill: #ffffff;
+    -fx-text-decoration: underline;
     -fx-font-family: "Quicksand";
 }
 
 #profileButton:hover{
     -fx-transition-duration: 0.4s;
-    -fx-background-color: rgb(63, 63, 63);
+    -fx-background-color: rgb(32, 32, 32);
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
 }
@@ -53,25 +54,27 @@
 #salaryCalculationButton{
     -fx-background-color:  #313939;
     -fx-text-fill: #ffffff;
+    -fx-text-decoration: underline;
     -fx-font-family: "Quicksand";
 }
 
 #salaryCalculationButton:hover{
     -fx-transition-duration: 0.4s;
-    -fx-background-color: rgb(63, 63, 63);
+    -fx-background-color: rgb(32, 32, 32);
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
 }
 
-#salariesButton{
+#mySalariesButton{
     -fx-background-color:  #313939;
     -fx-text-fill: #ffffff;
+    -fx-text-decoration: underline;
     -fx-font-family: "Quicksand";
 }
 
-#salariesButton:hover{
+#mySalariesButton:hover{
     -fx-transition-duration: 0.4s;
-    -fx-background-color: rgb(63, 63, 63);
+    -fx-background-color: rgb(32, 32, 32);
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
 }

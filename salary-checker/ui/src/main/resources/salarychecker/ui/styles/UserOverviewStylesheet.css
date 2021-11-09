@@ -1,0 +1,37 @@
+.table-view{
+    -fx-background-color: #ffffff;
+
+}
+
+#searchButton{
+    -fx-border-color: transparent;
+}
+#searchButton:hover{
+    -fx-background-color:#333;
+    -fx-text-fill:#ffff;
+    
+}
+
+#fnameCol{
+    -fx-background-color: transparent;
+}
+#lnameCol{
+    -fx-background-color: transparent;
+}
+#emailCol{
+    -fx-background-color: transparent;
+}
+#idCol{
+    -fx-background-color: transparent;
+}
+.table-row:hover{
+    -fx-background-color: #333;
+    -fx-text-fill: #ffff 
+}
+
+#searchField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
