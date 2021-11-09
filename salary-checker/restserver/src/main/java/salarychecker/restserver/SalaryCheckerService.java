@@ -19,13 +19,14 @@ import salarychecker.json.SalaryCheckerPersistence;
 
 
 /**
- * This class is used by the controller to manage Tracker-objects that are sent or requested
+ * This class is used by the controller to manage Accounts-objects that are sent or requested
  * by the client.
  */
 @Service
 public class SalaryCheckerService {
 
   private Accounts accounts;
+  private Calculation calculation;
   private SalaryCheckerPersistence salaryCheckerPersistence;
 
   /**
@@ -35,6 +36,7 @@ public class SalaryCheckerService {
    */
   public SalaryCheckerService(Accounts accounts) {
     this.accounts = accounts;
+    this.calculation = new Calculation();
     this.salaryCheckerPersistence = new SalaryCheckerPersistence();
     salaryCheckerPersistence.setFilePath("springbootserver-salarychecker.json");
   }
@@ -122,24 +124,28 @@ public class SalaryCheckerService {
     return accounts.getUsersByEmployerEmail(employerEmail);
   }
 
-  public UserSale calculateUsersUserSale(String url, String hours, String mobileamount, 
-      String salesperiod, double paid) 
-    throws NumberFormatException, IOException {
-    Calculation calculation = new Calculation();
-    return calculation.doCalculation(url, Double.parseDouble(hours), 
-        Integer.parseInt(mobileamount), salesperiod, paid);
-  }
+  // public UserSale calculateUsersUserSale(String url, String hours, String mobileamount, 
+  //     String salesperiod, double paid) 
+  //   throws NumberFormatException, IOException {
+  //     Calculation calculation = new Calculation();
+  //   return calculation.doCalculation(url, Double.parseDouble(hours), 
+  //       Integer.parseInt(mobileamount), salesperiod, paid);
+  // }
+
+  // public void calculateUsersUserSale(String url, String hours, String mobileamount, 
+  //     String salesperiod, double paid) 
+  //   throws NumberFormatException, IOException {
+    
+  //   return calculation.doCalculation(url, Double.parseDouble(hours), 
+  //       Integer.parseInt(mobileamount), salesperiod, paid);
+  // }
 
   /**
-   * Method to create a user object.
+   * Method to create a new User. The user to create is given by the client.
    * Adds the user object to accounts.
-   *
-   * @return the user object
    */
-  public User createUser() {
-    User user = new User();
-    accounts.addUser(user);
-    return user;
+  public void createUser(User newUser) {
+    accounts.addUser(newUser);
   }
 
   /**
@@ -151,5 +157,11 @@ public class SalaryCheckerService {
    */
   public boolean userLogin(String email, String password) {
     return accounts.checkValidUserLogin(email, password);
+  }
+
+  public void updateUserAttributes(User user, int indexOfUser) {
+    if (accounts.getUser(user.getEmail()) != null) {
+      accounts.getAccounts().set(indexOfUser, user);
+    }
   }
 }

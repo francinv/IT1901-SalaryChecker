@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,22 +63,33 @@ public class SalaryCheckerController {
     salaryCheckerService.setAccounts(accounts);
   }
 
-  @GetMapping("create-user")
-  public User createUser() {
-    return salaryCheckerService.createUser();
+  @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void createUser(@RequestBody User user) {
+    salaryCheckerService.createUser(user);
   }
   
-  @PutMapping(path = "user/calculate-sale")
-  public void calculateUsersUserSale(@RequestBody User user, @RequestParam("hours") String hours, 
-      @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url,
-      @RequestParam("salesPeriod") String salesPeriod, @RequestParam("paid") double paid) {
+  // @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
+  // public void calculateUsersUserSale(@RequestBody User user, @RequestParam("hours") String hours, 
+  //     @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url,
+  //     @RequestParam("salesPeriod") String salesPeriod, @RequestParam("paid") double paid) {
 
-    try {
-      salaryCheckerService.calculateUsersUserSale(url, hours, mobileAmount, salesPeriod, paid);
-    } catch (NumberFormatException | IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  //   try {
+  //     salaryCheckerService.calculateUsersUserSale(url, hours, mobileAmount, salesPeriod, paid);
+  //   } catch (NumberFormatException | IOException e) {
+  //     // TODO Auto-generated catch block
+  //     e.printStackTrace();
+  //   }
+  // }
+
+  /**
+   * Performs a PUT request
+   * localhost:8080//salarychecker/users/update-profile?index={indexOfUser}
+  */
+  @PutMapping(path = "user/update-profile", 
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void updateUserAttributes(@RequestBody User user, 
+      @RequestParam("index") int indexOfUser) {
+    salaryCheckerService.updateUserAttributes(user, indexOfUser);
   }
 
   @DeleteMapping
