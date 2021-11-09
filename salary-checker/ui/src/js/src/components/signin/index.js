@@ -12,37 +12,39 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAccounts, setAccounts } from '../../features/accounts/accountsSlice';
+import { setAccounts, getAccounts, getUser} from '../../features/accounts/accountsSlice';
 import { FetchProject, fetchProject } from '../../core/APIfunctions';
+import { selectAccounts, selectActiveUser } from '../../features/selectors';
+import { useAppDispatch } from '../../features/hooks';
 
 
 const theme = createTheme();
 
+const actionDispatch = (dispatch) => ({
+  setAccounts: (query) => dispatch(setAccounts(query)),
+  getUser: (query) => dispatch(getUser(query)),
+});
 
 export default function SignInComp() {
-
-  const acc = useSelector(selectAccounts);
-  const dispatch = useDispatch();
+  const { setAccounts } = actionDispatch(useAppDispatch());
+  const { getUser } = actionDispatch(useAppDispatch());
 
   React.useEffect(() => {
     fetchAccounts();
   }, [])
 
-  function fetchAccounts() {
-    const something = fetchProject();
-    console.log(something);
-    
-    // dispatch(setAccounts(fetchProject()));
-    // console.log(acc);
+
+  const fetchAccounts = async () => {
+    let something = await fetchProject();
+    setAccounts(something);
   }
+
+  const active = useSelector(selectActiveUser);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    getUser(data.get('email'));
   };
 
   return (
