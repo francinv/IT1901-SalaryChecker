@@ -1,0 +1,96 @@
+#emailField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#employerIdField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#socialField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#passwordField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#confirmPasswordField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#nameField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#lastNameField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#wageField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+#taxField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#goBackButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+    -fx-font-size: 25px
+}
+#goBackButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+    -fx-font-size:25px
+}
+
+#goOnButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+    -fx-font-size: 25px
+}
+
+#goOnButon:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+    -fx-font-size:25px
+}
+
+#createUserButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";  
+}
+
+#createUserButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
