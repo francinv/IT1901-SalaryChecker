@@ -68,7 +68,7 @@ public class CreateUserControllerTest extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateUser.fxml"));
+    final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/CreateUser.fxml"));
     CreateUserController createUserController = new CreateUserController();
     loader.setController(createUserController);
     final Parent parent = loader.load();
