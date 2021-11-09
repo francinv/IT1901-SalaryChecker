@@ -181,6 +181,7 @@
 
         <profile>
             <!-- https://github.com/amigoscode/spring-boot-react-fullstack/blob/master/pom.xml -->
+            <!-- Makes it possible to user npm or yarn locally, if not already installed-->
 			<id>demo</id>
 			<build>
 				<plugins>
