@@ -24,7 +24,7 @@ public class SalariesControllerTest extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("Salaries.fxml"));
+    final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/Salaries.fxml"));
     SalariesController salariesController = new SalariesController();
     loader.setController(salariesController);
     final Parent parent = loader.load();

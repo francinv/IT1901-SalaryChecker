@@ -32,7 +32,7 @@ public class AdminUserOverviewControllerTest extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminUserOverview.fxml"));
+    final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/AdminUserOverview.fxml"));
     AdminUserOverviewController adminUserOverviewController = new AdminUserOverviewController();
     loader.setController(adminUserOverviewController);
     final Parent parent = loader.load();

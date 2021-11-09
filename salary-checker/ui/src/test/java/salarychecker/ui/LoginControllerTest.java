@@ -38,7 +38,7 @@ public class LoginControllerTest extends ApplicationTest {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/LogIn.fxml"));
         LoginController loginController = new LoginController();
         fxmlLoader.setController(loginController);
         final Parent parent = fxmlLoader.load();
@@ -72,7 +72,7 @@ public class LoginControllerTest extends ApplicationTest {
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("HomePage.fxml")); // load same anchorpane that currentWindow contains
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/HomePage.fxml")); // load same anchorpane that currentWindow contains
             HomepageController homepageController = new HomepageController();
             loader.setController(homepageController);
             AnchorPane pane = loader.load();
@@ -93,7 +93,7 @@ public class LoginControllerTest extends ApplicationTest {
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AdminStartPage.fxml")); // load same anchorpane that currentWindow contains
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/AdminStartPage.fxml")); // load same anchorpane that currentWindow contains
             AdminStartPageController adminStartPageController = new AdminStartPageController();
             loader.setController(adminStartPageController);
             AnchorPane pane = loader.load();
