@@ -1,22 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+    isLoggedIn: false,
+    activeUser: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        socialNumber: '',
+        employeeNumber: '',
+        employerEmail: '',
+        taxCount: '',
+        hourRate: '',
+        userSales: [],
+    },
+}
 export const userSlice = createSlice ({
     name: 'user',
-    initialState : {
-        isLoggedIn: false,
-        activeUser: {
-            firstname: '',
-            lastname: '',
-            email: '',
-            password: '',
-            socialnumber: '',
-            employeenumber: '',
-            employeremail: '',
-            taxcount: '',
-            wage: '',
-            userSale: [],
-        },
-    },
+    initialState,
     reducers: {
         setUser: (state, action) => {
             state.isLoggedIn = true;
@@ -27,32 +28,47 @@ export const userSlice = createSlice ({
             state.activeUser = undefined;
         },
         addUserSale: (state, action) => {
-            state.activeUser.userSale.push(action.payload);
+            state.activeUser.userSales.push(action.payload);
         },
         getUserSales: (state) => {
-            return state.activeUser.userSale;
+            return state.activeUser.userSales;
         },
         editUser: (state, action) => {
             switch (action.type) {
                 case "firstname":
                     state.activeUser.firstname = action.payload;
+                    break;
                 case "lastname":
                     state.activeUser.lastname = action.payload;
+                    break;
                 case "email":
                     state.activeUser.email = action.payload;
+                    break;
                 case "password":
                     state.activeUser.password = action.payload;
+                    break;
                 case "socialnumber":
-                    state.activeUser.socialnumber = action.payload;
+                    state.activeUser.socialNumber = action.payload;
+                    break
                 case "employeenumber":
-                    state.activeUser.employeenumber = action.payload;
+                    state.activeUser.employeeNumber = action.payload;
+                    break;
                 case "employeremail":
-                    state.activeUser.employeremail = action.payload;
+                    state.activeUser.employerEmail = action.payload;
+                    break;
                 case "taxcount":
-                    state.activeUser.taxcount = action.payload;
+                    state.activeUser.taxCount = action.payload;
+                    break;
                 case "wage":
-                    state.activeUser.wage = action.payload;
+                    state.activeUser.hourRate = action.payload;
+                    break;
+                default:
+                    return state.activeUser;
             }
         }
     }
 })
+
+export const {setUser, logOutUser, addUserSale, getUserSales, editUser} = userSlice.actions;
+
+export default userSlice.reducer;
