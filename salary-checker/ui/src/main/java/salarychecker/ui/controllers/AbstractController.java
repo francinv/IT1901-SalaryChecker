@@ -31,15 +31,15 @@ public abstract class AbstractController {
    * fxml-string.
    */
   public enum CONTROLLERS {
-    LOGIN("LogIn.fxml", new LoginController()),
-    ADMIN("AdminStartPage.fxml", new AdminStartPageController()),
-    HOME("HomePage.fxml", new HomepageController()),
-    PROFILE("Profile.fxml", new ProfileController()),
-    SALARIES("Salaries.fxml", new SalariesController()),
-    SALARYCALC("SalaryCalculation.fxml", new SalaryCalculationController()),
-    SETTINGS("Settings.fxml", new SettingsController()),
-    ADMINOVERVIEW("AdminUserOverview.fxml", new AdminUserOverviewController()),
-    CREATEUSER("CreateUser.fxml", new CreateUserController());
+    LOGIN("views/LogIn.fxml", new LoginController()),
+    ADMIN("views/AdminStartPage.fxml", new AdminStartPageController()),
+    HOME("views/HomePage.fxml", new HomepageController()),
+    PROFILE("views/Profile.fxml", new ProfileController()),
+    SALARIES("views/Salaries.fxml", new SalariesController()),
+    SALARYCALC("views/SalaryCalculation.fxml", new SalaryCalculationController()),
+    SETTINGS("views/Settings.fxml", new SettingsController()),
+    ADMINOVERVIEW("views/AdminUserOverview.fxml", new AdminUserOverviewController()),
+    CREATEUSER("views/CreateUser.fxml", new CreateUserController());
 
     private final String fxml;
     private final AbstractController abstractController;
@@ -112,7 +112,7 @@ public abstract class AbstractController {
 
   /**
    * Method that switches out existing AnchorPane with new AnchorPane.
-   * Our HomePage.fxml contains Sidebar and Header. To make navigation
+   * Our views/HomePage.fxml contains Sidebar and Header. To make navigation
    * smoother we have determined to just switch out the content. This method
    * does that by getting the new pane from the given type.
    *
