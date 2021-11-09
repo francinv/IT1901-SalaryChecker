@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets = "@css/BackgroundStylesheet.css">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets = "@../styles/BackgroundStylesheet.css">
    <children>
       <BorderPane layoutX="371.0" layoutY="223.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -52,17 +52,17 @@
                <children>
                   <VBox layoutY="68.0" prefHeight="779.0" prefWidth="260.0" style="-fx-background-color: #313939;" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="68.0">
                      <children>
-                        <Button fx:id="profileButton" mnemonicParsing="false" onAction="#goToProfileAction" prefHeight="39.0" prefWidth="286.0" style="-fx-background-color: #313939;" text="Profil" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="profileButton" mnemonicParsing="false" onAction="#goToProfileAction" prefHeight="39.0" prefWidth="286.0"  text="Profil" textAlignment="CENTER" >
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="salaryCalculationButton" mnemonicParsing="false" onAction="#goToCalcAction" prefHeight="39.0" prefWidth="269.0" style="-fx-background-color: #313939;" text="Lønnsutregninger" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="salaryCalculationButton" mnemonicParsing="false" onAction="#goToCalcAction" prefHeight="39.0" prefWidth="269.0"  text="Lønnsutregninger" textAlignment="CENTER" >
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Button>
-                        <Button fx:id="mySalariesButton" mnemonicParsing="false" onAction="#goToSalAction" prefHeight="39.0" prefWidth="270.0" style="-fx-background-color: #313939;" text="Mine lønninger" textFill="WHITE">
+                        <Button fx:id="mySalariesButton" mnemonicParsing="false" onAction="#goToSalAction" prefHeight="39.0" prefWidth="270.0"  text="Mine lønninger" >
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
