@@ -74,7 +74,7 @@
     -fx-font-size: 25px
 }
 
-#goOnButon:hover{
+#goOnButton:hover{
     -fx-transition-duration: 0.4s;
     -fx-background-color: #333;
     -fx-text-fill: #ffffff;
