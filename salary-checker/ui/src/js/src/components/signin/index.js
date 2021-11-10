@@ -39,7 +39,6 @@ export default function SignInComp() {
     setAccounts(tempaccounts);
   }
 
-  const fetchUser = async (email) => {
     let tempuser = await fetchUserFromServer(email);
     setActiveUser(tempuser);
   }
@@ -50,8 +49,6 @@ export default function SignInComp() {
 
   React.useEffect(() => {}, [activeUser]);
 
-  const HandleSubmit = (event) => {
-    event.preventDefault();
     const data = new FormData(event.currentTarget);
     fetchUser(data.get('email'));
     if (activeUser.password === data.get('password')){
@@ -65,6 +62,10 @@ export default function SignInComp() {
     }
     
   };
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+};
 
   return (
     <ThemeProvider theme={theme}>
@@ -109,6 +110,8 @@ export default function SignInComp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={values.email}
+                onChange={handleChange('email')}
                 autoFocus
               />
               <TextField
@@ -119,6 +122,8 @@ export default function SignInComp() {
                 label="Password"
                 type="password"
                 id="password"
+                values={values.password}
+                onChange={handleChange('password')}
                 autoComplete="current-password"
               />
               <FormControlLabel
