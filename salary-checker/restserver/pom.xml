@@ -21,6 +21,10 @@
         <salarychecker.version>0.0.1-SNAPSHOT</salarychecker.version>
     </properties>
 
+    <properties>
+        <salarychecker.version>0.0.1-SNAPSHOT</salarychecker.version>
+    </properties>
+
 	<dependencies>
 
 		<dependency>

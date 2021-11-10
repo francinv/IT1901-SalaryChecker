@@ -39,6 +39,7 @@ export default function SignInComp() {
     setAccounts(tempaccounts);
   }
 
+  const fetchUser = async (email) => {
     let tempuser = await fetchUserFromServer(email);
     setActiveUser(tempuser);
   }
@@ -49,6 +50,8 @@ export default function SignInComp() {
 
   React.useEffect(() => {}, [activeUser]);
 
+  const HandleSubmit = (event) => {
+    event.preventDefault();
     const data = new FormData(event.currentTarget);
     fetchUser(data.get('email'));
     if (activeUser.password === data.get('password')){
