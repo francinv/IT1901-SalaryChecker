@@ -1,8 +1,11 @@
 import { Box } from "@mui/system";
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectActiveUser, selectUser } from "../../features/selectors";
 
 const PageInfo = ({userType}) => {
-    const name = "Francin Vincent";
+    const activeUser = useSelector(selectActiveUser);
+    const name = activeUser.firstname +" " + activeUser.lastname;
 
     if (userType === "U") {
         return(

@@ -11,10 +11,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAccounts, getAccounts, getUser} from '../../features/accounts/accountsSlice';
-import { FetchProject, fetchProject } from '../../core/APIfunctions';
-import { selectAccounts, selectActiveUser } from '../../features/selectors';
+import {  useSelector } from 'react-redux';
+import { setAccounts, setActiveUser, logIn, setUserType} from '../../features/accounts/accountsSlice';
+import { fetchProject } from '../../core/APIfunctions';
+import { selectActiveUser } from '../../features/selectors';
 import { useAppDispatch } from '../../features/hooks';
 
 
@@ -22,16 +22,27 @@ const theme = createTheme();
 
 const actionDispatch = (dispatch) => ({
   setAccounts: (query) => dispatch(setAccounts(query)),
-  getUser: (query) => dispatch(getUser(query)),
+  setActiveUser: (query) => dispatch(setActiveUser(query)),
+  setUserType: (query) => dispatch(setUserType(query)),
+  logIn: () => dispatch(logIn()),
 });
 
 export default function SignInComp() {
   const { setAccounts } = actionDispatch(useAppDispatch());
-  const { getUser } = actionDispatch(useAppDispatch());
+  const { setActiveUser } = actionDispatch(useAppDispatch());
+  const { setUserType } = actionDispatch(useAppDispatch());
+  const { logIn } = actionDispatch(useAppDispatch());
+
+  const [values, setValues] = React.useState({
+    email: '',
+    password:'',
+  })
+
+  const activeUser = useSelector(selectActiveUser);
 
   React.useEffect(() => {
     fetchAccounts();
-  }, [])
+  }, [activeUser])
 
 
   const fetchAccounts = async () => {
@@ -39,13 +50,26 @@ export default function SignInComp() {
     setAccounts(something);
   }
 
-  const active = useSelector(selectActiveUser);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    getUser(data.get('email'));
+    setActiveUser(data.get('email'));
+    if (values.password === activeUser.password){
+      var size = Object.keys(activeUser).length;
+      console.log(size);
+      logIn();
+      if (size > 5) {
+        setUserType('U');
+      } else {
+        setUserType('A');
+      }
+    }
   };
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+};
 
   return (
     <ThemeProvider theme={theme}>
@@ -90,6 +114,8 @@ export default function SignInComp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={values.email}
+                onChange={handleChange('email')}
                 autoFocus
               />
               <TextField
@@ -100,6 +126,8 @@ export default function SignInComp() {
                 label="Password"
                 type="password"
                 id="password"
+                values={values.password}
+                onChange={handleChange('password')}
                 autoComplete="current-password"
               />
               <FormControlLabel
