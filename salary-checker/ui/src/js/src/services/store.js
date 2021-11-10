@@ -4,7 +4,6 @@ import  AccountsReducer from '../features/accounts/accountsSlice';
 export const store = configureStore({
   reducer: {
     accounts: AccountsReducer,
-    user: userReducer
   },
 });
 
