@@ -32,7 +32,7 @@ export default function SignInComp() {
   const { setActiveUser } = actionDispatch(useAppDispatch());
   const { setUserType } = actionDispatch(useAppDispatch());
   const { logIn } = actionDispatch(useAppDispatch());
-  let activeUser = useSelector(selectActiveUser);
+  const activeUser = useSelector(selectActiveUser);
 
   const fetchAccounts = async () => {
     let tempaccounts = await fetchAccountsFromServer();

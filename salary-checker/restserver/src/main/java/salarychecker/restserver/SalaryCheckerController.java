@@ -63,6 +63,7 @@ public class SalaryCheckerController {
     salaryCheckerService.setAccounts(accounts);
   }
 
+  @CrossOrigin(origins = "http://localhost:3000")
   @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
   public void createUser(@RequestBody User user) {
     salaryCheckerService.createUser(user);
