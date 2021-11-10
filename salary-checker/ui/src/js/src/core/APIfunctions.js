@@ -15,4 +15,10 @@ export const fetchUserFromServer = (email) => {
   return response;
 }
   
-  
+export const postCreatUser = (data) => {
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+  axios.post('http://localhost:8080/salarychecker/create-user/', data, {headers})
+                        .catch(response => console.log(response));
+}

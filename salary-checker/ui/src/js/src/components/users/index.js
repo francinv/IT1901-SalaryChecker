@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled} from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,6 +20,10 @@ const UserView = () => {
     const handleChange = (event) => {
         setSearchValue(event.target.value);
     }
+    
+    useEffect(() => {
+        console.log(accounts);
+    })
     
     const accounts = useSelector(selectAccounts);
 
@@ -47,13 +51,11 @@ const UserView = () => {
         if (searchValue === ''){
             return (users = users.concat(accounts.filter(u => Object.keys(u).length > 5)))
         } else {
-            console.log(accounts.filter(u => u.employeeNumber))
             return (
                 users = accounts.filter(u => 
                     (u.firstname.includes(searchValue) && Object.keys(u).length > 5)||
                     (u.lastname.includes(searchValue) && Object.keys(u).length > 5) ||
                     (u.email.includes(searchValue) && Object.keys(u).length > 5) 
-                    /*(u.employeeNumber.includes(searchValue) && Object.keys(u).length > 5)*/
                 )
             );
         }
