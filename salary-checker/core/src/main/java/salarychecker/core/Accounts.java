@@ -30,7 +30,7 @@ public class Accounts implements IUserObserver {
    */
   public void addUser(AbstractUser user) {
     if (contains(user)) {
-      throw new IllegalArgumentException("User already exists!");
+      throw new IllegalStateException("User already exists!");
     }
     this.accounts.add(user);
   }
