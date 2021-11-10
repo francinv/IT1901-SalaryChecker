@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {  useSelector } from 'react-redux';
 import { setAccounts, setActiveUser, logIn, setUserType} from '../../features/accounts/accountsSlice';
-import { fetchProject } from '../../core/APIfunctions';
+import { fetchAccountsFromServer, fetchUserFromServer } from '../../core/APIfunctions';
 import { selectActiveUser } from '../../features/selectors';
 import { useAppDispatch } from '../../features/hooks';
 
@@ -32,44 +32,39 @@ export default function SignInComp() {
   const { setActiveUser } = actionDispatch(useAppDispatch());
   const { setUserType } = actionDispatch(useAppDispatch());
   const { logIn } = actionDispatch(useAppDispatch());
+  let activeUser = useSelector(selectActiveUser);
 
-  const [values, setValues] = React.useState({
-    email: '',
-    password:'',
-  })
+  const fetchAccounts = async () => {
+    let tempaccounts = await fetchAccountsFromServer();
+    setAccounts(tempaccounts);
+  }
 
-  const activeUser = useSelector(selectActiveUser);
+  const fetchUser = async (email) => {
+    let tempuser = await fetchUserFromServer(email);
+    setActiveUser(tempuser);
+  }
 
   React.useEffect(() => {
     fetchAccounts();
-  }, [activeUser])
+  });
 
+  React.useEffect(() => {}, [activeUser]);
 
-  const fetchAccounts = async () => {
-    let something = await fetchProject();
-    setAccounts(something);
-  }
-
-
-  const handleSubmit = (event) => {
+  const HandleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    setActiveUser(data.get('email'));
-    if (values.password === activeUser.password){
-      var size = Object.keys(activeUser).length;
-      console.log(size);
+    fetchUser(data.get('email'));
+    if (activeUser.password === data.get('password')){
       logIn();
-      if (size > 5) {
+      var size = Object.keys(activeUser).length;
+      if ( size > 5) {
         setUserType('U');
       } else {
         setUserType('A');
       }
     }
+    
   };
-
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-};
 
   return (
     <ThemeProvider theme={theme}>
@@ -105,7 +100,7 @@ export default function SignInComp() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={HandleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -114,8 +109,6 @@ export default function SignInComp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={values.email}
-                onChange={handleChange('email')}
                 autoFocus
               />
               <TextField
@@ -126,8 +119,6 @@ export default function SignInComp() {
                 label="Password"
                 type="password"
                 id="password"
-                values={values.password}
-                onChange={handleChange('password')}
                 autoComplete="current-password"
               />
               <FormControlLabel

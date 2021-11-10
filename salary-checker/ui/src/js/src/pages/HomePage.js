@@ -9,7 +9,6 @@ import { selectUserType } from "../features/selectors";
 
 const HomePage = () => {
     const userType = useSelector(selectUserType);
-    console.log(userType);
     return (
         <Box>
             <PrimaryNavBar userType={userType}/>
