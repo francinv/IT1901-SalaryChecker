@@ -149,13 +149,8 @@ public class SalaryCheckerService {
   }
 
   public void updateUserAttributes(User user, int indexOfUser) {
-    if (accounts.getUser(user.getEmail()) != null) {
-      accounts.getAccounts().set(indexOfUser, user);
-      autoSave();
-    }
-    else {
-      throw new NullPointerException("Email can not be empty");
-    }
+    accounts.updateUserObject(user, indexOfUser);
+    autoSave();
   }
 
   /**
