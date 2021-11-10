@@ -14,7 +14,7 @@ public class User extends AbstractUser {
   private double taxCount;
   private double hourRate;
 
-  private final ArrayList<UserSale> userSales = new ArrayList<>();
+  private ArrayList<UserSale> userSales = new ArrayList<>();
 
   /**
    * Constructor that is used to create a instance of this class.

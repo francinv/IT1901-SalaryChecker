@@ -6,6 +6,7 @@ const initialState = {
     activeUser:{},
     isActiveUserLoggedIn: false,
     activeUserType: '',
+    userIndex: 0,
 };
 
 export const AccountsSlice = createSlice({
@@ -22,18 +23,13 @@ export const AccountsSlice = createSlice({
         },
         setActiveUser: (state,action) => {
             state.activeUser = action.payload;
+            state.userIndex = state.accountsList.findIndex(u => u.email === state.activeUser.email);
         },
         logIn: (state) => {
             state.isActiveUserLoggedIn = true;
         },
         addUserSale: (state, action) => {
             state.activeUser.userSales.push(action.payload);
-        },
-        editFirstname: (state, action) => {
-            state.activeUser.firstname = action.payload;
-        },
-        editLastname: (state, action) => {
-            state.activeUser.lastname = action.payload;
         },
         editEmail: (state, action) => {
             state.activeUser.email = action.payload;
@@ -63,11 +59,12 @@ export const AccountsSlice = createSlice({
             state.isAccountsSet = false;
             state.activeUserType = undefined;
         }
+
     },
 });
 
-export const {addUser, setAccounts, setActiveUser, addUserSale, editFirstname,
-editLastname, editEmail, editPassword, editEmployeeNumber, editEmployerEmail, editTaxCount,
+export const {addUser, setAccounts, setActiveUser, addUserSale,
+editEmail, editPassword, editEmployeeNumber, editEmployerEmail, editTaxCount,
 editHourRate, setUserType, logOutUser, logIn} = AccountsSlice.actions;
 
 export default AccountsSlice.reducer;
