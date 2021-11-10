@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.restserver.exceptions.UserDoesNotExistException;
+import salarychecker.restserver.exceptions.UserNotFoundException;
 /**
  * Ensures that the server is capable of listening to HTTP-requests.
  * Decides how these requests are managed and what to do with them.
@@ -46,15 +44,14 @@ public class SalaryCheckerController {
   @GetMapping(path = "user")
   public AbstractUser getUser(@RequestParam("email") String email) {
     if (salaryCheckerService.getUserByEmail(email) == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
+      throw new UserNotFoundException();
     }
     return salaryCheckerService.getUserByEmail(email);
   } 
 
   //localhost:8080//salarychecker/users?employerEmail={employerEmail}
   @GetMapping(path = "users")
-  public List<AbstractUser> getEmployersUser(@RequestParam("employerEmail") String employerEmail)
-      throws UserDoesNotExistException {
+  public List<AbstractUser> getEmployersUser(@RequestParam("employerEmail") String employerEmail) {
       return salaryCheckerService.getUsersByEmployerEmail(employerEmail);
   } 
 
