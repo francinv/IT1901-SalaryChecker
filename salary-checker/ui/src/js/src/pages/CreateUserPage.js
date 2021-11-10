@@ -15,7 +15,7 @@ const AdminCreateUser = () => {
         if (!isLoggedIn) {
             navigate('/');
         }
-    }, [isLoggedIn])
+    })
 
     if (userType === 'A') {
         return(
