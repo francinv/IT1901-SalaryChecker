@@ -3,6 +3,7 @@ import AdminNav from '../adminnav';
 import UserNav from '../usernav';
 import { styled } from '@mui/system';
 import { Button } from '@mui/material';
+import { logOutUser } from '../../features/user/userSlice';
 
 const PrimaryNavBar = ({userType}) => {
 
