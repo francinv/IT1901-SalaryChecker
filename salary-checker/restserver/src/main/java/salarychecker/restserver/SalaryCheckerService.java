@@ -54,6 +54,7 @@ public class SalaryCheckerService {
 
   public void setAccounts(Accounts accounts) {
     this.accounts = accounts;
+    autoSave();
   } 
 
   /**
@@ -89,19 +90,6 @@ public class SalaryCheckerService {
     acc.addUser(testuser1);
     acc.addUser(testuser2);
     return acc;
-  }
-
-  /**
-   * Method that saves accounts automatically.
-   */
-  public void autoSaveAccounts() {
-    if (salaryCheckerPersistence != null) {
-      try {
-        salaryCheckerPersistence.saveAccounts(accounts);
-      } catch (IllegalStateException | IOException e) {
-        System.err.println("Couldn't auto-save Accounts: " + e);
-      }
-    }
   }
 
   /**
@@ -146,6 +134,7 @@ public class SalaryCheckerService {
    */
   public void createUser(User newUser) {
     accounts.addUser(newUser);
+    autoSave();
   }
 
   /**
@@ -162,6 +151,23 @@ public class SalaryCheckerService {
   public void updateUserAttributes(User user, int indexOfUser) {
     if (accounts.getUser(user.getEmail()) != null) {
       accounts.getAccounts().set(indexOfUser, user);
+      autoSave();
+    }
+    else {
+      throw new NullPointerException("Email can not be empty");
+    }
+  }
+
+  /**
+   * Saves Accounts to disk
+   */
+  private void autoSave() {
+    if (salaryCheckerPersistence != null) {
+      try {
+        salaryCheckerPersistence.saveAccounts(accounts);
+      } catch (IllegalStateException | IOException e) {
+        System.err.println("Could not auto-save Accounts: " + e);
+      }
     }
   }
 }
