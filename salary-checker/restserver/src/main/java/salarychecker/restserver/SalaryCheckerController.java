@@ -74,10 +74,11 @@ public class SalaryCheckerController {
 
   @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
   public void createUser(@RequestBody User user) {
-    if (salaryCheckerService.getAccounts().contains(user)) {
+    try {
+      salaryCheckerService.createUser(user);
+    } catch(Exception e) {
       throw new UserAlreadyExistsException();
     }
-    salaryCheckerService.createUser(user);
   }
   
   // @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
