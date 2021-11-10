@@ -16,12 +16,40 @@
 
 
 ## Additions of classes and files for release 3:
->The optimization of the user interface has lead the group to split parts of UI-classes and files into more managable sizes. The UI-package now consists of one main, parent controller and multiple sub-controllers, one for each main group of functionality. The fxml-file for the main stage has also been split up accordingly. One parent stage is used as a border, with navigation buttons and menu, and the scene changes occur in the center of the application as the user navigates around. The group decided to use CSS for a smoother and better looking UI. 
+>The optimization of the user interface has lead the group to split parts of UI-classes and files into more managable sizes. The UI-package now consists of one main, parent controller and multiple sub-controllers, one for each main group of functionality. The fxml-file for the main stage has also been split up accordingly. One parent stage is used as a border, with navigation buttons and menu, and the scene-changes occur in the center of the application as the user navigates around. The group decided to use CSS for a smoother and better looking UI. This was done with one CSS-file for each scene for smoother editing and perhaps more understandable code. 
 >
->Additionally, the group has added classes and files that are needed for setting up a RESTful application. 
+>Additionally, the group has added classes and files that are needed for setting up a RESTful application.  
 
 ### List of classes and files added in release 3:
 
+#### UI:
+##### Controller classes:
+    - AbstractController.java 
+    - AdminStartPageController.java
+    - AdminUserOverviewController.java
+    - CreateUserController.java
+    - HomepageController.java
+    - LoginController.java
+    - ProfileController.java
+    - SalariesController.java
+    - SalaryCalculationController.java
+    - SettingController.java
+
+##### FXML Files:
+    - AdminStartPage.fxml
+    - AdminUserOverview.fxml
+    - CreateUser.fxml
+    - HomePage.fxml
+    - Profile.fxml
+    - Salaries.fxml
+    - SalaryCalculation.fxml
+    - Settings.fxml
+##### Stylesheets:
+    - 
+#### RestServer:
+    - RestServerApplication.java
+    - SalaryCheckerController.Java
+    - SalaryCheckerService.java
 #### Removed or merged classes in release 3:
 
 ## Userstory for release 3: 
