@@ -86,6 +86,7 @@ public class SalaryCheckerController {
    * Performs a PUT request
    * localhost:8080//salarychecker/users/update-profile?index={indexOfUser}
   */
+  @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping(path = "user/update-profile", 
     consumes = MediaType.APPLICATION_JSON_VALUE)
   public void updateUserAttributes(@RequestBody User user, 

@@ -22,3 +22,14 @@ export const postCreatUser = (data) => {
   axios.post('http://localhost:8080/salarychecker/create-user/', data, {headers})
                         .catch(response => console.log(response));
 }
+
+export const putUserNewToServer = (data, index) => {
+  const header = {
+    'Content-Type': 'application/json'
+  };
+  const url = `http://localhost:8080/salarychecker/users/update-profile?index=${index}/`;
+
+  axios.put(url, data, {header})
+  .catch(response=> console.log(response));
+
+}
