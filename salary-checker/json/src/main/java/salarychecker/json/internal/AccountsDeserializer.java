@@ -13,45 +13,48 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 
+/**
+ * Class to Deserialize {@link Accounts}.
+ */
 public class AccountsDeserializer extends JsonDeserializer<Accounts> {
 
-    private UserDeserializer userDeserializer = new UserDeserializer();
-    private AdminUserDeserializer adminUserDeserializer = new AdminUserDeserializer();
-    /*
-    * format: { "Accounts": [ ... ] }
-    */
+  private final UserDeserializer userDeserializer = new UserDeserializer();
+  private final AdminUserDeserializer adminUserDeserializer = new AdminUserDeserializer();
 
-    @Override
-    public Accounts deserialize(JsonParser parser, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
-        TreeNode treeNode = parser.getCodec().readTree(parser);
-        return deserialize((JsonNode) treeNode);
-    }
+  /*
+  * format: { "Accounts": [ ... ] }
+  */
 
-    Accounts deserialize(JsonNode treeNode) {
+  @Override
+  public Accounts deserialize(JsonParser parser, DeserializationContext ctxt)
+      throws IOException, JsonProcessingException {
+    TreeNode treeNode = parser.getCodec().readTree(parser);
+    return deserialize((JsonNode) treeNode);
+  }
+
+  Accounts deserialize(JsonNode treeNode) {
     if (treeNode instanceof ObjectNode objectNode) {
-        JsonNode accountsNode = objectNode.get("Accounts");
-        if (! (accountsNode instanceof ArrayNode)) {
-            return null;
+      JsonNode accountsNode = objectNode.get("Accounts");
+      if (! (accountsNode instanceof ArrayNode)) {
+        return null;
+      }
+      Accounts accounts = new Accounts();
+
+      for (JsonNode elementNode : ((ArrayNode) accountsNode)) {
+        if (elementNode.size() == 4) {
+          AdminUser adminUser = adminUserDeserializer.deserialize(elementNode);
+          if (adminUser != null) {
+            accounts.addUser(adminUser);
+          }
+        } else {
+          User user = userDeserializer.deserialize(elementNode);
+          if (user != null) {
+            accounts.addUser(user);
+          }
         }
-        Accounts accounts = new Accounts();
-        
-        for (JsonNode elementNode : ((ArrayNode) accountsNode)) {
-            if (elementNode.size() == 4) {
-                AdminUser adminUser = adminUserDeserializer.deserialize(elementNode);
-                if (adminUser != null) {
-                    accounts.addUser(adminUser);
-                }
-            }
-            else {
-                User user = userDeserializer.deserialize(elementNode);
-                if (user != null) {
-                    accounts.addUser(user);
-                }
-            }
-        }
-        return accounts;
+      }
+      return accounts;
     }
     return null;
-    }   
+  }
 }

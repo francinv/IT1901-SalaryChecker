@@ -2,215 +2,97 @@ package salarychecker.ui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import salarychecker.core.Accounts;
-import salarychecker.core.Calculation;
 import salarychecker.core.User;
-import salarychecker.core.UserSale;
-import salarychecker.json.SalaryCheckerPersistence;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
+/**
+ * This is the class that controls the HomePage Scene.
+ */
+public class HomepageController extends AbstractController {
 
-public class HomepageController {
+  @FXML private Text pageTitle;
+  @FXML private Text userNameDisplay;
+  @FXML private AnchorPane menuNav;
+  @FXML private AnchorPane startPane;
+  @FXML private Button hideMenuButton;
 
-    @FXML private Text navnDisplay;
-    @FXML private Text epostDisplay;
-    @FXML private Text idDisplay;
-    @FXML private Text fDatoDisplay;
-    @FXML private Text taxDisplay;
-    @FXML private Text hourDisplay;
-    @FXML private Text employeDisplay;
+  private User user;
+  private Accounts accounts;
 
-    /*
-    * buttons to read and calculate salary*/
-    @FXML private Button readButton;
-    @FXML private Button calculateButton;
+  /**
+   * This is a method that loads the user info.
+   * The method is protected because it will be
+   * called outside this class.
+   */
+  @FXML
+  protected void loadInfo() {
+    user = (User) super.user;
+    accounts = super.accounts;
+    pageTitle.setText("Hjem");
+    userNameDisplay.setText(user.getFirstname() + " " + user.getLastname());
+  }
 
+  /**
+   * This method is used to log out a user and send them back to the Login-scene.
+   *
+   * @param event when user clicks on 'Logg ut'
+   */
+  @FXML
+  private void logOutAction(ActionEvent event) {
+    setScene(CONTROLLERS.LOGIN, event, null, null);
+  }
 
-    @FXML private TextField filenameDisplay;
-    @FXML private TextField hoursInput;
-    @FXML private TextField amountOfMobile;
-    @FXML private TextField recievedSalaryInput;
-    @FXML private Label salaryLabel;
-    @FXML private Label nettoLabel;
-    @FXML private Label salaryDiff;
-    @FXML private ComboBox<String> monthDropdown;
-    @FXML private TextField calculationYearInput;
-
-
-    @FXML private TableView<UserSale> salaryTableView;
-    @FXML private TableColumn<UserSale, String> tableSaleData;
-    @FXML private TableColumn<UserSale, Double> paidColTable;
-    @FXML private TableColumn<UserSale, Double> expectedColTable;
-    @FXML private TableColumn<UserSale, Double> diffColTable;
-
-
-    private String url;
-
-
-    User user = new User();
-    ArrayList<UserSale> tempdata = user.getUserSaleList();
-    Accounts existingaccounts = new Accounts();
-
-    @FXML
-    private void initialize() {
-        if(!tempdata.isEmpty()){
-            updateTableView();
-        }
+  /**
+   * This method is used to hide/show menu on left-side.
+   *
+   * @param event when user clicks on "Skjul meny"/"Vis meny"
+   */
+  @FXML
+  private void hideMenuAction(ActionEvent event) {
+    if (menuNav.isVisible()) {
+      menuNav.setVisible(false);
+      hideMenuButton.setText("Vis Meny");
+    } else {
+      menuNav.setVisible(true);
+      hideMenuButton.setText("Skjul Meny");
     }
+  }
 
-    void updateTableView() {
-        salaryTableView.getItems().clear();
-        tableSaleData.setCellValueFactory(new PropertyValueFactory<UserSale, String>("salesperiod"));
-        paidColTable.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("expected"));
-        expectedColTable.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("paid"));
-        diffColTable.setCellValueFactory(new PropertyValueFactory<UserSale, Double>("difference"));
+  /**
+   * Method that sends the user to Profile scene.
+   *
+   * @param event when user clicks on "Profil" in menu.
+   */
+  @FXML
+  private void goToProfileAction(ActionEvent event) {
+    pageTitle.setText("Profil");
+    setAnchorPane(CONTROLLERS.PROFILE, startPane, user, accounts);
+  }
 
-        for (UserSale uSale : tempdata ){
-            salaryTableView.getItems().add(uSale);
-        }
-    }
+  /**
+   * Method that sends the user to Calculation scene.
+   *
+   * @param event when user clicks on "Lønnsutregninger".
+   */
+  @FXML
+  private void goToCalcAction(ActionEvent event) {
+    pageTitle.setText("Utregning av lønn");
+    setAnchorPane(CONTROLLERS.SALARYCALC, startPane, user, accounts);
+  }
 
-    public void loadInfo() {
-        navnDisplay.setText(user.getFirstname()+ " " + user.getLastname());
-        epostDisplay.setText(user.getEmail());
-        idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
-        taxDisplay.setText(String.valueOf(user.getTaxCount()));
-        hourDisplay.setText(String.valueOf(user.getHourRate()));
-        employeDisplay.setText(String.valueOf(user.getEmployerEmail()));
-        String socialnumber = user.getSocialNumber();
-        fDatoDisplay.setText(splitSocialAddDot(socialnumber));
-        
-    }
+  /**
+   * Method that sends the user to Salaries scene.
+   *
+   * @param event when user clicks on "Mine lønninger"
+   */
+  @FXML
+  private void goToSalAction(ActionEvent event) {
+    pageTitle.setText("Mine lønninger");
+    setAnchorPane(CONTROLLERS.SALARIES, startPane, user, accounts);
+  }
 
-    String splitSocialAddDot(String socialnumber){
-        String sub = socialnumber.substring(0, 6);
-        String newSocial = sub.substring(0,2) +"."+sub.substring(2, 4) + "." +sub.substring(4, 6);
-        return newSocial;
-    }
-
-
-
-    //TODO complete method for sendEmail
-    @FXML
-    void sendEmail(ActionEvent event) {
-        System.out.println("Test");
-    }
-
-    @FXML
-    private void changeProfileSettingsAction(ActionEvent event){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
-            Parent root = fxmlLoader.load();
-            SettingsController settingsController = fxmlLoader.getController();
-            settingsController.setUser((User) user);
-            settingsController.setAccounts(existingaccounts);
-            settingsController.loadInfo();
-            user.addObserver(existingaccounts);
-            Scene homepageScene = new Scene(root);
-            Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-            window.setScene(homepageScene);
-            window.show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void calculateSalary(ActionEvent event) throws IOException {
-        UserSale userSale = new UserSale();
-        Calculation calculation = new Calculation(user);
-        double hours = Double.parseDouble(hoursInput.getText());
-        int mobileamount = Integer.parseInt(amountOfMobile.getText());
-        try {
-            calculation.doCalculation(getURL(), hours, mobileamount);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
-        String salesperiod = chosenmonth + " " + calculationYearInput.getText();
-        Double expectedCalc = Math.round(calculation.getCalculated() * 10) / 10.0;
-        userSale.setExpected(expectedCalc);
-        userSale.setPaid(Double.parseDouble(recievedSalaryInput.getText()));
-        userSale.setDifference();
-        userSale.setSalesperiod(salesperiod);
-
-        String expected = String.valueOf(userSale.getExpected());
-        String paid = String.valueOf(userSale.getPaid());
-        String diff = String.valueOf(userSale.getDifference());
-        salaryLabel.setText("Forventet lønn: " + expected);
-        nettoLabel.setText("Utbetalt lønn: " + paid);
-        salaryDiff.setText("Differanse: " + diff);
-
-        user.addUserSale(userSale);
-        
-        tempdata = user.getUserSaleList();
-        
-        SalaryCheckerPersistence SCP = new SalaryCheckerPersistence();
-        SCP.setSaveFile("Accounts.json");
-        try {
-            SCP.saveAccounts(existingaccounts);
-        } catch (IllegalStateException | IOException e) {
-            e.printStackTrace();
-        }
-        updateTableView();
-    }
-
-    @FXML
-    void readCSV(ActionEvent event){
-        Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-        FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showOpenDialog(stage);
-        setURL(file.getAbsolutePath());
-        filenameDisplay.setText(file.getName());
-    }
-
-    @FXML
-    private void logOutAction(ActionEvent event){
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene homepageScene = new Scene(root);
-            Stage window = (Stage) (((Node) event.getSource()).getScene().getWindow());
-            window.setScene(homepageScene);
-            window.show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void setURL(String url){
-        this.url = url;
-    }
-    public String getURL() {
-        return this.url;
-    }
-
-    public void setUser(User user) {
-        this.user=user;
-    }
-
-    public void setAccounts(Accounts accounts) {
-        this.existingaccounts = accounts;
-    }
 
 }

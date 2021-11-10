@@ -15,6 +15,7 @@
         <jackson.version>2.12.5</jackson.version>
         <openscsv.version>5.5.2</openscsv.version>
         <sunmail.version>1.5.5</sunmail.version>
+        <spring.version>2.5.6</spring.version>
         <skipTests>false</skipTests>
         <skipSpotBugs>false</skipSpotBugs>
         <skipCheckstyle>false</skipCheckstyle>
@@ -81,6 +82,38 @@
                     <version>${sunmail.version}</version>
             </dependency>
 
+            <!-- Spring-boot for restserver -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-rest-core</artifactId>
+                <version>3.5.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-commons</artifactId>
+                <version>2.5.6</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -100,7 +133,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M5</version>
                     <configuration>
-                        <!-- 
+                        <!--
                             <argLine>dash dash enable-preview</argLine>
                         -->
                         <skipTests>${skipTests}</skipTests>
@@ -170,15 +203,16 @@
                                 <goal>prepare-agent</goal>
                             </goals>
                         </execution>
-                        <execution>
-                            <id>jacoco-report</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>report</goal>
-                            </goals>
-                        </execution>
                     </executions>
                 </plugin>
+
+                <!-- Spring boot plugin for server and integration tests -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.version}</version>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
@@ -187,5 +221,7 @@
         <module>core</module>
         <module>ui</module>
         <module>json</module>
+        <module>restserver</module>
+        <module>report</module>
     </modules>
 </project>

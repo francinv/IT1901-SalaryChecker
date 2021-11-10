@@ -1,12 +1,15 @@
 package salarychecker.core;
 
+/**
+ * Interface for user observers.
+ */
 public interface IUserObserver {
 
-    void usersaleAdded(User user, UserSale uSale);
+  void usersaleAdded(User user, UserSale userSale);
 
-    void userInfoStringChanged(User user, String changedstring);
+  void userInfoStringChanged(User user, String changedstring);
 
-    void userInfoDoubleChanged(User user, Double changeddouble);
+  void userInfoDoubleChanged(User user, Double changeddouble);
 
-    void userInfoIntChanged(User user, Integer changedint);
+  void userInfoTaxCountChanged(User user, Integer changedTaxCount);
 }
