@@ -8,41 +8,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box } from "@mui/system";
+import { selectActiveUser } from "../../features/selectors";
+import { useSelector } from 'react-redux';
 
 const SalaryTable = () => {
+    const selectUser = useSelector(selectActiveUser);
 
-    const userSales = [
-        {
-            salesperiod: "Januar 2021",
-            paid: "10000",
-            expected: "15000",
-            difference: "5000",
-        },
-        {
-            salesperiod: "Februar 2021",
-            paid: "10000",
-            expected: "15000",
-            difference: "5000",
-        },
-        {
-            salesperiod: "Mars 2021",
-            paid: "10000",
-            expected: "15000",
-            difference: "5000",
-        },
-        {
-            salesperiod: "April 2021",
-            paid: "10000",
-            expected: "15000",
-            difference: "5000",
-        },
-        {
-            salesperiod: "Mai 2021",
-            paid: "10000",
-            expected: "15000",
-            difference: "5000",
-        },
-    ]
+    let userSales = [];
+
+    function getuserSales() {
+        return (userSales = userSales.concat(selectUser.userSaleList))
+    }
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -80,7 +56,7 @@ const SalaryTable = () => {
                     </TableRow>
                     </TableHead>
                     <TableBody>
-                    {userSales.map((userSale) => (
+                    {getuserSales().map((userSale) => (
                         <StyledTableRow key={userSale.salesperiod}>
                         <StyledTableCell component="th" scope="row">
                             {userSale.salesperiod}

@@ -87,6 +87,8 @@ public class SalaryCheckerService {
         "Vandre333!");
 
     Accounts acc = new Accounts();
+    UserSale us = new UserSale("August 2021", 15169.0, 10000.0);
+    testuser1.addUserSale(us);
     acc.addUser(testuser1);
     acc.addUser(testuser2);
     return acc;

@@ -1,16 +1,19 @@
-import { Grid, IconButton } from "@mui/material";
+import { Button, Grid, IconButton } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState } from "react";
 import { styled } from '@mui/system';
 import './index.css'
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import ModalContent from "../modalcontent";
 import { useSelector } from "react-redux";
-import { selectActiveUser } from "../../features/selectors";
+import { selectAccounts, selectActiveUser, selectUserIndex } from "../../features/selectors";
+import { putUserNewToServer } from "../../core/APIfunctions";
 
 const ProfileOverviewComp = () => {
     const loggedInUser = useSelector(selectActiveUser);
+    const indexOfUser = useSelector(selectUserIndex);
+    const [wantToChangePass, setChangePass] = useState(false);
 
     const GridItem = styled(Grid)(({theme}) => ({
         width:'50%',
@@ -30,6 +33,10 @@ const ProfileOverviewComp = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const updateUser = () => {
+        putUserNewToServer(loggedInUser, indexOfUser);
+    }
+
     return(
 
         <Box>
@@ -40,10 +47,30 @@ const ProfileOverviewComp = () => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
-                    <ModalContent modalHeader={modalHeader} modalInput={modalInput} modalLabel={modalLabel}/>
+                    <ModalContent 
+                        modalHeader={modalHeader} 
+                        modalInput={modalInput} 
+                        modalLabel={modalLabel} 
+                        handleClose={handleClose}
+                        wantToChangePass={wantToChangePass}
+                    />
                 </Modal>
             </div>
             <h1>Profil</h1>
+            <Button variant="outlined" sx={{
+                color:'white',
+                bgcolor: 'black',
+                borderColor:'black',
+                '&:hover': {
+                    color:'black',
+                    bgcolor:'white',
+                    borderColor:'black',
+                },
+            }}
+                onClick={updateUser}
+            >
+                Oppdater Profil
+            </Button>
             <h2 className="profile-header">{loggedInUser.firstname} {loggedInUser.lastname}</h2>
             <Box sx={{
                 width:'80%',
@@ -64,6 +91,21 @@ const ProfileOverviewComp = () => {
                         }
                         }>
                             <EditIcon />
+                        </IconButton>
+                    </InfoContainer>
+                </GridItem>
+                <GridItem item >
+                    <InfoContainer> 
+                        <h4 className="profile-text-label">Passord:</h4>
+                        <IconButton 
+                            onClick={ () => {
+                                setModalHeader("Endre passord");
+                                setModalLabel("Nytt passord");
+                                handleOpen();
+                                setChangePass(true);
+                            }
+                            }>
+                                <EditIcon />
                         </IconButton>
                     </InfoContainer>
                 </GridItem>
