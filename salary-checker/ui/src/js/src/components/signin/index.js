@@ -63,10 +63,6 @@ export default function SignInComp() {
     
   };
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-};
-
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -110,8 +106,6 @@ export default function SignInComp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                value={values.email}
-                onChange={handleChange('email')}
                 autoFocus
               />
               <TextField
@@ -122,8 +116,6 @@ export default function SignInComp() {
                 label="Password"
                 type="password"
                 id="password"
-                values={values.password}
-                onChange={handleChange('password')}
                 autoComplete="current-password"
               />
               <FormControlLabel
