@@ -18,4 +18,18 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ApiError(e.getMessage(), 404, 
             HttpStatus.NOT_FOUND, LocalDateTime.now()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<Object> handleNullpointer(UserNotFoundException e, 
+            WebRequest webRequest) {
+        return new ResponseEntity<>(new ApiError(e.getMessage(), 409, 
+            HttpStatus.CONFLICT, LocalDateTime.now()), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserAlreadyExists(UserAlreadyExistsException e, 
+            WebRequest webRequest) {
+        return new ResponseEntity<>(new ApiError(e.getMessage(), 409, 
+            HttpStatus.CONFLICT, LocalDateTime.now()), HttpStatus.CONFLICT);
+    }
 }

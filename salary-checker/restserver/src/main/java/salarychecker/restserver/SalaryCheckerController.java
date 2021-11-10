@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.restserver.exceptions.UserAlreadyExistsException;
 import salarychecker.restserver.exceptions.UserNotFoundException;
 /**
  * Ensures that the server is capable of listening to HTTP-requests.
@@ -53,7 +54,18 @@ public class SalaryCheckerController {
   @GetMapping(path = "users")
   public List<AbstractUser> getEmployersUser(@RequestParam("employerEmail") String employerEmail) {
       return salaryCheckerService.getUsersByEmployerEmail(employerEmail);
-  } 
+  }
+  
+  //localhost:8080//salarychecker/users?employerEmail={employerEmail}
+  @PostMapping(path = "login")
+  public void userLogin(String email, String password) {
+    if (salaryCheckerService.userLogin(email, password)) {
+      
+    }
+    else {
+      throw new RuntimeException("Invalid login");
+    }
+  }
 
   @PostMapping
   public void registerNewAccounts(@RequestBody Accounts accounts) {
@@ -62,6 +74,9 @@ public class SalaryCheckerController {
 
   @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
   public void createUser(@RequestBody User user) {
+    if (salaryCheckerService.getAccounts().contains(user)) {
+      throw new UserAlreadyExistsException();
+    }
     salaryCheckerService.createUser(user);
   }
   
