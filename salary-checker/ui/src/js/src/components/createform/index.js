@@ -1,26 +1,39 @@
 import React from "react";
 import { Button, Grid, TextField } from "@mui/material";
 import { Box } from "@mui/system";
+import { useSelector } from "react-redux";
+import { selectActiveUser } from "../../features/selectors";
+import { postCreatUser } from "../../core/APIfunctions";
+import { addUser } from "../../features/accounts/accountsSlice";
+import { useAppDispatch } from '../../features/hooks';
 
 
+const actionDispatch = (dispatch) => ({
+    addUser: (query) => dispatch(addUser(query)),
+});
 
 const CreateUser = () => {
+    const activeUser = useSelector(selectActiveUser);
+    const { addUser } = actionDispatch(useAppDispatch());
 
     const [values, setValues] = React.useState({
         firstname: '',
         lastname: '',
-        employeeid: 0,
         email: '',
-        social: '',
         password: '',
-        hour:0,
-        tax:0,
+        socialNumber: '',
+        employeeNumber: 0,
+        employerEmail: activeUser.email,
+        taxCount: 0.0,
+        hourRate:0.0,
     })
 
     const handleSubmit = (event) => {
         event.preventDefault();
         // eslint-disable-next-line no-console
         console.log(values);
+        addUser(values);
+        postCreatUser(values);
     };
 
     const handleChange = (prop) => (event) => {
@@ -78,8 +91,8 @@ const CreateUser = () => {
                         variant="outlined"
                         type="number"
                         label="Ansatt-ID"
-                        value={values.employeeid}
-                        onChange={handleChange('employeeid')}
+                        value={values.employeeNumber}
+                        onChange={handleChange('employeeNumber')}
                         sx={{
                             flex:1,
                             width:'100%',
@@ -107,8 +120,8 @@ const CreateUser = () => {
                         variant="outlined"
                         type="text"
                         label="Fødselsnummer"
-                        value={values.social}
-                        onChange={handleChange('social')}
+                        value={values.socialNumber}
+                        onChange={handleChange('socialNumber')}
                         sx={{
                             flex:1,
                             width:'100%',
@@ -136,8 +149,8 @@ const CreateUser = () => {
                         variant="outlined"
                         type="text"
                         label="Timesats"
-                        value={values.hour}
-                        onChange={handleChange('hour')}
+                        value={values.hourRate}
+                        onChange={handleChange('hourRate')}
                         sx={{
                             flex:1,
                             width:'100%',
@@ -150,8 +163,8 @@ const CreateUser = () => {
                         variant="outlined"
                         type="text"
                         label="Skattesats"
-                        value={values.tax}
-                        onChange={handleChange('tax')}
+                        value={values.taxCount}
+                        onChange={handleChange('taxCount')}
                         sx={{
                             flex:1,
                             width:'100%',
