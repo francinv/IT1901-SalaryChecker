@@ -9,13 +9,15 @@ import { selectUserIsLoggedIn, selectUserType } from "../features/selectors";
 const AdminOverview = () => {
     const userType = useSelector(selectUserType);
     const isLoggedIn = useSelector(selectUserIsLoggedIn);
+    
     let navigate = useNavigate();
+    
 
     useEffect(() => {
         if (!isLoggedIn) {
             navigate('/');
         }
-    }, [isLoggedIn])
+    })
 
     if (userType === 'A') {
         return(

@@ -1,7 +1,7 @@
 import { Box } from "@mui/system";
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectActiveUser, selectUser } from "../../features/selectors";
+import { selectActiveUser } from "../../features/selectors";
 
 const PageInfo = ({userType}) => {
     const activeUser = useSelector(selectActiveUser);

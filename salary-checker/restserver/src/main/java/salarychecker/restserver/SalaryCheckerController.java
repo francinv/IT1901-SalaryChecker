@@ -44,6 +44,7 @@ public class SalaryCheckerController {
   }  
 
   //localhost:8080//salarychecker/users?email={email}
+  @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping(path = "user")
   public AbstractUser getUser(@RequestParam("email") String email) {
     if (salaryCheckerService.getUserByEmail(email) == null) {
