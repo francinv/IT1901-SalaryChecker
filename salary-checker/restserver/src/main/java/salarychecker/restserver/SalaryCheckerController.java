@@ -60,7 +60,7 @@ public class SalaryCheckerController {
   @PostMapping(path = "login")
   public void userLogin(String email, String password) {
     if (salaryCheckerService.userLogin(email, password)) {
-      
+    //TODO finish method
     }
     else {
       throw new RuntimeException("Invalid login");
