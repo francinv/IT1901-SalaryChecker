@@ -16,7 +16,7 @@ const CalculationPage = () => {
         if (!isLoggedIn) {
             navigate('/');
         }
-    }, [isLoggedIn])
+    })
     
     if (userType === 'U') {
         return(

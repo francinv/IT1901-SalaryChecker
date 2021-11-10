@@ -17,10 +17,11 @@ export const AccountsSlice = createSlice({
         },
         setAccounts: (state, action) => {
             state.isAccountsSet = true;
+            state.accountsList = [];
             state.accountsList = state.accountsList.concat(action.payload);
         },
         setActiveUser: (state,action) => {
-            state.activeUser = state.accountsList.find(u => u.email === action.payload);
+            state.activeUser = action.payload;
         },
         logIn: (state) => {
             state.isActiveUserLoggedIn = true;
@@ -57,6 +58,10 @@ export const AccountsSlice = createSlice({
         },
         logOutUser: (state) => {
             state.isActiveUserLoggedIn = false;
+            state.accountsList = undefined;
+            state.activeUser = undefined;
+            state.isAccountsSet = false;
+            state.activeUserType = undefined;
         }
     },
 });
