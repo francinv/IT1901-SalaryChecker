@@ -10,6 +10,7 @@ module salarychecker.restserver {
   requires spring.data.rest.core;
   requires spring.data.commons;
   requires spring.core;
+  requires spring.webmvc;
 
   opens salarychecker.restserver;
   exports salarychecker.restserver;
