@@ -3,13 +3,20 @@ import { AppBar, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Box } from "@mui/system";
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
+import { logOutUser } from "../../features/accounts/accountsSlice";
+import { useAppDispatch } from "../../features/hooks";
 
+const actionDispatch = (dispatch) => ({
+  logOutUser: () => dispatch(logOutUser()),
+});
 
 const AdminNav = ({NavButton, LogoButton}) => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
+
+    const { logOutUser } = actionDispatch(useAppDispatch());
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -18,6 +25,10 @@ const AdminNav = ({NavButton, LogoButton}) => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+
+    const LogOut = () => {
+      logOutUser();
+    }
 
     const menuId = 'primary-search-account-menu';
     return(
@@ -75,7 +86,7 @@ const AdminNav = ({NavButton, LogoButton}) => {
         open={isMenuOpen}
         onClose={handleMenuClose}    
       >
-        <MenuItem onClick={handleMenuClose}>Logg ut</MenuItem>
+        <MenuItem onClick={LogOut}>Logg ut</MenuItem>
     </Menu>
     </Box>
     );

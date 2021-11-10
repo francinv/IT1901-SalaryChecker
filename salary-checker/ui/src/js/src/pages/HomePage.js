@@ -1,12 +1,15 @@
 import { Box } from "@mui/system";
 import React from "react";
+import { useSelector } from "react-redux";
 import PageInfo from "../components/introinfo";
 import PrimaryNavBar from "../components/navbar";
+import { selectUserType } from "../features/selectors";
 
 
 
 const HomePage = () => {
-    const [userType, setUserType] = "U";
+    const userType = useSelector(selectUserType);
+    console.log(userType);
     return (
         <Box>
             <PrimaryNavBar userType={userType}/>
