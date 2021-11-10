@@ -6,18 +6,11 @@ import './index.css'
 import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import ModalContent from "../modalcontent";
+import { useSelector } from "react-redux";
+import { selectActiveUser } from "../../features/selectors";
 
 const ProfileOverviewComp = () => {
-    const loggedInUser = {
-            firstname: "Francin",
-            lastname: "Vincent",
-            email: "francin.vinc@gmail.com",
-            employeeid: "12345",
-            birth: "17.05.1998",
-            tax: "33.2",
-            hour: "132.3",
-            employerEmail: "employer@gmail.com",
-    }
+    const loggedInUser = useSelector(selectActiveUser);
 
     const GridItem = styled(Grid)(({theme}) => ({
         width:'50%',
@@ -77,11 +70,11 @@ const ProfileOverviewComp = () => {
                 <GridItem item>
                     <h4 className="profile-text-label">Ansatt ID:</h4>
                     <InfoContainer>
-                        <p>{loggedInUser.employeeid}</p>
+                        <p>{loggedInUser.employeeNumber}</p>
                         <IconButton
                             onClick={ () => {
                                 setModalHeader("Endre Ansatt-ID");
-                                setModalInput(loggedInUser.employeeid);
+                                setModalInput(loggedInUser.employeeNumber);
                                 setModalLabel("Ansatt-ID");
                                 handleOpen();
                             }}
@@ -93,17 +86,17 @@ const ProfileOverviewComp = () => {
                 <GridItem item>
                     <h4 className="profile-text-label">Fødselsdato:</h4>
                     <InfoContainer>
-                        <p>{loggedInUser.birth}</p>
+                        <p>{loggedInUser.socialNumber}</p>
                     </InfoContainer>
                 </GridItem>
                 <GridItem item>
                     <h4 className="profile-text-label">Skattesats:</h4>
                     <InfoContainer>
-                        <p>{loggedInUser.tax}</p>
+                        <p>{loggedInUser.taxCount}</p>
                         <IconButton
                             onClick={ () => {
                                 setModalHeader("Endre skattesats");
-                                setModalInput(loggedInUser.tax);
+                                setModalInput(loggedInUser.taxCount);
                                 setModalLabel("Skattesats");
                                 handleOpen();
                             }}
@@ -115,11 +108,11 @@ const ProfileOverviewComp = () => {
                 <GridItem item>
                     <h4 className="profile-text-label">Timesats:</h4>
                     <InfoContainer>
-                        <p>{loggedInUser.hour}</p>
+                        <p>{loggedInUser.hourRate}</p>
                         <IconButton
                             onClick={ () => {
                                 setModalHeader("Endre timesats");
-                                setModalInput(loggedInUser.hour);
+                                setModalInput(loggedInUser.hourRate);
                                 setModalLabel("Timesats");
                                 handleOpen();
                             }}

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router';
 import './App.css';
+import { selectUserIsLoggedIn } from './features/selectors';
 import AdminOverview from './pages/AdminUserOverviewPage';
 import CalculationPage from './pages/CalculationPage';
 import AdminCreateUser from './pages/CreateUserPage';
@@ -10,7 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 import SalariesPage from './pages/SalariesPage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const isLoggedIn = useSelector(selectUserIsLoggedIn);
   return (
     <div className="App">
       <Routes>
