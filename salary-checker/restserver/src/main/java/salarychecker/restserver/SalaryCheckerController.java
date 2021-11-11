@@ -42,7 +42,7 @@ public class SalaryCheckerController {
   }  
   
   @GetMapping
-  public List<AbstractUser> getAccounts() {
+  public Accounts getAccounts() {
     return salaryCheckerService.getAccounts();
   }  
 

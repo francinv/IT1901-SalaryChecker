@@ -73,7 +73,7 @@ public class SalaryCheckerService {
 
   }
 
-  public List<AbstractUser> getAccounts() {
+  public Accounts getAccounts() {
     return accounts.getAccounts();
   } 
 
