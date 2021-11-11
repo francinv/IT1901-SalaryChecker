@@ -74,7 +74,7 @@ public class SalaryCheckerService {
   }
 
   public Accounts getAccounts() {
-    return accounts.getAccounts();
+    return accounts;
   } 
 
   public void setAccounts(Accounts accounts) {
