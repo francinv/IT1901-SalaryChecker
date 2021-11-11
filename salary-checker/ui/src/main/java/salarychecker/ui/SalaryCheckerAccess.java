@@ -45,7 +45,7 @@ public interface SalaryCheckerAccess {
     /**
      * This is meant for set the users that can use Salary Checker.
      */
-    public void registerNewAccounts();
+    public void registerNewAccounts(Accounts accounts);
 
     /**
      * Creates a new user and adds it to Accounts.
