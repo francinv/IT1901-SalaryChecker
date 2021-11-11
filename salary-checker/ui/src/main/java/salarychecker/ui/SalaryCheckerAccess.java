@@ -16,7 +16,7 @@ public interface SalaryCheckerAccess {
      * 
      * @return all the users
      */
-    public Accounts getAccounts();
+    public Accounts readAccounts();
 
     /**
      * Get a specific user by email.
@@ -24,7 +24,7 @@ public interface SalaryCheckerAccess {
      * @param email of the user to get
      * @return the user
      */
-    public User getUser(String email);
+    public User readUser(String email);
 
     /**
      * Finds all the users with same employer. 
@@ -32,7 +32,7 @@ public interface SalaryCheckerAccess {
      * @param employerEmail
      * @return list of all the users with same employer
      */
-    public List<AbstractUser> getEmployersUser(String employerEmail);
+    public List<AbstractUser> readAccountsWithSameEmployer(String employerEmail);
 
     /**
      * Method to log in as a regular user.
@@ -49,8 +49,10 @@ public interface SalaryCheckerAccess {
 
     /**
      * Creates a new user and adds it to Accounts.
+     * 
+     * @param User the user to create
      */
-    public void createUser();
+    public void createUser(User user);
 
     /**
      * Updates thes atrributes of a specific user.
