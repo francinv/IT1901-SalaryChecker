@@ -48,7 +48,7 @@ public class SalaryCheckerService {
     this(createDeafaultAccounts());
   } 
 
-  public List<AbstractUser> getAccounts() {
+  public Accounts getAccounts() {
     return accounts.getAccounts();
   } 
 

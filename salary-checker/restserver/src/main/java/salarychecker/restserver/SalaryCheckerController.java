@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.Calculation;
 import salarychecker.core.User;
 import salarychecker.restserver.exceptions.UserAlreadyExistsException;
 import salarychecker.restserver.exceptions.UserNotFoundException;
@@ -37,7 +38,7 @@ public class SalaryCheckerController {
   }  
   
   @GetMapping
-  public List<AbstractUser> getAccounts() {
+  public Accounts getAccounts() {
     return salaryCheckerService.getAccounts();
   }  
 
@@ -81,18 +82,10 @@ public class SalaryCheckerController {
     }
   }
   
-  // @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
-  // public void calculateUsersUserSale(@RequestBody User user, @RequestParam("hours") String hours, 
-  //     @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url,
-  //     @RequestParam("salesPeriod") String salesPeriod, @RequestParam("paid") double paid) {
-
-  //   try {
-  //     salaryCheckerService.calculateUsersUserSale(url, hours, mobileAmount, salesPeriod, paid);
-  //   } catch (NumberFormatException | IOException e) {
-  //     // TODO Auto-generated catch block
-  //     e.printStackTrace();
-  //   }
-  // }
+  @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void calculateUsersUserSale(@RequestBody Calculation calculation) {
+      //salaryCheckerService.calculateUsersUserSale(calculation.getURL(), hours, mobileAmount, salesPeriod, paid);
+  }
 
   /**
    * Performs a PUT request
