@@ -61,8 +61,9 @@ public interface SalaryCheckerAccess {
      * Updates thes atrributes of a specific user.
      * 
      * @param user the user to update
+     * @param indexOfUser in Accounts
      */
-    public void updateUserAttributes(AbstractUser user);
+    public void updateUserAttributes(AbstractUser user, int indexOfUser);
 
     /**
      * This method is to remove the Accounts object currently used by
