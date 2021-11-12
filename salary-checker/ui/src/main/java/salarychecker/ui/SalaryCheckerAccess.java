@@ -1,5 +1,6 @@
 package salarychecker.ui;
 
+import java.io.IOException;
 import java.util.List;
 
 import salarychecker.core.AbstractUser;
@@ -15,8 +16,9 @@ public interface SalaryCheckerAccess {
      * Gets all the accounts registred to use Salary Checker.
      * 
      * @return all the users
+     * @throws IOException
      */
-    public Accounts readAccounts();
+    public Accounts readAccounts() throws IOException;
 
     /**
      * Get a specific user by email.
@@ -39,8 +41,9 @@ public interface SalaryCheckerAccess {
      * 
      * @param email of the user
      * @param password of the user
+     * @return the user
      */
-    public void userLogin(String email, String password);
+    public AbstractUser userLogin(String email, String password);
 
     /**
      * This is meant for set the users that can use Salary Checker.
@@ -52,14 +55,14 @@ public interface SalaryCheckerAccess {
      * 
      * @param User the user to create
      */
-    public void createUser(User user);
+    public void createUser(AbstractUser user);
 
     /**
      * Updates thes atrributes of a specific user.
      * 
-     * @param User the user to update
+     * @param user the user to update
      */
-    public void updateUserAttributes(User user);
+    public void updateUserAttributes(AbstractUser user);
 
     /**
      * This method is to remove the Accounts object currently used by
