@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.ui.controllers;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;

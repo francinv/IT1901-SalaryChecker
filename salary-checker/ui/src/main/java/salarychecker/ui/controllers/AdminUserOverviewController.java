@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.ui.controllers;
 
 import java.util.ArrayList;
 import java.util.List;

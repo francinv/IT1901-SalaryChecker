@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.ui.controllers;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +12,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import salarychecker.ui.controllers.AdminStartPageController;
+import salarychecker.ui.controllers.HomepageController;
+import salarychecker.ui.controllers.LoginController;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.ui.controllers;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -12,6 +12,7 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
+import salarychecker.ui.SalaryCheckerAccess;
 
 /**
  * Controller class for the Login-scene.
