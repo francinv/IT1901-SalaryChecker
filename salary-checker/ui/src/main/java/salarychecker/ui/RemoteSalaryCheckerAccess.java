@@ -14,6 +14,7 @@ import java.util.List;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
@@ -117,7 +118,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
         String key = "employerEmail";
         String value = employerEmail;
         try {
-            HttpRequest request = 
+            HttpRequest httpRequest = 
                 HttpRequest.newBuilder(resolveURIAccounts(getMappingPath + key + value))
                            .header("Accept", "application/json")
                            .GET()
@@ -125,7 +126,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
             final HttpResponse<String> httpResponse =
                     HttpClient.newBuilder()
                               .build()
-                              .send(request, HttpResponse.BodyHandlers.ofString());
+                              .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
             return objectMapper.readValue(httpResponse.body(), List.class);
           } catch (IOException | InterruptedException e) {
@@ -137,7 +138,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * Sends a POST-request to activate a new user login.
      */
     @Override
-    public void userLogin(String email, String password) {
+    public AbstractUser userLogin(String email, String password) {
         String postMappingPath = "login?";
         String key1 = "email";
         String value1 = email + "&";
@@ -151,9 +152,16 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                 .POST(BodyPublishers.ofString(email + "|" + password))
                 .build();
  
-                HttpClient.newBuilder()
-                          .build()
-                          .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        final HttpResponse<String> httpResponse =
+        HttpClient.newBuilder()
+                    .build()
+                    .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+        if (httpResponse.body().length() == 10) {
+            return objectMapper.readValue(httpResponse.body(), User.class);
+        }
+        return objectMapper.readValue(httpResponse.body(), AdminUser.class);
+         
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -190,7 +198,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param user the user to register
      */
     @Override
-    public void createUser(User user) {
+    public void createUser(AbstractUser user) {
         String postMappingPath = "create-user";
         try {
             String json = objectMapper.writeValueAsString(user);
@@ -215,7 +223,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param user the user to update
      */
     @Override
-    public void updateUserAttributes(User user) {
+    public void updateUserAttributes(AbstractUser user) {
         String putMappingPath = "user/update-profile";
         try {
             String json = objectMapper.writeValueAsString(user);
