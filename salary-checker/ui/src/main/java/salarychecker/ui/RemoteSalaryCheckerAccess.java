@@ -223,11 +223,13 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param user the user to update
      */
     @Override
-    public void updateUserAttributes(AbstractUser user) {
-        String putMappingPath = "user/update-profile";
+    public void updateUserAttributes(AbstractUser user, int indexOfUser) {
+        String putMappingPath = "user/update-profile?";
+        String key = "index";
+        String value = String.valueOf(indexOfUser);
         try {
             String json = objectMapper.writeValueAsString(user);
-            HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(putMappingPath))
+            HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(putMappingPath + key + value))
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .PUT(BodyPublishers.ofString(json))
