@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.ui.controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 import javafx.fxml.FXML;
+import salarychecker.ui.LocalSalaryCheckerAccess;
+import salarychecker.ui.RemoteSalaryCheckerAccess;
 
 public class SalaryCheckerAppController {
 
