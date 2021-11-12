@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="createUserPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="createUserPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/CreateUserStylesheet.css">
    <children>
       <Button fx:id="createUserButton" layoutX="982.0" layoutY="456.0" mnemonicParsing="false" onAction="#createUserAction" prefHeight="85.0" prefWidth="159.0" text="Opprett Bruker" />
       <AnchorPane fx:id="firstLastPane" layoutX="98.0" layoutY="374.0" prefHeight="90.0" prefWidth="1013.0">
@@ -25,8 +25,8 @@
             <TextField fx:id="lastNameField" layoutX="660.0" layoutY="24.0" prefHeight="39.0" prefWidth="337.0" promptText="Etternavn" />
          </children>
       </AnchorPane>
-      <Button fx:id="goBackButton" layoutX="300.0" layoutY="324.0" mnemonicParsing="false" onAction="#goBackAction" prefHeight="39.0" prefWidth="43.0" text="&lt;-" />
-      <Button fx:id="goOnButton" layoutX="938.0" layoutY="326.0" mnemonicParsing="false" onAction="#goFurtherAction" prefHeight="39.0" prefWidth="43.0" text="-&gt;" />
+      <Button fx:id="goBackButton" layoutX="300.0" layoutY="324.0" mnemonicParsing="false" onAction="#goBackAction" prefHeight="39.0" prefWidth="70.0" text="&#x2190;" />
+      <Button fx:id="goOnButton" layoutX="938.0" layoutY="326.0" mnemonicParsing="false" onAction="#goFurtherAction" prefHeight="39.0" prefWidth="70.0" text="&#x2192;" />
       <AnchorPane fx:id="empemailPane" layoutX="102.0" layoutY="69.0" prefHeight="90.0" prefWidth="1143.0">
          <children>
             <Text fx:id="employerIDLabel" layoutX="51.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ansatt-ID:">
