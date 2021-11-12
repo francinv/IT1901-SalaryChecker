@@ -63,13 +63,11 @@ public class SalaryCheckerController {
   
   //localhost:8080//salarychecker/users?employerEmail={employerEmail}
   @PostMapping(path = "login")
-  public void userLogin(String email, String password) {
+  public AbstractUser userLogin(String email, String password) {
     if (salaryCheckerService.userLogin(email, password)) {
-    //TODO finish method
+      return salaryCheckerService.getUserByEmail(email);
     }
-    else {
-      throw new RuntimeException("Invalid login");
-    }
+    throw new UserNotFoundException();
   }
 
   @PostMapping
@@ -78,7 +76,7 @@ public class SalaryCheckerController {
   }
 
   @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void createUser(@RequestBody User user) {
+  public void createUser(@RequestBody AbstractUser user) {
     try {
       salaryCheckerService.createUser(user);
     } catch(Exception e) {
