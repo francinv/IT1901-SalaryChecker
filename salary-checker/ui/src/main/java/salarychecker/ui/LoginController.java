@@ -29,6 +29,8 @@ public class LoginController extends AbstractController {
   private final UserValidation userval = new UserValidation();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
+  private SalaryCheckerAccess dataAccess;
+
   /**
    * We use the initialize method to set saveFile for persistence.
    */
@@ -89,5 +91,9 @@ public class LoginController extends AbstractController {
     persistence.saveAccounts(acc);
     createButton.setText("Test users created!");
     createButton.setTextFill(Paint.valueOf("#008000"));
+  }
+
+  protected void setDataAccess(SalaryCheckerAccess dataAccess) {
+    this.dataAccess = dataAccess;
   }
 }
