@@ -251,7 +251,7 @@ public class Accounts implements IUserObserver {
    * @param user        to change
    * @param indexOfUser in list
    */
-  public void updateUserObject(User user, int indexOfUser) {
+  public void updateUserObject(AbstractUser user, int indexOfUser) {
     accounts.set(indexOfUser, user);
   }
 
