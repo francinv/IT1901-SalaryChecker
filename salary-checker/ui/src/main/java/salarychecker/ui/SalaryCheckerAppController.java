@@ -2,6 +2,8 @@ package salarychecker.ui;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Path;
 import java.util.Properties;
 
 import javafx.fxml.FXML;
@@ -12,7 +14,28 @@ public class SalaryCheckerAppController {
 
     private SalaryCheckerConfig config;
 
-    
+    /**
+     * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
+     * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
+     * otherwise LocalSalaryCheckerAccess.
+     */
+    @FXML
+    void initialize() {
+        this.config = new SalaryCheckerConfig();
+
+        if (config.getProperty("remoteAccess").equals("true")) {
+
+            loginController.setDataAccess(
+                    new RemoteSalaryCheckerAccess(
+                            URI.create(config.getProperty("serverUri"))
+                    ));
+
+            System.out.println("Using remote endpoint @ " + config.getProperty("serverUri")); 
+
+        } else {
+            loginController.setDataAccess(new LocalSalaryCheckerAccess());
+        }
+    }
     
     /**
      * Configuration class for the app. Decides wheter to run main or tests
