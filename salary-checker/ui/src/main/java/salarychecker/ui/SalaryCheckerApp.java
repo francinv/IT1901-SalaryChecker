@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import salarychecker.ui.controllers.LoginController;
-import salarychecker.ui.controllers.SalaryCheckerConfig;
+import salarychecker.ui.controllers.SalaryCheckerAppController;
 
 /**
  * JavaFX App.
@@ -18,10 +18,11 @@ public class SalaryCheckerApp extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     FXMLLoader loader = new FXMLLoader();
-    LoginController controller = new LoginController();
+    SalaryCheckerAppController controller = new SalaryCheckerAppController();
     loader.setController(controller);
-    loader.setLocation(SalaryCheckerApp.class.getResource("views/LogIn.fxml"));
+    loader.setLocation(SalaryCheckerApp.class.getResource("views/SalaryCheckerApp.fxml"));
     final Parent parent = loader.load();
+    controller.setLoginController(loader.getController());
     stage.setScene(new Scene(parent));
     stage.show();
 
