@@ -9,6 +9,7 @@ import java.util.Properties;
 import javafx.fxml.FXML;
 import salarychecker.ui.LocalSalaryCheckerAccess;
 import salarychecker.ui.RemoteSalaryCheckerAccess;
+import salarychecker.ui.SalaryCheckerApp;
 
 public class SalaryCheckerAppController {
 
@@ -20,12 +21,13 @@ public class SalaryCheckerAppController {
      * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
      * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
      * otherwise LocalSalaryCheckerAccess.
+     * @throws IOException
      */
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
         this.config = new SalaryCheckerConfig();
 
-        if (config.getProperty("remoteAccess").equals("true")) {
+        if (config.getProperty("remoteAccess").equals("true")) { 
 
             loginController.setDataAccess(
                     new RemoteSalaryCheckerAccess(
@@ -50,7 +52,7 @@ public class SalaryCheckerAppController {
             this.properties = new Properties();
 
             try (InputStream inputStream = 
-                    getClass().getResourceAsStream("salarychecker.properties")) {
+                    SalaryCheckerApp.class.getResourceAsStream("salarychecker.properties")) {
                 properties.load(inputStream);
             } catch (IOException e) {
                 throw new IllegalStateException("Could not load salarychecker.properties");
@@ -67,5 +69,9 @@ public class SalaryCheckerAppController {
         public String getProperty(String key) {
             return properties.getProperty(key);
         }
+    }
+
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
     }
 }
