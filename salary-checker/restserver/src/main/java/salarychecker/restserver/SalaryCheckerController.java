@@ -77,7 +77,7 @@ public class SalaryCheckerController {
   }
 
   @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void createUser(@RequestBody User user) {
+  public void createUser(@RequestBody AbstractUser user) {
     try {
       salaryCheckerService.createUser(user);
     } catch(Exception e) {
