@@ -152,7 +152,7 @@ public class SalaryCheckerService {
    * Method to create a new User. The user to create is given by the client.
    * Adds the user object to accounts.
    */
-  public void createUser(User newUser) {
+  public void createUser(AbstractUser newUser) {
     accounts.addUser(newUser);
     autoSave();
   }
