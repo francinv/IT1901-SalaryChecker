@@ -1,59 +1,69 @@
 package salarychecker.ui;
 
+import java.io.IOException;
 import java.util.List;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.json.SalaryCheckerPersistence;
 
+/**
+ * This implementation of {@link SalaryCheckerAccess} is meant for 
+ * using the app without the server running. 
+ */
 public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
+    private Accounts accounts;
+    private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+
+    public LocalSalaryCheckerAccess() {
+        persistence.setFilePath("Accounts.json");
+    }
+
     @Override
-    public Accounts readAccounts() {
-        // TODO Auto-generated method stub
-        return null;
+    public Accounts readAccounts() throws IOException {
+        return persistence.loadAccounts();
     }
 
     @Override
     public User readUser(String email) {
-        // TODO Auto-generated method stub
-        return null;
+        if (accounts.getUser(email) instanceof User) {
+            return (User) accounts.getUser(email);
+        }
+        return  null;
     }
 
     @Override
     public List<AbstractUser> readAccountsWithSameEmployer(String employerEmail) {
-        // TODO Auto-generated method stub
-        return null;
+        return accounts.getUsersByEmployerEmail(employerEmail);
     }
 
     @Override
-    public void userLogin(String email, String password) {
-        // TODO Auto-generated method stub
-        
+    public AbstractUser userLogin(String email, String password) {
+        return accounts.getUser(email, password);
     }
 
     @Override
     public void registerNewAccounts(Accounts accounts) {
-        // TODO Auto-generated method stub
-        
+        this.accounts = accounts;
     }
 
     @Override
-    public void createUser(User user) {
-        // TODO Auto-generated method stub
-        
+    public void createUser(AbstractUser user) {
+        if (user != null) {
+            accounts.addUser(user);
+        }
     }
 
     @Override
-    public void updateUserAttributes(User user) {
-        // TODO Auto-generated method stub
-        
+    public void updateUserAttributes(AbstractUser user, int indexOfUser) {
+        accounts.updateUserObject(user, indexOfUser);
     }
 
     @Override
     public void deleteAccounts() {
-        // TODO Auto-generated method stub
-        
+        accounts = null;
     }
 
 }
