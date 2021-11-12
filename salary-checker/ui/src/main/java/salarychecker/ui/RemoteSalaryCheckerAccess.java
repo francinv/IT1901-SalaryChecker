@@ -200,7 +200,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param user the user to register
      */
     @Override
-    public void createUser(User user) {
+    public void createUser(AbstractUser user) {
         String postMappingPath = "create-user";
         try {
             String json = objectMapper.writeValueAsString(user);
