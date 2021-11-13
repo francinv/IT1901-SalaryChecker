@@ -7,13 +7,16 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import salarychecker.ui.LocalSalaryCheckerAccess;
 import salarychecker.ui.RemoteSalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerApp;
 
-public class SalaryCheckerAppController {
+public class SalaryCheckerAppController extends AbstractController {
 
-    @FXML private LoginController loginController;
+    @FXML private Parent includedView;
+    @FXML private LoginController loginController; // $includedView;+Controller
 
     private SalaryCheckerConfig config;
 
@@ -26,7 +29,7 @@ public class SalaryCheckerAppController {
     @FXML
     void initialize() throws IOException {
         this.config = new SalaryCheckerConfig();
-
+        
         if (config.getProperty("remoteAccess").equals("true")) { 
 
             loginController.setDataAccess(

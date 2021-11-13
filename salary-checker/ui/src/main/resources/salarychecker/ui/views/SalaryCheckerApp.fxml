@@ -3,5 +3,5 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <fx:include fx:id="loginScene" source="LogIn.fxml"/>
+    <fx:include fx:id="includedView" source="LogIn.fxml"/>
 </AnchorPane>

@@ -15,14 +15,16 @@ public class SalaryCheckerApp extends Application {
 
   public static Stage stg;
 
+  private SalaryCheckerAppController controller;
+
   @Override
   public void start(Stage stage) throws Exception {
     FXMLLoader loader = new FXMLLoader();
-    SalaryCheckerAppController controller = new SalaryCheckerAppController();
+    controller = new SalaryCheckerAppController();
     loader.setController(controller);
     loader.setLocation(SalaryCheckerApp.class.getResource("views/SalaryCheckerApp.fxml"));
+    controller.setLoginController(new LoginController());
     final Parent parent = loader.load();
-    controller.setLoginController(loader.getController());
     stage.setScene(new Scene(parent));
     stage.show();
 
