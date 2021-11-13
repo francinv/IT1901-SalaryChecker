@@ -63,11 +63,12 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                                                  .build();
             try {
                 final HttpResponse<String> httpResponse = 
-                HttpClient.newBuilder()
-                          .build()
-                          .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                    HttpClient.newBuilder()
+                            .build()
+                            .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-                this.accounts = objectMapper.readValue(httpResponse.body(), Accounts.class);
+                this.accounts = 
+                    objectMapper.readValue(httpResponse.body(), Accounts.class);
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
