@@ -49,9 +49,20 @@ public class Calculation {
   private double calculated;
   private User user;
   private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader(); 
+  private String salesperiod;
+  private double hours;
+  private int mobileamount;
+  private double paid;
 
   public Calculation(User user) {
     this.user = user;
+  }
+
+  public Calculation(String salesperiod, double hours, int mobileamount, double paid) {
+    this.salesperiod = salesperiod;
+    this.hours = hours;
+    this.mobileamount = mobileamount;
+    this.paid = paid;
   }
 
   public Calculation() {
@@ -256,8 +267,8 @@ public class Calculation {
    * @param hours number of worked hours
    * @param hourwage the hourly salary for the User.
    */
-  public void hourSalary(double hours, double hourwage) {
-    double hoursal = hourwage * hours;
+  public void hourSalary(double hours, User user) {
+    double hoursal = user.getHourRate() * hours;
     calculated += hoursal;
   }
 
@@ -282,8 +293,8 @@ public class Calculation {
    *
    * @param taxCount for the User.
    */
-  public void taxDeduction(double taxCount) {
-    calculated = (calculated * ((100 - taxCount) / 100));
+  public void taxDeduction(User user) {
+    calculated = (calculated * ((100 - user.getTaxCount()) / 100));
   }
 
   /**
@@ -298,7 +309,7 @@ public class Calculation {
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                               denoted by a specified pathname has failed.
    */
-  public UserSale doCalculation(
+  public void doCalculation(
       String url, double hours, int mobileamount, String salesperiod, double paid)
       throws IOException {
     updateList(url);
@@ -309,7 +320,7 @@ public class Calculation {
     hourSalary(hours);
     taxDeduction();
     double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
-    return new UserSale(salesperiod, expectedCalc, paid);
+    this.user.addUserSale(new UserSale(salesperiod, expectedCalc, paid));
   }
 
   /**
@@ -326,19 +337,18 @@ public class Calculation {
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                                denoted by a specified pathname has failed.
    */
-  public UserSale doCalculation(
-      String url, double hours, double hourwage, double taxcount,
-      int mobileamount, String salesperiod, double paid)
+  public void doCalculation(
+      String url, User user)
       throws IOException {
     updateList(url);
     removeUnwanted();
     updateElectricityCommission();
     calculateElectricityCommission();
     addMobile(mobileamount);
-    hourSalary(hours, hourwage);
-    taxDeduction(taxcount);
+    hourSalary(hours, user);
+    taxDeduction(user);
     double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
-    return new UserSale(salesperiod, expectedCalc, paid);
+    user.addUserSale(new UserSale(this.salesperiod, expectedCalc, this.paid));
   }
 
   

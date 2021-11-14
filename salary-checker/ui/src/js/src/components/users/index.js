@@ -21,10 +21,6 @@ const UserView = () => {
         setSearchValue(event.target.value);
     }
     
-    useEffect(() => {
-        console.log(accounts);
-    })
-    
     const accounts = useSelector(selectAccounts);
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({

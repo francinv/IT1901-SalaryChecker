@@ -54,16 +54,17 @@ export default function SignInComp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     fetchUser(data.get('email'));
-    if (activeUser.password === data.get('password')){
-      logIn();
-      var size = Object.keys(activeUser).length;
-      if ( size > 5) {
-        setUserType('U');
-      } else {
-        setUserType('A');
+    if (activeUser !== undefined) {
+      if (activeUser.password === data.get('password')){
+        logIn();
+        var size = Object.keys(activeUser).length;
+        if ( size > 5) {
+          setUserType('U');
+        } else {
+          setUserType('A');
+        }
       }
     }
-    
   };
 
   return (

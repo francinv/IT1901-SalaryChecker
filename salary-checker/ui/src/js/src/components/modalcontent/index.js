@@ -40,7 +40,6 @@ const ModalContent = ({modalHeader, modalInput, modalLabel, handleClose, wantToC
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(modalLabel);
         if (modalLabel === "E-post") {
             editEmail(value);
             handleClose();

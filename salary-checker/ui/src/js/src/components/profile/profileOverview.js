@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Modal from '@mui/material/Modal';
 import ModalContent from "../modalcontent";
 import { useSelector } from "react-redux";
-import { selectAccounts, selectActiveUser, selectUserIndex } from "../../features/selectors";
+import { selectActiveUser, selectUserIndex } from "../../features/selectors";
 import { putUserNewToServer } from "../../core/APIfunctions";
 
 const ProfileOverviewComp = () => {
@@ -34,6 +34,7 @@ const ProfileOverviewComp = () => {
     const handleClose = () => setOpen(false);
 
     const updateUser = () => {
+        console.log(loggedInUser);
         putUserNewToServer(loggedInUser, indexOfUser);
     }
 

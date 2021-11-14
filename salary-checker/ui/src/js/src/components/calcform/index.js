@@ -4,15 +4,18 @@ import { Box } from "@mui/system";
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import { uploadFile } from "../../core/APIfunctions";
+import fs from 'fs';
 
 const CalcForm = () => {
     const [values, setValues] = React.useState({
         salesperiod: '',
-        salesreport: '',
-        paid: 0,
-        mobil: 0,
-        hours: 0,
+        hours: 0.0,
+        mobileamount: 0,
+        paid: 0.0,
     });
+
+    const [fileState, setFileState] = React.useState('');
     const [tempperiod, setTempPeriod] = React.useState(new Date());
     const [expected, setExpected] = React.useState(0);
     const [difference, setDifference] = React.useState(0);
@@ -21,9 +24,9 @@ const CalcForm = () => {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    function doCalculation() {
-        setExpected(Math.floor(Math.random(15000-10000 + 1))+10000);
-        setDifference(values.paid - expected);
+    const handleFileChange = (event) => {
+        event.preventDefault();
+        setFileState(event.target.files[0]);
     }
 
     const months = ["Januar", "Februar", "Mars","April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Desember"];
@@ -31,9 +34,12 @@ const CalcForm = () => {
         event.preventDefault();
         values.salesperiod = months[tempperiod.getMonth()] + " " + tempperiod.getFullYear();
         // eslint-disable-next-line no-console
-        console.log(values);
-        doCalculation();
+        var data = new FormData();
+        data.append("file", fileState);
+        uploadFile(data);
+        
     };
+
     
     return(
         <Box
@@ -73,8 +79,7 @@ const CalcForm = () => {
                         id="fileChooser"
                         required
                         type="file"
-                        value={values.salesreport}
-                        onChange={handleChange('salesreport')}
+                        onChange={handleFileChange}
                     />
                 </div>
                 <FormControl fullWidth sx={{ m: 1 }}>
@@ -94,8 +99,8 @@ const CalcForm = () => {
                     <InputLabel htmlFor="outlined-adornment-mobile">Antall mobil</InputLabel>
                     <OutlinedInput
                         id="outlined-adornment-mobile"
-                        value={values.mobil}
-                        onChange={handleChange('mobil')}
+                        value={values.mobileamount}
+                        onChange={handleChange('mobileamount')}
                         label="Antall mobil"
                         type="number"
                         min={0}

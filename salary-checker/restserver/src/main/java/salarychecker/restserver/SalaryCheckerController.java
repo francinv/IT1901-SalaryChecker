@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.Calculation;
 import salarychecker.core.User;
 import salarychecker.restserver.exceptions.UserAlreadyExistsException;
 import salarychecker.restserver.exceptions.UserNotFoundException;
+import salarychecker.restserver.payload.UploadFileResponse;
 /**
  * Ensures that the server is capable of listening to HTTP-requests.
  * Decides how these requests are managed and what to do with them.
@@ -37,14 +41,12 @@ public class SalaryCheckerController {
     this.salaryCheckerService = salaryCheckerService;
   }  
   
-  @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping
   public List<AbstractUser> getAccounts() {
     return salaryCheckerService.getAccounts();
   }  
 
   //localhost:8080//salarychecker/users?email={email}
-  @CrossOrigin(origins = "http://localhost:3000")
   @GetMapping(path = "user")
   public AbstractUser getUser(@RequestParam("email") String email) {
     if (salaryCheckerService.getUserByEmail(email) == null) {
@@ -75,7 +77,6 @@ public class SalaryCheckerController {
     salaryCheckerService.setAccounts(accounts);
   }
 
-  @CrossOrigin(origins = "http://localhost:3000")
   @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
   public void createUser(@RequestBody User user) {
     try {
@@ -85,24 +86,20 @@ public class SalaryCheckerController {
     }
   }
   
-  // @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
-  // public void calculateUsersUserSale(@RequestBody User user, @RequestParam("hours") String hours, 
-  //     @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url,
-  //     @RequestParam("salesPeriod") String salesPeriod, @RequestParam("paid") double paid) {
-
-  //   try {
-  //     salaryCheckerService.calculateUsersUserSale(url, hours, mobileAmount, salesPeriod, paid);
-  //   } catch (NumberFormatException | IOException e) {
-  //     // TODO Auto-generated catch block
-  //     e.printStackTrace();
-  //   }
-  // }
+  @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void calculateUsersUserSale(@RequestBody Calculation calculation, @RequestParam("email") String emailOfUser) {
+    try {
+      salaryCheckerService.calculateUsersUserSale(calculation, emailOfUser);
+    } catch (NumberFormatException | IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
 
   /**
    * Performs a PUT request
    * localhost:8080//salarychecker/users/update-profile?index={indexOfUser}
   */
-  @CrossOrigin(origins = "http://localhost:3000")
   @PutMapping(path = "user/update-profile", 
     consumes = MediaType.APPLICATION_JSON_VALUE)
   public void updateUserAttributes(@RequestBody User user, 
@@ -110,8 +107,18 @@ public class SalaryCheckerController {
     salaryCheckerService.updateUserAttributes(user, indexOfUser);
   }
 
-  @DeleteMapping
-  public void deleteAccounts() {
-    salaryCheckerService.setAccounts(null);
+  @PostMapping(path = "/uploadFile")
+  public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+    String fileName = salaryCheckerService.storeFile(file);
+
+    return new UploadFileResponse(fileName,
+      file.getContentType(), file.getSize());
   }
+
+
+
+  // @DeleteMapping
+  // public void deleteAccounts() {
+  //   salaryCheckerService.setAccounts(null);
+  // }
 }  
