@@ -1,3 +1,8 @@
+#userOverviewPane{
+    -fx-height:850;
+    -fx-width: 1340;
+}
+
 #tableUsers{
     -fx-background-color: #333;
     -fx-background-radius: 30;

@@ -1,3 +1,8 @@
+#profilePane{
+    -fx-height:850;
+    -fx-width: 1340;
+}
+
 #changeProfileButton{
     -fx-background-color: #ffff; 
     -fx-border-color: #333;

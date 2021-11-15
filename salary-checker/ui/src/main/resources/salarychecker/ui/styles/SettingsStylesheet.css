@@ -1,4 +1,72 @@
-.textfield{
+#settingsPane{
+    -fx-height:850;
+    -fx-width: 1340;
+}
+
+#changeFirstNameField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeLastNameField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeEmailField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeConfirmedEmailField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeEmployerField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeConfirmedEmployerField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changePasswordField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeConfirmedPasswordField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeTaxBracketField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeEmployeeNumberField{
     -fx-background-color: -fx-text-box-border, -fx-background ;
     -fx-background-insets: 0, 0 0 3 0 ;
     -fx-background-radius: 0 ;  
