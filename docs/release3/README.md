@@ -16,7 +16,7 @@
 
 
 ## Additions of classes and files for release 3:
->The optimization of the user interface has lead the group to split parts of UI-classes and files into more managable sizes. The UI-package now consists of one main, parent controller and multiple sub-controllers, one for each main group of functionality. The fxml-file for the main stage has also been split up accordingly. One parent stage is used as a border, with navigation buttons and menu, and the scene-changes occur in the center of the application as the user navigates around. The group decided to use CSS for a smoother and better looking UI. This was done with one CSS-file for each scene for smoother editing and perhaps more understandable code. 
+>The optimization of the user interface has lead the group to split parts of UI-classes and files into more managable sizes. The UI-package now consists of one main, parent controller and multiple sub-controllers, one for each main group of functionality. The fxml-file for the main stage has also been split up accordingly. One parent stage is used as a border, with navigation buttons and menu, and the scene-changes occur in the center of the application as the user navigates around. The group decided to use CSS for a smoother and better looking UI. This was done with one CSS-file for each scene for smoother editing and perhaps more understandable code. The group opted to access UI-components through fx:id instead of component class names. This desition was made for time-purposes, as accessing through class name was not working at first. The group felt it was more time effective to copy paste code where possible. 
 >
 >Additionally, the group has added classes and files that are needed for setting up a RESTful application.  
 
@@ -45,12 +45,21 @@
     - SalaryCalculation.fxml
     - Settings.fxml
 ##### Stylesheets:
-    - 
+    - AdminStartStylesheet
+    - UserOverviewStylesheet
+    - CreateUserStylesheet
+    - BackgroundStylesheet
+    - LogInStylesheet
+    - ProfileStylesheet
+    - SalariesStylesheet
+    - CalculationStylesheet
+    - SettingsStylesheet
+
 #### RestServer:
     - RestServerApplication.java
     - SalaryCheckerController.Java
     - SalaryCheckerService.java
-#### Removed or merged classes in release 3:
+
 
 ## Userstory for release 3: 
     "An employer wishes to check if he has made any errors regarding paychecks. He loggs into the client-application, and gets an overview of users. He checks every indiviual user and checks for differences in expected and actual payout."
