@@ -14,7 +14,7 @@ import salarychecker.json.SalaryCheckerPersistence;
  */
 public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
-    private Accounts accounts;
+    private Accounts accounts = new Accounts();
     private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
     public LocalSalaryCheckerAccess() {
@@ -53,6 +53,11 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     public void createUser(AbstractUser user) {
         if (user != null) {
             accounts.addUser(user);
+        }
+        try {
+            persistence.saveAccounts(accounts);
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
         }
     }
 
