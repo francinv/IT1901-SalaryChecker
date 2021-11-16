@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.ui.SalaryCheckerApp;
 
 
 /**
@@ -44,7 +45,7 @@ public abstract class AbstractController {
     private final AbstractController abstractController;
 
     CONTROLLERS(String fxml, AbstractController abstractController) {
-      this.fxml = "/views" + fxml;
+      this.fxml = "/views/" + fxml;
       this.abstractController = abstractController;
     }
 
@@ -93,7 +94,8 @@ public abstract class AbstractController {
       AbstractController controller = type.getControllerInstance();
       FXMLLoader loader = new FXMLLoader();
       loader.setController(controller);
-      loader.setLocation(AbstractController.class.getResource(type.getFXMLString()));
+      System.out.println(type.getFXMLString());
+      loader.setLocation(SalaryCheckerApp.class.getResource(type.getFXMLString()));
       controller.setUser(user);
       controller.setAccounts(accounts);
       Parent parent = loader.load();
