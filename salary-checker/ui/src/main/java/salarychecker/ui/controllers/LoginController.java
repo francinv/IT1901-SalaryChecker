@@ -1,6 +1,10 @@
 package salarychecker.ui.controllers;
 
 import java.io.IOException;
+import java.net.URI;
+
+import javax.crypto.BadPaddingException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,8 +14,11 @@ import javafx.scene.text.Text;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
+import salarychecker.core.Errors;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
+import salarychecker.ui.LocalSalaryCheckerAccess;
+import salarychecker.ui.RemoteSalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerAccess;
 
 /**
@@ -29,6 +36,31 @@ public class LoginController extends AbstractController {
   private final UserValidation userval = new UserValidation();
 
   private SalaryCheckerAccess dataAccess;
+  private SalaryCheckerConfig config;
+
+    /**
+     * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
+     * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
+     * otherwise LocalSalaryCheckerAccess.
+     * @throws IOException
+     */
+    @FXML
+    void initialize() throws IOException {
+        this.config = new SalaryCheckerConfig();
+        
+        if (config.getProperty("remoteAccess").equals("true")) { 
+
+            setDataAccess(
+                    new RemoteSalaryCheckerAccess(
+                            URI.create(config.getProperty("serverUri"))
+                    ));
+
+            System.out.println("Using remote endpoint @ " + config.getProperty("serverUri")); 
+
+        } else {
+            setDataAccess(new LocalSalaryCheckerAccess());
+        }
+    }
 
   /**
    * This is the method that handles the log-in.
@@ -58,6 +90,8 @@ public class LoginController extends AbstractController {
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
+    // } catch (Exception e) {
+    //   errorDisplay.setText(Errors.NOT_REGISTERED.getMessage());
     }
   }
 
