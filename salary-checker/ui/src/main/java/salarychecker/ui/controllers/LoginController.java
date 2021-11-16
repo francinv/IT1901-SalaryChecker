@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
+import salarychecker.core.Errors;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.ui.LocalSalaryCheckerAccess;
