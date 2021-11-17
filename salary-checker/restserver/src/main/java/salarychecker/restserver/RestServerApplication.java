@@ -1,5 +1,7 @@
 package salarychecker.restserver;
 
+import com.fasterxml.jackson.databind.module.SimpleModule;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -8,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import salarychecker.restserver.properties.FileStorageProperties;
+import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * Contains the starting method for the server application.
@@ -21,6 +24,11 @@ public class RestServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RestServerApplication.class, args);
+	}
+
+	@Bean
+	public SimpleModule objectMapperModule() {
+		return SalaryCheckerPersistence.createJacksonModule();
 	}
 
 	@Bean
