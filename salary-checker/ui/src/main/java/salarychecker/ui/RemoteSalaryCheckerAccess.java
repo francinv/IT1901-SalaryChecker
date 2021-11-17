@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,6 +18,7 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.controllers.SalaryCheckerConfig;
 
 /**
  * A implementation of {@link SalaryCheckerAccess}
@@ -25,7 +27,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
 
     private final URI baseURI;
     private ObjectMapper objectMapper;
-    private Accounts accounts;
+    private Accounts accounts = new Accounts();
 
     /**
      * This constructor initialize the objectmapper used for serializing, 
@@ -36,7 +38,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     public RemoteSalaryCheckerAccess(URI baseURI) {
         this.baseURI = baseURI;
         this.objectMapper = SalaryCheckerPersistence.createObjectMapper();
-        this.accounts = readAccounts();
+        //this.accounts = readAccounts();
     }
 
     /**
@@ -88,7 +90,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public User readUser(String email) {
         String getMappingPath = "user?";
-        String key = "email";
+        String key = "email=";
         String value = email;
         try {
             HttpRequest request = 
@@ -117,7 +119,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public List<AbstractUser> readAccountsWithSameEmployer(String employerEmail) {
         String getMappingPath = "users?";
-        String key = "employerEmail";
+        String key = "employerEmail=";
         String value = employerEmail;
         try {
             HttpRequest httpRequest = 
@@ -142,9 +144,9 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public AbstractUser userLogin(String email, String password) {
         String postMappingPath = "login?";
-        String key1 = "email";
+        String key1 = "email=";
         String value1 = email + "&";
-        String key2 = "password";
+        String key2 = "password=";
         String value2 = password;
         
         try {
@@ -227,7 +229,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public void updateUserAttributes(AbstractUser user, int indexOfUser) {
         String putMappingPath = "user/update-profile?";
-        String key = "index";
+        String key = "index=";
         String value = String.valueOf(indexOfUser);
         try {
             String json = objectMapper.writeValueAsString(user);
@@ -266,4 +268,17 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
         }
     }
 
+
+    public static void main(String[] args) {
+        try {
+            RemoteSalaryCheckerAccess r = new RemoteSalaryCheckerAccess(new URI(new SalaryCheckerConfig().getProperty("serverURI")));
+            System.out.println(r.userLogin("seran@.no", "Password123!"));
+            System.out.println(r.readAccounts());
+            User user = new User("Ola", "Nordmann", "email@email.com", "Password123!", "22010199234", 55555, "samder@gmail.com", 33.3, 130.3);
+            r.createUser(user);
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }
