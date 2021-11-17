@@ -2,8 +2,7 @@ package salarychecker.ui.controllers;
 
 import java.io.IOException;
 import java.net.URI;
-
-import javax.crypto.BadPaddingException;
+import java.net.URISyntaxException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.text.Text;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
-import salarychecker.core.Errors;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.ui.LocalSalaryCheckerAccess;
@@ -43,19 +41,20 @@ public class LoginController extends AbstractController {
      * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
      * otherwise LocalSalaryCheckerAccess.
      * @throws IOException
+     * @throws URISyntaxException
      */
     @FXML
-    void initialize() throws IOException {
+    void initialize() throws IOException, URISyntaxException {
         this.config = new SalaryCheckerConfig();
         
         if (config.getProperty("remoteAccess").equals("true")) { 
 
             setDataAccess(
                     new RemoteSalaryCheckerAccess(
-                            URI.create(config.getProperty("serverUri"))
+                            new URI(config.getProperty("serverURI"))
                     ));
 
-            System.out.println("Using remote endpoint @ " + config.getProperty("serverUri")); 
+            System.out.println("Using remote endpoint @ " + config.getProperty("serverURI")); 
 
         } else {
             setDataAccess(new LocalSalaryCheckerAccess());
