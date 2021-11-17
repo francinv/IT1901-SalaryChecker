@@ -36,6 +36,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     public RemoteSalaryCheckerAccess(URI baseURI) {
         this.baseURI = baseURI;
         this.objectMapper = SalaryCheckerPersistence.createObjectMapper();
+        this.accounts = readAccounts();
     }
 
     /**
