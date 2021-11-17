@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.Calculation;
 import salarychecker.core.User;
-import salarychecker.restserver.exceptions.UserDoesNotExistException;
+import salarychecker.restserver.exceptions.UserAlreadyExistsException;
+import salarychecker.restserver.exceptions.UserNotFoundException;
 /**
  * Ensures that the server is capable of listening to HTTP-requests.
  * Decides how these requests are managed and what to do with them.
@@ -37,7 +38,7 @@ public class SalaryCheckerController {
   }  
   
   @GetMapping
-  public List<AbstractUser> getAccounts() {
+  public Accounts getAccounts() {
     return salaryCheckerService.getAccounts();
   }  
 
@@ -45,39 +46,54 @@ public class SalaryCheckerController {
   @GetMapping(path = "user")
   public AbstractUser getUser(@RequestParam("email") String email) {
     if (salaryCheckerService.getUserByEmail(email) == null) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
+      throw new UserNotFoundException();
     }
     return salaryCheckerService.getUserByEmail(email);
   } 
 
   //localhost:8080//salarychecker/users?employerEmail={employerEmail}
   @GetMapping(path = "users")
-  public List<AbstractUser> getEmployersUser(@RequestParam("employerEmail") String employerEmail)
-      throws UserDoesNotExistException {
+  public List<AbstractUser> getEmployersUser(@RequestParam("employerEmail") String employerEmail) {
       return salaryCheckerService.getUsersByEmployerEmail(employerEmail);
-  } 
+  }
+  
+  //localhost:8080//salarychecker/users?employerEmail={employerEmail}
+  @PostMapping(path = "login")
+  public AbstractUser userLogin(String email, String password) {
+    if (salaryCheckerService.userLogin(email, password)) {
+      return salaryCheckerService.getUserByEmail(email);
+    }
+    throw new UserNotFoundException();
+  }
 
   @PostMapping
   public void registerNewAccounts(@RequestBody Accounts accounts) {
     salaryCheckerService.setAccounts(accounts);
   }
 
-  @GetMapping("create-user")
-  public User createUser() {
-    return salaryCheckerService.createUser();
+  @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void createUser(@RequestBody AbstractUser user) {
+    try {
+      salaryCheckerService.createUser(user);
+    } catch(Exception e) {
+      throw new UserAlreadyExistsException();
+    }
   }
   
-  @PutMapping(path = "user/calculate-sale")
-  public void calculateUsersUserSale(@RequestBody User user, @RequestParam("hours") String hours, 
-      @RequestParam("mobileamount") String mobileAmount, @RequestParam("url") String url,
-      @RequestParam("salesPeriod") String salesPeriod, @RequestParam("paid") double paid) {
+  @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void calculateUsersUserSale(@RequestBody Calculation calculation) {
+      //salaryCheckerService.calculateUsersUserSale(calculation.getURL(), hours, mobileAmount, salesPeriod, paid);
+  }
 
-    try {
-      salaryCheckerService.calculateUsersUserSale(url, hours, mobileAmount, salesPeriod, paid);
-    } catch (NumberFormatException | IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  /**
+   * Performs a PUT request
+   * localhost:8080//salarychecker/users/update-profile?index={indexOfUser}
+  */
+  @PutMapping(path = "user/update-profile", 
+    consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void updateUserAttributes(@RequestBody User user, 
+      @RequestParam("index") int indexOfUser) {
+    salaryCheckerService.updateUserAttributes(user, indexOfUser);
   }
 
   @DeleteMapping

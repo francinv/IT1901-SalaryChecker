@@ -1,0 +1,43 @@
+.root{
+    -fx-font-family: "Quicksand";
+}
+
+#email{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#password{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;
+    -fx-font-family: "Quicksand";
+}
+
+#logIn{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";  
+}
+
+#logIn:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
+
+#createButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333; 
+    -fx-font-family: "Quicksand";
+}
+
+#createButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}

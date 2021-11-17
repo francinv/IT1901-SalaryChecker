@@ -1,0 +1,80 @@
+#logOutButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+}
+
+#logOutButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: rgb(112, 4, 4);
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
+
+#hideMenuButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+}
+
+#hideMenuButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
+
+#showMenuButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+}
+
+#showMenuButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
+
+#profileButton{
+    -fx-background-color:  #313939;
+    -fx-text-fill: #ffffff;
+    -fx-text-decoration: underline;
+    -fx-font-family: "Quicksand";
+}
+
+#profileButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: rgb(32, 32, 32);
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
+
+#salaryCalculationButton{
+    -fx-background-color:  #313939;
+    -fx-text-fill: #ffffff;
+    -fx-text-decoration: underline;
+    -fx-font-family: "Quicksand";
+}
+
+#salaryCalculationButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: rgb(32, 32, 32);
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
+
+#mySalariesButton{
+    -fx-background-color:  #313939;
+    -fx-text-fill: #ffffff;
+    -fx-text-decoration: underline;
+    -fx-font-family: "Quicksand";
+}
+
+#mySalariesButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: rgb(32, 32, 32);
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
