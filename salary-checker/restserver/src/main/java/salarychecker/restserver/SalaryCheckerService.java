@@ -46,6 +46,7 @@ public class SalaryCheckerService {
   */
   public SalaryCheckerService() {
     this(createDeafaultAccounts());
+    autoSave();
   } 
 
   public Accounts getAccounts() {
