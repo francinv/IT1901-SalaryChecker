@@ -27,7 +27,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
 
     private final URI baseURI;
     private ObjectMapper objectMapper;
-    private Accounts accounts;
+    private Accounts accounts = new Accounts();
 
     /**
      * This constructor initialize the objectmapper used for serializing, 
@@ -38,7 +38,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     public RemoteSalaryCheckerAccess(URI baseURI) {
         this.baseURI = baseURI;
         this.objectMapper = SalaryCheckerPersistence.createObjectMapper();
-        this.accounts = readAccounts();
+        //this.accounts = readAccounts();
     }
 
     /**
