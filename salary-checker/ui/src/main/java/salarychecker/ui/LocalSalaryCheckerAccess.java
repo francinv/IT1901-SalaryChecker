@@ -14,11 +14,17 @@ import salarychecker.json.SalaryCheckerPersistence;
  */
 public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
-    private Accounts accounts = new Accounts();
+    private Accounts accounts;
     private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
     public LocalSalaryCheckerAccess() {
         persistence.setFilePath("Accounts.json");
+        try {
+            this.accounts = persistence.loadAccounts();
+        } catch (IllegalStateException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
