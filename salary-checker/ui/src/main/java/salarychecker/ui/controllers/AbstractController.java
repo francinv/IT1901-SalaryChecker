@@ -45,7 +45,7 @@ public abstract class AbstractController {
     private final AbstractController abstractController;
 
     CONTROLLERS(String fxml, AbstractController abstractController) {
-      this.fxml = "/views/" + fxml;
+      this.fxml = "views/" + fxml;
       this.abstractController = abstractController;
     }
 
@@ -94,7 +94,6 @@ public abstract class AbstractController {
       AbstractController controller = type.getControllerInstance();
       FXMLLoader loader = new FXMLLoader();
       loader.setController(controller);
-      System.out.println(type.getFXMLString());
       loader.setLocation(SalaryCheckerApp.class.getResource(type.getFXMLString()));
       controller.setUser(user);
       controller.setAccounts(accounts);
