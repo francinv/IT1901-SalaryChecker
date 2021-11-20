@@ -15,7 +15,7 @@ import salarychecker.json.SalaryCheckerPersistence;
  */
 public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
-    private Accounts accounts = new Accounts();
+    private Accounts accounts;
     private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
     public LocalSalaryCheckerAccess() {
