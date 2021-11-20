@@ -126,7 +126,8 @@ public abstract class AbstractController {
     try {
       AbstractController controller = type.getControllerInstance();
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(AbstractController.class.getResource(type.getFXMLString()));
+      System.out.println(type.getFXMLString());
+      loader.setLocation(SalaryCheckerApp.class.getResource(type.getFXMLString()));
       loader.setController(controller);
       controller.setUser(user);
       controller.setAccounts(accounts);
