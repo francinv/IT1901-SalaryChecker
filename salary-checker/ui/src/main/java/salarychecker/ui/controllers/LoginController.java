@@ -84,7 +84,8 @@ public class LoginController extends AbstractController {
       user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
         setScene(CONTROLLERS.HOME, event, user, accounts);
-      } else {
+      }
+      else if (user instanceof AdminUser){
         setScene(CONTROLLERS.ADMIN, event, user, accounts);
       }
     } catch (IllegalArgumentException e) {
