@@ -1,6 +1,6 @@
 package salarychecker.restserver;
 
-import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.Module;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,7 +22,7 @@ public class RestServerApplication {
 	}
 
 	@Bean
-	public SimpleModule objectMapperModule() {
+	public Module objectMapperModule() {
 		return SalaryCheckerPersistence.createJacksonModule();
 	}
 
