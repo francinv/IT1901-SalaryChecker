@@ -48,7 +48,7 @@ public class Calculation {
 
   private double calculated;
   private User user;
-  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader(); 
+  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
 
   public Calculation(User user) {
     this.user = user;
@@ -76,7 +76,7 @@ public class Calculation {
    *                     failed or interrupted I/O operations.
    */
   public void updateList(String url) throws IOException {
-    saleslist = SALARY_CSV_READER.csvToBean(url);
+    saleslist = SALARY_CSV_READER.CSVtoSale(url);
   }
 
   /**
