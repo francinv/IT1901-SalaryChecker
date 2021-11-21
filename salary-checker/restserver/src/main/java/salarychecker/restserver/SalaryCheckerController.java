@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.Calculation;
 import salarychecker.core.User;
 import salarychecker.restserver.exceptions.UserAlreadyExistsException;
@@ -72,9 +73,18 @@ public class SalaryCheckerController {
   }
 
   @PostMapping(path = "create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void createUser(@RequestBody AbstractUser user) {
+  public void createUser(@RequestBody User user) {
     try {
       salaryCheckerService.createUser(user);
+    } catch(Exception e) {
+      throw new UserAlreadyExistsException();
+    }
+  }
+
+  @PostMapping(path = "create-user/admin", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void createAdminUser(@RequestBody AdminUser newUser) {
+    try {
+      salaryCheckerService.createAdminUser(newUser);
     } catch(Exception e) {
       throw new UserAlreadyExistsException();
     }

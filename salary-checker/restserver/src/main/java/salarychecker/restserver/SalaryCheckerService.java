@@ -51,7 +51,7 @@ public class SalaryCheckerService {
 
   public Accounts getAccounts() {
     return accounts;
-  } 
+  }
 
   public void setAccounts(Accounts accounts) {
     this.accounts = accounts;
@@ -65,15 +65,15 @@ public class SalaryCheckerService {
    */
   public static Accounts createDeafaultAccounts() {
     SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
-    URL url = SalaryCheckerService.class.getResource("default-accounts.json");
-    if (url != null) {
-      try (Reader reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
-        return salaryCheckerPersistence.readAccounts(reader);
-      } catch (IOException e) {
-        System.out.println("Could not read default-salarychecker.json." 
+    try {
+      Accounts accounts = salaryCheckerPersistence.loadAccounts();
+      if (accounts != null) {
+        return accounts;
+      }
+    } catch (IllegalStateException | IOException e) {
+      System.out.println("Could not read default-salarychecker.json." 
                             + "\n Rigging Accounts manually ("
                             + e + ")");
-      }
     }
     return manuallyCreateAccounts();
   }
@@ -133,9 +133,22 @@ public class SalaryCheckerService {
    * Method to create a new User. The user to create is given by the client.
    * Adds the user object to accounts.
    */
-  public void createUser(AbstractUser newUser) {
-    accounts.addUser(newUser);
-    autoSave();
+  public void createUser(User newUser) {
+    if (newUser != null) {
+      accounts.addUser(newUser);
+      autoSave();
+    }
+  }
+
+   /**
+   * Method to create a new AdminUser. The AdminUser to create is given by the client.
+   * Adds the AdminUser object to accounts.
+   */
+  public void createAdminUser(AdminUser newUser) {
+    if (newUser != null) {
+      accounts.addUser(newUser);
+      autoSave();
+    }
   }
 
   /**
