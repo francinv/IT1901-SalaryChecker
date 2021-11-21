@@ -5,6 +5,7 @@ import java.util.List;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 
 /**
@@ -55,7 +56,14 @@ public interface SalaryCheckerAccess {
      * 
      * @param User the user to create
      */
-    public void createUser(AbstractUser user);
+    public void createUser(User user);
+
+    /**
+     * Creates a new AdminUser and adds it to Accounts.
+     * 
+     * @param adminUser the user to create
+     */
+    public void createAdminUser(AdminUser adminUser);
 
     /**
      * Updates thes atrributes of a specific user.
