@@ -210,7 +210,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .POST(BodyPublishers.ofString(json))
                     .build();
             
-            final HttpResponse<String> httpResponse = HttpClient.newBuilder()
+            HttpClient.newBuilder()
                       .build()
                       .send(httpRequest, HttpResponse.BodyHandlers.ofString());
             
@@ -235,11 +235,9 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .POST(BodyPublishers.ofString(json))
                     .build();
             
-            HttpResponse<String> httpResponse = HttpClient.newBuilder()
+            HttpClient.newBuilder()
                       .build()
                       .send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            
-            System.out.println(httpResponse);
             
           } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
