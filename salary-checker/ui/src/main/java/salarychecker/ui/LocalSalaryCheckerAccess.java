@@ -5,6 +5,7 @@ import java.util.List;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
@@ -56,9 +57,21 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     }
 
     @Override
-    public void createUser(AbstractUser user) {
+    public void createUser(User user) {
         if (user != null) {
             accounts.addUser(user);
+        }
+        try {
+            persistence.saveAccounts(accounts);
+        } catch (IllegalStateException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void createAdminUser(AdminUser adminUser) {
+        if (adminUser != null) {
+            accounts.addUser(adminUser);
         }
         try {
             persistence.saveAccounts(accounts);
