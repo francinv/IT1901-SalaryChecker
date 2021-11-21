@@ -27,7 +27,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
 
     private final URI baseURI;
     private ObjectMapper objectMapper;
-    private Accounts accounts = new Accounts();
+    private Accounts accounts;
 
     /**
      * This constructor initialize the objectmapper used for serializing, 
@@ -38,7 +38,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     public RemoteSalaryCheckerAccess(URI baseURI) {
         this.baseURI = baseURI;
         this.objectMapper = SalaryCheckerPersistence.createObjectMapper();
-        //this.accounts = readAccounts();
+        this.accounts = readAccounts();
     }
 
     /**
@@ -200,7 +200,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param user the user to register
      */
     @Override
-    public void createUser(AbstractUser user) {
+    public void createUser(User user) {
         String postMappingPath = "create-user";
         try {
             String json = objectMapper.writeValueAsString(user);
@@ -210,9 +210,36 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .POST(BodyPublishers.ofString(json))
                     .build();
             
-            HttpClient.newBuilder()
+            final HttpResponse<String> httpResponse = HttpClient.newBuilder()
                       .build()
                       .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            
+          } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+          }
+    }
+
+    /**
+     * Sends a POST-request to register a new AdminUser object to use in the app.
+     * 
+     * @param adminUser the user to register
+     */
+    @Override
+    public void createAdminUser(AdminUser adminUser) {
+        String postMappingPath = "create-user/admin";
+        try {
+            String json = objectMapper.writeValueAsString(adminUser);
+            HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .POST(BodyPublishers.ofString(json))
+                    .build();
+            
+            HttpResponse<String> httpResponse = HttpClient.newBuilder()
+                      .build()
+                      .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            
+            System.out.println(httpResponse);
             
           } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
