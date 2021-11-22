@@ -13,34 +13,18 @@
 	<artifactId>salary-restserver</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <salarychecker.version>0.0.1-SNAPSHOT</salarychecker.version>
-    </properties>
-
-    <!-- <properties>
-        <salarychecker.version>0.0.1-SNAPSHOT</salarychecker.version>
-    </properties>
-
-    <properties>
-        <salarychecker.version>0.0.1-SNAPSHOT</salarychecker.version>
-    </properties>
-
-    <properties>
-        <salarychecker.version>0.0.1-SNAPSHOT</salarychecker.version>
-    </properties> -->
-
 	<dependencies>
 
 		<dependency>
 			<groupId>gr2111</groupId>
 			<artifactId>salary-core</artifactId>
-			<version>${salarychecker.version}</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>gr2111</groupId>
 			<artifactId>salary-json</artifactId>
-			<version>${salarychecker.version}</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<!-- junit testing with jupiter -->
@@ -137,4 +121,5 @@
 			</plugin>
     </plugins>
 	</build>
+
 </project>
