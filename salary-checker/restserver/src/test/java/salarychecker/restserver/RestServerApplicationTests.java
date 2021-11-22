@@ -81,48 +81,88 @@ class RestServerApplicationTests {
 	}
 
 	@Test
-	public void testUserSignUp()
+	public void testGetUser() throws Exception 
 	{
-		String email = "seran@live.no";
-		final User user1 = new User("Seran", "Shanmugathas", email,
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
-		final User user2 =  new User("Hammad", "Siddiqui", email,
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
-		this.salaryCheckerService.createUser(user1);
-		assertNotNull(this.salaryCheckerService.getUserByEmail(email));
-		assertThrows(IllegalStateException.class, () -> {this.salaryCheckerService.createUser(user2);});
+		mockMvc.perform(MockMvcRequestBuilders.get(getUrl("user?email=olanordmann@gmail.com"))
+			   								  .accept(MediaType.APPLICATION_JSON))
+			   .andExpect(MockMvcResultMatchers.status().isOk())
+			   .andReturn();
 	}
 
 	@Test
-	public void testUserSignIn()
+	public void testUserSignUp() throws Exception
+	{
+		final User user = new User("Seran", "Shanmugathas", "seran@live.no",
+        	"Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
+		final AdminUser adminUser =  new AdminUser("Hammad", "Siddiqui", "hammad@live.no",
+        	"Password123!");
+		this.salaryCheckerService.createUser(user);
+		assertNotNull(this.salaryCheckerService.getUserByEmail("seran@live.no"));
+		assertThrows(IllegalStateException.class, () -> {this.salaryCheckerService.createAdminUser(adminUser);});
+
+		String userAsJson = objectMapper.writeValueAsString(user);
+		String adminUserAsJson = objectMapper.writeValueAsString(adminUser);
+
+		mockMvc.perform(MockMvcRequestBuilders.post(getUrl("create-user"))
+											  .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+											  .content(userAsJson).accept(MediaType.APPLICATION_JSON))
+			   .andExpect(MockMvcResultMatchers.status().isOk());
+
+		mockMvc.perform(MockMvcRequestBuilders.post(getUrl("create-user", "admin"))
+			   							      .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+			   							      .content(adminUserAsJson).accept(MediaType.APPLICATION_JSON))
+			   .andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	@Test
+	public void testUserSignIn() throws Exception
 	{
 		assertTrue(this.salaryCheckerService.userLogin("testemail@gmail.com", "Password123!"));
 		assertFalse(this.salaryCheckerService.userLogin("testemail@gmail.com", "Hello "));
 		assertFalse(this.salaryCheckerService.userLogin("email@example.com", "Password123!"));
+
+		mockMvc.perform(MockMvcRequestBuilders.get(getUrl("users?employerEmail=employeer1@gmail.com"))
+			   							      .accept(MediaType.APPLICATION_JSON))
+			   .andExpect(MockMvcResultMatchers.status().isOk())
+			   .andReturn(); 
 	}
 
 	@Test
-	public void testGetUsersByEmployerEmail()
+	public void testGetUsersByEmployerEmail() throws Exception
 	{
 		List<AbstractUser> employees = this.salaryCheckerService.getUsersByEmployerEmail("employeer1@gmail.com");
 		assertTrue(employees.size() == 3);
 		assertTrue(employees.stream().allMatch(user -> ((User) user).getEmployerEmail().equals("employeer1@gmail.com")));
 
+		mockMvc.perform(MockMvcRequestBuilders.get(getUrl("users?employerEmail=employeer1@gmail.com"))
+			   							      .accept(MediaType.APPLICATION_JSON))
+			   .andExpect(MockMvcResultMatchers.status().isOk())
+			   .andReturn(); 
+
 	}
 
 	@Test
-	public void testUpdateUserAttributes()
+	public void testUpdateUserAttributes() throws Exception
 	{
 		Iterator<AbstractUser> iterator = salaryCheckerService.getAccounts().iterator();
+		User updatedUser = new User("Ola", "Nordmann", "olanordmannEmail2@gmail.com",
+			"Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
+
+		String updatedUserAsString = objectMapper.writeValueAsString(updatedUser);
+
 		if (iterator.hasNext()) {
 			assertEquals("seran@live.no", iterator.next().getEmail());
 		}
 		if (iterator.hasNext()) {
-			this.salaryCheckerService.updateUserAttributes(new User("Ola", "Nordmann", "olanordmannEmail2@gmail.com",
-				"Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130), 0);
+			this.salaryCheckerService.updateUserAttributes(updatedUser, 0);
 			assertNotNull(salaryCheckerService.getUserByEmail("olanordmannEmail2@gmail.com"));
 			assertNull(salaryCheckerService.getUserByEmail("seran@live.no"));
 		}
+
+		mockMvc.perform(MockMvcRequestBuilders.put(getUrl("user", "update-profile"))
+											  .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+											  .content(updatedUserAsString).accept(MediaType.APPLICATION_JSON))
+			   .andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	private String getUrl(String... segments) {
