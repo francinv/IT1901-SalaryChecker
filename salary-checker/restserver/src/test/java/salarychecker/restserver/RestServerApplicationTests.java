@@ -12,27 +12,42 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Iterator;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.json.SalaryCheckerPersistence;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 @ContextConfiguration(classes = { SalaryCheckerController.class, SalaryCheckerService.class, RestServerApplication.class })
+@WebMvcTest
 class RestServerApplicationTests {
 
 	@Autowired
+	private MockMvc mockMvc;
+
+	@MockBean
 	private SalaryCheckerService salaryCheckerService;
+
+	private ObjectMapper objectMapper;
 
 	@Test
     public void contextLoads() throws Exception {
@@ -42,6 +57,8 @@ class RestServerApplicationTests {
 	@BeforeAll
 	public void setup()
 	{
+		objectMapper = SalaryCheckerPersistence.createObjectMapper();
+
 		final User employee1 = new User("Ola", "Nordmann", "olanordmann@gmail.com",
         "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
 		final User employee2 = new User("Kari", "Nordmann", "karinordmann@gmail.com",
@@ -52,6 +69,15 @@ class RestServerApplicationTests {
 		this.salaryCheckerService.createUser(employee1);
 		this.salaryCheckerService.createUser(employee2);
 		this.salaryCheckerService.createUser(employee3);	
+	}
+
+	@Test
+	public void testGetAccounts() throws Exception 
+	{
+		mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
+			   								  .accept(MediaType.APPLICATION_JSON))
+			   .andExpect(MockMvcResultMatchers.status().isOk())
+			   .andReturn();
 	}
 
 	@Test
@@ -97,5 +123,13 @@ class RestServerApplicationTests {
 			assertNotNull(salaryCheckerService.getUserByEmail("olanordmannEmail2@gmail.com"));
 			assertNull(salaryCheckerService.getUserByEmail("seran@live.no"));
 		}
+	}
+
+	private String getUrl(String... segments) {
+		String url = "/" + SalaryCheckerController.SALARY_CHECKER_SERVICE_PATH;
+		for (String segment : segments) {
+		  url = url + "/" + segment;
+		}
+		return url;
 	}
 }
