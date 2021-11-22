@@ -61,9 +61,9 @@ public class SalaryCheckerController {
       return salaryCheckerService.getUsersByEmployerEmail(employerEmail);
   }
   
-  //localhost:8080//salarychecker/users?employerEmail={employerEmail}
+  //localhost:8080//salarychecker/login?email={email}&password={password}
   @PostMapping(path = "login")
-  public AbstractUser userLogin(String email, String password) {
+  public AbstractUser userLogin(@RequestParam("email") String email, @RequestParam("password") String password) {
     if (salaryCheckerService.userLogin(email, password)) {
       return salaryCheckerService.getUserByEmail(email);
     }
@@ -105,7 +105,7 @@ public class SalaryCheckerController {
   }
 
   /**
-   * Performs a PUT request
+   * Makes it possible to performs a PUT request
    * localhost:8080//salarychecker/users/update-profile?index={indexOfUser}
   */
   @PutMapping(path = "user/update-profile", 
