@@ -49,7 +49,7 @@ public class ProfileControllerTest extends ApplicationTest{
     
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("Profile.fxml"));
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/Profile.fxml"));
         ProfileController profileController = new ProfileController();
         loader.setController(profileController);
         final Parent parent = loader.load();

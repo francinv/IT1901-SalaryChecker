@@ -52,7 +52,7 @@ public class SettingsControllerTest extends ApplicationTest {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/Settings.fxml"));
         SettingsController settingsController = new SettingsController();
         loader.setController(settingsController);
         final Parent parent = loader.load();
