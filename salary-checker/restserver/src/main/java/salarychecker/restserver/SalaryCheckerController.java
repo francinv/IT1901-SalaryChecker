@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.web.multipart.MultipartFile;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
@@ -21,6 +22,8 @@ import salarychecker.core.Calculation;
 import salarychecker.core.User;
 import salarychecker.restserver.exceptions.UserAlreadyExistsException;
 import salarychecker.restserver.exceptions.UserNotFoundException;
+import salarychecker.restserver.payload.UploadFileResponse;
+
 /**
  * Ensures that the server is capable of listening to HTTP-requests.
  * Decides how these requests are managed and what to do with them.
@@ -89,10 +92,16 @@ public class SalaryCheckerController {
       throw new UserAlreadyExistsException();
     }
   }
-  
+
+  //localhost:8080//salarychecker/user/calculate-sale?email={email}
   @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public void calculateUsersUserSale(@RequestBody Calculation calculation) {
-      //salaryCheckerService.calculateUsersUserSale(calculation.getURL(), hours, mobileAmount, salesPeriod, paid);
+  public void calculateUsersUserSale(@RequestBody Calculation calculation, @RequestParam("email") String emailOfUser) {
+    try {
+      salaryCheckerService.calculateUsersUserSale(calculation, emailOfUser);
+    } catch (NumberFormatException | IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -104,6 +113,14 @@ public class SalaryCheckerController {
   public void updateUserAttributes(@RequestBody User user, 
       @RequestParam("index") int indexOfUser) {
     salaryCheckerService.updateUserAttributes(user, indexOfUser);
+  }
+
+  @PostMapping(path = "/uploadFile")
+  public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+    String fileName = salaryCheckerService.storeFile(file);
+
+    return new UploadFileResponse(fileName,
+        file.getContentType(), file.getSize());
   }
 
   @DeleteMapping

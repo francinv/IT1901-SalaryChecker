@@ -58,6 +58,7 @@ public interface SalaryCheckerAccess {
      */
     public void createUser(User user);
 
+
     /**
      * Creates a new AdminUser and adds it to Accounts.
      * 

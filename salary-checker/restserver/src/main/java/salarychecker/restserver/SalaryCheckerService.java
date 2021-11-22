@@ -1,14 +1,22 @@
 package salarychecker.restserver;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
@@ -16,6 +24,8 @@ import salarychecker.core.Calculation;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.restserver.exceptions.FileStorageException;
+import salarychecker.restserver.properties.FileStorageProperties;
 
 
 /**
@@ -28,6 +38,7 @@ public class SalaryCheckerService {
   private Accounts accounts;
   private Calculation calculation;
   private SalaryCheckerPersistence salaryCheckerPersistence;
+  private Path fileStorageLocation;
 
   /**
    * Constructor for SalaryCheckerService.
@@ -44,10 +55,26 @@ public class SalaryCheckerService {
   /**
   * This constructor calls the other, while adding a default configuration for Accounts.
   */
-  public SalaryCheckerService() {
+  @Autowired
+  public SalaryCheckerService(FileStorageProperties fileStorageProperties) {
     this(createDeafaultAccounts());
+    setFileStorage(fileStorageProperties);
     autoSave();
-  } 
+  }
+
+
+  public void setFileStorage(FileStorageProperties fileStorageProperties) {
+    this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
+        .toAbsolutePath().normalize();
+    try {
+      Files.createDirectories(this.fileStorageLocation);
+    }
+    catch (Exception e) {
+      throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", e);
+    }
+
+  }
+
 
   public Accounts getAccounts() {
     return accounts;
@@ -113,21 +140,14 @@ public class SalaryCheckerService {
     return accounts.getUsersByEmployerEmail(employerEmail);
   }
 
-  // public UserSale calculateUsersUserSale(String url, String hours, String mobileamount, 
-  //     String salesperiod, double paid) 
-  //   throws NumberFormatException, IOException {
-  //     Calculation calculation = new Calculation();
-  //   return calculation.doCalculation(url, Double.parseDouble(hours), 
-  //       Integer.parseInt(mobileamount), salesperiod, paid);
-  // }
-
-  // public void calculateUsersUserSale(String url, String hours, String mobileamount, 
-  //     String salesperiod, double paid) 
-  //   throws NumberFormatException, IOException {
-    
-  //   return calculation.doCalculation(url, Double.parseDouble(hours), 
-  //       Integer.parseInt(mobileamount), salesperiod, paid);
-  // }
+  public void calculateUsersUserSale(Calculation calculation, String emailOfUser)
+      throws NumberFormatException, IOException {
+    User user = (User) accounts.getUser(emailOfUser);
+    int index = accounts.indexOf(user);
+    String url = "/Library/SalaryChecker/SalesReport.csv";
+    calculation.doCalculation(url, user);
+    this.updateUserAttributes(user, index);
+  }
 
   /**
    * Method to create a new User. The user to create is given by the client.
@@ -179,4 +199,25 @@ public class SalaryCheckerService {
       }
     }
   }
+
+  public String storeFile(MultipartFile file) {
+    // Normalize file name
+    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+    try {
+      // Check if the file's name contains invalid characters
+      if(fileName.contains("..")) {
+        throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+      }
+
+      // Copy file to the target location (Replacing existing file with the same name)
+      Path targetLocation = this.fileStorageLocation.resolve(fileName);
+      Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+      return fileName;
+    } catch (IOException ex) {
+      throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+    }
+  }
+
 }
