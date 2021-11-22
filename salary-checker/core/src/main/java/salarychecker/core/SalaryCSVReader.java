@@ -1,12 +1,12 @@
 package salarychecker.core;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /*
  * Class to read from CSV file.
@@ -24,24 +24,73 @@ public class SalaryCSVReader {
    */
 
 
+
   public List<Sale> CSVtoSale(String url) throws IOException {
-    List<Sale> temp = new ArrayList<>();
-    Reader reader = new FileReader(url);
-    Iterable<CSVRecord> records = CSVFormat.EXCEL.withDelimiter(';').parse(reader);
-    for (CSVRecord csvRecord : records) {
-      Sale sale = new Sale();
-      sale.setSalesID(csvRecord.get(0));
-      sale.setAnleggStatus(csvRecord.get(14));
-      sale.setSalgsType(csvRecord.get(15));
-      sale.setCampaign(csvRecord.get(25));
-      sale.setBrand(csvRecord.get(27));
-      sale.setTX3(csvRecord.get(28));
-      sale.setRebate(csvRecord.get(34));
-      sale.setNVK(csvRecord.get(35));
-      sale.setProduct(csvRecord.get(37));
-      temp.add(sale);
+    
+    List<List<String>> records = new ArrayList<>();
+    List<Integer> indexOfRemove = new ArrayList<>();
+
+    try (Scanner scanner = new Scanner(new File(url));) {
+      while (scanner.hasNextLine()) {
+        records.add(getRecordFromLine(scanner.nextLine()));
+      }
     }
-    temp.remove(0);
-    return temp;
+    for (List<String> e : records) {
+      List<String> temp;
+      if (e.size() == 17) {
+        int index = records.indexOf(e);
+        temp = Stream.concat(e.stream(), records.get(index+1).stream()).collect(Collectors.toList());
+        temp = Stream.concat(temp.stream(), records.get(index+2).stream()).collect(Collectors.toList());
+        temp = Stream.concat(temp.stream(), records.get(index+3).stream()).collect(Collectors.toList());
+        records.set(index, temp);
+        indexOfRemove.addAll(Arrays.asList(index+1, index+2, index+3));
+      }
+    }
+    for (int i = indexOfRemove.size(); i-- > 0; ) {
+      if (records.get(indexOfRemove.get(i)).size() == 1 || records.get(indexOfRemove.get(i)).size() == 22) {
+        int index = indexOfRemove.get(i);
+        records.remove(index);
+      }
+    }
+    records.remove(0);
+    List<Sale> saleslist = new ArrayList<>();
+    for (List<String> e : records) {
+      Sale sale = new Sale();
+      if (e.size() == 41) {
+        sale.setSalesID(e.get(0));
+        sale.setAnleggStatus(e.get(14));
+        sale.setSalgsType(e.get(15));
+        sale.setCampaign(e.get(28));
+        sale.setBrand(e.get(30));
+        sale.setTX3(e.get(31));
+        sale.setRebate(e.get(37));
+        sale.setNVK(e.get(38));
+        sale.setProduct(e.get(40));
+        saleslist.add(sale);
+      } else {
+        sale.setSalesID(e.get(0));
+        sale.setAnleggStatus(e.get(14));
+        sale.setSalgsType(e.get(15));
+        sale.setCampaign(e.get(25));
+        sale.setBrand(e.get(27));
+        sale.setTX3(e.get(28));
+        sale.setRebate(e.get(34));
+        sale.setNVK(e.get(35));
+        sale.setProduct(e.get(37));
+        saleslist.add(sale);
+      }
+    }
+    return saleslist;
+  }
+
+  private List<String> getRecordFromLine(String nextLine) {
+    List<String> values = new ArrayList<String>();
+    try (Scanner rowScanner = new Scanner(nextLine)) {
+      rowScanner.useDelimiter(";");
+      while (rowScanner.hasNext()) {
+        values.add(rowScanner.next());
+      }
+    }
+    return values;
   }
 }
