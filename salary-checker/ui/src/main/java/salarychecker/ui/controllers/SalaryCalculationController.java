@@ -77,7 +77,7 @@ public class SalaryCalculationController extends AbstractController {
     String salesperiod = chosenmonth + " " + yearField.getText();
     double paid = Double.parseDouble(paidField.getText());
     try {
-      userSale = calculation.doCalculation(getURL(), hours, mobileamount, salesperiod, paid);
+      calculation.doCalculation(getURL(), hours, mobileamount, salesperiod, paid);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }

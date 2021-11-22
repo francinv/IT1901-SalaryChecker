@@ -245,31 +245,6 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     }
 
     /**
-     * Sends a POST-request to register a new AdminUser object to use in the app.
-     * 
-     * @param adminUser the user to register
-     */
-    @Override
-    public void createAdminUser(AdminUser adminUser) {
-        String postMappingPath = "create-user/admin";
-        try {
-            String json = objectMapper.writeValueAsString(adminUser);
-            HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
-                    .header("Accept", "application/json")
-                    .header("Content-Type", "application/json")
-                    .POST(BodyPublishers.ofString(json))
-                    .build();
-            
-            HttpClient.newBuilder()
-                      .build()
-                      .send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            
-          } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-          }
-    }
-
-    /**
      * Sends a PUT-request and updates the attribute of the user
      *
      * @param user the user to update
