@@ -71,7 +71,7 @@ public class SalaryCheckerService {
         return accounts;
       }
     } catch (IllegalStateException | IOException e) {
-      System.out.println("Could not read default-salarychecker.json." 
+      System.out.println("Could not read json file." 
                             + "\n Rigging Accounts manually ("
                             + e + ")");
     }
