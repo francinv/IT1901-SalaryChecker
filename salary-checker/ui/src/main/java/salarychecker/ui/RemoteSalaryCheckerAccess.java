@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,6 +18,7 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.controllers.SalaryCheckerConfig;
 
 /**
  * A implementation of {@link SalaryCheckerAccess}
@@ -36,6 +38,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     public RemoteSalaryCheckerAccess(URI baseURI) {
         this.baseURI = baseURI;
         this.objectMapper = SalaryCheckerPersistence.createObjectMapper();
+        this.accounts = readAccounts();
     }
 
     /**
@@ -46,7 +49,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @return the URI on the server with the given path.
      */
     public URI resolveURIAccounts(String URI) {
-        return baseURI.resolve(URLEncoder.encode(URI, StandardCharsets.UTF_8));
+        return baseURI.resolve(URI);
     }
 
 
@@ -56,21 +59,20 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      */
     @Override
     public Accounts readAccounts() {
-        if (accounts == null) {
-            HttpRequest httpRequest = HttpRequest.newBuilder(baseURI)
-                                                 .header("Accept", "application/json")
-                                                 .GET()
-                                                 .build();
-            try {
-                final HttpResponse<String> httpResponse = 
+        HttpRequest httpRequest = HttpRequest.newBuilder(baseURI)
+                                                .header("Accept", "application/json")
+                                                .GET()
+                                                .build();
+        try {
+            final HttpResponse<String> httpResponse = 
                 HttpClient.newBuilder()
-                          .build()
-                          .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+                        .build()
+                        .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-                this.accounts = objectMapper.readValue(httpResponse.body(), Accounts.class);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            this.accounts = 
+                objectMapper.readValue(httpResponse.body(), Accounts.class);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
         return accounts;
     }
@@ -86,7 +88,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public User readUser(String email) {
         String getMappingPath = "user?";
-        String key = "email";
+        String key = "email=";
         String value = email;
         try {
             HttpRequest request = 
@@ -115,7 +117,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public List<AbstractUser> readAccountsWithSameEmployer(String employerEmail) {
         String getMappingPath = "users?";
-        String key = "employerEmail";
+        String key = "employerEmail=";
         String value = employerEmail;
         try {
             HttpRequest httpRequest = 
@@ -140,9 +142,9 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public AbstractUser userLogin(String email, String password) {
         String postMappingPath = "login?";
-        String key1 = "email";
+        String key1 = "email=";
         String value1 = email + "&";
-        String key2 = "password";
+        String key2 = "password=";
         String value2 = password;
         
         try {
@@ -157,7 +159,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .build()
                     .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-        if (httpResponse.body().length() == 10) {
+        if (httpResponse.body().contains("employeeNumber")) {
             return objectMapper.readValue(httpResponse.body(), User.class);
         }
         return objectMapper.readValue(httpResponse.body(), AdminUser.class);
@@ -198,10 +200,35 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param user the user to register
      */
     @Override
-    public void createUser(AbstractUser user) {
+    public void createUser(User user) {
         String postMappingPath = "create-user";
         try {
             String json = objectMapper.writeValueAsString(user);
+            HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .POST(BodyPublishers.ofString(json))
+                    .build();
+            
+            HttpClient.newBuilder()
+                      .build()
+                      .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            
+          } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+          }
+    }
+
+    /**
+     * Sends a POST-request to register a new AdminUser object to use in the app.
+     * 
+     * @param adminUser the user to register
+     */
+    @Override
+    public void createAdminUser(AdminUser adminUser) {
+        String postMappingPath = "create-user/admin";
+        try {
+            String json = objectMapper.writeValueAsString(adminUser);
             HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
                     .header("Accept", "application/json")
                     .header("Content-Type", "application/json")
@@ -225,7 +252,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public void updateUserAttributes(AbstractUser user, int indexOfUser) {
         String putMappingPath = "user/update-profile?";
-        String key = "index";
+        String key = "index=";
         String value = String.valueOf(indexOfUser);
         try {
             String json = objectMapper.writeValueAsString(user);
@@ -263,5 +290,4 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
             throw new RuntimeException(e);
         }
     }
-
 }

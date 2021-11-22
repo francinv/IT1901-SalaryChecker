@@ -1,0 +1,12 @@
+#changeProfileButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";  
+}
+
+#changeProfileButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}

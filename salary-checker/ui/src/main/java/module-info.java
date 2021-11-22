@@ -6,4 +6,6 @@ module salarychecker.ui {
     requires java.net.http;
 
     opens salarychecker.ui to javafx.graphics, javafx.fxml;
+    opens salarychecker.ui.controllers to javafx.graphics, javafx.fxml;
+    exports salarychecker.ui.controllers;
 }
