@@ -1,6 +1,9 @@
-package salarychecker.ui;
+package salarychecker.ui.controllers;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,7 +15,9 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
-import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.LocalSalaryCheckerAccess;
+import salarychecker.ui.RemoteSalaryCheckerAccess;
+import salarychecker.ui.SalaryCheckerAccess;
 
 /**
  * Controller class for the Login-scene.
@@ -27,15 +32,35 @@ public class LoginController extends AbstractController {
   private AbstractUser user = super.user;
   private Accounts accounts;
   private final UserValidation userval = new UserValidation();
-  private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
-  /**
-   * We use the initialize method to set saveFile for persistence.
-   */
-  @FXML
-  void initialize() {
-    persistence.setFilePath("Accounts.json");
-  }
+  private SalaryCheckerAccess dataAccess;
+  private SalaryCheckerConfig config;
+
+    /**
+     * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
+     * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
+     * otherwise LocalSalaryCheckerAccess.
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    @FXML
+    void initialize() throws IOException, URISyntaxException {
+        this.config = new SalaryCheckerConfig();
+        
+        if (config.getProperty("remoteAccess").equals("true")) { 
+
+            setDataAccess(
+                    new RemoteSalaryCheckerAccess(
+                            new URI(config.getProperty("serverURI"))
+                    ));
+
+            System.out.println("Using remote endpoint @ " + config.getProperty("serverURI")); 
+
+        } else {
+            setDataAccess(new LocalSalaryCheckerAccess());
+        }
+        this.accounts = dataAccess.readAccounts();
+    }
 
   /**
    * This is the method that handles the log-in.
@@ -50,21 +75,23 @@ public class LoginController extends AbstractController {
   void userLogIn(ActionEvent event) throws IOException {
     String usernameField = email.getText();
     String passwordField = password.getText();
-    accounts = persistence.loadAccounts();
 
     try {
       userval.checkValidEmail(usernameField);
       userval.checkValidPassword(passwordField);
       userval.isNotExistingUser(usernameField, passwordField, accounts);
       userval.isValidLogIn(usernameField, passwordField, accounts);
-      user = accounts.getUser(usernameField, passwordField);
+      user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
         setScene(CONTROLLERS.HOME, event, user, accounts);
-      } else {
+      }
+      else if (user instanceof AdminUser){
         setScene(CONTROLLERS.ADMIN, event, user, accounts);
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
+    // } catch (Exception e) {
+    //   errorDisplay.setText(Errors.NOT_REGISTERED.getMessage());
     }
   }
 
@@ -77,17 +104,16 @@ public class LoginController extends AbstractController {
    */
   @FXML
   private void createUsersAction(ActionEvent event) throws IOException {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no",
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
-    AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com",
-        "Vandre333!");
+    dataAccess.createUser(new User("Seran", "Shanmugathas", "seran@llive.no",
+        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130));
+    dataAccess.createAdminUser(new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com",
+        "Vandre333!"));
 
-    Accounts acc = new Accounts();
-    acc.addUser(testuser1);
-    acc.addUser(testuser2);
-
-    persistence.saveAccounts(acc);
     createButton.setText("Test users created!");
     createButton.setTextFill(Paint.valueOf("#008000"));
+  }
+
+  protected void setDataAccess(SalaryCheckerAccess dataAccess) {
+    this.dataAccess = dataAccess;
   }
 }

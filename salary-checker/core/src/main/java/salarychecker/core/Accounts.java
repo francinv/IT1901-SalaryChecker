@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Accounts implements IUserObserver {
 
-  private final List<AbstractUser> accounts = new ArrayList<>();
+  protected final List<AbstractUser> accounts = new ArrayList<>();
 
   /**
    * Access method for accounts.
@@ -30,7 +30,7 @@ public class Accounts implements IUserObserver {
    */
   public void addUser(AbstractUser user) {
     if (contains(user)) {
-      throw new IllegalArgumentException("User already exists!");
+      throw new IllegalStateException("User already exists!");
     }
     this.accounts.add(user);
   }
@@ -245,6 +245,17 @@ public class Accounts implements IUserObserver {
   }
 
   /**
+   * This method is needed in server, when a client that uses the API,
+   * changes the attribute of a User object.
+   * 
+   * @param user        to change
+   * @param indexOfUser in list
+   */
+  public void updateUserObject(AbstractUser user, int indexOfUser) {
+    accounts.set(indexOfUser, user);
+  }
+
+  /**
    * Adds usersale to the user.
    *
    * @param user the user
@@ -320,5 +331,19 @@ public class Accounts implements IUserObserver {
   @Override
   public String toString() {
     return "{ accounts='" + getAccounts() + "'}";
+  }
+
+  public static void main(String[] args) {
+    Accounts accounts = new Accounts();
+    User seran = new User("Seran", "Shanmugathas", "seran@live.no",
+        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
+    AdminUser francin = new AdminUser("Francin", "Vincent", "francin@gmail.com", "password!12W");
+
+    accounts.addUser(seran);
+    accounts.addUser(francin);
+
+    System.out.println(seran.getFirstname());
+    accounts.getAccounts().get(0).setFirstname("firstname");
+    System.out.println(seran.getFirstname());
   }
 }

@@ -19,13 +19,14 @@ import salarychecker.json.SalaryCheckerPersistence;
 
 
 /**
- * This class is used by the controller to manage Tracker-objects that are sent or requested
+ * This class is used by the controller to manage Accounts-objects that are sent or requested
  * by the client.
  */
 @Service
 public class SalaryCheckerService {
 
   private Accounts accounts;
+  private Calculation calculation;
   private SalaryCheckerPersistence salaryCheckerPersistence;
 
   /**
@@ -35,6 +36,7 @@ public class SalaryCheckerService {
    */
   public SalaryCheckerService(Accounts accounts) {
     this.accounts = accounts;
+    this.calculation = new Calculation();
     this.salaryCheckerPersistence = new SalaryCheckerPersistence();
     salaryCheckerPersistence.setFilePath("springbootserver-salarychecker.json");
   }
@@ -44,14 +46,16 @@ public class SalaryCheckerService {
   */
   public SalaryCheckerService() {
     this(createDeafaultAccounts());
+    autoSave();
   } 
 
-  public List<AbstractUser> getAccounts() {
-    return accounts.getAccounts();
-  } 
+  public Accounts getAccounts() {
+    return accounts;
+  }
 
   public void setAccounts(Accounts accounts) {
     this.accounts = accounts;
+    autoSave();
   } 
 
   /**
@@ -61,15 +65,15 @@ public class SalaryCheckerService {
    */
   public static Accounts createDeafaultAccounts() {
     SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
-    URL url = SalaryCheckerService.class.getResource("default-accounts.json");
-    if (url != null) {
-      try (Reader reader = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8)) {
-        return salaryCheckerPersistence.readAccounts(reader);
-      } catch (IOException e) {
-        System.out.println("Could not read default-salarychecker.json." 
+    try {
+      Accounts accounts = salaryCheckerPersistence.loadAccounts();
+      if (accounts != null) {
+        return accounts;
+      }
+    } catch (IllegalStateException | IOException e) {
+      System.out.println("Could not read default-salarychecker.json." 
                             + "\n Rigging Accounts manually ("
                             + e + ")");
-      }
     }
     return manuallyCreateAccounts();
   }
@@ -87,19 +91,6 @@ public class SalaryCheckerService {
     acc.addUser(testuser1);
     acc.addUser(testuser2);
     return acc;
-  }
-
-  /**
-   * Method that saves accounts automatically.
-   */
-  public void autoSaveAccounts() {
-    if (salaryCheckerPersistence != null) {
-      try {
-        salaryCheckerPersistence.saveAccounts(accounts);
-      } catch (IllegalStateException | IOException e) {
-        System.err.println("Couldn't auto-save Accounts: " + e);
-      }
-    }
   }
 
   /**
@@ -122,24 +113,42 @@ public class SalaryCheckerService {
     return accounts.getUsersByEmployerEmail(employerEmail);
   }
 
-  public UserSale calculateUsersUserSale(String url, String hours, String mobileamount, 
-      String salesperiod, double paid) 
-    throws NumberFormatException, IOException {
-    Calculation calculation = new Calculation();
-    return calculation.doCalculation(url, Double.parseDouble(hours), 
-        Integer.parseInt(mobileamount), salesperiod, paid);
-  }
+  // public UserSale calculateUsersUserSale(String url, String hours, String mobileamount, 
+  //     String salesperiod, double paid) 
+  //   throws NumberFormatException, IOException {
+  //     Calculation calculation = new Calculation();
+  //   return calculation.doCalculation(url, Double.parseDouble(hours), 
+  //       Integer.parseInt(mobileamount), salesperiod, paid);
+  // }
+
+  // public void calculateUsersUserSale(String url, String hours, String mobileamount, 
+  //     String salesperiod, double paid) 
+  //   throws NumberFormatException, IOException {
+    
+  //   return calculation.doCalculation(url, Double.parseDouble(hours), 
+  //       Integer.parseInt(mobileamount), salesperiod, paid);
+  // }
 
   /**
-   * Method to create a user object.
+   * Method to create a new User. The user to create is given by the client.
    * Adds the user object to accounts.
-   *
-   * @return the user object
    */
-  public User createUser() {
-    User user = new User();
-    accounts.addUser(user);
-    return user;
+  public void createUser(User newUser) {
+    if (newUser != null) {
+      accounts.addUser(newUser);
+      autoSave();
+    }
+  }
+
+   /**
+   * Method to create a new AdminUser. The AdminUser to create is given by the client.
+   * Adds the AdminUser object to accounts.
+   */
+  public void createAdminUser(AdminUser newUser) {
+    if (newUser != null) {
+      accounts.addUser(newUser);
+      autoSave();
+    }
   }
 
   /**
@@ -151,5 +160,23 @@ public class SalaryCheckerService {
    */
   public boolean userLogin(String email, String password) {
     return accounts.checkValidUserLogin(email, password);
+  }
+
+  public void updateUserAttributes(User user, int indexOfUser) {
+    accounts.updateUserObject(user, indexOfUser);
+    autoSave();
+  }
+
+  /**
+   * Saves Accounts to disk
+   */
+  private void autoSave() {
+    if (salaryCheckerPersistence != null) {
+      try {
+        salaryCheckerPersistence.saveAccounts(accounts);
+      } catch (IllegalStateException | IOException e) {
+        System.err.println("Could not auto-save Accounts: " + e);
+      }
+    }
   }
 }

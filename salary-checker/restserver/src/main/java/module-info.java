@@ -2,15 +2,16 @@ module salarychecker.restserver {
   requires spring.boot;
   requires spring.boot.autoconfigure;
   requires spring.beans;
-  requires spring.web;
-
-  requires transitive salarychecker.core;
-  requires salarychecker.json;
+  requires spring.core;
   requires spring.context;
   requires spring.data.rest.core;
   requires spring.data.commons;
-  requires spring.core;
+  requires spring.web;
+  requires spring.webmvc;
 
-  opens salarychecker.restserver;
-  exports salarychecker.restserver;
+  requires transitive salarychecker.core;
+  requires salarychecker.json;
+  requires com.fasterxml.jackson.databind;
+
+  opens salarychecker.restserver to spring.beans, spring.context, spring.web, spring.core;
 }

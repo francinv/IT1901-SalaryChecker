@@ -5,7 +5,7 @@ package salarychecker.core;
  */
 public class Sale {
 
-  private String saleDate;
+  private String salesID;
   private String anleggStatus;
   private String salgsType;
   private String campaign;
@@ -19,7 +19,7 @@ public class Sale {
   /**
    * Creates Sale with all relevant parameters.
    *
-   * @param saleDate date of sale
+   * @param salesID date of sale
    * @param anleggStatus status
    * @param salgsType type of sale
    * @param campaign campaign
@@ -30,11 +30,11 @@ public class Sale {
    * @param product product of sale
    * @param provisjon commission
    */
-  public Sale(String saleDate, String anleggStatus, String salgsType, String campaign,
+  public Sale(String salesID, String anleggStatus, String salgsType, String campaign,
               String brand, String TX3, String rebate, String NVK, String product,
               Double provisjon) {
 
-    this.saleDate = saleDate;
+    this.salesID = salesID;
     this.anleggStatus = anleggStatus;
     this.salgsType = salgsType;
     this.campaign = campaign;
@@ -68,11 +68,11 @@ public class Sale {
   }
 
   public String getSalesDate() {
-    return this.saleDate;
+    return this.salesID;
   }
 
-  public void setSaleDate(String salgsDato) {
-    this.saleDate = salgsDato;
+  public void setSalesID(String salesID) {
+    this.salesID = salesID;
   }
 
   public String getAnleggStatus() {

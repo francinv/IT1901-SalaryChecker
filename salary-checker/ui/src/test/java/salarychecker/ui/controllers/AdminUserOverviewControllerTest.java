@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.ui.controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +14,7 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.controllers.AdminUserOverviewController;
 
 import java.io.IOException;
 
