@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
@@ -24,7 +21,6 @@ import salarychecker.core.Calculation;
 import salarychecker.core.User;
 import salarychecker.restserver.exceptions.UserAlreadyExistsException;
 import salarychecker.restserver.exceptions.UserNotFoundException;
-import salarychecker.restserver.payload.UploadFileResponse;
 /**
  * Ensures that the server is capable of listening to HTTP-requests.
  * Decides how these requests are managed and what to do with them.
@@ -97,11 +93,15 @@ public class SalaryCheckerController {
   @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
   public void calculateUsersUserSale(@RequestBody Calculation calculation, @RequestParam("email") String emailOfUser) {
     try {
-      salaryCheckerService.calculateUsersUserSale(calculation, emailOfUser);
-    } catch (NumberFormatException | IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      salaryCheckerService.createAdminUser(newUser);
+    } catch(Exception e) {
+      throw new UserAlreadyExistsException();
     }
+  }
+  
+  @PutMapping(path = "user/calculate-sale", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public void calculateUsersUserSale(@RequestBody Calculation calculation) {
+      //salaryCheckerService.calculateUsersUserSale(calculation.getURL(), hours, mobileAmount, salesPeriod, paid);
   }
 
   /**
@@ -115,18 +115,8 @@ public class SalaryCheckerController {
     salaryCheckerService.updateUserAttributes(user, indexOfUser);
   }
 
-  @PostMapping(path = "/uploadFile")
-  public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-    String fileName = salaryCheckerService.storeFile(file);
-
-    return new UploadFileResponse(fileName,
-      file.getContentType(), file.getSize());
+  @DeleteMapping
+  public void deleteAccounts() {
+    salaryCheckerService.setAccounts(null);
   }
-
-
-
-  // @DeleteMapping
-  // public void deleteAccounts() {
-  //   salaryCheckerService.setAccounts(null);
-  // }
 }  
