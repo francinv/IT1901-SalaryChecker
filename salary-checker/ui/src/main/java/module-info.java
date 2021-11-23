@@ -1,9 +1,10 @@
 module salarychecker.ui {
-    requires salarychecker.core;
     requires javafx.controls;
     requires javafx.fxml;
-    requires salarychecker.json;
     requires java.net.http;
+
+    requires transitive salarychecker.core;
+    requires transitive salarychecker.json;
 
     opens salarychecker.ui to javafx.graphics, javafx.fxml;
     opens salarychecker.ui.controllers to javafx.graphics, javafx.fxml;
