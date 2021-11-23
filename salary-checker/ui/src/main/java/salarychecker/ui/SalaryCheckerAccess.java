@@ -84,6 +84,6 @@ public interface SalaryCheckerAccess {
      * @param calculation object that will be used to calculate salary.
      * @param emailOfUser the user that want to calculate salary.
      */
-    public void calculateSale(Calculation calculation, String emailOfUser);
+    public void calculateSale(Calculation calculation, String emailOfUser) throws IOException;
 
 }

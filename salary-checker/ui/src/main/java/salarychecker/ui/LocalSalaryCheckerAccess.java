@@ -102,7 +102,7 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     }
 
     @Override
-    public void calculateSale(Calculation calculation, String emailOfUser) {
+    public void calculateSale(Calculation calculation, String emailOfUser) throws IOException {
         User user = this.readUser(emailOfUser);
         calculation.doCalculation(this.getFilePath(), user);
     }
