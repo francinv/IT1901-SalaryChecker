@@ -19,6 +19,9 @@ public class SalaryCheckerApp extends Application {
   public void start(Stage stage) throws Exception {
     FXMLLoader loader = new FXMLLoader();
     LoginController controller = new LoginController();
+    controller.setDataAccess(
+        new LocalSalaryCheckerAccess()
+    );
     loader.setController(controller);
     loader.setLocation(SalaryCheckerApp.class.getResource("views/LogIn.fxml"));
     final Parent parent = loader.load();
