@@ -6,7 +6,7 @@
 
     <parent>
         <artifactId>salary-checker</artifactId>
-        <groupId>gr2111</groupId>
+        <groupId>gr2111.salarychecker</groupId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -15,22 +15,22 @@
 
     <dependencies>
         <dependency>
-            <groupId>gr2111</groupId>
+            <groupId>gr2111.salarychecker</groupId>
             <artifactId>salary-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>gr2111</groupId>
+            <groupId>gr2111.salarychecker</groupId>
             <artifactId>salary-json</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>gr2111</groupId>
+            <groupId>gr2111.salarychecker</groupId>
             <artifactId>salary-ui</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>gr2111</groupId>
+            <groupId>gr2111.salarychecker</groupId>
             <artifactId>salary-restserver</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
