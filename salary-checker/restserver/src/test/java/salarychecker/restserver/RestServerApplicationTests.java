@@ -34,7 +34,7 @@ import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
-@SpringBootTest
+/*@SpringBootTest*/
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 @ContextConfiguration(classes = { SalaryCheckerController.class, SalaryCheckerService.class, RestServerApplication.class })
