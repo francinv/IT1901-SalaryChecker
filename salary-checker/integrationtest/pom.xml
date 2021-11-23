@@ -38,10 +38,6 @@
             <groupId>it1901.salarychecker</groupId>
             <artifactId>salary-restserver</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <!-- 
-                https://pragmaticintegrator.wordpress.com/2010/10/22/using-a-war-module-as-dependency-in-maven/
-                <classifier>classes</classifier>
-            -->
         </dependency>
 
         <dependency>
