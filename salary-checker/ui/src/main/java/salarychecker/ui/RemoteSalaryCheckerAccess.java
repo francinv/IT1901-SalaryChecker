@@ -4,13 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import salarychecker.core.AbstractUser;
@@ -18,7 +15,6 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.controllers.SalaryCheckerConfig;
 
 /**
  * A implementation of {@link SalaryCheckerAccess}
@@ -27,7 +23,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
 
     private final URI baseURI;
     private ObjectMapper objectMapper;
-    private Accounts accounts = new Accounts();
+    private Accounts accounts;
 
     /**
      * This constructor initialize the objectmapper used for serializing, 
@@ -38,7 +34,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     public RemoteSalaryCheckerAccess(URI baseURI) {
         this.baseURI = baseURI;
         this.objectMapper = SalaryCheckerPersistence.createObjectMapper();
-        //this.accounts = readAccounts();
+        this.accounts = readAccounts();
     }
 
     /**
@@ -49,7 +45,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @return the URI on the server with the given path.
      */
     public URI resolveURIAccounts(String URI) {
-        return baseURI.resolve(URLEncoder.encode(URI, StandardCharsets.UTF_8));
+        return baseURI.resolve(URI);
     }
 
 
@@ -59,22 +55,20 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      */
     @Override
     public Accounts readAccounts() {
-        if (accounts == null) {
-            HttpRequest httpRequest = HttpRequest.newBuilder(baseURI)
-                                                 .header("Accept", "application/json")
-                                                 .GET()
-                                                 .build();
-            try {
-                final HttpResponse<String> httpResponse = 
-                    HttpClient.newBuilder()
-                            .build()
-                            .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        HttpRequest httpRequest = HttpRequest.newBuilder(baseURI)
+                                                .header("Accept", "application/json")
+                                                .GET()
+                                                .build();
+        try {
+            final HttpResponse<String> httpResponse = 
+                HttpClient.newBuilder()
+                        .build()
+                        .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-                this.accounts = 
-                    objectMapper.readValue(httpResponse.body(), Accounts.class);
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            this.accounts = 
+                objectMapper.readValue(httpResponse.body(), Accounts.class);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
         return accounts;
     }
@@ -116,6 +110,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param employerEmail the employerEmail of the Accounts to be returned
      * @return the accounts with the right email
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<AbstractUser> readAccountsWithSameEmployer(String employerEmail) {
         String getMappingPath = "users?";
@@ -161,7 +156,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .build()
                     .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-        if (httpResponse.body().length() == 10) {
+        if (httpResponse.body().contains("employeeNumber")) {
             return objectMapper.readValue(httpResponse.body(), User.class);
         }
         return objectMapper.readValue(httpResponse.body(), AdminUser.class);
@@ -202,10 +197,35 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param user the user to register
      */
     @Override
-    public void createUser(AbstractUser user) {
+    public void createUser(User user) {
         String postMappingPath = "create-user";
         try {
             String json = objectMapper.writeValueAsString(user);
+            HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .POST(BodyPublishers.ofString(json))
+                    .build();
+            
+            HttpClient.newBuilder()
+                      .build()
+                      .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            
+          } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+          }
+    }
+
+    /**
+     * Sends a POST-request to register a new AdminUser object to use in the app.
+     * 
+     * @param adminUser the user to register
+     */
+    @Override
+    public void createAdminUser(AdminUser adminUser) {
+        String postMappingPath = "create-user/admin";
+        try {
+            String json = objectMapper.writeValueAsString(adminUser);
             HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
                     .header("Accept", "application/json")
                     .header("Content-Type", "application/json")
@@ -265,20 +285,6 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                           
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-
-    public static void main(String[] args) {
-        try {
-            RemoteSalaryCheckerAccess r = new RemoteSalaryCheckerAccess(new URI(new SalaryCheckerConfig().getProperty("serverURI")));
-            System.out.println(r.userLogin("seran@.no", "Password123!"));
-            System.out.println(r.readAccounts());
-            User user = new User("Ola", "Nordmann", "email@email.com", "Password123!", "22010199234", 55555, "samder@gmail.com", 33.3, 130.3);
-            r.createUser(user);
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 }

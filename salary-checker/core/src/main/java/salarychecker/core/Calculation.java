@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Class for calcualting a users salary based on SalesReport.
  */
+
 public class Calculation {
 
   private List<Sale> saleslist = new ArrayList<>();
@@ -48,14 +49,65 @@ public class Calculation {
 
   private double calculated;
   private User user;
-  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader(); 
+  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private String salesperiod;
+  private double hours;
+  private int mobileamount;
+  private double paid;
 
   public Calculation(User user) {
     this.user = user;
   }
+  /**
+   * Constructor for initializing a calculation object.
+   * 
+   * @param salesperiod sales period
+   * @param hours working hours
+   * @param mobileamount mobile amount
+   * @param paid paid salary
+   */
+
+  public Calculation(String salesperiod, double hours, int mobileamount, double paid) {
+    this.salesperiod = salesperiod;
+    this.hours = hours;
+    this.mobileamount = mobileamount;
+    this.paid = paid;
+  }
 
   public Calculation() {
-    
+
+  }
+
+  public String getSalesperiod() {
+    return salesperiod;
+  }
+
+  public void setSalesperiod(String salesperiod) {
+    this.salesperiod = salesperiod;
+  }
+
+  public double getHours() {
+    return hours;
+  }
+
+  public void setHours(double hours) {
+    this.hours = hours;
+  }
+
+  public int getMobileamount() {
+    return mobileamount;
+  }
+
+  public void setMobileamount(int mobileamount) {
+    this.mobileamount = mobileamount;
+  }
+
+  public double getPaid() {
+    return paid;
+  }
+
+  public void setPaid(double paid) {
+    this.paid = paid;
   }
 
   /**
@@ -84,8 +136,8 @@ public class Calculation {
    */
   public void removeUnwanted() {
     saleslist = saleslist.stream()
-      .filter(s -> s.getAnleggStatus().equals("23-Etablert"))
-      .collect(Collectors.toList());
+        .filter(s -> s.getAnleggStatus().equals("23-Etablert"))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -254,10 +306,10 @@ public class Calculation {
    * Calculates just the hour salary.
    *
    * @param hours number of worked hours
-   * @param hourwage the hourly salary for the User.
+   * @param user the user
    */
-  public void hourSalary(double hours, double hourwage) {
-    double hoursal = hourwage * hours;
+  public void hourSalary(double hours, User user) {
+    double hoursal = user.getHourRate() * hours;
     calculated += hoursal;
   }
 
@@ -266,6 +318,7 @@ public class Calculation {
    *
    * @return the calculated
    */
+
   public double getCalculated() {
     return calculated;
   }
@@ -273,17 +326,19 @@ public class Calculation {
   /**
    * Removes tax from calculated.
    */
+
   public void taxDeduction() {
     calculated = (calculated * ((100 - user.getTaxCount()) / 100));
   }
 
   /**
-   * Removes tax from calculated.
+   * Removes tax from calculated according to the TaxCount.
    *
-   * @param taxCount for the User.
+   * @param user the User.
    */
-  public void taxDeduction(double taxCount) {
-    calculated = (calculated * ((100 - taxCount) / 100));
+
+  public void taxDeduction(User user) {
+    calculated = (calculated * ((100 - user.getTaxCount()) / 100));
   }
 
   /**
@@ -294,11 +349,11 @@ public class Calculation {
    * @param mobileamount amount of mobile
    * @param salesperiod the period the sales are done.
    * @param paid the amount that were paid by employer.
-   * @return UserSale for the calculation.
-   * @throws FileNotFoundException Signals that an attempt to open the file
+   * @throws IOException Signals that an attempt to open the file
    *                               denoted by a specified pathname has failed.
    */
-  public UserSale doCalculation(
+
+  public void doCalculation(
       String url, double hours, int mobileamount, String salesperiod, double paid)
       throws IOException {
     updateList(url);
@@ -309,37 +364,31 @@ public class Calculation {
     hourSalary(hours);
     taxDeduction();
     double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
-    return new UserSale(salesperiod, expectedCalc, paid);
+    this.user.addUserSale(new UserSale(salesperiod, expectedCalc, paid));
   }
 
   /**
    * This method do the full calculation. This method is needed by API.
    *
    * @param url to the SalesReport.
-   * @param hours total hours of working.
-   * @param hourwage salary per hour.
-   * @param taxcount the tax that need to be subtracted.
-   * @param mobileamount amount of mobile.
-   * @param salesperiod the period the sales are done.
-   * @param paid the amount that were paid by employer.
-   * @return UserSale for the calculation.
+   * @param user the user.
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                                denoted by a specified pathname has failed.
    */
-  public UserSale doCalculation(
-      String url, double hours, double hourwage, double taxcount,
-      int mobileamount, String salesperiod, double paid)
+  
+  public void doCalculation(
+      String url, User user)
       throws IOException {
     updateList(url);
     removeUnwanted();
     updateElectricityCommission();
     calculateElectricityCommission();
     addMobile(mobileamount);
-    hourSalary(hours, hourwage);
-    taxDeduction(taxcount);
+    hourSalary(hours, user);
+    taxDeduction(user);
     double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
-    return new UserSale(salesperiod, expectedCalc, paid);
+    user.addUserSale(new UserSale(this.salesperiod, expectedCalc, this.paid));
   }
 
-  
+
 }

@@ -6,7 +6,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -19,15 +18,9 @@ import org.testfx.framework.junit5.ApplicationTest;
 
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.controllers.HomepageController;
-import salarychecker.ui.controllers.LoginController;
-import salarychecker.ui.controllers.AbstractController.CONTROLLERS;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

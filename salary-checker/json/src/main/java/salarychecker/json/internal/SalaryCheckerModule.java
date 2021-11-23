@@ -2,10 +2,7 @@ package salarychecker.json.internal;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.User;
-import salarychecker.core.UserSale;
+import salarychecker.core.*;
 
 /**
  * A Jackson module for configuring JSON serialization of User instances.
@@ -23,9 +20,11 @@ public class SalaryCheckerModule extends SimpleModule {
     addSerializer(AdminUser.class, new AdminUserSerializer());
     addSerializer(UserSale.class, new UserSaleSerializer());
     addSerializer(Accounts.class, new AccountsSerializer());
+    addSerializer(Calculation.class, new CalculationSerializer());
     addDeserializer(User.class, new UserDeserializer());
     addDeserializer(AdminUser.class, new AdminUserDeserializer());
     addDeserializer(UserSale.class, new UserSaleDeserializer());
     addDeserializer(Accounts.class, new AccountsDeserializer());
+    addDeserializer(Calculation.class, new CalculationDeserializer());
   }
 }

@@ -1,8 +1,6 @@
 package salarychecker.ui.controllers;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,20 +11,14 @@ import javafx.stage.Stage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import javafx.stage.Window;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.controllers.SettingsController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class SettingsControllerTest extends ApplicationTest {
 
