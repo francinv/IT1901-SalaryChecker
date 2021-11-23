@@ -1,12 +1,10 @@
 package salarychecker.ui;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.User;
+import salarychecker.core.*;
 import salarychecker.json.SalaryCheckerPersistence;
 
 /**
@@ -17,6 +15,7 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
     private Accounts accounts;
     private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+    private File salaryCSV;
 
     public LocalSalaryCheckerAccess() {
         persistence.setFilePath("Accounts.json");
@@ -88,6 +87,24 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public void deleteAccounts() {
         accounts = null;
+    }
+
+    public void uploadFile(File file) {
+        this.salaryCSV = file;
+    }
+
+    public String getFilePath() {
+        return this.salaryCSV.getAbsolutePath();
+    }
+
+    public String getFileName() {
+        return this.salaryCSV.getName();
+    }
+
+    @Override
+    public void calculateSale(Calculation calculation, String emailOfUser) {
+        User user = this.readUser(emailOfUser);
+        calculation.doCalculation(this.getFilePath(), user);
     }
 
 }
