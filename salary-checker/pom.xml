@@ -222,6 +222,7 @@
         <module>ui</module>
         <module>json</module>
         <module>restserver</module>
+        <module>integrationtest</module>
         <module>report</module>
     </modules>
 </project>
