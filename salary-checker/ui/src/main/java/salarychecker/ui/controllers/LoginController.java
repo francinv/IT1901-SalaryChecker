@@ -113,7 +113,7 @@ public class LoginController extends AbstractController {
     createButton.setTextFill(Paint.valueOf("#008000"));
   }
 
-  protected void setDataAccess(SalaryCheckerAccess dataAccess) {
+  public void setDataAccess(SalaryCheckerAccess dataAccess) {
     this.dataAccess = dataAccess;
   }
 }
