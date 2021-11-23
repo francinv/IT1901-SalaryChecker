@@ -128,4 +128,8 @@ public class RemoteSalaryCheckerAccessTest {
 		return url;
 	}
 
+    public RemoteSalaryCheckerAccess getRemoteSalaryCheckerAccess() {
+        return remoteSalaryCheckerAccess;
+    }
+
 }

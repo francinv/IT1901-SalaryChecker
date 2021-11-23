@@ -110,6 +110,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param employerEmail the employerEmail of the Accounts to be returned
      * @return the accounts with the right email
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<AbstractUser> readAccountsWithSameEmployer(String employerEmail) {
         String getMappingPath = "users?";

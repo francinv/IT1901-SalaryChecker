@@ -1,6 +1,8 @@
 module salarychecker.ui {
+    requires transitive javafx.base;
     requires javafx.controls;
     requires javafx.fxml;
+    requires transitive javafx.graphics;
     requires java.net.http;
 
     requires transitive salarychecker.core;
