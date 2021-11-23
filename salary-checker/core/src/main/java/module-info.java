@@ -1,6 +1,6 @@
 module salarychecker.core {
-    requires com.opencsv;
     requires java.sql;
+    requires commons.csv;
     exports salarychecker.core;
     opens salarychecker.core;
 }
