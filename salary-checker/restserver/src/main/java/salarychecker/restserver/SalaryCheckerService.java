@@ -1,11 +1,6 @@
 package salarychecker.restserver;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +17,6 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.Calculation;
 import salarychecker.core.User;
-import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
 import salarychecker.restserver.exceptions.FileStorageException;
 import salarychecker.restserver.properties.FileStorageProperties;
@@ -84,6 +78,10 @@ public class SalaryCheckerService {
     this.accounts = accounts;
     autoSave();
   } 
+
+  public Calculation getCalculation() {
+      return calculation;
+  }
 
   /**
    * Creates default users from json-file.
