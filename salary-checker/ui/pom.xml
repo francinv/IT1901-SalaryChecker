@@ -113,19 +113,19 @@
             </build>
         </profile>
         <profile>
-            <id>documentapp</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.openjfx</groupId>
-                        <artifactId>javafx-maven-plugin</artifactId>
-                        <version>0.0.6</version>
-                        <configuration>                    
-                            <mainClass>salarychecker.ui/salarychecker.ui.SalaryCheckerApp</mainClass>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <id>headless</id>
+            <properties>
+                <headlessTests>true</headlessTests>
+            </properties>
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>jdk-12.0.1+2</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>remoteapp</id>

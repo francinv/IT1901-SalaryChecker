@@ -16,6 +16,7 @@
         <openscsv.version>5.5.2</openscsv.version>
         <sunmail.version>1.5.5</sunmail.version>
         <spring.version>2.5.6</spring.version>
+        <headlessTests>false</headlessTests>
         <skipTests>false</skipTests>
         <skipSpotBugs>false</skipSpotBugs>
         <skipCheckstyle>false</skipCheckstyle>
