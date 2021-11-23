@@ -19,8 +19,6 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.controllers.AdminStartPageController;
-import salarychecker.ui.controllers.LoginController;
 
 import java.io.IOException;
 import java.util.ArrayList;
