@@ -1,9 +1,8 @@
 package salarychecker.restserver;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,7 +33,6 @@ import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
 
-/*@SpringBootTest*/
 @AutoConfigureMockMvc
 @TestInstance(Lifecycle.PER_CLASS)
 @ContextConfiguration(classes = { SalaryCheckerController.class, SalaryCheckerService.class, RestServerApplication.class })

@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
+import salarychecker.ui.SalaryCheckerAccess;
 
 /**
  * This class is a controller for the Admin Scene.
@@ -16,6 +17,7 @@ public class AdminStartPageController extends AbstractController {
 
   private AdminUser adminUser;
   private Accounts accounts;
+  private SalaryCheckerAccess dataAccess;
 
   @FXML private Text adminName;
   @FXML private Button hideMenuButton;
@@ -34,6 +36,7 @@ public class AdminStartPageController extends AbstractController {
   protected void loadAdminInfo() {
     adminUser = (AdminUser) super.user;
     accounts = super.accounts;
+    dataAccess = super.dataAccess;
     String name = adminUser.getFirstname() + " " + adminUser.getLastname();
     adminName.setText(name);
     pageTitle.setText("Hjem");
@@ -63,7 +66,7 @@ public class AdminStartPageController extends AbstractController {
   @FXML
   private void goToUsersAction(ActionEvent event) {
     pageTitle.setText("Brukere");
-    setAnchorPane(CONTROLLERS.ADMINOVERVIEW, adminStartPane, adminUser, accounts);
+    setAnchorPane(CONTROLLERS.ADMINOVERVIEW, adminStartPane, adminUser, accounts, dataAccess);
   }
 
   /**
@@ -74,7 +77,7 @@ public class AdminStartPageController extends AbstractController {
   @FXML
   private void goToNewUAction(ActionEvent event) {
     pageTitle.setText("Opprett bruker");
-    setAnchorPane(CONTROLLERS.CREATEUSER, adminStartPane, adminUser, accounts);
+    setAnchorPane(CONTROLLERS.CREATEUSER, adminStartPane, adminUser, accounts, dataAccess);
   }
 
 
@@ -86,6 +89,6 @@ public class AdminStartPageController extends AbstractController {
    */
   @FXML
   private void logOutAction(ActionEvent event) {
-    setScene(CONTROLLERS.LOGIN, event, null, null);
+    setScene(CONTROLLERS.LOGIN, event, null, null, null);
   }
 }

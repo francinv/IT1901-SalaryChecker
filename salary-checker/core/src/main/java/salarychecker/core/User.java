@@ -198,6 +198,10 @@ public class User extends AbstractUser {
     }
   }
 
+  public UserSale getUserSale(String salesperiod) {
+    return getUserSaleList().stream().filter(s-> s.getSalesperiod().equals(salesperiod)).findAny().orElse(null);
+  }
+
 
   @Override
   public String toString() {

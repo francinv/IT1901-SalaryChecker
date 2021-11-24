@@ -3,18 +3,14 @@ package salarychecker.ui.controllers;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.SalaryCheckerAccess;
 
 /**
  * This is the class that controls the Settings-scene.
@@ -24,6 +20,7 @@ public class SettingsController extends AbstractController {
 
   private User user;
   private Accounts accounts;
+  private SalaryCheckerAccess dataAccess;
   private final UserValidation userValidation = new UserValidation();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
@@ -51,6 +48,7 @@ public class SettingsController extends AbstractController {
   public void loadSettingsInfo() {
     user = (User) super.user;
     accounts = super.accounts;
+    dataAccess = super.dataAccess;
     changeFirstNameField.setPromptText(user.getFirstname());
     changeLastNameField.setPromptText(user.getLastname());
     changeEmailField.setPromptText(user.getEmail());
@@ -135,14 +133,11 @@ public class SettingsController extends AbstractController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      persistence.setFilePath("Accounts.json");
-      persistence.saveAccounts(accounts);
+      dataAccess.updateUserAttributes(user, accounts.indexOf(user));
       loadSettingsInfo();
     } catch (IllegalArgumentException e) {
       errorTextDisplay.setText(e.getMessage());
       successMessageDisplay.setText(null);
-    } catch (IOException e) {
-      e.printStackTrace();
     }
 
   }
@@ -163,6 +158,6 @@ public class SettingsController extends AbstractController {
    */
   @FXML
   public void closeButtonAction(ActionEvent event) {
-    setAnchorPane(CONTROLLERS.PROFILE, settingsPane, user, accounts);
+    setAnchorPane(CONTROLLERS.PROFILE, settingsPane, user, accounts, dataAccess);
   }
 }

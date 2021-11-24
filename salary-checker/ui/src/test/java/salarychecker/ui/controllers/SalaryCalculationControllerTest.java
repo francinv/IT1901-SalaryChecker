@@ -15,7 +15,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.controllers.SalaryCalculationController;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SalaryCalculationControllerTest extends ApplicationTest {
 
-  private ComboBox<String> monthDropdown;
+  /*private ComboBox<String> monthDropdown;
   private TextField yearField;
   private TextField hoursField;
   private TextField mobileField;
@@ -103,6 +102,6 @@ public class SalaryCalculationControllerTest extends ApplicationTest {
 
     persistence.setFilePath("Accounts.json");
     persistence.saveAccounts(acc);
-  }
+  }*/
 
 }

@@ -14,5 +14,5 @@ module salarychecker.restserver {
   requires com.fasterxml.jackson.databind;
 
   opens salarychecker.restserver to spring.beans, spring.context, spring.web, spring.core;
-  exports salarychecker.restserver.properties;
+  exports salarychecker.restserver.properties to spring.beans, spring.boot;
 }

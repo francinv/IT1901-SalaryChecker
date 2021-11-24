@@ -58,10 +58,17 @@ public class AdminUser extends AbstractUser {
         employeeNumber, employerEmail, taxCount, hourRate);
     User user = new User(firstname, lastname, email, password, socialNumber,
         employeeNumber, employerEmail, taxCount, hourRate);
-    accounts.addUser(user);
+    createUser(user);
   }
-
-  public void createUser(User user){
-    accounts.addUser(user);
+  /**
+   * Method for adding a user.
+   * 
+   * @param user the user
+   */
+  
+  public void createUser(User user) {
+    if (user != null) {
+      accounts.addUser(user);
+    }
   }
 }

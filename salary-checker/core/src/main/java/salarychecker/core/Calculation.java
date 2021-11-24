@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 /**
  * Class for calcualting a users salary based on SalesReport.
  */
+
 public class Calculation {
 
   private List<Sale> saleslist = new ArrayList<>();
@@ -57,6 +58,14 @@ public class Calculation {
   public Calculation(User user) {
     this.user = user;
   }
+  /**
+   * Constructor for initializing a calculation object.
+   * 
+   * @param salesperiod sales period
+   * @param hours working hours
+   * @param mobileamount mobile amount
+   * @param paid paid salary
+   */
 
   public Calculation(String salesperiod, double hours, int mobileamount, double paid) {
     this.salesperiod = salesperiod;
@@ -119,7 +128,7 @@ public class Calculation {
    *                     failed or interrupted I/O operations.
    */
   public void updateList(String url) throws IOException {
-    saleslist = SALARY_CSV_READER.csvToBean(url);
+    saleslist = SALARY_CSV_READER.CSVtoSale(url);
   }
 
   /**
@@ -297,7 +306,7 @@ public class Calculation {
    * Calculates just the hour salary.
    *
    * @param hours number of worked hours
-   * @param hourwage the hourly salary for the User.
+   * @param user the user
    */
   public void hourSalary(double hours, User user) {
     double hoursal = user.getHourRate() * hours;
@@ -309,6 +318,7 @@ public class Calculation {
    *
    * @return the calculated
    */
+
   public double getCalculated() {
     return calculated;
   }
@@ -316,15 +326,17 @@ public class Calculation {
   /**
    * Removes tax from calculated.
    */
+
   public void taxDeduction() {
     calculated = (calculated * ((100 - user.getTaxCount()) / 100));
   }
 
   /**
-   * Removes tax from calculated.
+   * Removes tax from calculated according to the TaxCount.
    *
-   * @param taxCount for the User.
+   * @param user the User.
    */
+
   public void taxDeduction(User user) {
     calculated = (calculated * ((100 - user.getTaxCount()) / 100));
   }
@@ -337,10 +349,10 @@ public class Calculation {
    * @param mobileamount amount of mobile
    * @param salesperiod the period the sales are done.
    * @param paid the amount that were paid by employer.
-   * @return UserSale for the calculation.
-   * @throws FileNotFoundException Signals that an attempt to open the file
+   * @throws IOException Signals that an attempt to open the file
    *                               denoted by a specified pathname has failed.
    */
+
   public void doCalculation(
       String url, double hours, int mobileamount, String salesperiod, double paid)
       throws IOException {
@@ -359,16 +371,11 @@ public class Calculation {
    * This method do the full calculation. This method is needed by API.
    *
    * @param url to the SalesReport.
-   * @param hours total hours of working.
-   * @param hourwage salary per hour.
-   * @param taxcount the tax that need to be subtracted.
-   * @param mobileamount amount of mobile.
-   * @param salesperiod the period the sales are done.
-   * @param paid the amount that were paid by employer.
-   * @return UserSale for the calculation.
+   * @param user the user.
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                                denoted by a specified pathname has failed.
    */
+  
   public void doCalculation(
       String url, User user)
       throws IOException {

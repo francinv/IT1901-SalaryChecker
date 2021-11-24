@@ -1,3 +1,8 @@
+#createUserPane{
+    -fx-height:850;
+    -fx-width: 1340;
+}
+
 #emailField{
     -fx-background-color: -fx-text-box-border, -fx-background ;
     -fx-background-insets: 0, 0 0 3 0 ;
