@@ -1,4 +1,4 @@
-package salarychecker.dataacess;
+package salarychecker.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
