@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.dataacess;
 
 import java.io.File;
 import java.io.IOException;
