@@ -15,11 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.web.multipart.MultipartFile;
-import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.Calculation;
-import salarychecker.core.User;
+import salarychecker.core.*;
 import salarychecker.restserver.exceptions.UserAlreadyExistsException;
 import salarychecker.restserver.exceptions.UserNotFoundException;
 import salarychecker.restserver.payload.UploadFileResponse;
@@ -121,6 +117,11 @@ public class SalaryCheckerController {
 
     return new UploadFileResponse(fileName,
         file.getContentType(), file.getSize());
+  }
+
+  @GetMapping(path = "user/get-user-sale")
+  public UserSale getUserSale(@RequestParam("salesperiod") String salesperiod, @RequestParam("email") String emailOfUser) {
+    return salaryCheckerService.getUserSale(salesperiod, emailOfUser);
   }
 
   @DeleteMapping

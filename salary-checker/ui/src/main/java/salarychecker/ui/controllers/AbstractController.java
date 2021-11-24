@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.ui.SalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerApp;
 
 
@@ -23,6 +24,7 @@ public abstract class AbstractController {
 
   protected AbstractUser user = new User();
   protected Accounts accounts = new Accounts();
+  protected SalaryCheckerAccess dataAccess;
 
 
   /**
@@ -78,6 +80,10 @@ public abstract class AbstractController {
     this.accounts = accounts;
   }
 
+  public void setDataAccess(SalaryCheckerAccess dataAccess) {
+    this.dataAccess = dataAccess;
+  }
+
   /**
    * Method that set Scene. Based on the event it will switch out with the wanted scene.
    * The method sets controller and location of wanted scene. Further on it also sets
@@ -88,7 +94,7 @@ public abstract class AbstractController {
    * @param user that logs in.
    * @param accounts from persistence.
    */
-  public void setScene(CONTROLLERS type, Event event, AbstractUser user, Accounts accounts) {
+  public void setScene(CONTROLLERS type, Event event, AbstractUser user, Accounts accounts, SalaryCheckerAccess dataAccess) {
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     try {
       AbstractController controller = type.getControllerInstance();
@@ -97,6 +103,7 @@ public abstract class AbstractController {
       loader.setLocation(SalaryCheckerApp.class.getResource(type.getFXMLString()));
       controller.setUser(user);
       controller.setAccounts(accounts);
+      controller.setDataAccess(dataAccess);
       Parent parent = loader.load();
       if (controller instanceof HomepageController) {
         ((HomepageController) controller).loadInfo();
@@ -122,7 +129,7 @@ public abstract class AbstractController {
    * @param accounts from persistence.
    */
   public void setAnchorPane(
-      CONTROLLERS type, AnchorPane pane, AbstractUser user, Accounts accounts) {
+      CONTROLLERS type, AnchorPane pane, AbstractUser user, Accounts accounts, SalaryCheckerAccess dataAccess) {
     try {
       AbstractController controller = type.getControllerInstance();
       FXMLLoader loader = new FXMLLoader();
@@ -130,6 +137,7 @@ public abstract class AbstractController {
       loader.setController(controller);
       controller.setUser(user);
       controller.setAccounts(accounts);
+      controller.setDataAccess(dataAccess);
       AnchorPane anchorPane = loader.load();
       pane.getChildren().clear();
       pane.getChildren().setAll(anchorPane);

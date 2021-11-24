@@ -119,7 +119,7 @@ public class Calculation {
    *                     failed or interrupted I/O operations.
    */
   public void updateList(String url) throws IOException {
-    saleslist = SALARY_CSV_READER.csvToBean(url);
+    saleslist = SALARY_CSV_READER.CSVtoSale(url);
   }
 
   /**

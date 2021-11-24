@@ -4,6 +4,7 @@ module salarychecker.ui {
     requires javafx.fxml;
     requires salarychecker.json;
     requires java.net.http;
+    requires methanol;
 
     opens salarychecker.ui to javafx.graphics, javafx.fxml;
     opens salarychecker.ui.controllers to javafx.graphics, javafx.fxml;

@@ -1,6 +1,9 @@
 package salarychecker.ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import salarychecker.core.*;
@@ -86,4 +89,7 @@ public interface SalaryCheckerAccess {
      */
     public void calculateSale(Calculation calculation, String emailOfUser) throws IOException;
 
+    public void uploadFile(File file) throws IOException, InterruptedException, URISyntaxException;
+
+    public UserSale getUserSale(String salesperiod, String emailOfUser);
 }
