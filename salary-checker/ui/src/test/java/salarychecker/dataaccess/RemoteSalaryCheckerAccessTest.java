@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.dataaccess;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
-import salarychecker.dataacess.RemoteSalaryCheckerAccess;
 import salarychecker.ui.controllers.SalaryCheckerConfig;
 
 public class RemoteSalaryCheckerAccessTest {
