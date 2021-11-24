@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
-import salarychecker.dataacess.SalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
 
 /**

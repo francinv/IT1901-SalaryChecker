@@ -6,7 +6,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.dataacess.SalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is the class that handles controller for the Profile-scene.

@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
-import salarychecker.dataacess.SalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This class is a controller for the Admin Scene.
