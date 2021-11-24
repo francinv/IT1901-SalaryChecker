@@ -2,20 +2,13 @@ package salarychecker.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpRequest.BodyPublisher;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +18,6 @@ import com.github.mizosoft.methanol.MultipartBodyPublisher;
 import com.github.mizosoft.methanol.MutableRequest;
 import salarychecker.core.*;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.controllers.SalaryCheckerConfig;
 
 /**
  * A implementation of {@link SalaryCheckerAccess}
@@ -121,6 +113,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
      * @param employerEmail the employerEmail of the Accounts to be returned
      * @return the accounts with the right email
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<AbstractUser> readAccountsWithSameEmployer(String employerEmail) {
         String getMappingPath = "users?";

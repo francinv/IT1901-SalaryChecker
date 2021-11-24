@@ -117,13 +117,25 @@ public class Accounts implements IUserObserver {
     }
     return null;
   }
+  /**
+   * get accounts by email.
+   * 
+   * @param email the email
+   * @return accounts if they exist, null else
+   */
 
   public AbstractUser getUser(String email) {
     return getAccounts().stream().filter(u -> u.getEmail().equals(email))
                                  .findAny()
                                  .orElse(null);
   }
-
+  /**
+   * gets accouns by employerEmail.
+   * 
+   * @param employerEmail employers email
+   * @return users with the same employer.
+   */
+  
   public List<AbstractUser> getUsersByEmployerEmail(String employerEmail) {
     List<AbstractUser> usersWithSameEmployer = new ArrayList<>();
     for (AbstractUser abstractUser : accounts) {
@@ -331,19 +343,5 @@ public class Accounts implements IUserObserver {
   @Override
   public String toString() {
     return "{ accounts='" + getAccounts() + "'}";
-  }
-
-  public static void main(String[] args) {
-    Accounts accounts = new Accounts();
-    User seran = new User("Seran", "Shanmugathas", "seran@live.no",
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
-    AdminUser francin = new AdminUser("Francin", "Vincent", "francin@gmail.com", "password!12W");
-
-    accounts.addUser(seran);
-    accounts.addUser(francin);
-
-    System.out.println(seran.getFirstname());
-    accounts.getAccounts().get(0).setFirstname("firstname");
-    System.out.println(seran.getFirstname());
   }
 }

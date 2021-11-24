@@ -112,8 +112,7 @@
                 </plugins>
             </build>
         </profile>
-
-        <!-- <profile>
+        <profile>
             <id>remoteapp</id>
             <build>
                 <plugins>
