@@ -29,7 +29,7 @@ public class SaleTest {
 
     @Test
     public void setMethodTest(){
-        testSale.setSaleDate("21. September 2021");
+        testSale.setSalesID("21. September 2021");
         Assertions.assertEquals("21. September 2021", testSale.getSalesDate());
 
         testSale.setAnleggStatus("anleggStatusString2");

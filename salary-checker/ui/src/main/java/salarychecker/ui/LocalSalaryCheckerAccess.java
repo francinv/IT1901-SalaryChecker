@@ -1,12 +1,11 @@
 package salarychecker.ui;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.User;
+import salarychecker.core.*;
 import salarychecker.json.SalaryCheckerPersistence;
 
 /**
@@ -17,6 +16,7 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
     private Accounts accounts;
     private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+    private File salaryCSV;
 
     public LocalSalaryCheckerAccess() {
         persistence.setFilePath("Accounts.json");
@@ -83,11 +83,48 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     @Override
     public void updateUserAttributes(AbstractUser user, int indexOfUser) {
         accounts.updateUserObject(user, indexOfUser);
+        try {
+            persistence.saveAccounts(accounts);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteAccounts() {
         accounts = null;
     }
+
+    @Override
+    public void uploadFile(File file) {
+        this.salaryCSV = file;
+    }
+
+    @Override public UserSale getUserSale(String salesperiod, String emailOfUser) {
+        User user = readUser(emailOfUser);
+
+        return user.getUserSale(salesperiod);
+    }
+
+    public String getFilePath() {
+        return this.salaryCSV.getAbsolutePath();
+    }
+
+    public String getFileName() {
+        return this.salaryCSV.getName();
+    }
+
+    @Override
+    public void calculateSale(Calculation calculation, String emailOfUser) throws IOException {
+        User user = this.readUser(emailOfUser);
+        calculation.doCalculation(this.getFilePath(), user);
+        try {
+            persistence.saveAccounts(accounts);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

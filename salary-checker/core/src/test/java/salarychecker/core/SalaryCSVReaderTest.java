@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-public class SalaryCSVReaderTest {
+/*public class SalaryCSVReaderTest {
     private List<Sale> someRead = new ArrayList<Sale>();
 
     private SalaryCSVReader testReader;
@@ -31,4 +31,4 @@ public class SalaryCSVReaderTest {
     public void testCsvToBean(){
         Assertions.assertNotNull(someRead);
     }
-}
+}*/

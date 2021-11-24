@@ -4,6 +4,7 @@ module salarychecker.ui {
     requires javafx.fxml;
     requires transitive javafx.graphics;
     requires java.net.http;
+    requires methanol;
 
     requires transitive salarychecker.core;
     requires transitive salarychecker.json;

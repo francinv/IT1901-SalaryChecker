@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SalaryCalculationControllerTest extends ApplicationTest {
 
-  private ComboBox<String> monthDropdown;
+  /*private ComboBox<String> monthDropdown;
   private TextField yearField;
   private TextField hoursField;
   private TextField mobileField;
@@ -102,6 +102,6 @@ public class SalaryCalculationControllerTest extends ApplicationTest {
 
     persistence.setFilePath("Accounts.json");
     persistence.saveAccounts(acc);
-  }
+  }*/
 
 }

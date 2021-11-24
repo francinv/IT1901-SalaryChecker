@@ -198,6 +198,11 @@ public class SalaryCheckerService {
     }
   }
 
+  public UserSale getUserSale(String salesperiod, String emailOfUser) {
+    User user = (User) getUserByEmail(emailOfUser);
+    return user.getUserSale(salesperiod);
+  }
+
   public String storeFile(MultipartFile file) {
     // Normalize file name
     String fileName = StringUtils.cleanPath(file.getOriginalFilename());

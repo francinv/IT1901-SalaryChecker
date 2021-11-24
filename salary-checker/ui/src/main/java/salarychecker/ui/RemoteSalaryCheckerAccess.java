@@ -7,13 +7,16 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpRequest.BodyPublisher;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Map;
 
-import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.User;
+import com.github.mizosoft.methanol.MediaType;
+import com.github.mizosoft.methanol.Methanol;
+import com.github.mizosoft.methanol.MultipartBodyPublisher;
+import com.github.mizosoft.methanol.MutableRequest;
+import salarychecker.core.*;
 import salarychecker.json.SalaryCheckerPersistence;
 
 /**
@@ -160,8 +163,6 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
             return objectMapper.readValue(httpResponse.body(), User.class);
         }
         return objectMapper.readValue(httpResponse.body(), AdminUser.class);
-         
-
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -231,14 +232,16 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .header("Content-Type", "application/json")
                     .POST(BodyPublishers.ofString(json))
                     .build();
-            
-            HttpClient.newBuilder()
+
+            final HttpResponse<String> httpResponse = HttpClient.newBuilder()
                       .build()
                       .send(httpRequest, HttpResponse.BodyHandlers.ofString());
-            
+
+            System.out.println(httpResponse);
           } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
           }
+
     }
 
     /**
@@ -265,7 +268,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
            
           } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
-          }
+        }
       
     }
 
@@ -287,4 +290,72 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void uploadFile(File file) throws IOException, InterruptedException, URISyntaxException {
+
+        final Methanol client = Methanol.create();
+        var multipartBody = MultipartBodyPublisher.newBuilder()
+            .textPart("title", "Salesreport")
+            .filePart("csv", Path.of(file.getAbsolutePath()))
+            .build();
+
+        var request = MutableRequest.POST("http://localhost:8080/salarychecker/uploadFile", multipartBody)
+            .header("Content-Type", "multipart/form-data");
+
+        final HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(httpResponse.body());
+        System.out.println(httpResponse.statusCode());
+    }
+
+    @Override
+    public UserSale getUserSale(String salesperiod, String emailOfUser) {
+        String postMappingPath = "user/get-user-sale";
+        String key1 = "salesperiod=";
+        String value1 = salesperiod + "&";
+        String key2 = "email=";
+        String value2 = emailOfUser;
+
+        try {
+            HttpRequest httpRequest = HttpRequest
+                .newBuilder(resolveURIAccounts(postMappingPath + key1 + value1 + key2 + value2))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+
+            final HttpResponse<String> httpResponse =
+                HttpClient.newBuilder()
+                    .build()
+                    .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            return objectMapper.readValue(httpResponse.body(), UserSale.class);
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @Override public void calculateSale(Calculation calculation, String emailOfUser) {
+        String postMappingPath = "user/calculate-sale?";
+        String key = "email=";
+        String value = emailOfUser;
+
+        try {
+            String json = objectMapper.writeValueAsString(calculation);
+            HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath + key + value))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .PUT(BodyPublishers.ofString(json))
+                .build();
+
+            HttpClient.newBuilder()
+                .build()
+                .send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
