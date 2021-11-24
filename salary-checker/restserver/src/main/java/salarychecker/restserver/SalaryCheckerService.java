@@ -17,6 +17,7 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.Calculation;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
 import salarychecker.restserver.exceptions.FileStorageException;
 import salarychecker.restserver.properties.FileStorageProperties;
