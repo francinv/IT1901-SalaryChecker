@@ -41,6 +41,7 @@ export const uploadFile = (data) => {
     }
   })
 
+
 }
 
 export const calculateSalary = (data, email) => {
