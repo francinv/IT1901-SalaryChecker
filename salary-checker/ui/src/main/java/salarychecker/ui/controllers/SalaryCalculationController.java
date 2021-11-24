@@ -1,8 +1,9 @@
 package salarychecker.ui.controllers;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -14,11 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import salarychecker.core.Accounts;
 import salarychecker.core.Calculation;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
-import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * This is the class for controller that handles the SalaryCalculation-scene.
@@ -39,8 +38,6 @@ public class SalaryCalculationController extends AbstractController {
   @FXML private AnchorPane calculationPane;
 
   private User user;
-  private Accounts accounts;
-  private String url;
 
 
   /**
@@ -50,7 +47,6 @@ public class SalaryCalculationController extends AbstractController {
    */
   protected void setUserAndAccounts() {
     user = (User) super.user;
-    accounts = super.accounts;
   }
 
   /**
@@ -69,35 +65,21 @@ public class SalaryCalculationController extends AbstractController {
    */
   @FXML
   private void calculateSalary(ActionEvent event) throws IOException {
-    UserSale userSale = new UserSale();
-    Calculation calculation = new Calculation(user);
     double hours = Double.parseDouble(hoursField.getText());
     int mobileamount = Integer.parseInt(mobileField.getText());
     String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
     String salesperiod = chosenmonth + " " + yearField.getText();
     double paid = Double.parseDouble(paidField.getText());
-    try {
-      userSale = calculation.doCalculation(getURL(), hours, mobileamount, salesperiod, paid);
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    Calculation calculation = new Calculation(salesperiod, hours, mobileamount, paid);
+    dataAccess.calculateSale(calculation, user.getEmail());
 
+    UserSale userSale = dataAccess.getUserSale(salesperiod, user.getEmail());
     String expected = String.valueOf(userSale.getExpected());
     String displayPaid = String.valueOf(userSale.getPaid()).toString();
     String diff = String.valueOf(userSale.getDifference());
     expectedText.setText(expected);
     paidText.setText(displayPaid);
     differenceText.setText(diff);
-
-    user.addUserSale(userSale);
-
-    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
-    persistence.setFilePath("Accounts.json");
-    try {
-      persistence.saveAccounts(accounts);
-    } catch (IllegalStateException | IOException e) {
-      e.printStackTrace();
-    }
   }
 
   /**
@@ -108,20 +90,15 @@ public class SalaryCalculationController extends AbstractController {
    * @param event when user clicks on 'Last opp Salgsrapport'.
    */
   @FXML
-  private void uploadAction(ActionEvent event) {
+  private void uploadAction(ActionEvent event) throws IOException, InterruptedException, URISyntaxException {
     Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showOpenDialog(stage);
-    setURL(file.getAbsolutePath());
-    fileField.setText(file.getName());
-  }
+    if (file.exists()) {
+      dataAccess.uploadFile(file);
+      fileField.setText(file.getName());
+    }
 
-  protected void setURL(String url) {
-    this.url = url;
-  }
-
-  private String getURL() {
-    return this.url;
   }
 
 }

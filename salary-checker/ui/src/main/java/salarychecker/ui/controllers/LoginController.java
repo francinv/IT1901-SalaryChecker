@@ -59,6 +59,7 @@ public class LoginController extends AbstractController {
         } else {
             setDataAccess(new LocalSalaryCheckerAccess());
         }
+        this.dataAccess = super.dataAccess;
         this.accounts = dataAccess.readAccounts();
     }
 
@@ -83,10 +84,10 @@ public class LoginController extends AbstractController {
       userval.isValidLogIn(usernameField, passwordField, accounts);
       user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
-        setScene(CONTROLLERS.HOME, event, user, accounts);
+        setScene(CONTROLLERS.HOME, event, user, accounts, dataAccess);
       }
       else if (user instanceof AdminUser){
-        setScene(CONTROLLERS.ADMIN, event, user, accounts);
+        setScene(CONTROLLERS.ADMIN, event, user, accounts, dataAccess);
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
@@ -110,10 +111,9 @@ public class LoginController extends AbstractController {
         "Vandre333!"));
 
     createButton.setText("Test users created!");
-    createButton.setTextFill(Paint.valueOf("#008000"));
   }
 
-  protected void setDataAccess(SalaryCheckerAccess dataAccess) {
+  /*protected void setDataAccess(SalaryCheckerAccess dataAccess) {
     this.dataAccess = dataAccess;
-  }
+  }*/
 }
