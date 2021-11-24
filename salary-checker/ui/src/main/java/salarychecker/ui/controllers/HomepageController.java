@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.ui.SalaryCheckerAccess;
+import salarychecker.dataacess.SalaryCheckerAccess;
 
 /**
  * This is the class that controls the HomePage Scene.

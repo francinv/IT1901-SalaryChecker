@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.ui.SalaryCheckerAccess;
+import salarychecker.dataacess.SalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerApp;
 
 
