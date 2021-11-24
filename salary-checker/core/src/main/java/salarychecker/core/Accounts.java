@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Accounts implements IUserObserver {
 
-  private final List<AbstractUser> accounts = new ArrayList<>();
+  protected final List<AbstractUser> accounts = new ArrayList<>();
 
   /**
    * Access method for accounts.
@@ -30,7 +30,7 @@ public class Accounts implements IUserObserver {
    */
   public void addUser(AbstractUser user) {
     if (contains(user)) {
-      throw new IllegalArgumentException("User already exists!");
+      throw new IllegalStateException("User already exists!");
     }
     this.accounts.add(user);
   }
@@ -117,13 +117,25 @@ public class Accounts implements IUserObserver {
     }
     return null;
   }
+  /**
+   * get accounts by email.
+   * 
+   * @param email the email
+   * @return accounts if they exist, null else
+   */
 
   public AbstractUser getUser(String email) {
     return getAccounts().stream().filter(u -> u.getEmail().equals(email))
                                  .findAny()
                                  .orElse(null);
   }
-
+  /**
+   * gets accouns by employerEmail.
+   * 
+   * @param employerEmail employers email
+   * @return users with the same employer.
+   */
+  
   public List<AbstractUser> getUsersByEmployerEmail(String employerEmail) {
     List<AbstractUser> usersWithSameEmployer = new ArrayList<>();
     for (AbstractUser abstractUser : accounts) {
@@ -242,6 +254,17 @@ public class Accounts implements IUserObserver {
       }
     }
     user.setHourRate(employeenumber);
+  }
+
+  /**
+   * This method is needed in server, when a client that uses the API,
+   * changes the attribute of a User object.
+   * 
+   * @param user        to change
+   * @param indexOfUser in list
+   */
+  public void updateUserObject(AbstractUser user, int indexOfUser) {
+    accounts.set(indexOfUser, user);
   }
 
   /**
