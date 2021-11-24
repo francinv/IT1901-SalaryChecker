@@ -3,7 +3,7 @@ import axios from "axios";
 export const fetchAccountsFromServer = () => {
     const axe = axios.get('http://localhost:8080/salarychecker/');
     const response = axe.then(response => 
-      response.data
+      response.data.Accounts
     );
     return response;
 };
@@ -40,19 +40,22 @@ export const uploadFile = (data) => {
       'Content-Type': 'multipart/form-data'
     }
   })
-
-
+  .then(response => console.log(response));
+  
 }
 
 export const calculateSalary = (data, email) => {
-  var responsetemp;
   const url = `http://localhost:8080/salarychecker/user/calculate-sale?email=${email}`;
   const header = {
     'Content-Type': 'application/json'
   };
-  axios.post(url, data, header)
+  axios.put(url, data, header)
   .catch(response => console.log(response))
-  .finally(response => responsetemp = response.data);
-  return responsetemp;
+}
 
+export const getUserSale = (salesperiod, email) => {
+  let url = `http://localhost:8080/salarychecker/user/get-user-sale?salesperiod=${salesperiod}&email=${email}`
+  const axe = axios.get(url);
+  const response = axe.then(response => response.data);
+  return response;
 }
