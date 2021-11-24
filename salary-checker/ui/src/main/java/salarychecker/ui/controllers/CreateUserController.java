@@ -12,8 +12,8 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
+import salarychecker.dataacess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.SalaryCheckerAccess;
 
 /**
  * This is the class for controlling CreateUser scene.

@@ -9,8 +9,8 @@ import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
+import salarychecker.dataacess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
-import salarychecker.ui.SalaryCheckerAccess;
 
 /**
  * This is the class that controls the Settings-scene.
