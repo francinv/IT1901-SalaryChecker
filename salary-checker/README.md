@@ -60,10 +60,10 @@ cd ui
 mvn clean javafx:jlink
 
 3) 
-cd target/salarychecker/bin
+cd target/SalaryCheckerFX/bin
 
 4)
-./salarycheckerfx
+./SalaryCheckerFX
 ```
 
 ## Userstories
