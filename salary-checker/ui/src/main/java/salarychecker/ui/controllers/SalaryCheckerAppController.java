@@ -1,7 +1,7 @@
 package salarychecker.ui.controllers;
 
 import javafx.fxml.FXML;
-import salarychecker.ui.SalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 
 public class SalaryCheckerAppController {
 

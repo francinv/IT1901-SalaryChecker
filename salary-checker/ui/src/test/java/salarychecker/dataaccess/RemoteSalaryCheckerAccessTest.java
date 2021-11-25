@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.dataaccess;
 
 import java.net.URI;
 import java.net.URISyntaxException;

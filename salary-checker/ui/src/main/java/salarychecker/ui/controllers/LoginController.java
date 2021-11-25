@@ -15,9 +15,9 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
-import salarychecker.ui.LocalSalaryCheckerAccess;
-import salarychecker.ui.RemoteSalaryCheckerAccess;
-import salarychecker.ui.SalaryCheckerAccess;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.RemoteSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * Controller class for the Login-scene.

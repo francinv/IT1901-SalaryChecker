@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import salarychecker.dataaccess.RemoteSalaryCheckerAccess;
 import salarychecker.ui.controllers.LoginController;
 import salarychecker.ui.controllers.SalaryCheckerConfig;
 

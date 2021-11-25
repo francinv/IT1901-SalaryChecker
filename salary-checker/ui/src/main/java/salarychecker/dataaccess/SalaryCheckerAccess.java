@@ -1,4 +1,4 @@
-package salarychecker.ui;
+package salarychecker.dataaccess;
 
 import java.io.File;
 import java.io.FileNotFoundException;
