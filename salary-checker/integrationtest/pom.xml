@@ -126,7 +126,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>salarychecjer.restserver.RestServerApplication</mainClass>
+                    <mainClass>salarychecker.restserver.RestServerApplication</mainClass>
                     <jmxPort>7070</jmxPort>
                     <fork>true</fork>
                 </configuration>
