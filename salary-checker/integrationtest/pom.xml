@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>salary-integrationtests</artifactId>
+    <artifactId>salary-integrationtest</artifactId>
     <packaging>war</packaging>
 
     <properties>
