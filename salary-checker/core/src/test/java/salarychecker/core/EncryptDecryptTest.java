@@ -3,15 +3,6 @@ package salarychecker.core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,14 +17,7 @@ public class EncryptDecryptTest {
     @BeforeEach
     void setUp(){
         encryptDecrypt = new EncryptDecrypt();
-        try {
-        
-            encryptedString = encryptDecrypt.encrypt(stringToEncrypt, alias);
-
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-           e.printStackTrace();
-        }
+        encryptedString = encryptDecrypt.encrypt(stringToEncrypt, alias);
     }
 
     @Test
@@ -48,12 +32,6 @@ public class EncryptDecryptTest {
 
     @Test
     public void testDecrypt() {
-        try {
-            assertEquals(stringToEncrypt, encryptDecrypt.decrypt(encryptedString, alias));
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException | IllegalBlockSizeException e) {
-            fail();
-        }
+        assertEquals(stringToEncrypt, encryptDecrypt.decrypt(encryptedString, alias));
     }
-    
 }
