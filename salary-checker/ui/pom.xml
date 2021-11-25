@@ -212,13 +212,13 @@
 
                     <!-- linux options --> 
                     <linuxShortcut>true</linuxShortcut>
-                    <linuxMenuGroup>TodoListFX</linuxMenuGroup>
+                    <linuxMenuGroup>SalaryCheckerFX</linuxMenuGroup>
 
                     <!-- windows options --> 
                     <winDirChooser>true</winDirChooser>
                     <winShortcut>true</winShortcut>
                     <winMenu>true</winMenu>
-                    <winMenuGroup>TodoListFX</winMenuGroup>
+                    <winMenuGroup>SalaryCheckerFX</winMenuGroup>
 
                 </configuration>
             </plugin>

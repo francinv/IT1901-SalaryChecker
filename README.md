@@ -4,12 +4,77 @@
 This repo contains a multi-module, multi-package javafx project for checking salary. This application is mainly meant for people who work on commision. 
 The app will calculate if you have been paid the correct amount based on your sales. You can read more about the project here: [Salary Checker](salary-checker/README.md).
 
-## Building and running the project
 
-1. `mvn clean install` | tells Maven to do the clean phase in each module before running the install phase for each module. In addition all the tests will also be run.
-     
-     If you want to skip the tests: `mvn clean install -Dskiptests`
-2. `mvn -pl ui javafx:run` | tells Maven to run the app from the UI module. 
+## Building and running the project:
+
+The application can be ran in three different ways. A step by step guide on how to perform each way is provided below.
+
+#### Note:
+This project is built up with maven and subsequently, if maven is not installed, one needs to use the **./mvnw** command instead of **mvn**. This does not apply if the application is ran from gitpod.  
+
+
+### Running application with local access:
+1) Navigate to salary-checker directory.
+2) Install dependencies and run tests.
+3) Start server.
+3) Run javafx client application.
+
+```sh
+1)
+cd salary-checker
+
+2)
+mvn clean install
+#Tests can be skipped by using "mvn clean install -DskipTests"
+
+3)
+mvn spring-boot:run -pl restserver
+
+4)
+mvn javafx:run -pl ui
+```
+### Running application with remote access:
+1) Navigate to salary-checker directory.
+2) Install dependencies and run tests.
+3) Start server. 
+4) Run javafx client application.
+
+```sh
+1)
+cd salary-checker
+
+2)
+mvn clean install
+#Tests can be skipped by using "mvn clean install -DskipTests"
+
+3)
+mvn spring-boot:run -pl restserver
+
+4)
+mvn javafx:run -pl ui -P remoteapp
+```
+### Running application with react client:
+1) Navigate to salary-checker directory.
+2) Install dependencies and run tests.
+3) Start server.
+3) Run react client application.
+
+```sh
+1)
+cd salary-checker
+
+2)
+mvn clean install
+#Tests can be skipped by using "mvn clean install -DskipTests"
+
+3)
+mvn spring-boot:run -pl restserver
+
+4)
+yarn #Trenger kommando!
+```
+
+
 
 ## Organization of the code:
 
