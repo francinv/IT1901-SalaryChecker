@@ -37,7 +37,9 @@ public class RestServerApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry
-						.addMapping("/salarychecker/**").allowedOrigins("http://localhost:3000/").allowedMethods("PUT","POST","GET");
+					.addMapping("/salarychecker/**")
+					.allowedOrigins("http://localhost:3000")
+					.allowedMethods("PUT","POST","GET");
 			}
 		};
 	}

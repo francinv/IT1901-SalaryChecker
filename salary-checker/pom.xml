@@ -69,19 +69,6 @@
                 <version>${jackson.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
-            <dependency>
-                <groupId>com.opencsv</groupId>
-                <artifactId>opencsv</artifactId>
-                <version>${openscsv.version}</version>
-            </dependency>
-
-            <!--Email sending dependency-->
-            <dependency>
-                <groupId>com.sun.mail</groupId>
-                    <artifactId>javax.mail</artifactId>
-                    <version>${sunmail.version}</version>
-            </dependency>
 
             <!-- Spring-boot for restserver -->
             <dependency>

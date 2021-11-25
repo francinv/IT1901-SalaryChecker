@@ -7,6 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is the class that controls the HomePage Scene.
@@ -21,6 +22,7 @@ public class HomepageController extends AbstractController {
 
   private User user;
   private Accounts accounts;
+  private SalaryCheckerAccess dataAccess;
 
   /**
    * This is a method that loads the user info.
@@ -31,6 +33,7 @@ public class HomepageController extends AbstractController {
   protected void loadInfo() {
     user = (User) super.user;
     accounts = super.accounts;
+    dataAccess = super.dataAccess;
     pageTitle.setText("Hjem");
     userNameDisplay.setText(user.getFirstname() + " " + user.getLastname());
   }
@@ -42,7 +45,7 @@ public class HomepageController extends AbstractController {
    */
   @FXML
   private void logOutAction(ActionEvent event) {
-    setScene(CONTROLLERS.LOGIN, event, null, null);
+    setScene(CONTROLLERS.LOGIN, event, null, null, null);
   }
 
   /**
@@ -69,7 +72,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToProfileAction(ActionEvent event) {
     pageTitle.setText("Profil");
-    setAnchorPane(CONTROLLERS.PROFILE, startPane, user, accounts);
+    setAnchorPane(CONTROLLERS.PROFILE, startPane, user, accounts, dataAccess);
   }
 
   /**
@@ -80,7 +83,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToCalcAction(ActionEvent event) {
     pageTitle.setText("Utregning av lønn");
-    setAnchorPane(CONTROLLERS.SALARYCALC, startPane, user, accounts);
+    setAnchorPane(CONTROLLERS.SALARYCALC, startPane, user, accounts, dataAccess);
   }
 
   /**
@@ -91,7 +94,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToSalAction(ActionEvent event) {
     pageTitle.setText("Mine lønninger");
-    setAnchorPane(CONTROLLERS.SALARIES, startPane, user, accounts);
+    setAnchorPane(CONTROLLERS.SALARIES, startPane, user, accounts, dataAccess);
   }
 
 

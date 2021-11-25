@@ -17,6 +17,7 @@ import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.Calculation;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
 import salarychecker.restserver.exceptions.FileStorageException;
 import salarychecker.restserver.properties.FileStorageProperties;
@@ -196,6 +197,11 @@ public class SalaryCheckerService {
         System.err.println("Could not auto-save Accounts: " + e);
       }
     }
+  }
+
+  public UserSale getUserSale(String salesperiod, String emailOfUser) {
+    User user = (User) getUserByEmail(emailOfUser);
+    return user.getUserSale(salesperiod);
   }
 
   public String storeFile(MultipartFile file) {

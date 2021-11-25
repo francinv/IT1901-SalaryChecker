@@ -1,23 +1,19 @@
 package salarychecker.core;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-/**
+/*
  * Class to read from CSV file.
- */
+*/
 public class SalaryCSVReader {
 
-  /**
+  /*
    * Translates the information from the CSV file to a list.
    *
    * @param url location of CSV file
@@ -26,32 +22,75 @@ public class SalaryCSVReader {
    *                     This class is the general class of exceptions produced by
    *                     failed or interrupted I/O operations.
    */
-  public List<Sale> csvToBean(String url) throws IOException {
-    Map<String, String> mapping = new HashMap<>();
-    mapping.put("SalgsID", "salgsID");
-    mapping.put("AnleggsStatus", "anleggStatus");
-    mapping.put("Salgstype", "salgsType");
-    mapping.put("Kampanje", "Campaign");
-    mapping.put("Merkevare", "Brand");
-    mapping.put("Trippelgaranti", "TX3");
-    mapping.put("BRUDDGEBYR(KR)", "rebate");
-    mapping.put("Norsk Vannkraft", "NVK");
-    mapping.put("ProductHubNavn", "product");
 
-    HeaderColumnNameTranslateMappingStrategy<Sale> strategy =
-        new HeaderColumnNameTranslateMappingStrategy<>();
-    strategy.setType(Sale.class);
-    strategy.setColumnMapping(mapping);
 
-    Reader reader = new BufferedReader(new FileReader(url, StandardCharsets.UTF_8));
 
-    CsvToBean<Sale> csvReader = new CsvToBeanBuilder<Sale>(reader).withType(Sale.class)
-                                                                  .withSeparator(';')
-                                                                  .withIgnoreLeadingWhiteSpace(true)
-                                                                  .withIgnoreEmptyLine(true)
-                                                                  .withMappingStrategy(strategy)
-                                                                  .build();
+  public List<Sale> CSVtoSale(String url) throws IOException {
+    
+    List<List<String>> records = new ArrayList<>();
+    List<Integer> indexOfRemove = new ArrayList<>();
 
-    return csvReader.parse();
+    try (Scanner scanner = new Scanner(new File(url));) {
+      while (scanner.hasNextLine()) {
+        records.add(getRecordFromLine(scanner.nextLine()));
+      }
+    }
+    for (List<String> e : records) {
+      List<String> temp;
+      if (e.size() == 17) {
+        int index = records.indexOf(e);
+        temp = Stream.concat(e.stream(), records.get(index+1).stream()).collect(Collectors.toList());
+        temp = Stream.concat(temp.stream(), records.get(index+2).stream()).collect(Collectors.toList());
+        temp = Stream.concat(temp.stream(), records.get(index+3).stream()).collect(Collectors.toList());
+        records.set(index, temp);
+        indexOfRemove.addAll(Arrays.asList(index+1, index+2, index+3));
+      }
+    }
+    for (int i = indexOfRemove.size(); i-- > 0; ) {
+      if (records.get(indexOfRemove.get(i)).size() == 1 || records.get(indexOfRemove.get(i)).size() == 22) {
+        int index = indexOfRemove.get(i);
+        records.remove(index);
+      }
+    }
+    records.remove(0);
+    List<Sale> saleslist = new ArrayList<>();
+    for (List<String> e : records) {
+      Sale sale = new Sale();
+      if (e.size() == 41) {
+        sale.setSalesID(e.get(0));
+        sale.setAnleggStatus(e.get(14));
+        sale.setSalgsType(e.get(15));
+        sale.setCampaign(e.get(28));
+        sale.setBrand(e.get(30));
+        sale.setTX3(e.get(31));
+        sale.setRebate(e.get(37));
+        sale.setNVK(e.get(38));
+        sale.setProduct(e.get(40));
+        saleslist.add(sale);
+      } else {
+        sale.setSalesID(e.get(0));
+        sale.setAnleggStatus(e.get(14));
+        sale.setSalgsType(e.get(15));
+        sale.setCampaign(e.get(25));
+        sale.setBrand(e.get(27));
+        sale.setTX3(e.get(28));
+        sale.setRebate(e.get(34));
+        sale.setNVK(e.get(35));
+        sale.setProduct(e.get(37));
+        saleslist.add(sale);
+      }
+    }
+    return saleslist;
+  }
+
+  private List<String> getRecordFromLine(String nextLine) {
+    List<String> values = new ArrayList<String>();
+    try (Scanner rowScanner = new Scanner(nextLine)) {
+      rowScanner.useDelimiter(";");
+      while (rowScanner.hasNext()) {
+        values.add(rowScanner.next());
+      }
+    }
+    return values;
   }
 }

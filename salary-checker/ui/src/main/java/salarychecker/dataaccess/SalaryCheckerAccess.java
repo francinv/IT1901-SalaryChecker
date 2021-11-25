@@ -1,12 +1,12 @@
-package salarychecker.ui;
+package salarychecker.dataaccess;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
-import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.User;
+import salarychecker.core.*;
 
 /**
  * Interface for classes that wants to take advantage of a REST APi.
@@ -79,4 +79,17 @@ public interface SalaryCheckerAccess {
      * Salary Checker.
      */
     public void deleteAccounts();
+
+    /**
+     * This method is used to calculate user sale. This method will use the
+     * uploaded file and calculate the salary.
+     *
+     * @param calculation object that will be used to calculate salary.
+     * @param emailOfUser the user that want to calculate salary.
+     */
+    public void calculateSale(Calculation calculation, String emailOfUser) throws IOException;
+
+    public void uploadFile(File file) throws IOException, InterruptedException, URISyntaxException;
+
+    public UserSale getUserSale(String salesperiod, String emailOfUser);
 }
