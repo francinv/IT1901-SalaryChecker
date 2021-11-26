@@ -18,7 +18,7 @@ In order to further ensure a smooth user experience after the final release the 
 - EmailSender.java
 - EncryptDecrypt.java
 - Errors.java
-- IUserObserver.java
+- UserObserver.java
 - SalaryCSVReader.java
 - Sale.java
 - UserSale.java

@@ -6,10 +6,10 @@ import java.util.List;
 
 /**
  * Class which contains a list of all registred Users.
- * This class implements IUserObserver, this is needed to
+ * This class implements UserObserver, this is needed to
  * observe changes in User object
  */
-public class Accounts implements IUserObserver {
+public class Accounts implements UserObserver {
 
   protected final List<AbstractUser> accounts = new ArrayList<>();
 

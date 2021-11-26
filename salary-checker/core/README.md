@@ -11,7 +11,7 @@ The core module also includes tests for functionality-classes. The group has foc
 - Calculation.java :point_right: Calulates the value of a sales-period.
 - EncryptDecrypt.java :point_right: Encrypts and decrypts user-passwords.
 - Errors.java :point_right: Initialization of constant error-messages.
-- IUserObserver.java :point_right: Interface for observing user objects.
+- UserObserver.java :point_right: Interface for observing user objects.
 - SalaryCSVReader.java :point_right: Reads a CSV-file and translates it to processable strings. 
 - Sale.java :point_right: Processes information read from SalaryCSVReder.java.
 - User.java :point_right: Generates User-objects.
@@ -32,7 +32,7 @@ The core module also includes tests for functionality-classes. The group has foc
 ### Connections between classes:
 Firstly the Errors Enum is simply an Enum where errors are declared. Errors are being displayed in the user interface whenever the user does something illegal. 
 
-Secondly, User.java generates a user object, which can be added to the list of users in Accounts.java. User.java also includes set and get methods for User-object parameters. AdminUser.java generates an AdminUser-object. AdminUser differs from the regular User. An admin User can only access the Admin-scenes in the application. AbstractUser abstractifies User and AdminUser objects by storing the common parameters. This allows us to store them in the same list. This simplifies the coding of the LogIn process. When generating a User or AdminUser-object, UserValidation.java validates all parameters, and throws IllegalArgumentExeptions in case of invalid user input. Accounts.java observes User-objects using the IUserObserver-interface.
+Secondly, User.java generates a user object, which can be added to the list of users in Accounts.java. User.java also includes set and get methods for User-object parameters. AdminUser.java generates an AdminUser-object. AdminUser differs from the regular User. An admin User can only access the Admin-scenes in the application. AbstractUser abstractifies User and AdminUser objects by storing the common parameters. This allows us to store them in the same list. This simplifies the coding of the LogIn process. When generating a User or AdminUser-object, UserValidation.java validates all parameters, and throws IllegalArgumentExeptions in case of invalid user input. Accounts.java observes User-objects using the UserObserver-interface.
 
 Furthermore, encrypt decrypt encrypts and decrypts User and admin Passwords. This is done in order to store an encrypted version of the password for securityreasons. 
 

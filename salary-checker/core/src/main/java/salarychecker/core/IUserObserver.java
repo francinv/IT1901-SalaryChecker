@@ -3,7 +3,7 @@ package salarychecker.core;
 /**
  * Interface for user observers.
  */
-public interface IUserObserver {
+public interface UserObserver {
 
   void usersaleAdded(User user, UserSale userSale);
 

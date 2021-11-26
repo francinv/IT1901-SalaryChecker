@@ -15,7 +15,7 @@ public abstract class AbstractUser {
   protected String password;
 
   protected UserValidation userValidation = new UserValidation();
-  protected Collection<IUserObserver> userObs = new ArrayList<>();
+  protected Collection<UserObserver> userObs = new ArrayList<>();
 
   /**
    * Access method for firstname.
@@ -34,7 +34,7 @@ public abstract class AbstractUser {
   public void setFirstname(String firstname) {
     userValidation.checkValidFirstname(firstname);
     this.firstname = firstname;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, firstname);
     }
   }
@@ -56,7 +56,7 @@ public abstract class AbstractUser {
   public void setLastname(String lastname) {
     userValidation.checkValidLastname(lastname);
     this.lastname = lastname;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, lastname);
     }
   }
@@ -78,7 +78,7 @@ public abstract class AbstractUser {
   public void setEmail(String email) {
     userValidation.checkValidEmail(email);
     this.email = email;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, email);
     }
   }
@@ -100,7 +100,7 @@ public abstract class AbstractUser {
   public void setPassword(String password) {
     userValidation.checkValidPassword(password);
     this.password = password;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, password);
     }
   }
@@ -110,7 +110,7 @@ public abstract class AbstractUser {
    *
    * @param userObserver the observer
    */
-  public void addObserver(IUserObserver userObserver) {
+  public void addObserver(UserObserver userObserver) {
     userObs.add(userObserver);
   }
 
@@ -119,7 +119,7 @@ public abstract class AbstractUser {
    *
    * @param userObserver the observer to remove
    */
-  public void removeObserver(IUserObserver userObserver) {
+  public void removeObserver(UserObserver userObserver) {
     userObs.remove(userObserver);
   }
 
@@ -128,7 +128,7 @@ public abstract class AbstractUser {
    *
    * @return the userObs
    */
-  public Collection<IUserObserver> getUserObs() {
+  public Collection<UserObserver> getUserObs() {
     return new ArrayList<>(userObs);
   }
 
