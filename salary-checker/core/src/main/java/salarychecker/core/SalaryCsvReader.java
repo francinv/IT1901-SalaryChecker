@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /** 
  * Class to read from CSV file.
  */
-public class SalaryCscReader {
+public class SalaryCsvReader {
 
   /** 
    * Translates the information from the CSV file to a list.
