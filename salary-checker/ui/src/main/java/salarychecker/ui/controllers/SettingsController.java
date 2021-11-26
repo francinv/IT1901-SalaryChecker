@@ -21,7 +21,6 @@ public class SettingsController extends AbstractController {
   private User user;
   private Accounts accounts;
   private SalaryCheckerAccess dataAccess;
-  private final UserValidation userValidation = new UserValidation();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
   //FXML VARIABLES
@@ -82,7 +81,7 @@ public class SettingsController extends AbstractController {
 
       if (!(changeEmailField.getText().equals("")
           && changeConfirmedEmailField.getText().equals(""))) {
-        userValidation.isEqualEmail(changeEmailField.getText(),
+        UserValidation.isEqualEmail(changeEmailField.getText(),
             changeConfirmedEmailField.getText());
         user.setEmail(changeEmailField.getText());
         errorTextDisplay.setText(null);
@@ -93,7 +92,7 @@ public class SettingsController extends AbstractController {
 
       if (!(changeEmployerField.getText().equals("")
           && changeConfirmedEmployerField.getText().equals(""))) {
-        userValidation.isEqualEmail(changeEmployerField.getText(),
+        UserValidation.isEqualEmail(changeEmployerField.getText(),
             changeConfirmedEmployerField.getText());
         user.setEmployerEmail(changeEmployerField.getText());
         errorTextDisplay.setText(null);
@@ -111,7 +110,7 @@ public class SettingsController extends AbstractController {
 
       if (!(changePasswordField.getText().equals("")
           && changeConfirmedPasswordField.getText().equals(""))) {
-        userValidation.isEqualPassword(changePasswordField.getText(),
+        UserValidation.isEqualPassword(changePasswordField.getText(),
             changeConfirmedPasswordField.getText());
         user.setPassword(changePasswordField.getText());
         errorTextDisplay.setText(null);
