@@ -45,20 +45,6 @@ public class LoginController extends AbstractController {
      */
     @FXML
     void initialize() throws IOException, URISyntaxException {
-        this.config = new SalaryCheckerConfig();
-        
-        if (config.getProperty("remoteAccess").equals("true")) { 
-
-            setDataAccess(
-                    new RemoteSalaryCheckerAccess(
-                            new URI(config.getProperty("serverURI"))
-                    ));
-
-            System.out.println("Using remote endpoint @ " + config.getProperty("serverURI")); 
-
-        } else {
-            setDataAccess(new LocalSalaryCheckerAccess());
-        }
         this.dataAccess = super.dataAccess;
         this.accounts = dataAccess.readAccounts();
     }
