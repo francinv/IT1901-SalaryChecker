@@ -14,7 +14,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
-import salarychecker.core.UserValidation;
 import salarychecker.json.SalaryCheckerPersistence;
 
 import java.io.IOException;
