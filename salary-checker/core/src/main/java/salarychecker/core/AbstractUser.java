@@ -14,7 +14,6 @@ public abstract class AbstractUser {
   protected String email;
   protected String password;
 
-  protected UserValidation userValidation = new UserValidation();
   protected Collection<IUserObserver> userObs = new ArrayList<>();
 
   /**
@@ -32,7 +31,7 @@ public abstract class AbstractUser {
    * @param firstname the firstname to set
    */
   public void setFirstname(String firstname) {
-    userValidation.checkValidFirstname(firstname);
+    UserValidation.checkValidFirstname(firstname);
     this.firstname = firstname;
     for (IUserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, firstname);
@@ -54,7 +53,7 @@ public abstract class AbstractUser {
    * @param lastname the firstname to set
    */
   public void setLastname(String lastname) {
-    userValidation.checkValidLastname(lastname);
+    UserValidation.checkValidLastname(lastname);
     this.lastname = lastname;
     for (IUserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, lastname);
@@ -76,7 +75,7 @@ public abstract class AbstractUser {
    * @param email the firstname to set
    */
   public void setEmail(String email) {
-    userValidation.checkValidEmail(email);
+    UserValidation.checkValidEmail(email);
     this.email = email;
     for (IUserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, email);
@@ -98,7 +97,7 @@ public abstract class AbstractUser {
    * @param password the firstname to set
    */
   public void setPassword(String password) {
-    userValidation.checkValidPassword(password);
+    UserValidation.checkValidPassword(password);
     this.password = password;
     for (IUserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged((User) this, password);
@@ -111,7 +110,9 @@ public abstract class AbstractUser {
    * @param userObserver the observer
    */
   public void addObserver(IUserObserver userObserver) {
-    userObs.add(userObserver);
+    if (userObserver != null) {
+      userObs.add(userObserver);
+    }
   }
 
   /**
@@ -120,7 +121,9 @@ public abstract class AbstractUser {
    * @param userObserver the observer to remove
    */
   public void removeObserver(IUserObserver userObserver) {
-    userObs.remove(userObserver);
+    if (userObserver != null) {
+      userObs.remove(userObserver);
+    }
   }
 
   /**
