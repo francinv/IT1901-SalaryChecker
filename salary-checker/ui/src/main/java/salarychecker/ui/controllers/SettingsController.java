@@ -10,7 +10,6 @@ import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.dataaccess.SalaryCheckerAccess;
-import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * This is the class that controls the Settings-scene.
@@ -21,7 +20,6 @@ public class SettingsController extends AbstractController {
   private User user;
   private Accounts accounts;
   private SalaryCheckerAccess dataAccess;
-  private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
   //FXML VARIABLES
   @FXML private TextField changeFirstNameField;
