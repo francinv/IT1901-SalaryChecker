@@ -33,7 +33,7 @@ public class UserValidation {
    * @param string to match
    * @return boolean
    */
-  private boolean isValidRegex(Pattern regex, String string) {
+  private static boolean isValidRegex(Pattern regex, String string) {
     return regex.matcher(string).matches();
   }
 
@@ -43,7 +43,7 @@ public class UserValidation {
    * @param firstname to check
    * @throws IllegalArgumentException if field is empty, or firstname does not match Regex pattern
    */
-  public void checkValidFirstname(String firstname) {
+  public static void checkValidFirstname(String firstname) {
     if (firstname.equals("")) {
       throw new IllegalArgumentException(Errors.NAME_FIELD_EMPTY.getMessage());
     }
@@ -58,7 +58,7 @@ public class UserValidation {
    * @param lastname to check
    * @throws IllegalArgumentException if field is empty, or lastname does not match Regex pattern
    */
-  public void checkValidLastname(String lastname) {
+  public static void checkValidLastname(String lastname) {
     if (lastname.equals("")) {
       throw new IllegalArgumentException(Errors.NAME_FIELD_EMPTY.getMessage());
     }
@@ -73,7 +73,7 @@ public class UserValidation {
    * @param password to check
    * @throws IllegalArgumentException if field is empty, or password does not match Regex pattern
    */
-  public void checkValidPassword(String password) {
+  public static void checkValidPassword(String password) {
     if (password.equals("")) {
       throw new IllegalArgumentException(Errors.PWD_FIELD_EMPTY.getMessage());
     }
@@ -89,7 +89,7 @@ public class UserValidation {
    * @throws IllegalArgumentException if field is empty, or socialNumber does not
    *                                  match Regex pattern.
    */
-  public void checkValidSocialNumber(String socialNumber) {
+  public static void checkValidSocialNumber(String socialNumber) {
     if (socialNumber.equals("")) {
       throw new IllegalArgumentException(Errors.SOCIAL_NUMBER_EMPTY.getMessage());
     }
@@ -105,7 +105,7 @@ public class UserValidation {
    * @throws IllegalArgumentException if field is empty, or employeeNumber
    *                                  does not match Regex pattern
    */
-  public void checkValidEmployeeNumber(int employeeNumber) {
+  public static void checkValidEmployeeNumber(int employeeNumber) {
     if (employeeNumber == 0) {
       throw new IllegalArgumentException(Errors.EMPLOYEE_NUMBER_EMPTY.getMessage());
     }
@@ -120,7 +120,7 @@ public class UserValidation {
    * @param email to check
    * @throws IllegalArgumentException if field is empty, or email does not match Regex pattern
    */
-  public void checkValidEmail(String email) {
+  public static void checkValidEmail(String email) {
     if (email.equals("")) {
       throw new IllegalArgumentException(Errors.EMAIL_FIELD_EMPTY.getMessage());
     }
@@ -135,7 +135,7 @@ public class UserValidation {
    * @param taxCount to check
    * @throws IllegalArgumentException if field is empty, or taxCount does not match Regex pattern
    */
-  public void checkValidTaxCount(double taxCount) throws IllegalArgumentException {
+  public static void checkValidTaxCount(double taxCount) throws IllegalArgumentException {
     if (taxCount == 0.0) {
       throw new IllegalArgumentException(Errors.TAX_COUNT_EMPTY.getMessage());
     }
@@ -150,7 +150,7 @@ public class UserValidation {
    * @param hourRate to check
    * @throws IllegalArgumentException if field is empty, or hourRate does not match Regex pattern
    */
-  public void checkValidHourRate(double hourRate) throws IllegalArgumentException {
+  public static void checkValidHourRate(double hourRate) throws IllegalArgumentException {
     if (hourRate == 0.0) {
       throw new IllegalArgumentException(Errors.HOUR_RATE_EMPTY.getMessage());
     }
@@ -164,7 +164,7 @@ public class UserValidation {
    * @param accounts check if user exists in this accounts
    * @throws IllegalArgumentException if the user is not in accounts
    */
-  public void isNotExistingUser(String email, String password, Accounts accounts) {
+  public static void isNotExistingUser(String email, String password, Accounts accounts) {
     if (accounts.getUser(email, password) == null) {
       throw new IllegalArgumentException(Errors.NOT_REGISTERED.getMessage());
     }
@@ -184,7 +184,7 @@ public class UserValidation {
    *  @param taxCount users tax count
    *  @param hourRate users hour rate
    */
-  public void checkValidUser(String firstname, String lastname, String email, String password,
+  public static void checkValidUser(String firstname, String lastname, String email, String password,
                              String socialNumber, int employeeNumber, String employerEmail,
                              double taxCount, double hourRate) {
     allFieldsEmpty(firstname, lastname, email, password, socialNumber,
@@ -213,7 +213,7 @@ public class UserValidation {
    *  @param hourRate users hour rate
    *  @throws IllegalArgumentException if all fields are empty
    */
-  public void allFieldsEmpty(String firstname, String lastname, String email, String password,
+  public static void allFieldsEmpty(String firstname, String lastname, String email, String password,
                              String socialNumber, int employeeNumber, double taxCount,
                              double hourRate) {
     if (firstname.equals("") && lastname.equals("") && email.equals("")
@@ -231,7 +231,7 @@ public class UserValidation {
    * @param accounts check if user exists in this accounts
    * @throws IllegalArgumentException if the user is not in accounts
    */
-  public void isValidLogIn(String email, String password, Accounts accounts) {
+  public static void isValidLogIn(String email, String password, Accounts accounts) {
     if (!accounts.checkValidUserLogin(email, password)) {
       throw new IllegalArgumentException(Errors.INVALID_EMAIL_AND_OR_PWD.getMessage());
     }
@@ -244,7 +244,7 @@ public class UserValidation {
    * @param password2 password 2
    * @throws IllegalArgumentException if passwords is not equal
    */
-  public void isEqualPassword(String password1, String password2) {
+  public static void isEqualPassword(String password1, String password2) {
     if (!(password1.equals(password2))) {
       throw new IllegalArgumentException(Errors.NOT_EQUAL_PASSWORD.getMessage());
     }
@@ -257,7 +257,7 @@ public class UserValidation {
    * @param email2 email2
    * @throws IllegalArgumentException if emails is not equal
    */
-  public void isEqualEmail(String email1, String email2) {
+  public static void isEqualEmail(String email1, String email2) {
     if (!(email1.equals(email2))) {
       throw new IllegalArgumentException(Errors.NOT_EQUAL_EMAIL.getMessage());
     }
