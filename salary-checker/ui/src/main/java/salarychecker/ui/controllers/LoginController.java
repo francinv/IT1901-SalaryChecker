@@ -26,7 +26,6 @@ public class LoginController extends AbstractController {
 
   private AbstractUser user = super.user;
   private Accounts accounts;
-  private final UserValidation userval = new UserValidation();
 
   private SalaryCheckerAccess dataAccess;
   private SalaryCheckerConfig config;
@@ -60,10 +59,10 @@ public class LoginController extends AbstractController {
     String passwordField = password.getText();
 
     try {
-      userval.checkValidEmail(usernameField);
-      userval.checkValidPassword(passwordField);
-      userval.isNotExistingUser(usernameField, passwordField, accounts);
-      userval.isValidLogIn(usernameField, passwordField, accounts);
+      UserValidation.checkValidEmail(usernameField);
+      UserValidation.checkValidPassword(passwordField);
+      UserValidation.isNotExistingUser(usernameField, passwordField, accounts);
+      UserValidation.isValidLogIn(usernameField, passwordField, accounts);
       user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
         setScene(Controllers.HOME, event, user, accounts, dataAccess);
