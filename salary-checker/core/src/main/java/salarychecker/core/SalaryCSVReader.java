@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  */
 public class SalaryCsvReader {
 
-  /*
+  /** 
    * Translates the information from the CSV file to a list.
    *
    * @param url location of CSV file
