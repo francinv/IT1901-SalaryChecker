@@ -10,7 +10,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
+import salarychecker.core.User;
 import salarychecker.core.UserValidation;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
 
 /**
@@ -21,6 +23,7 @@ public class CreateUserController extends AbstractController {
   private AdminUser adminUser;
   private Accounts accounts;
   UserValidation userValidation = new UserValidation();
+  private SalaryCheckerAccess dataAccess;
 
   @FXML private AnchorPane firstLastPane;
   @FXML private AnchorPane empemailPane;
@@ -56,6 +59,7 @@ public class CreateUserController extends AbstractController {
   protected void loadUserAndAccount() {
     adminUser = (AdminUser) super.user;
     accounts = super.accounts;
+    dataAccess = super.dataAccess;
     empemailPane.setVisible(false);
     socialPassPane.setVisible(false);
     wageTaxPane.setVisible(false);
@@ -156,16 +160,14 @@ public class CreateUserController extends AbstractController {
         } else {
           userValidation.checkValidTaxCount(tax);
         }
-        adminUser.setAccounts(accounts);
-        adminUser.createUser(firstname, lastname, email, password,
+        User user = new User(firstname, lastname, email, password,
             socialNumber, employeeNumber, adminUser.getEmail(), tax, wage);
+        dataAccess.createUser(user);
         errorMessageDisplay.setFill(Paint.valueOf("#008000"));
         errorMessageDisplay.setText("User created!");
       } catch (IllegalArgumentException e) {
         errorMessageDisplay.setText(e.getMessage());
       }
-      persistence.setFilePath("Accounts.json");
-      persistence.saveAccounts(accounts);
     }
   }
 

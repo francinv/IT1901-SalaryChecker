@@ -1,9 +1,70 @@
 # Salary Checker
 
-Note: just before delivery time we found out that, spotbugs wasnt corrected. Will fix this to next release.
-
 ## Motivation and purpose for the project:
 Many people are employed in the sales industry, and a lot of companies reward their sales-employees based on a bonus scheeme. Payouts can vary based on what products were sold, the employees rank within the company, if the costumer was a new or previous costumer etc. All these factors can make it har to keep track of what is owed to an employee at the end of the month. The SalaryChecker application attempts to solve this problem for the employee.
+
+## Packaging the SalaryChecker Application:
+
+The Salarychecker App can be packaged into two packages. The Spring Boot application will be packaged into a .jar file, while the client application is packaged into an executable file called SalaryCheckerFX. Since the two applications are seperatly and independently packaged, they work and run independently. 
+
+### Get started using the SalaryChecker App:
+In order to run SalaryChecker via git-pod one has to execute the client application via the terminal. 
+
+SalaryChecker can also be run on your local machines desktop by launching the application from the applications folder. 
+### Packaging the Spring Boot server:
+
+1) Navigate to the restserver module in the salarychecker directory.
+2) Package the Spring Boot Application.
+3) Navigate to target directory in restserver module.
+4) Run web server as .jar.
+
+```sh
+1) 
+cd restserver
+
+2)
+mvn clean package spring-boot:repackage
+
+3)
+cd target
+
+4)
+java -jar salary-restserver-0.0.1-SNAPSHOT.jar
+```
+
+### Packaging JavaFX client application as desktop application:
+
+1) Navigate to UI-module in salarychecker directiory.
+2) Create client application as desktopapplication.
+
+```sh 
+1) 
+cd ui
+
+2)
+mvn clean compile javafx:jlink jpackage:jpackage -pl ui
+```
+
+### Pacaging JavaFX client application as executable:
+
+1) Navigate to UI-module in salarychecker directiory.
+2) Create client application as executable.
+3) Navigate to the target/salarychecker/bin directory in ui-module.
+4) Run executable client application.
+
+```sh
+1)
+cd ui
+
+2)
+mvn clean javafx:jlink
+
+3) 
+cd target/SalaryCheckerFX/bin
+
+4)
+./SalaryCheckerFX
+```
 
 ## Userstories
 #### Userstories for later releases will be added as functionality improves during later releases
@@ -17,9 +78,11 @@ Many people are employed in the sales industry, and a lot of companies reward th
 #### Story 2:
     "An emplyee feels like he/she is on a positive trend in terms of salary. He/She wishes to compare her last months sales to previous ones. She navigates to the "Tidligere lønninger" tab and examines the overview of her previous paychecks.
 
-    The emplye wishes to figure out wether this trend is caused by her selling more products, working more hours, or a combination of the two. The employee proceeds to navigate to the "Timelister" tab where she can se an overview of her working hours."
 #### Story 3: 
-    "After realising the positive trend in salary the emplyee notices she will enter a different tax bracket than he/she was previously in. He/She wishes to update his/her profile accordingly. The employee also realizes his/her password has not been changed in a while and wishes to update this as well. The employee opens the settings window where he/she can make the previously mentioned changes."   
+    "After realising the positive trend in salary the emplyee notices she will enter a different tax bracket than he/she was previously in. He/She wishes to update his/her profile accordingly. The employee also realizes his/her password has not been changed in a while and wishes to update this as well. The employee opens the settings window where he/she can make the previously mentioned changes."  
+
+### Userstory release 3:
+     "An employer wishes to check if he has made any errors regarding paychecks. He loggs into the client-application, and gets an overview of users. He checks every indiviual user and checks for differences in expected and actual payout."
 
 ## Intended functionality at final release:
 ### For employee (User): 
@@ -64,6 +127,8 @@ Many people are employed in the sales industry, and a lot of companies reward th
         - [README.md](../../docs/release1/README.md) :point_right: Documentation for release 1
     - [release2](../../docs/release2)
         - [README.md](../../docs/release2/README.md) :point_right: Documentation for release 2
+    - [release3](../../docs/release3)
+        - [README.md](../../docs/release3/README.md) :point_right: Documentation for release 3
 
 
 - [salary-checker](../salary-checker)
@@ -97,23 +162,65 @@ Many people are employed in the sales industry, and a lot of companies reward th
                 - [UserSaleTest](./core/src/test/java/salarychecker/core/UserSaleTest.java) :point_right: Test for UserSale.Java
                 - [UserTest](./core/src/test/java/salarychecker/core/UserTest.java) :point_right: Test for User.java
                 - [UserValidationTest](./core/src/test/java/salarychecker/core/UserValidationTest.java) :point_right: Test for UserValidation.java
+    - [retserver](.restserver/src/main/java/salarychecker/restserver/)
+        - [RestServerApplication](.restserver/src/main/java/salarychecker/restserver/RestServerApplication.java) :point_right: RestServer Application Class
+        - [SalaryCheckerController](.restserver/src/main/java/salarychecker/restserver/SalaryCheckerController.java) :point_right: Restserver Application Cntroller.
+        - [SalaryCheckerService](.restserver/src/main/java/salarychecker/restserver/SalaryCheckerService.java) :point_right: Service class for Rest Server.
                 
     - [ui](./ui)
-        - [salarychecker/ui](./ui/src/main/java/salarychecker/ui)
-            - [SalaryCheckerApp](./ui/src/main/java/salarychecker/ui/SalaryCheckerApp.java) :point_right: App class.
-            - [LoginController](./ui/src/main/java/salarychecker/ui/LoginController.java) :point_right: Controller for the login scene.
-            - [AdminController](./ui/src/main/java/salarychecker/ui/AdminController.java) :point_right: Controller for the admin scene.
-            - [HomepageController](./ui/src/main/java/salarychecker/ui/HomepageController.java) :point_right: Controller for the user homepage.
-            - [SettingsController](./ui/src/main/java/salarychecker/ui/SettingsController.java) :point_right: Controller for the settings scene.
+        - [salarychecker](./salarychecker) 
+            - [ui](./ui/src/main/java/salarychecker/ui)
+                - [SalaryCheckerApp](./ui/src/main/java/salarychecker/ui/controllers/SalaryCheckerApp.java) :point_right: App class.
+                - [controllers](./ui/src/main/java/salarychecker/ui/controllers)
+                    - [AbstractController](./ui/src/main/java/salarychecker/ui/controllers/AbstractController.java) :point_right: Abstract controller for application.
+                    - [AdminStartPageController](./ui/src/main/java/salarychecker/ui/controllers/AdminSTartPAgeController.java) :point_right: Controller for Admin start scene.
+                    - [AdminUserOverviewController](./ui/src/main/java/salarychecker/ui/controllers/AdminUserOverviewController.java) :point_right: Controller for the admins overview of users. 
+                    - [CreateUserController](./ui/src/main/java/salarychecker/ui/controllers/CreateUserController.java) :point_right: Controller for admins ability to create users.
+                    - [LoginController](./ui/src/main/java/salarychecker/ui/controllers/LoginController.java) :point_right: Controller for the login scene.
+                    
+                    - [ProfileController](./ui/src/main/java/salarychecker/ui/controllers/ProfileController.java) :point_right: Controller for users profile scene.
+                    - [HomepageController](./ui/src/main/java/salarychecker/ui/controllers/HomepageController.java) :point_right: Controller for the user start scene.
+                    - [SettingsController](./ui/src/main/java/salarychecker/ui/controllers/SettingsController.java) :point_right: Controller for the users settings scene.
+                    - [SalariesController](./ui/src/main/java/salarychecker/ui/controllers/SalariesController.java) :point_right: Controller for the users overview of previous salaries.
+                    - [SalaryCalculationController](./ui/src/main/java/salarychecker/ui/controllers/SalaryCalculationController) :point_right: Controller for users functionality to calculate salary.
+
+                - [dataccess](./ui/src/main/java/salarychecker/dataaccess)
+                    - [SalaryCheckerAccess](./ui/src/main/java/salarychecker/dataaccess/SalaryCheckerAccess.java) :point_right: Interface for data access objects.
+                    - [RemoteSalaryCheckerAccess](./ui/src/main/java/salarychecker/dataaccess/RemoteSalaryCheckerAccess.java) :point_right: Remote implementation of DAO interface.
+                    - [LocalSalaryCheckerAccess](./ui/src/main/java/salarychecker/dataaccess/LocalSalaryCheckerAccess.java) :point_right: Local implementation of DAO interface.
         - [resources](./ui/src/main/resources)
-            - [LogIn.fxml](./ui/src/main/resources/LogIn.fxml) :point_right: FXML-file for login page.
-            - [HomePage.fxml](./ui/src/main/resources/HomePage.fxml) :point_right: FXML-file for homepage.
-            - [Admin.fxml](./ui/src/main/resources/Admin.fxml) :point_right: FXML-file for admin page.
-            - [Settings.fxml](./ui/src/main/resources/Settings.fxml) :point_right: FXML-file for settings page.
+            - [Views](./ui/src/main/resources/views)
+                - [LogIn.fxml](./ui/src/main/resources/views/LogIn.fxml) :point_right: FXML-file for login page.
+                - [HomePage.fxml](./ui/src/main/resources/views/HomePage.fxml) :point_right: FXML-file for homepage.
+                - [AdminStartPage.fxml](./ui/src/main/resources/views/AdminStartPage.fxml) :point_right: FXML-file for admin start scene.
+                - [CreateUser.fxml](./ui/src/main/resources/views/CreateUser.fxml) :point_right: FXML-file for admin creating users
+                - [AdminUserOverview.fxml](./ui/src/main/resources/views/AdminUserOverview.fxml) :point_right: FXML-file for user overview for admin.
+                - [Profile.fxml](./ui/src/main/resources/views/Profile.fxml) :point_right: FXML-file for users profile.
+                - [Salaries.fxml](./ui/src/main/resources/views/Salaries.fxml) :point_right: FXML-file for users overview of previous salaries.
+                - [SalaryCalculation.fxml](./ui/src/main/resources/views/SalaryCalculation.fxml) :point_right: FXML-file for users ability to calculate salaray.
+                - [Settings.fxml](./ui/src/main/resources/views/Settings.fxml) :point_right: FXML-file for settings page.
+            - [Styles](./ui/src/main/resources/styles)
+                - [AdminStartStylesheet](./ui/src/main/resources/styles/AdminSTartStylesheet.css)
+                - [UserOverviewStylesheet](./ui/src/main/resources/styles/UserOverviewStylesheet.css)
+                - [CreateUserStylesheet](./ui/src/main/resources/styles/CreateUserStylesheet.css)
+                - [BackgroundStylesheet](./ui/src/main/resources/styles/BackgroundStylesheet.css)
+                - [LogInStylesheet](./ui/src/main/resources/styles/LogInStylesheet.css)
+                - [ProfileStylesheet](./ui/src/main/resources/styles/ProfileStylesheet.css)
+                - [SalariesStylesheet](./ui/src/main/resources/styles/SalariesStylesheet.css)
+                - [CalculationStylesheet](./ui/src/main/resources/styles/CalculationStylesheet.css)
+                - [SettingsStylesheet](./ui/src/main/resources/styles/SettingsStylesheet.css)
+
         - [tests](./ui/src/test)
-            - [AdminControllerTest](./ui/src/test/AdminControllerTest.java) :point_right: Test for AdminController.java
-            - [HomePageControllerTest](./ui/src/test/HomePageControllerTest.java) :point_right: Test for HomePageController.java
-            - [LogInControllerTest](./ui/src/test/LogInControllerTest.java) :point_right: Test for LogInController.java
+            - [ui/controllers](./ui/src/main/java/salarychecker/ui/controllers)
+                - [AdminStartPageControllerTest](./ui/src/test/salarychecker/ui/controllers/AdminStartPageControllerTest.java) :point_right: Test for AdminStartPageController.java
+                - [AdminUserOverviewControllerTest](./ui/src/test/salarychecker/ui/controllers/AdminUserOverviewControllerTest.java) :point_right: Test for AdminUserOverviewController.
+                - [CreateUserControllerTest](./ui/src/test/salarychecker/ui/controllers/CreateUserControllerTest.java) :point_right: Test for CreateUserController.
+                - [HomePageControllerTest](./ui/src/test/salarychecker/ui/controllers/HomePageControllerTest.java) :point_right: Test for HomePageController.java
+                - [LogInControllerTest](./ui/src/test/salarychecker/ui/controllers/LogInControllerTest.java) :point_right: Test for LogInController.java
+                - [ProfileControllerTest](./ui/src/test/salarychecker/ui/controllers/ProfileControllerTest.java) :point_right: Test for ProfileController.java
+                - [SalariesControllerTest](./ui/src/test/salarychecker/ui/controllers/SalariesControllerTest.java) :point_right: Test for SalariesController.java.
+                - [SalaryCalculationControllerTest](./ui/src/test/salarychecker/ui/controllers/SalaryCalculationControllerTest.java) :point_right: Test for SalaryCalculationController.
+                - [SettingsControllerTest](./ui/src/test/salarychecker/ui/controllers/SettingsControllerTest.java) :point_right: Test for SettingsController.java.
                     
 
 

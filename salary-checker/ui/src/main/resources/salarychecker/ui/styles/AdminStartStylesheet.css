@@ -1,7 +1,26 @@
+#adminStartPane{
+    -fx-height:850;
+    -fx-width: 1340;
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
+}
+
+#menuPane{
+    -fx-flex-wrap: wrap;
+}
+#adminName{
+    -fx-flex-wrap: wrap;
+}
+#pageTitle{
+    -fx-flex-wrap: wrap;
+}
+
 #logOutButton{
     -fx-background-color: #ffff; 
     -fx-border-color: #333;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 
 #logOutButton:hover{
@@ -9,12 +28,15 @@
     -fx-background-color: rgb(112, 4, 4);
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 
 #hideMenuButton{
     -fx-background-color: #ffff; 
     -fx-border-color: #333;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
 }
 
 #hideMenuButton:hover{
@@ -22,12 +44,16 @@
     -fx-background-color: #333;
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 
 #showMenuButton{
     -fx-background-color: #ffff; 
     -fx-border-color: #333;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 
 #showMenuButton:hover{
@@ -35,6 +61,8 @@
     -fx-background-color: #333;
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 
 #menuUsersButton{
@@ -42,12 +70,16 @@
     -fx-text-fill: #ffffff;
     -fx-text-decoration: underline;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 #menuUsersButton:hover{
     -fx-transition-duration: 0.4s;
     -fx-background-color: rgb(32, 32, 32);
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 
 #menuNewButton{
@@ -55,6 +87,8 @@
     -fx-text-fill: #ffffff;
     -fx-text-decoration: underline;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }
 
 #menuNewButton:hover{
@@ -62,4 +96,6 @@
     -fx-background-color: rgb(32, 32, 32);
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
+    -fx-display: flex;
+    -fx-flex-wrap: wrap;
 }

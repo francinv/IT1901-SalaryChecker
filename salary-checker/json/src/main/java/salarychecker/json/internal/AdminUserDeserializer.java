@@ -8,12 +8,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import salarychecker.core.AdminUser;
 import salarychecker.core.EncryptDecrypt;
 
@@ -53,16 +47,9 @@ public class AdminUserDeserializer extends JsonDeserializer<AdminUser> {
 
       JsonNode passwordNode = objectNode.get("password");
       if (passwordNode instanceof TextNode) {
-
-        try {
           String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(),
               firstnameNode.asText() + lastnameNode.asText());
           user.setPassword(decryptedPassword);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException
-                | IllegalBlockSizeException e) {
-          e.printStackTrace();
-        }
       }
       return user;
     }

@@ -10,12 +10,6 @@ import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import salarychecker.core.EncryptDecrypt;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
@@ -57,30 +51,16 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
       JsonNode passwordNode = objectNode.get("password");
       if (passwordNode instanceof TextNode) {
-
-        try {
           String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(),
               firstnameNode.asText() + lastnameNode.asText());
           user.setPassword(decryptedPassword);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException
-                | IllegalBlockSizeException e) {
-          e.printStackTrace();
-        }
       }
 
       JsonNode socialNumberNode = objectNode.get("socialNumber");
       if (socialNumberNode instanceof TextNode) {
-
-        try {
           String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(),
               lastnameNode.asText() + firstnameNode.asText());
           user.setSocialNumber(decryptedSocialNumber);
-        } catch (InvalidKeyException | NoSuchPaddingException | NoSuchAlgorithmException
-                | InvalidAlgorithmParameterException | BadPaddingException
-                | IllegalBlockSizeException e) {
-          e.printStackTrace();
-        }
       }
 
       JsonNode employeeNumberNode = objectNode.get("employeeNumber");
