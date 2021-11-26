@@ -80,8 +80,8 @@ public class EncryptDecrypt {
       keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
       writStream = new FileOutputStream(path);
       keyStore.store(writStream, jksPassword);
-    } catch (IOException | NoSuchAlgorithmException | 
-             CertificateException | KeyStoreException e) {
+    } catch (IOException | NoSuchAlgorithmException 
+      | CertificateException | KeyStoreException e) {
       System.out.println(e.getMessage());
     } finally {
       try {
@@ -120,8 +120,8 @@ public class EncryptDecrypt {
       readStream.close();
       return secretKey;
 
-    } catch (UnrecoverableKeyException | CertificateException | 
-             KeyStoreException | NoSuchAlgorithmException | IOException e) {
+    } catch (UnrecoverableKeyException | CertificateException 
+        | KeyStoreException | NoSuchAlgorithmException | IOException e) {
       System.out.println(e.getMessage());
     }
     return null;
@@ -166,9 +166,9 @@ public class EncryptDecrypt {
       cipher.init(Cipher.ENCRYPT_MODE, secretKey);
       storeToKeyStore(alias, secretKey);
       cipherText = cipher.doFinal(strToEncrypt.getBytes(Charset.forName("UTF-8")));
-    } catch (NoSuchAlgorithmException | NoSuchPaddingException | 
-             InvalidKeyException | IllegalBlockSizeException | 
-             BadPaddingException e) {
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException 
+       | InvalidKeyException | IllegalBlockSizeException 
+       | BadPaddingException e) {
       System.out.println(e.getMessage());
     }
     
@@ -194,9 +194,9 @@ public class EncryptDecrypt {
       cipher.init(Cipher.DECRYPT_MODE, secretKey);
       plainText = cipher.doFinal(Base64.getDecoder()
         .decode(cipherText));
-    } catch (NoSuchAlgorithmException | NoSuchPaddingException | 
-             InvalidKeyException | IllegalBlockSizeException | 
-             BadPaddingException e) {
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException 
+      | InvalidKeyException | IllegalBlockSizeException 
+      | BadPaddingException e) {
       // TODO Auto-generated catch block
       System.out.println(e.getMessage());
     }

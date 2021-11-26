@@ -158,6 +158,6 @@ public class SettingsController extends AbstractController {
    */
   @FXML
   public void closeButtonAction(ActionEvent event) {
-    setAnchorPane(CONTROLLERS.PROFILE, settingsPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.PROFILE, settingsPane, user, accounts, dataAccess);
   }
 }

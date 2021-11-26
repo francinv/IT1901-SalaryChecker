@@ -65,7 +65,7 @@ public class ProfileController extends AbstractController {
    */
   @FXML
   private void changeProfileAction(ActionEvent event) {
-    setAnchorPane(CONTROLLERS.SETTINGS, profilePane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.SETTINGS, profilePane, user, accounts, dataAccess);
   }
 
 }

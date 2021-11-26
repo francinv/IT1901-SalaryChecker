@@ -119,7 +119,7 @@ public class Accounts implements IUserObserver {
   }
   /**
    * get accounts by email.
-   * 
+   *
    * @param email the email
    * @return accounts if they exist, null else
    */
@@ -131,7 +131,7 @@ public class Accounts implements IUserObserver {
   }
   /**
    * gets accouns by employerEmail.
-   * 
+   *
    * @param employerEmail employers email
    * @return users with the same employer.
    */
@@ -140,7 +140,7 @@ public class Accounts implements IUserObserver {
     List<AbstractUser> usersWithSameEmployer = new ArrayList<>();
     for (AbstractUser abstractUser : accounts) {
       if (abstractUser instanceof User) {
-        if (((User)abstractUser).getEmployerEmail().equals(employerEmail)) {
+        if (((User) abstractUser).getEmployerEmail().equals(employerEmail)) {
           usersWithSameEmployer.add(abstractUser);
         }
       }
@@ -259,7 +259,7 @@ public class Accounts implements IUserObserver {
   /**
    * This method is needed in server, when a client that uses the API,
    * changes the attribute of a User object.
-   * 
+   *
    * @param user        to change
    * @param indexOfUser in list
    */

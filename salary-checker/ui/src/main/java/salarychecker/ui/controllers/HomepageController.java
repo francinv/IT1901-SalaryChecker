@@ -45,7 +45,7 @@ public class HomepageController extends AbstractController {
    */
   @FXML
   private void logOutAction(ActionEvent event) {
-    setScene(CONTROLLERS.LOGIN, event, null, null, null);
+    setScene(Controllers.LOGIN, event, null, null, null);
   }
 
   /**
@@ -72,7 +72,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToProfileAction(ActionEvent event) {
     pageTitle.setText("Profil");
-    setAnchorPane(CONTROLLERS.PROFILE, startPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.PROFILE, startPane, user, accounts, dataAccess);
   }
 
   /**
@@ -83,7 +83,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToCalcAction(ActionEvent event) {
     pageTitle.setText("Utregning av lønn");
-    setAnchorPane(CONTROLLERS.SALARYCALC, startPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.SALARYCALC, startPane, user, accounts, dataAccess);
   }
 
   /**
@@ -94,7 +94,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToSalAction(ActionEvent event) {
     pageTitle.setText("Mine lønninger");
-    setAnchorPane(CONTROLLERS.SALARIES, startPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.SALARIES, startPane, user, accounts, dataAccess);
   }
 
 

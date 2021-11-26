@@ -66,9 +66,9 @@ public class LoginController extends AbstractController {
       userval.isValidLogIn(usernameField, passwordField, accounts);
       user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
-        setScene(CONTROLLERS.HOME, event, user, accounts, dataAccess);
+        setScene(Controllers.HOME, event, user, accounts, dataAccess);
       } else if (user instanceof AdminUser) {
-        setScene(CONTROLLERS.ADMIN, event, user, accounts, dataAccess);
+        setScene(Controllers.ADMIN, event, user, accounts, dataAccess);
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());

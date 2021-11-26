@@ -66,7 +66,7 @@ public class AdminStartPageController extends AbstractController {
   @FXML
   private void goToUsersAction(ActionEvent event) {
     pageTitle.setText("Brukere");
-    setAnchorPane(CONTROLLERS.ADMINOVERVIEW, adminStartPane, adminUser, accounts, dataAccess);
+    setAnchorPane(Controllers.ADMINOVERVIEW, adminStartPane, adminUser, accounts, dataAccess);
   }
 
   /**
@@ -77,7 +77,7 @@ public class AdminStartPageController extends AbstractController {
   @FXML
   private void goToNewUAction(ActionEvent event) {
     pageTitle.setText("Opprett bruker");
-    setAnchorPane(CONTROLLERS.CREATEUSER, adminStartPane, adminUser, accounts, dataAccess);
+    setAnchorPane(Controllers.CREATEUSER, adminStartPane, adminUser, accounts, dataAccess);
   }
 
 
@@ -89,6 +89,6 @@ public class AdminStartPageController extends AbstractController {
    */
   @FXML
   private void logOutAction(ActionEvent event) {
-    setScene(CONTROLLERS.LOGIN, event, null, null, null);
+    setScene(Controllers.LOGIN, event, null, null, null);
   }
 }

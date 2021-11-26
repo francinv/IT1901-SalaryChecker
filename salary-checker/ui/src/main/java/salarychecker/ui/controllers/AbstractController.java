@@ -32,7 +32,7 @@ public abstract class AbstractController {
    * The enum also contains get methods for both controller-instance and
    * fxml-string.
    */
-  public enum CONTROLLERS {
+  public enum Controllers {
     LOGIN("LogIn.fxml", new LoginController()),
     ADMIN("AdminStartPage.fxml", new AdminStartPageController()),
     HOME("HomePage.fxml", new HomepageController()),
@@ -46,7 +46,7 @@ public abstract class AbstractController {
     private final String fxml;
     private final AbstractController abstractController;
 
-    CONTROLLERS(String fxml, AbstractController abstractController) {
+    Controllers(String fxml, AbstractController abstractController) {
       this.fxml = "views/" + fxml;
       this.abstractController = abstractController;
     }
@@ -94,7 +94,7 @@ public abstract class AbstractController {
    * @param user that logs in.
    * @param accounts from persistence.
    */
-  public void setScene(CONTROLLERS type, Event event, AbstractUser user, 
+  public void setScene(Controllers type, Event event, AbstractUser user, 
       Accounts accounts, SalaryCheckerAccess dataAccess) {
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     try {
@@ -130,7 +130,7 @@ public abstract class AbstractController {
    * @param accounts from persistence.
    */
   public void setAnchorPane(
-      CONTROLLERS type, AnchorPane pane, AbstractUser user, 
+      Controllers type, AnchorPane pane, AbstractUser user, 
       Accounts accounts, SalaryCheckerAccess dataAccess) {
     try {
       AbstractController controller = type.getControllerInstance();
