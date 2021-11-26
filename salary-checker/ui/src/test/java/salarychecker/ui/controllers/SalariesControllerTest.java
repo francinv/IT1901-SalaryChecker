@@ -1,5 +1,8 @@
 package salarychecker.ui.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,10 +16,9 @@ import salarychecker.core.User;
 import salarychecker.core.UserSale;
 import salarychecker.json.SalaryCheckerPersistence;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Tests for SalariesController.
+ */
 public class SalariesControllerTest extends ApplicationTest {
 
   private TableView<UserSale> salariesTable;
@@ -30,7 +32,8 @@ public class SalariesControllerTest extends ApplicationTest {
     final Parent parent = loader.load();
     final Scene scene = new Scene(parent);
 
-    User user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
+    User user = new User("Seran", "Shanmugathas", "seran@live.no", 
+        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
     createTestUsers();
     salariesController.setUser(user);
     salariesController.setAccounts(persistence.loadAccounts());
@@ -44,12 +47,12 @@ public class SalariesControllerTest extends ApplicationTest {
   }
 
   @BeforeEach
-  public void initFields(){
+  public void initFields() {
     salariesTable = lookup("#salariesTable").query();
   }
 
   @Test
-  public void checkIfUserSalesShown(){
+  public void checkIfUserSalesShown() {
     UserSale userSale1 = salariesTable.getItems().get(0);
     assertEquals("August 2021", userSale1.getSalesperiod());
     assertEquals(15643.0, userSale1.getExpected());
@@ -64,8 +67,10 @@ public class SalariesControllerTest extends ApplicationTest {
 
 
   private void createTestUsers() throws IOException {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-    User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
+    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", 
+        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
+    User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", 
+        "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
 
     Accounts accounts = new Accounts();
     accounts.addUser(testuser1);

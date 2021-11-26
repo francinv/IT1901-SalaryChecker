@@ -15,4 +15,5 @@ module salarychecker.ui {
     exports salarychecker.ui.controllers;
 
     opens salarychecker.dataaccess;
+    exports salarychecker.dataaccess;
 }

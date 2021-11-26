@@ -25,17 +25,17 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
    * Loads accounts from json-file.
    */
   public LocalSalaryCheckerAccess() {
-      persistence.setFilePath("Accounts.json");
+    persistence.setFilePath("Accounts.json");
+    try {
+      this.accounts = persistence.loadAccounts();
+    } catch (IllegalStateException | IOException e) {
+      this.accounts = new Accounts();
       try {
-          this.accounts = persistence.loadAccounts();
-      } catch (IllegalStateException | IOException e) {
-          this.accounts = new Accounts();
-          try {
-              persistence.saveAccounts(accounts);
-          } catch (IllegalStateException | IOException e1) {
-              System.out.println(e1.getMessage());
-          }
+        persistence.saveAccounts(accounts);
+      } catch (IllegalStateException | IOException e1) {
+        System.out.println(e1.getMessage());
       }
+    }
   }
 
   @Override

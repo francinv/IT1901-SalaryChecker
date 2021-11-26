@@ -60,7 +60,7 @@ public class Calculation {
   }
   /**
    * Constructor for initializing a calculation object.
-   * 
+   *
    * @param salesperiod sales period
    * @param hours working hours
    * @param mobileamount mobile amount

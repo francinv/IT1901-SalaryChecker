@@ -62,7 +62,7 @@ public class AdminUser extends AbstractUser {
   }
   /**
    * Method for adding a user.
-   * 
+   *
    * @param user the user
    */
   

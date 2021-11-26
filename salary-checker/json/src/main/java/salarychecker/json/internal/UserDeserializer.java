@@ -51,16 +51,16 @@ public class UserDeserializer extends JsonDeserializer<User> {
 
       JsonNode passwordNode = objectNode.get("password");
       if (passwordNode instanceof TextNode) {
-          String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(),
+        String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(),
               firstnameNode.asText() + lastnameNode.asText());
-          user.setPassword(decryptedPassword);
+        user.setPassword(decryptedPassword);
       }
 
       JsonNode socialNumberNode = objectNode.get("socialNumber");
       if (socialNumberNode instanceof TextNode) {
-          String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(),
+        String decryptedSocialNumber = encryptDecrypt.decrypt(socialNumberNode.asText(),
               lastnameNode.asText() + firstnameNode.asText());
-          user.setSocialNumber(decryptedSocialNumber);
+        user.setSocialNumber(decryptedSocialNumber);
       }
 
       JsonNode employeeNumberNode = objectNode.get("employeeNumber");

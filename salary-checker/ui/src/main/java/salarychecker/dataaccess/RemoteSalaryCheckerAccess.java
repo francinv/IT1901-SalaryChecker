@@ -312,7 +312,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
         client.send(request, HttpResponse.BodyHandlers.ofString());
     System.out.println(httpResponse.body());
     System.out.println(httpResponse.statusCode());
-    }
+  }
 
   @Override
   public UserSale getUserSale(String salesperiod, String emailOfUser) {

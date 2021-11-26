@@ -12,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is a class controls the AdminUserOverview - scene.

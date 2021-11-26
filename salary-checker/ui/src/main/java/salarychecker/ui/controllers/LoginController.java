@@ -1,22 +1,17 @@
 package salarychecker.ui.controllers;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
-import salarychecker.dataaccess.LocalSalaryCheckerAccess;
-import salarychecker.dataaccess.RemoteSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
@@ -36,18 +31,19 @@ public class LoginController extends AbstractController {
   private SalaryCheckerAccess dataAccess;
   private SalaryCheckerConfig config;
 
-    /**
-     * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
-     * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
-     * otherwise LocalSalaryCheckerAccess.
-     * @throws IOException
-     * @throws URISyntaxException
-     */
-    @FXML
-    void initialize() throws IOException, URISyntaxException {
-        this.dataAccess = super.dataAccess;
-        this.accounts = dataAccess.readAccounts();
-    }
+  /**
+   * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
+   * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
+   * otherwise LocalSalaryCheckerAccess.
+   *
+   * @throws IOException if not found
+   * @throws URISyntaxException if string doesn't parse
+   */
+  @FXML
+  void initialize() throws IOException, URISyntaxException {
+    this.dataAccess = super.dataAccess;
+    this.accounts = dataAccess.readAccounts();
+  }
 
   /**
    * This is the method that handles the log-in.
@@ -71,14 +67,13 @@ public class LoginController extends AbstractController {
       user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
         setScene(CONTROLLERS.HOME, event, user, accounts, dataAccess);
-      }
-      else if (user instanceof AdminUser){
+      } else if (user instanceof AdminUser) {
         setScene(CONTROLLERS.ADMIN, event, user, accounts, dataAccess);
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
-    // } catch (Exception e) {
-    //   errorDisplay.setText(Errors.NOT_REGISTERED.getMessage());
+      // } catch (Exception e) {
+      //   errorDisplay.setText(Errors.NOT_REGISTERED.getMessage());
     }
   }
 

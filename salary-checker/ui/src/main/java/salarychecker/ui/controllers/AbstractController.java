@@ -94,7 +94,8 @@ public abstract class AbstractController {
    * @param user that logs in.
    * @param accounts from persistence.
    */
-  public void setScene(CONTROLLERS type, Event event, AbstractUser user, Accounts accounts, SalaryCheckerAccess dataAccess) {
+  public void setScene(CONTROLLERS type, Event event, AbstractUser user, 
+      Accounts accounts, SalaryCheckerAccess dataAccess) {
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     try {
       AbstractController controller = type.getControllerInstance();
@@ -129,7 +130,8 @@ public abstract class AbstractController {
    * @param accounts from persistence.
    */
   public void setAnchorPane(
-      CONTROLLERS type, AnchorPane pane, AbstractUser user, Accounts accounts, SalaryCheckerAccess dataAccess) {
+      CONTROLLERS type, AnchorPane pane, AbstractUser user, 
+      Accounts accounts, SalaryCheckerAccess dataAccess) {
     try {
       AbstractController controller = type.getControllerInstance();
       FXMLLoader loader = new FXMLLoader();
