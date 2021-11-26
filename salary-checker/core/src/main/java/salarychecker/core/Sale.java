@@ -14,7 +14,7 @@ public class Sale {
   private String rebate;
   private String nvk;
   private String product;
-  private double provisjon;
+  private double commission;
 
   /**
    * Creates Sale with all relevant parameters.
@@ -28,11 +28,11 @@ public class Sale {
    * @param rebate discount on sale
    * @param nvk nvk
    * @param product product of sale
-   * @param provisjon commission
+   * @param commission commission
    */
   public Sale(String salesId, String anleggStatus, String salgsType, String campaign,
               String brand, String tx3, String rebate, String nvk, String product,
-              Double provisjon) {
+              double commission) {
 
     this.salesId = salesId;
     this.anleggStatus = anleggStatus;
@@ -43,7 +43,7 @@ public class Sale {
     this.rebate = rebate;
     this.nvk = nvk;
     this.product = product;
-    this.provisjon = provisjon;
+    this.commission = commission;
   }
 
   /**
@@ -55,16 +55,16 @@ public class Sale {
   /**
    * Set and get methods.
    */
-  public double getProvisjon() {
-    return this.provisjon;
+  public double getCommission() {
+    return this.commission;
   }
 
-  public void setProvisjon(double provisjon) {
-    this.provisjon = provisjon;
+  public void setCommission(double commission) {
+    this.commission = commission;
   }
 
-  public void updateProvisjon(int number) {
-    this.provisjon += number;
+  public void updateCommission(int number) {
+    this.commission += number;
   }
 
   public String getSalesDate() {
@@ -151,7 +151,7 @@ public class Sale {
       + ", Rabatt='" + getRebate() + "'"
       + ", Norsk VannKraft='" + getNvk() + "'"
       + ", Produktnavn='" + getProduct() + "'"
-      + ", Provisjon='" + getProvisjon() + "'"
+      + ", Provisjon='" + getCommission() + "'"
       + "}";
   }
 }

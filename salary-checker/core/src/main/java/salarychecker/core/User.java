@@ -79,7 +79,7 @@ public class User extends AbstractUser {
    * @param socialNumber the socialNumber to set
    */
   public void setSocialNumber(String socialNumber) {
-    userValidation.checkValidSocialNumber(socialNumber);
+    UserValidation.checkValidSocialNumber(socialNumber);
     this.socialNumber = socialNumber;
   }
 
@@ -98,7 +98,7 @@ public class User extends AbstractUser {
    * @param employeeNumber the employee number to set
    */
   public void setEmployeeNumber(int employeeNumber) {
-    userValidation.checkValidEmployeeNumber(employeeNumber);
+    UserValidation.checkValidEmployeeNumber(employeeNumber);
     this.employeeNumber = employeeNumber;
     for (UserObserver userObserver : userObs) {
       userObserver.userInfoTaxCountChanged(this, employeeNumber);
@@ -120,7 +120,7 @@ public class User extends AbstractUser {
    * @param employerEmail the employer email to set
    */
   public void setEmployerEmail(String employerEmail) {
-    userValidation.checkValidEmail(employerEmail);
+    UserValidation.checkValidEmail(employerEmail);
     this.employerEmail = employerEmail;
     for (UserObserver userObserver : userObs) {
       userObserver.userInfoStringChanged(this, employerEmail);
@@ -142,7 +142,7 @@ public class User extends AbstractUser {
    * @param taxCount the tax count to set
    */
   public void setTaxCount(double taxCount) {
-    userValidation.checkValidTaxCount(taxCount);
+    UserValidation.checkValidTaxCount(taxCount);
     this.taxCount = taxCount;
     for (UserObserver userObserver : userObs) {
       userObserver.userInfoDoubleChanged(this, taxCount);
@@ -164,7 +164,7 @@ public class User extends AbstractUser {
    * @param hourRate the hour rate to set
    */
   public void setHourRate(double hourRate) {
-    userValidation.checkValidHourRate(hourRate);
+    UserValidation.checkValidHourRate(hourRate);
     this.hourRate = hourRate;
     for (UserObserver userObserver : userObs) {
       userObserver.userInfoDoubleChanged(this, hourRate);

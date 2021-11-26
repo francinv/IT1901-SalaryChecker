@@ -24,7 +24,7 @@ public class SaleTest {
         Assertions.assertEquals("rebateString", testSale.getRebate());
         Assertions.assertEquals("nvkString", testSale.getNvk());
         Assertions.assertEquals("productString", testSale.getProduct());
-        Assertions.assertEquals(50.0, testSale.getProvisjon());
+        Assertions.assertEquals(50.0, testSale.getCommission());
     }
 
     @Test
@@ -56,8 +56,8 @@ public class SaleTest {
         testSale.setProduct("productString2");
         Assertions.assertEquals("productString2", testSale.getProduct());
 
-        testSale.setProvisjon(60.0);
-        Assertions.assertEquals(60.0, testSale.getProvisjon());
+        testSale.setCommission(60.0);
+        Assertions.assertEquals(60.0, testSale.getCommission());
     }
     
 }

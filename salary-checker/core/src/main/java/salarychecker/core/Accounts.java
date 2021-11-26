@@ -217,7 +217,7 @@ public class Accounts implements UserObserver {
    * @param user the user
    * @param hoursal new hoursal
    */
-  public void updateHourSal(User user, Double hoursal) {
+  public void updateHourSal(User user, double hoursal) {
     for (AbstractUser u : accounts) {
       if (u.getEmail().equals(user.getEmail())) {
         user = (User) u;
@@ -232,7 +232,7 @@ public class Accounts implements UserObserver {
    * @param user the user
    * @param taxcount new tax count
    */
-  public void updateTaxCount(User user, Double taxcount) {
+  public void updateTaxCount(User user, double taxcount) {
     for (AbstractUser u : accounts) {
       if (u.getEmail().equals(user.getEmail())) {
         user = (User) u;
@@ -297,11 +297,11 @@ public class Accounts implements UserObserver {
    * @param user the user
    * @param changeddouble the changed double
    */
-  public void userInfoDoubleChanged(User user, Double changeddouble) {
-    if (changeddouble.equals(user.getTaxCount())) {
-      updateTaxCount(user, changeddouble);
-    } else if (changeddouble.equals(user.getHourRate())) {
-      updateHourSal(user, changeddouble);
+  public void userInfoDoubleChanged(User user, double changedDouble) {
+    if (changedDouble == user.getTaxCount()) {
+      updateTaxCount(user, changedDouble);
+    } else if (changedDouble == user.getHourRate()) {
+      updateHourSal(user, changedDouble);
     }
   }
 

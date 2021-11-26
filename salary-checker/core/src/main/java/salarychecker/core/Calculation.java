@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Class for calcualting a users salary based on SalesReport.
+ * Class for calcualting a users salary based on SalesReport. In the 
+ * future this app will do the calualtion of more SalesReporsts.
  */
 
 public class Calculation {
@@ -147,126 +148,125 @@ public class Calculation {
     for (Sale s : saleslist) {
 
       if (s.getTx3().equals("Ja") && s.getNvk().equals("Nei")) {
-        s.setProvisjon(75);
+        s.setCommission(75);
       }
       if (s.getNvk().equals("Ja") && s.getTx3().equals("Nei")) {
-        s.setProvisjon(50);
+        s.setCommission(50);
       }
       if (s.getTx3().equals("Ja") && s.getNvk().equals("Ja")) {
-        s.setProvisjon(125);
+        s.setCommission(125);
       }
 
       if (s.getSalgsType().equals("Produktbytte") && WINBACK.contains(s.getCampaign())
           || s.getSalgsType().equals("Produktbytte") && LEADS.contains(s.getCampaign())) {
-        s.updateProvisjon(50);
+        s.updateCommission(50);
       }
 
-      if (BUN.contains(s.getProduct()) && WINBACK.contains(s.getCampaign())
+      checkIfBunWinBackLeadsContainsCampaign(s);
+      checkIfNySalgContainsCampaign(s);
+      checkIfComebackContainsCampaign(s);
+    }
+  }
+
+  /**
+   * Checks if comeback contains campagin, an do the needed 
+   * update of commission.
+   */
+  public void checkIfComebackContainsCampaign(Sale s) {
+    if (COMEBACK.contains(s.getCampaign())) {
+      if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+        s.updateCommission(175);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
+        }
+        if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-50);
+        }
+      }
+      if (NSPOT.contains(s.getProduct())) {
+        s.updateCommission(150);
+        if (s.getRebate().equals("300") || s.getRebate().equals("500")
+            || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-25);
+        }
+      }
+      if (RSPOT.contains(s.getProduct())) {
+        s.updateCommission(125);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
+        }
+      }
+    }
+  }
+
+  /**
+   * Checks if bun and winback lists or bun and leads list, 
+   * contains campagin. If so, do the needed update of commission.
+   */
+  public void checkIfBunWinBackLeadsContainsCampaign(Sale s) {
+    if (BUN.contains(s.getProduct()) && WINBACK.contains(s.getCampaign())
           || BUN.contains(s.getProduct()) && LEADS.contains(s.getCampaign())) {
-        s.updateProvisjon(50);
+        s.updateCommission(50);
       }
+  }
 
-      if (NYSALG.contains(s.getCampaign())) {
-
-        if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
-          s.updateProvisjon(225);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-25);
-          }
-          if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-50);
-          }
+  /**
+   * Checks if nysalg contains campagin, If so, do the needed 
+   * update of commission.
+   */
+  public void checkIfNySalgContainsCampaign(Sale s) {
+    if (NYSALG.contains(s.getCampaign())) {
+      if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+        s.updateCommission(225);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
         }
-        if (NSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(200);
-          if (s.getRebate().equals("300") || s.getRebate().equals("500")
-              || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-25);
-          }
-        }
-        if (RSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(175);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-25);
-          }
-        }
-
-      }
-
-      if (WINBACK.contains(s.getCampaign())) {
-        if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
-          s.updateProvisjon(110);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-30);
-          }
-          if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-60);
-          }
-        }
-        if (NSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(80);
-          if (s.getRebate().equals("300") || s.getRebate().equals("500")
-              || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-30);
-          }
-        }
-        if (RSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(50);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-25);
-          }
-        }
-
-      }
-
-      if (COMEBACK.contains(s.getCampaign())) {
-
-        if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
-          s.updateProvisjon(175);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-25);
-          }
-          if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-50);
-          }
-        }
-        if (NSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(150);
-          if (s.getRebate().equals("300") || s.getRebate().equals("500")
-              || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-25);
-          }
-        }
-        if (RSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(125);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-25);
-          }
+        if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-50);
         }
       }
+      if (NSPOT.contains(s.getProduct())) {
+        s.updateCommission(200);
+        if (s.getRebate().equals("300") || s.getRebate().equals("500")
+            || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-25);
+        }
+      }
+      if (RSPOT.contains(s.getProduct())) {
+        s.updateCommission(175);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
+        }
+      }
+    }
+  }
 
-      if (LEADS.contains(s.getCampaign())) {
-        if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
-          s.updateProvisjon(150);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-35);
-          }
-          if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-70);
-          }
+  /**
+   * Checks if leads list contains campagin, If so, do the needed 
+   * update of commission.
+   */
+  public void checkIfLeadsContainsCampaign(Sale s) {
+    if (LEADS.contains(s.getCampaign())) {
+      if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+        s.updateCommission(150);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-35);
         }
-        if (NSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(115);
-          if (s.getRebate().equals("300") || s.getRebate().equals("500")
-              || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
-            s.updateProvisjon(-15);
-          }
+        if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-70);
         }
-        if (RSPOT.contains(s.getProduct())) {
-          s.updateProvisjon(100);
-          if (s.getRebate().equals("500")) {
-            s.updateProvisjon(-50);
-          }
+      }
+      if (NSPOT.contains(s.getProduct())) {
+        s.updateCommission(115);
+        if (s.getRebate().equals("300") || s.getRebate().equals("500")
+            || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-15);
+        }
+      }
+      if (RSPOT.contains(s.getProduct())) {
+        s.updateCommission(100);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-50);
         }
       }
     }
@@ -277,7 +277,7 @@ public class Calculation {
    */
   public void calculateElectricityCommission() {
     for (Sale s : saleslist) {
-      calculated += s.getProvisjon();
+      calculated += s.getCommission();
     }
   }
 
@@ -389,6 +389,4 @@ public class Calculation {
     double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
     user.addUserSale(new UserSale(this.salesperiod, expectedCalc, this.paid));
   }
-
-
 }

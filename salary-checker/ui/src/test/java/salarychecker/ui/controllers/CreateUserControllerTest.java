@@ -23,9 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateUserControllerTest extends ApplicationTest {
 
-  AdminUser adminUser;
-  SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
-  UserValidation userValidation = new UserValidation();
+  private AdminUser adminUser;
+  private SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
   private Button createUserButton;
   private Button goBackButton;

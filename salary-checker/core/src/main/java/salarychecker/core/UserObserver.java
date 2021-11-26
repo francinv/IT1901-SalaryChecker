@@ -9,7 +9,7 @@ public interface UserObserver {
 
   void userInfoStringChanged(User user, String changedstring);
 
-  void userInfoDoubleChanged(User user, Double changeddouble);
+  void userInfoDoubleChanged(User user, double changeddouble);
 
   void userInfoTaxCountChanged(User user, Integer changedTaxCount);
 }
