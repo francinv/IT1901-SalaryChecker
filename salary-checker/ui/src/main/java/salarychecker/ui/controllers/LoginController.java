@@ -28,7 +28,6 @@ public class LoginController extends AbstractController {
   private Accounts accounts;
 
   private SalaryCheckerAccess dataAccess;
-  private SalaryCheckerConfig config;
 
   /**
    * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
@@ -92,8 +91,4 @@ public class LoginController extends AbstractController {
 
     createButton.setText("Test users created!");
   }
-
-  /*protected void setDataAccess(SalaryCheckerAccess dataAccess) {
-    this.dataAccess = dataAccess;
-  }*/
 }
