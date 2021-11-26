@@ -75,7 +75,7 @@ public class AdminStartPageController extends AbstractController {
    * @param event when user clicks on "Opprett Bruker".
    */
   @FXML
-  private void goToNewUAction(ActionEvent event) {
+  private void goToNewUserAction(ActionEvent event) {
     pageTitle.setText("Opprett bruker");
     setAnchorPane(Controllers.CREATEUSER, adminStartPane, adminUser, accounts, dataAccess);
   }

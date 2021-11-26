@@ -2,7 +2,6 @@ package salarychecker.restserver;
 
 import java.io.IOException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,9 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.multipart.MultipartFile;
-import salarychecker.core.*;
+import salarychecker.core.AbstractUser;
+import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
+import salarychecker.core.Calculation;
+import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.restserver.exceptions.UserAlreadyExistsException;
 import salarychecker.restserver.exceptions.UserNotFoundException;
 import salarychecker.restserver.payload.UploadFileResponse;
@@ -43,6 +46,7 @@ public class SalaryCheckerController {
   }  
   /**
    * Gets user by email if it exists.
+   *
    * @param email the email
    * @return user, if found
    */
@@ -63,7 +67,7 @@ public class SalaryCheckerController {
   }
   /**
    * Posts the login requests entered from client.
-   * 
+   *
    * @param email the email
    * @param password the password
    * @return the user if login is correct
@@ -85,6 +89,7 @@ public class SalaryCheckerController {
   }
   /**
    * Allows post requests to create new users, through the API.
+   *
    * @param user the user
    */
 
@@ -98,7 +103,7 @@ public class SalaryCheckerController {
   }
   /**
    * Method for creating a new admin user.
-   * 
+   *
    * @param newUser new user
    */
 
@@ -112,6 +117,7 @@ public class SalaryCheckerController {
   }
   /**
    * Method for calculating the sales of a user by email.
+   *
    * @param calculation calculates user sales
    * @param emailOfUser email of the user
    */
@@ -141,6 +147,7 @@ public class SalaryCheckerController {
   }
   /**
    * Makes it possible to upload a CSV file.
+   *
    * @param file the file
    * @return file attributes
    */
@@ -154,7 +161,8 @@ public class SalaryCheckerController {
   }
 
   @GetMapping(path = "user/get-user-sale")
-  public UserSale getUserSale(@RequestParam("salesperiod") String salesperiod, @RequestParam("email") String emailOfUser) {
+  public UserSale getUserSale(@RequestParam("salesperiod") String salesperiod, 
+      @RequestParam("email") String emailOfUser) {
     return salaryCheckerService.getUserSale(salesperiod, emailOfUser);
   }
 

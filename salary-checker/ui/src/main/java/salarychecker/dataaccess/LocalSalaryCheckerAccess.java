@@ -19,7 +19,7 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
   private Accounts accounts;
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
-  private File salaryCSV;
+  private File salaryCsv;
 
   /**
    * Loads accounts from json-file.
@@ -107,7 +107,7 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
   @Override
   public void uploadFile(File file) {
-    this.salaryCSV = file;
+    this.salaryCsv = file;
   }
 
   @Override 
@@ -117,11 +117,11 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
   }
 
   public String getFilePath() {
-    return this.salaryCSV.getAbsolutePath();
+    return this.salaryCsv.getAbsolutePath();
   }
 
   public String getFileName() {
-    return this.salaryCSV.getName();
+    return this.salaryCsv.getName();
   }
 
   @Override

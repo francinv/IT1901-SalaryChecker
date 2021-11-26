@@ -48,6 +48,15 @@ public class User extends AbstractUser {
   public User() {
   }
 
+  /**
+   * Super constructor.
+   *
+   * @param firstname first name
+   * @param lastname last name
+   * @param email e-mail
+   * @param employeeNumber employee number
+   */
+
   public User(String firstname, String lastname, String email, int employeeNumber) {
     super.firstname = firstname;
     super.lastname = lastname;
@@ -199,7 +208,8 @@ public class User extends AbstractUser {
   }
 
   public UserSale getUserSale(String salesperiod) {
-    return getUserSaleList().stream().filter(s-> s.getSalesperiod().equals(salesperiod)).findAny().orElse(null);
+    return getUserSaleList().stream().filter(s -> 
+      s.getSalesperiod().equals(salesperiod)).findAny().orElse(null);
   }
 
 

@@ -19,7 +19,7 @@ In order to further ensure a smooth user experience after the final release the 
 - EncryptDecrypt.java
 - Errors.java
 - UserObserver.java
-- SalaryCSVReader.java
+- SalaryCsvReader.java
 - Sale.java
 - UserSale.java
 

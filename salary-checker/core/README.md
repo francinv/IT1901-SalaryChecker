@@ -12,8 +12,8 @@ The core module also includes tests for functionality-classes. The group has foc
 - EncryptDecrypt.java :point_right: Encrypts and decrypts user-passwords.
 - Errors.java :point_right: Initialization of constant error-messages.
 - UserObserver.java :point_right: Interface for observing user objects.
-- SalaryCSVReader.java :point_right: Reads a CSV-file and translates it to processable strings. 
-- Sale.java :point_right: Processes information read from SalaryCSVReder.java.
+- SalaryCsvReader.java :point_right: Reads a Csv-file and translates it to processable strings. 
+- Sale.java :point_right: Processes information read from SalaryCsvReder.java.
 - User.java :point_right: Generates User-objects.
 - UserSale.java :point_right: Calculates differences in expected and actual payout for a given salesperiod. 
 - UserValidation.java :point_right: Validates User and AdminUser-parameters.
@@ -23,7 +23,7 @@ The core module also includes tests for functionality-classes. The group has foc
 - AdminUserTest.java :point_right: Test for AdminUser.java
 - CalculationTest.java :point_right: Test for Calculation.java
 - EncryptDecryptTest.java :point_right: Test for EncryptDecrypt.java
-- SalaryCSVReaderTest.java :point_right: Test for SalaryCSVReader.java
+- SalaryCsvReaderTest.java :point_right: Test for SalaryCsvReader.java
 - SaleTest.java :point_right: Test for Sale.java
 - UserTest.java :point_right: Test for User.java
 - UserSaleTest.java :point_right: Test for UserSale.java
@@ -36,7 +36,7 @@ Secondly, User.java generates a user object, which can be added to the list of u
 
 Furthermore, encrypt decrypt encrypts and decrypts User and admin Passwords. This is done in order to store an encrypted version of the password for securityreasons. 
 
-Lastly, SalaryCSVReader.java allows the application to recieve a CSV-file and store the information in order to generate a sale-object. The sale object is then processed in Calculation.java, and asserted to a user in UserSale.java. Calculation.java processes all sales information from the CSV-file oploaded to SalaryCSVReader.java, and calculates the total worth of a Users salesperiod. UserSale then accesses a given sales-period, and compares it to the user-input given in the user interface. It then calculates the differnece between the amount a user has been paid, and what he is owed. 
+Lastly, SalaryCsvReader.java allows the application to recieve a Csv-file and store the information in order to generate a sale-object. The sale object is then processed in Calculation.java, and asserted to a user in UserSale.java. Calculation.java processes all sales information from the Csv-file oploaded to SalaryCsvReader.java, and calculates the total worth of a Users salesperiod. UserSale then accesses a given sales-period, and compares it to the user-input given in the user interface. It then calculates the differnece between the amount a user has been paid, and what he is owed. 
 
 Test-classes test functionality of respective classes as written in the "TestClasses" section.  
 

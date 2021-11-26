@@ -10,7 +10,7 @@ public class SaleTest {
 
     @BeforeEach
     public void setUp(){
-        testSale = new Sale("17. Mai, 2021" , "anleggStatusString", "salgsTypeString", "campaignString", "brandString", "TX3String", "rebateString", "NVKString", "productString", 50.0);
+        testSale = new Sale("17. Mai, 2021" , "anleggStatusString", "salgsTypeString", "campaignString", "brandString", "tx3String", "rebateString", "nvkString", "productString", 50.0);
     }
 
     @Test
@@ -20,16 +20,16 @@ public class SaleTest {
         Assertions.assertEquals("salgsTypeString", testSale.getSalgsType());
         Assertions.assertEquals("campaignString", testSale.getCampaign());
         Assertions.assertEquals("brandString", testSale.getBrand());
-        Assertions.assertEquals("TX3String", testSale.getTX3());
+        Assertions.assertEquals("tx3String", testSale.getTx3());
         Assertions.assertEquals("rebateString", testSale.getRebate());
-        Assertions.assertEquals("NVKString", testSale.getNVK());
+        Assertions.assertEquals("nvkString", testSale.getNvk());
         Assertions.assertEquals("productString", testSale.getProduct());
         Assertions.assertEquals(50.0, testSale.getProvisjon());
     }
 
     @Test
     public void setMethodTest(){
-        testSale.setSalesID("21. September 2021");
+        testSale.setSalesId("21. September 2021");
         Assertions.assertEquals("21. September 2021", testSale.getSalesDate());
 
         testSale.setAnleggStatus("anleggStatusString2");
@@ -44,14 +44,14 @@ public class SaleTest {
         testSale.setBrand("brandString2");
         Assertions.assertEquals("brandString2", testSale.getBrand());
 
-        testSale.setTX3("TX3String2");
-        Assertions.assertEquals("TX3String2", testSale.getTX3());
+        testSale.setTx3("tx3String2");
+        Assertions.assertEquals("tx3String2", testSale.getTx3());
 
         testSale.setRebate("rebateString2");
         Assertions.assertEquals("rebateString2", testSale.getRebate());
 
-        testSale.setNVK("NVKString2");;
-        Assertions.assertEquals("NVKString2", testSale.getNVK());
+        testSale.setNvk("nvkString2");;
+        Assertions.assertEquals("nvkString2", testSale.getNvk());
 
         testSale.setProduct("productString2");
         Assertions.assertEquals("productString2", testSale.getProduct());

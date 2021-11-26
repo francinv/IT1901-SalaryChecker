@@ -49,7 +49,7 @@ public class Calculation {
 
   private double calculated;
   private User user;
-  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private static final SalaryCsvReader SALARY_CSV_READER = new SalaryCsvReader();
   private String salesperiod;
   private double hours;
   private int mobileamount;
@@ -128,7 +128,7 @@ public class Calculation {
    *                     failed or interrupted I/O operations.
    */
   public void updateList(String url) throws IOException {
-    saleslist = SALARY_CSV_READER.CSVtoSale(url);
+    saleslist = SALARY_CSV_READER.csvToSale(url);
   }
 
   /**
@@ -146,13 +146,13 @@ public class Calculation {
   public void updateElectricityCommission() {
     for (Sale s : saleslist) {
 
-      if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")) {
+      if (s.getTx3().equals("Ja") && s.getNvk().equals("Nei")) {
         s.setProvisjon(75);
       }
-      if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")) {
+      if (s.getNvk().equals("Ja") && s.getTx3().equals("Nei")) {
         s.setProvisjon(50);
       }
-      if (s.getTX3().equals("Ja") && s.getNVK().equals("Ja")) {
+      if (s.getTx3().equals("Ja") && s.getNvk().equals("Ja")) {
         s.setProvisjon(125);
       }
 

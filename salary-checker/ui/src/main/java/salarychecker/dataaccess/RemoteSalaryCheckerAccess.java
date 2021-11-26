@@ -28,18 +28,18 @@ import salarychecker.json.SalaryCheckerPersistence;
 
 public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
 
-  private final URI baseURI;
+  private final URI baseUri;
   private ObjectMapper objectMapper;
   private Accounts accounts;
 
   /**
    * This constructor initialize the objectmapper used for serializing, 
-   * and sets the baseURI.
+   * and sets the baseUri.
    *
-   * @param baseURI URL used for HTTP requests.
+   * @param baseUri URL used for HTTP requests.
    */
-  public RemoteSalaryCheckerAccess(final URI baseURI) {
-    this.baseURI = baseURI;
+  public RemoteSalaryCheckerAccess(final URI baseUri) {
+    this.baseUri = baseUri;
     this.objectMapper = SalaryCheckerPersistence.createObjectMapper();
     this.accounts = readAccounts();
   }
@@ -48,11 +48,11 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
    * Creates a URI by resolving the input string against the uri for 
    * fetching from the server.
    *
-   * @param URI the path.
+   * @param uri the path.
    * @return the URI on the server with the given path.
    */
-  public URI resolveURIAccounts(String URI) {
-    return baseURI.resolve(URI);
+  public URI resolveUriAccounts(String uri) {
+    return baseUri.resolve(uri);
   }
 
 
@@ -62,7 +62,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
    */
   @Override
   public Accounts readAccounts() {
-    HttpRequest httpRequest = HttpRequest.newBuilder(baseURI)
+    HttpRequest httpRequest = HttpRequest.newBuilder(baseUri)
                                                 .header("Accept", "application/json")
                                                 .GET()
                                                 .build();
@@ -95,7 +95,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     String value = email;
     try {
       HttpRequest request = 
-          HttpRequest.newBuilder(resolveURIAccounts(getMappingPath + key + value))
+          HttpRequest.newBuilder(resolveUriAccounts(getMappingPath + key + value))
                      .header("Accept", "application/json")
                      .GET()
                      .build();
@@ -125,7 +125,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     String value = employerEmail;
     try {
       HttpRequest httpRequest = 
-          HttpRequest.newBuilder(resolveURIAccounts(getMappingPath + key + value))
+          HttpRequest.newBuilder(resolveUriAccounts(getMappingPath + key + value))
                      .header("Accept", "application/json")
                      .GET()
                      .build();
@@ -153,7 +153,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     
     try {
       HttpRequest httpRequest = HttpRequest
-            .newBuilder(resolveURIAccounts(postMappingPath + key1 + value1 + key2 + value2))
+            .newBuilder(resolveUriAccounts(postMappingPath + key1 + value1 + key2 + value2))
             .header("Accept", "application/json")
             .POST(BodyPublishers.ofString(email + "|" + password))
             .build();
@@ -206,7 +206,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     String postMappingPath = "create-user";
     try {
       String json = objectMapper.writeValueAsString(user);
-      HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
+      HttpRequest httpRequest = HttpRequest.newBuilder(resolveUriAccounts(postMappingPath))
                     .header("Accept", "application/json")
                     .header("Content-Type", "application/json")
                     .POST(BodyPublishers.ofString(json))
@@ -231,7 +231,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     String postMappingPath = "create-user/admin";
     try {
       String json = objectMapper.writeValueAsString(adminUser);
-      HttpRequest httpRequest = HttpRequest.newBuilder(resolveURIAccounts(postMappingPath))
+      HttpRequest httpRequest = HttpRequest.newBuilder(resolveUriAccounts(postMappingPath))
                     .header("Accept", "application/json")
                     .header("Content-Type", "application/json")
                     .POST(BodyPublishers.ofString(json))
@@ -261,7 +261,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     try {
       String json = objectMapper.writeValueAsString(user);
       HttpRequest httpRequest = 
-          HttpRequest.newBuilder(resolveURIAccounts(putMappingPath + key + value))
+          HttpRequest.newBuilder(resolveUriAccounts(putMappingPath + key + value))
               .header("Accept", "application/json")
               .header("Content-Type", "application/json")
               .PUT(BodyPublishers.ofString(json))
@@ -324,7 +324,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
 
     try {
       HttpRequest httpRequest = HttpRequest
-                .newBuilder(resolveURIAccounts(postMappingPath + key1 + value1 + key2 + value2))
+                .newBuilder(resolveUriAccounts(postMappingPath + key1 + value1 + key2 + value2))
                 .header("Accept", "application/json")
                 .GET()
                 .build();
@@ -351,7 +351,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     try {
       String json = objectMapper.writeValueAsString(calculation);
       HttpRequest httpRequest = 
-          HttpRequest.newBuilder(resolveURIAccounts(postMappingPath + key + value))
+          HttpRequest.newBuilder(resolveUriAccounts(postMappingPath + key + value))
                      .header("Accept", "application/json")
                      .header("Content-Type", "application/json")
                      .PUT(BodyPublishers.ofString(json))

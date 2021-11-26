@@ -1,9 +1,20 @@
 package salarychecker.restserver.payload;
 
+/**
+ * Response with file attributes when uploading.
+ */
 public class UploadFileResponse {
   private String fileName;
   private String fileType;
   private long size;
+
+  /**
+   * Constructor with file attributes.
+   *
+   * @param fileName File name
+   * @param fileType File type
+   * @param size File size
+   */
 
   public UploadFileResponse(String fileName, String fileType, long size) {
     this.fileName = fileName;

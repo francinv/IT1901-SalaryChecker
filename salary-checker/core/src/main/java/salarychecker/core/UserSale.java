@@ -2,7 +2,7 @@ package salarychecker.core;
 
 /**
  * Class to specify a sale for a user. This class translates
- * the SalesReport to java class, with help of {@link SalaryCSVReader}
+ * the SalesReport to java class, with help of {@link SalaryCsvReader}
  * and {@link Sale}.
  */
 public class UserSale {

@@ -2,6 +2,9 @@ package salarychecker.restserver.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Configures properties when preparing upload.
+ */
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
   private String uploadDir;

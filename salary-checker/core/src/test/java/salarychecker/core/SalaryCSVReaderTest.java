@@ -11,16 +11,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-/*public class SalaryCSVReaderTest {
+/*public class SalaryCsvReaderTest {
     private List<Sale> someRead = new ArrayList<Sale>();
 
-    private SalaryCSVReader testReader;
+    private SalaryCsvReader testReader;
 
     @BeforeEach
     public void setUp() throws IOException {
-        testReader = new SalaryCSVReader();
+        testReader = new SalaryCsvReader();
         try {
-            someRead = testReader.csvToBean(new File(getClass().getResource("SalesReport.csv").getFile()).getAbsolutePath());
+            someRead = testReader.csvTooBean(new File(getClass().getResource("SalesReport.csv").getFile()).getAbsolutePath());
         } catch (FileNotFoundException e) {
 
             e.printStackTrace();
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
     }
 
     @Test
-    public void testCsvToBean(){
+    public void testcsvToBean(){
         Assertions.assertNotNull(someRead);
     }
 }*/

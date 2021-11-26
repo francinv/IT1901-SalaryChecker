@@ -152,7 +152,8 @@ public class SettingsController extends AbstractController {
   }
 
   /**
-   * Method that closes the scene and goes back to views/HomePage.fxml with updated user information.
+   * Method that closes the scene and goes back to views/HomePage.fxml 
+   * with updated user information.
    *
    * @param event when clicked on 'Lukk'
    */

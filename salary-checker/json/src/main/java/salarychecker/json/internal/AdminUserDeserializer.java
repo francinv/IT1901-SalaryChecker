@@ -47,9 +47,9 @@ public class AdminUserDeserializer extends JsonDeserializer<AdminUser> {
 
       JsonNode passwordNode = objectNode.get("password");
       if (passwordNode instanceof TextNode) {
-          String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(),
+        String decryptedPassword = encryptDecrypt.decrypt(passwordNode.asText(),
               firstnameNode.asText() + lastnameNode.asText());
-          user.setPassword(decryptedPassword);
+        user.setPassword(decryptedPassword);
       }
       return user;
     }

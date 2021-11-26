@@ -55,7 +55,7 @@ public abstract class AbstractController {
       return this.abstractController;
     }
 
-    public String getFXMLString() {
+    public String getFxmlString() {
       return this.fxml;
     }
   }
@@ -101,7 +101,7 @@ public abstract class AbstractController {
       AbstractController controller = type.getControllerInstance();
       FXMLLoader loader = new FXMLLoader();
       loader.setController(controller);
-      loader.setLocation(SalaryCheckerApp.class.getResource(type.getFXMLString()));
+      loader.setLocation(SalaryCheckerApp.class.getResource(type.getFxmlString()));
       controller.setUser(user);
       controller.setAccounts(accounts);
       controller.setDataAccess(dataAccess);
@@ -135,7 +135,7 @@ public abstract class AbstractController {
     try {
       AbstractController controller = type.getControllerInstance();
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(SalaryCheckerApp.class.getResource(type.getFXMLString()));
+      loader.setLocation(SalaryCheckerApp.class.getResource(type.getFxmlString()));
       loader.setController(controller);
       controller.setUser(user);
       controller.setAccounts(accounts);

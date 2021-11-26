@@ -3,7 +3,6 @@ package salarychecker.ui.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -90,7 +89,8 @@ public class SalaryCalculationController extends AbstractController {
    * @param event when user clicks on 'Last opp Salgsrapport'.
    */
   @FXML
-  private void uploadAction(ActionEvent event) throws IOException, InterruptedException, URISyntaxException {
+  private void uploadAction(ActionEvent event) throws IOException, 
+      InterruptedException, URISyntaxException {
     Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showOpenDialog(stage);

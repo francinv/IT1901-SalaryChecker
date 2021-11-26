@@ -68,7 +68,7 @@
                               <Insets top="5.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="menuNewButton" mnemonicParsing="false" onAction="#goToNewUAction" prefHeight="39.0" prefWidth="301.0"  text="Ny bruker" textFill="WHITE">
+                        <Button fx:id="menuNewButton" mnemonicParsing="false" onAction="#goToNewUserAction" prefHeight="39.0" prefWidth="301.0"  text="Ny bruker" textFill="WHITE">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
