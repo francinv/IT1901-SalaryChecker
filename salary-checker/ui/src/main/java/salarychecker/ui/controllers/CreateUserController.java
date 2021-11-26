@@ -8,12 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.dataaccess.SalaryCheckerAccess;
-import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * This is the class for controlling CreateUser scene.
@@ -21,7 +19,6 @@ import salarychecker.json.SalaryCheckerPersistence;
 public class CreateUserController extends AbstractController {
 
   private AdminUser adminUser;
-  private Accounts accounts;
   private SalaryCheckerAccess dataAccess;
 
   @FXML private AnchorPane firstLastPane;
@@ -140,7 +137,6 @@ public class CreateUserController extends AbstractController {
    */
   @FXML
   private void createUserAction(ActionEvent event) throws IOException {
-    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     if (wageTaxPane.isVisible()) {
       try {
         String tempwage = wageField.getText();
