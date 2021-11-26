@@ -8,9 +8,9 @@ package salarychecker.core;
 public class UserSale {
 
   String salesperiod;
-  Double expected;
-  Double paid;
-  Double difference;
+  double expected;
+  double paid;
+  double difference;
 
   /**
    * Constructor for UserSale, a salesperiod, ie: October 2021.
@@ -44,23 +44,23 @@ public class UserSale {
     this.salesperiod = salesperiod;
   }
 
-  public Double getExpected() {
+  public double getExpected() {
     return this.expected;
   }
 
-  public void setExpected(Double expected) {
+  public void setExpected(double expected) {
     this.expected = expected;
   }
 
-  public Double getPaid() {
+  public double getPaid() {
     return this.paid;
   }
 
-  public void setPaid(Double paid) {
+  public void setPaid(double paid) {
     this.paid = paid;
   }
 
-  public Double getDifference() {
+  public double getDifference() {
     return this.difference;
   }
 

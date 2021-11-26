@@ -32,7 +32,7 @@ public class Sale {
    */
   public Sale(String salesID, String anleggStatus, String salgsType, String campaign,
               String brand, String TX3, String rebate, String NVK, String product,
-              Double commission) {
+              double commission) {
 
     this.salesID = salesID;
     this.anleggStatus = anleggStatus;
