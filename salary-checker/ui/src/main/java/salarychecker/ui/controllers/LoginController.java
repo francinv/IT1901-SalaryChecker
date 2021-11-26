@@ -84,11 +84,14 @@ public class LoginController extends AbstractController {
    */
   @FXML
   private void createUsersAction(ActionEvent event) throws IOException {
-    dataAccess.createUser(new User("Seran", "Shanmugathas", "seran@llive.no",
+    try {
+      dataAccess.createUser(new User("Seran", "Shanmugathas", "seran@llive.no",
         "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130));
-    dataAccess.createAdminUser(new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com",
+      dataAccess.createAdminUser(new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com",
         "Vandre333!"));
-
-    createButton.setText("Test users created!");
+      createButton.setText("Test users created!");
+    } catch (Exception e) {
+      createButton.setText(e.getMessage());
+    }
   }
 }
