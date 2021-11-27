@@ -13,8 +13,6 @@ import salarychecker.ui.controllers.LoginController;
  */
 public class SalaryCheckerApp extends Application {
 
-  public static Stage stg;
-
   @Override
   public void start(Stage stage) throws Exception {
     FXMLLoader loader = new FXMLLoader();

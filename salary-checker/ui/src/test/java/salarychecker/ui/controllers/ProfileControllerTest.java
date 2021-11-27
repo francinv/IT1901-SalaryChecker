@@ -16,9 +16,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
-import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
+import salarychecker.ui.SalaryCheckerApp;
 
 public class ProfileControllerTest extends ApplicationTest{
 
@@ -31,7 +33,7 @@ public class ProfileControllerTest extends ApplicationTest{
     private Text employerEmailDisplay;
     private Button changeProfileButton;
 
-    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+    SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
     User user;
 
     @BeforeEach
@@ -49,19 +51,17 @@ public class ProfileControllerTest extends ApplicationTest{
     
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/Profile.fxml"));
-        ProfileController profileController = new ProfileController();
-        loader.setController(profileController);
-        final Parent parent = loader.load();
-        final Scene scene = new Scene(parent);
-
-        user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-        createTestUsers();
-        profileController.setUser(user);
-        profileController.setAccounts(persistence.loadAccounts());
-        profileController.loadProfileInfo();
-        stage.setScene(scene);
-        stage.show();
+      FXMLLoader loader = new FXMLLoader();
+      ProfileController controller = new ProfileController();
+      loader.setController(controller);
+      controller.setDataAccess(dataAccess);
+      loader.setLocation(SalaryCheckerApp.class.getResource("views/Profile.fxml"));
+      createTestUsers();
+      user = (User) dataAccess.userLogin("testprofile@live.no", "Password123!");
+      final Parent parent = loader.load();
+      controller.loadProfileInfo();
+      stage.setScene(new Scene(parent));
+      stage.show();
     }
     
     @Test
@@ -88,15 +88,15 @@ public class ProfileControllerTest extends ApplicationTest{
         assertTrue(settingsPane.isVisible());
     }
 
-    private void createTestUsers() throws IOException {
-        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
-
-        Accounts accounts = new Accounts();
-        accounts.addUser(testuser1);
-        accounts.addUser(testuser2);
-
-        persistence.setFilePath("Accounts.json");
-        persistence.saveAccounts(accounts);
+  private void createTestUsers() throws IOException {
+    try {
+      dataAccess.createUser(new User("Test", "User",
+          "testprofile@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0));
+      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
+          "testprofile@admin.no", "Password123!"));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
     }
+  }
 }

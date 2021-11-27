@@ -1,5 +1,5 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.checkstyle.configuration": "${workspaceFolder}\\salary-checker\\config\\checkstyle\\eclipse-java-google-checks.xml",
-    "java.checkstyle.version": "8.18"
+    "java.checkstyle.version": "9.1"
 }

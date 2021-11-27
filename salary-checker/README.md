@@ -60,10 +60,10 @@ cd ui
 mvn clean javafx:jlink
 
 3) 
-cd target/cognition/bin
+cd target/SalaryCheckerFX/bin
 
 4)
-./salarychecker
+./SalaryCheckerFX
 ```
 
 ## Userstories
@@ -141,8 +141,8 @@ cd target/cognition/bin
             - [EmailSender](./core/src/main/java/salarychecker/core/EmailSender.java) :point_right: Sending e-maul to employer.
             - [EncryptDecrypt](./core/src/main/java/salarychecker/core/EncryptDecrypt.java) :point_right: Encryption and decryption of passwords.
             - [Errors](./core/src/main/java/salarychecker/core/Errors.java) :point_right: Errors being displayed for different invalid user-inputs.
-            - [IUserObserver](./core/src/main/java/salarychecker/coreIUserObserver.java) 
-            - [SalaryCSVReader.java](./core/src/main/java/salarychecker/core/SalaryCSVReader.java) :point_right: Reades sales information from csv-file.
+            - [UserObserver](./core/src/main/java/salarychecker/coreIUserObserver.java) 
+            - [SalaryCsvReader.java](./core/src/main/java/salarychecker/core/SalaryCsvReader.java) :point_right: Reades sales information from csv-file.
             - [Sale.java](./core/src/main/java/salarychecker/core/Sale.java) :point_right: Creates a new sale, get and set methods for all sale attributes.
             - [UserSale](./core/src/main/java/salarychecker/core/UserSale.java) :point_right: Creates a new sales period for a given user.
             - [UserValidation](./core/src/main/java/salarychecker/core/UserValidation.java) :point_right: Validates user attributes according to predefined parameters.
@@ -157,7 +157,7 @@ cd target/cognition/bin
                 - [AdminUserTest](./core/src/test/java/salarychecker/core/AdminUserTest.java) :point_right: Test for AdminUser.Java
                 - [CalculationTest](./core/src/test/java/salarychecker/core/CalculationTest.java) :point_right: Test for Calculation.java
                 - [EncryptDecryptTest](./core/src/test/java/salarychecker/core/EncryptDecryptTest.java) :point_right: Test for EncryptDecrypt.java. 
-                - [SalaryCSVReaderTest](./core/src/test/java/salarychecker/core/SalaryCSVReaderTest.java) :point_right: Test for CalaryCSVReader.java.
+                - [SalaryCsvReaderTest](./core/src/test/java/salarychecker/core/SalaryCsvReaderTest.java) :point_right: Test for CalaryCsvReader.java.
                 - [SaleTest](./core/src/test/java/salarychecker/core/SaleTest.java) :point_right: Test for Sale.java
                 - [UserSaleTest](./core/src/test/java/salarychecker/core/UserSaleTest.java) :point_right: Test for UserSale.Java
                 - [UserTest](./core/src/test/java/salarychecker/core/UserTest.java) :point_right: Test for User.java

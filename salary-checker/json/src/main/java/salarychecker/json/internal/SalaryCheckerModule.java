@@ -2,7 +2,11 @@ package salarychecker.json.internal;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import salarychecker.core.*;
+import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
+import salarychecker.core.Calculation;
+import salarychecker.core.User;
+import salarychecker.core.UserSale;
 
 /**
  * A Jackson module for configuring JSON serialization of User instances.

@@ -3,11 +3,13 @@ package salarychecker.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Iterator;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import salarychecker.core.*;
+import salarychecker.core.AbstractUser;
+import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
+import salarychecker.core.User;
 import salarychecker.json.internal.SalaryCheckerModule;
 
 public class SalaryCheckerModuleTest {
@@ -22,15 +24,16 @@ public class SalaryCheckerModuleTest {
     }
 
 
-    @Test
-    public void testSerializers() {
-        Accounts accounts = new Accounts();
-        User hammad = new User("Hammad","Siddiqui","ham@mad.no","Qwerty!123", "23020094332", 12345, "employer@gmail.com", 30, 152.50);
-        AdminUser francin = new AdminUser("Francin", "Vincent", "francin@vincent.no", "Vandre!123");
-        accounts.addUser(hammad);
-        accounts.addUser(francin);
+  @Test
+  public void testSerializers() {
+    Accounts accounts = new Accounts();
+    User hammad = new User("Hammad", "Siddiqui", "ham@mad.no",
+        "Qwerty!123", "23020094332", 12345, "employer@gmail.com", 30, 152.50);
+    AdminUser francin = new AdminUser("Francin", "Vincent", "francin@vincent.no", "Vandre!123");
+    accounts.addUser(hammad);
+    accounts.addUser(francin);
 
-        checkUser(hammad, "Hammad", "Siddiqui", "ham@mad.no", 12345, "employer@gmail.com", 30, 152.50);
+    checkUser(hammad, "Hammad", "Siddiqui", "ham@mad.no", 12345, "employer@gmail.com", 30, 152.50);
     }
 
     static void checkUser(User user, String firstname, String lastname, String email, int employeeNumber, 

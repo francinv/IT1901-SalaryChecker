@@ -4,9 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is the class that handles controller for the Profile-scene.
@@ -23,19 +21,13 @@ public class ProfileController extends AbstractController {
   @FXML private AnchorPane profilePane;
   @FXML private Text pageTitle;
 
-  private User user;
-  private Accounts accounts;
-  private SalaryCheckerAccess dataAccess;
-
   /**
    * This is the method that loads info to the Profile page.
    * This method is protected because AbstractController calls it when a user goes
    * to this scene.
    */
   protected void loadProfileInfo() {
-    user = (User) super.user;
-    accounts = super.accounts;
-    dataAccess = super.dataAccess;
+    User user = (User) getDataAccess().getLoggedInUser();
     navnDisplay.setText(user.getFirstname() + " " + user.getLastname());
     epostDisplay.setText(user.getEmail());
     idDisplay.setText(String.valueOf(user.getEmployeeNumber()));
@@ -65,7 +57,7 @@ public class ProfileController extends AbstractController {
    */
   @FXML
   private void changeProfileAction(ActionEvent event) {
-    setAnchorPane(CONTROLLERS.SETTINGS, profilePane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.SETTINGS, profilePane, getDataAccess());
   }
 
 }

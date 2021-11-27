@@ -10,7 +10,6 @@ import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 import salarychecker.dataaccess.SalaryCheckerAccess;
-import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * This is the class that controls the Settings-scene.
@@ -19,10 +18,6 @@ import salarychecker.json.SalaryCheckerPersistence;
 public class SettingsController extends AbstractController {
 
   private User user;
-  private Accounts accounts;
-  private SalaryCheckerAccess dataAccess;
-  private final UserValidation userValidation = new UserValidation();
-  private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
   //FXML VARIABLES
   @FXML private TextField changeFirstNameField;
@@ -46,9 +41,7 @@ public class SettingsController extends AbstractController {
    * We use this method to load existing user information as a prompt text to Text Fields.
    */
   public void loadSettingsInfo() {
-    user = (User) super.user;
-    accounts = super.accounts;
-    dataAccess = super.dataAccess;
+    user = (User) getDataAccess().getLoggedInUser();
     changeFirstNameField.setPromptText(user.getFirstname());
     changeLastNameField.setPromptText(user.getLastname());
     changeEmailField.setPromptText(user.getEmail());
@@ -82,7 +75,7 @@ public class SettingsController extends AbstractController {
 
       if (!(changeEmailField.getText().equals("")
           && changeConfirmedEmailField.getText().equals(""))) {
-        userValidation.isEqualEmail(changeEmailField.getText(),
+        UserValidation.isEqualEmail(changeEmailField.getText(),
             changeConfirmedEmailField.getText());
         user.setEmail(changeEmailField.getText());
         errorTextDisplay.setText(null);
@@ -93,7 +86,7 @@ public class SettingsController extends AbstractController {
 
       if (!(changeEmployerField.getText().equals("")
           && changeConfirmedEmployerField.getText().equals(""))) {
-        userValidation.isEqualEmail(changeEmployerField.getText(),
+        UserValidation.isEqualEmail(changeEmployerField.getText(),
             changeConfirmedEmployerField.getText());
         user.setEmployerEmail(changeEmployerField.getText());
         errorTextDisplay.setText(null);
@@ -111,7 +104,7 @@ public class SettingsController extends AbstractController {
 
       if (!(changePasswordField.getText().equals("")
           && changeConfirmedPasswordField.getText().equals(""))) {
-        userValidation.isEqualPassword(changePasswordField.getText(),
+        UserValidation.isEqualPassword(changePasswordField.getText(),
             changeConfirmedPasswordField.getText());
         user.setPassword(changePasswordField.getText());
         errorTextDisplay.setText(null);
@@ -133,7 +126,7 @@ public class SettingsController extends AbstractController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      dataAccess.updateUserAttributes(user, accounts.indexOf(user));
+      dataAccess.updateUserAttributes(user, getDataAccess().readAccounts().getAccounts().indexOf(user));
       loadSettingsInfo();
     } catch (IllegalArgumentException e) {
       errorTextDisplay.setText(e.getMessage());
@@ -152,12 +145,13 @@ public class SettingsController extends AbstractController {
   }
 
   /**
-   * Method that closes the scene and goes back to views/HomePage.fxml with updated user information.
+   * Method that closes the scene and goes back to views/HomePage.fxml 
+   * with updated user information.
    *
    * @param event when clicked on 'Lukk'
    */
   @FXML
   public void closeButtonAction(ActionEvent event) {
-    setAnchorPane(CONTROLLERS.PROFILE, settingsPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.PROFILE, settingsPane, getDataAccess());
   }
 }

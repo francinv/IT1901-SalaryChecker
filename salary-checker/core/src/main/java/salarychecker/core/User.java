@@ -48,6 +48,15 @@ public class User extends AbstractUser {
   public User() {
   }
 
+  /**
+   * Super constructor.
+   *
+   * @param firstname first name
+   * @param lastname last name
+   * @param email e-mail
+   * @param employeeNumber employee number
+   */
+
   public User(String firstname, String lastname, String email, int employeeNumber) {
     super.firstname = firstname;
     super.lastname = lastname;
@@ -70,7 +79,7 @@ public class User extends AbstractUser {
    * @param socialNumber the socialNumber to set
    */
   public void setSocialNumber(String socialNumber) {
-    userValidation.checkValidSocialNumber(socialNumber);
+    UserValidation.checkValidSocialNumber(socialNumber);
     this.socialNumber = socialNumber;
   }
 
@@ -89,10 +98,10 @@ public class User extends AbstractUser {
    * @param employeeNumber the employee number to set
    */
   public void setEmployeeNumber(int employeeNumber) {
-    userValidation.checkValidEmployeeNumber(employeeNumber);
+    UserValidation.checkValidEmployeeNumber(employeeNumber);
     this.employeeNumber = employeeNumber;
-    for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoTaxCountChanged(this, employeeNumber);
+    for (UserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -111,10 +120,10 @@ public class User extends AbstractUser {
    * @param employerEmail the employer email to set
    */
   public void setEmployerEmail(String employerEmail) {
-    userValidation.checkValidEmail(employerEmail);
+    UserValidation.checkValidEmail(employerEmail);
     this.employerEmail = employerEmail;
-    for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged(this, employerEmail);
+    for (UserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -133,10 +142,10 @@ public class User extends AbstractUser {
    * @param taxCount the tax count to set
    */
   public void setTaxCount(double taxCount) {
-    userValidation.checkValidTaxCount(taxCount);
+    UserValidation.checkValidTaxCount(taxCount);
     this.taxCount = taxCount;
-    for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoDoubleChanged(this, taxCount);
+    for (UserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -155,10 +164,10 @@ public class User extends AbstractUser {
    * @param hourRate the hour rate to set
    */
   public void setHourRate(double hourRate) {
-    userValidation.checkValidHourRate(hourRate);
+    UserValidation.checkValidHourRate(hourRate);
     this.hourRate = hourRate;
-    for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoDoubleChanged(this, hourRate);
+    for (UserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -192,30 +201,16 @@ public class User extends AbstractUser {
   public void addUserSale(UserSale userSale) {
     if (!(isExistingUserSale(userSale))) {
       userSales.add(userSale);
-      for (IUserObserver userObserver : userObs) {
-        userObserver.usersaleAdded(this, userSale);
+      for (UserObserver userObserver : userObs) {
+        userObserver.userInfoChanged(this);
       }
     }
   }
 
   public UserSale getUserSale(String salesperiod) {
-    return getUserSaleList().stream().filter(s-> s.getSalesperiod().equals(salesperiod)).findAny().orElse(null);
+    return getUserSaleList().stream().filter(s -> 
+      s.getSalesperiod().equals(salesperiod)).findAny().orElse(null);
   }
 
 
-  @Override
-  public String toString() {
-    return "{"
-      + " firstname='" + getFirstname() + "'"
-      + ", lastname='" + getLastname() + "'"
-      + ", email='" + getEmail() + "'"
-      + ", password='" + getPassword() + "'"
-      + ", socialNumber='" + getSocialNumber() + "'"
-      + ", employeeNumber='" + getEmployeeNumber() + "'"
-      + ", employerEmail='" + getEmployerEmail() + "'"
-      + ", taxCount='" + getTaxCount() + "'"
-      + ", hourRate='" + getHourRate() + "'"
-      + ", userSales='" + getUserSaleList() + "'"
-      + "}";
-  }
 }

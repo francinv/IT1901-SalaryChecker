@@ -1,5 +1,6 @@
 package salarychecker.ui.controllers;
 
+import com.github.tomakehurst.wiremock.core.Admin;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,7 +19,10 @@ import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AdminStartPageControllerTest extends ApplicationTest {
 
     AdminUser adminUser;
-    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+    SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
 
     private static Text adminName;
     private static Button logOutButton;
@@ -44,19 +48,16 @@ public class AdminStartPageControllerTest extends ApplicationTest {
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/AdminStartPage.fxml"));
-        AdminStartPageController adminStartPageController = new AdminStartPageController();
-        loader.setController(adminStartPageController);
+        FXMLLoader loader = new FXMLLoader();
+        AdminStartPageController controller = new AdminStartPageController();
+        loader.setController(controller);
+        controller.setDataAccess(dataAccess);
+        loader.setLocation(SalaryCheckerApp.class.getResource("views/AdminStartPage.fxml"));
+        createTestUsers();
+        adminUser = (AdminUser) dataAccess.userLogin("testadminH@gmail.com", "Vandre333!");
         final Parent parent = loader.load();
-        final Scene scene = new Scene(parent);
-
-        adminUser = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
-        createTestUser();
-        adminStartPageController.setUser(adminUser);
-        persistence.setFilePath("Accounts.json");
-        adminStartPageController.setAccounts(persistence.loadAccounts());
-        adminStartPageController.loadAdminInfo();
-        stage.setScene(scene);
+        controller.loadAdminInfo();
+        stage.setScene(new Scene(parent));
         stage.show();
     }
 
@@ -85,7 +86,7 @@ public class AdminStartPageControllerTest extends ApplicationTest {
         clickOn(logOutButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/LogIn.fxml")); // load same anchorpane that currentWindow contains
+            FXMLLoader loader = new FXMLLoader(SalaryCheckerApp.class.getResource("views/LogIn.fxml")); // load same anchorpane that currentWindow contains
             LoginController loginController = new LoginController();
             loader.setController(loginController);
             AnchorPane pane = loader.load();
@@ -128,16 +129,13 @@ public class AdminStartPageControllerTest extends ApplicationTest {
     }
 
 
-    private void createTestUser() throws IOException {
-        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
-        AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
-
-        Accounts acc = new Accounts();
-        acc.addUser(testuser1);
-        acc.addUser(testuser2);
-
-        persistence.setFilePath("Accounts.json");
-        persistence.saveAccounts(acc);
+    private void createTestUsers() throws IOException {
+        try {
+            dataAccess.createAdminUser(new AdminUser("Test", "Admin",
+                "testadminH@gmail.com", "Vandre333!"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private Stage getTopModalStage() {

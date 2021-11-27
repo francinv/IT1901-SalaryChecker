@@ -1,5 +1,8 @@
 package salarychecker.ui.controllers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,48 +11,43 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
-import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
+import salarychecker.ui.SalaryCheckerApp;
 
-import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Tests for SalariesController.
+ */
 public class SalariesControllerTest extends ApplicationTest {
 
   private TableView<UserSale> salariesTable;
-  SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+  SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
+  private User user;
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/Salaries.fxml"));
-    SalariesController salariesController = new SalariesController();
-    loader.setController(salariesController);
-    final Parent parent = loader.load();
-    final Scene scene = new Scene(parent);
-
-    User user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
+    FXMLLoader loader = new FXMLLoader();
+    SalariesController controller = new SalariesController();
+    loader.setController(controller);
+    controller.setDataAccess(dataAccess);
+    loader.setLocation(SalaryCheckerApp.class.getResource("views/Salaries.fxml"));
     createTestUsers();
-    salariesController.setUser(user);
-    salariesController.setAccounts(persistence.loadAccounts());
-    UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
-    user.addUserSale(testsale1);
-    UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
-    user.addUserSale(testsale2);
-    salariesController.loadTableView();
-    stage.setScene(scene);
+    user = (User) dataAccess.userLogin("testsalaries@live.no", "Password123!");
+    final Parent parent = loader.load();
+    controller.loadTableView();
+    stage.setScene(new Scene(parent));
     stage.show();
   }
 
   @BeforeEach
-  public void initFields(){
+  public void initFields() {
     salariesTable = lookup("#salariesTable").query();
   }
 
   @Test
-  public void checkIfUserSalesShown(){
+  public void checkIfUserSalesShown() {
     UserSale userSale1 = salariesTable.getItems().get(0);
     assertEquals("August 2021", userSale1.getSalesperiod());
     assertEquals(15643.0, userSale1.getExpected());
@@ -64,14 +62,17 @@ public class SalariesControllerTest extends ApplicationTest {
 
 
   private void createTestUsers() throws IOException {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-    User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
-
-    Accounts accounts = new Accounts();
-    accounts.addUser(testuser1);
-    accounts.addUser(testuser2);
-
-    persistence.setFilePath("Accounts.json");
-    persistence.saveAccounts(accounts);
+    try {
+      User user = new User("Test", "User",
+          "testsalaries@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0);
+      UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+      user.addUserSale(testsale1);
+      UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+      user.addUserSale(testsale2);
+      dataAccess.createUser(user);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 }

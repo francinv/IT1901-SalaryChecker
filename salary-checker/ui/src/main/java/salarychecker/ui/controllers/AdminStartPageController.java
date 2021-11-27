@@ -15,10 +15,6 @@ import salarychecker.dataaccess.SalaryCheckerAccess;
  */
 public class AdminStartPageController extends AbstractController {
 
-  private AdminUser adminUser;
-  private Accounts accounts;
-  private SalaryCheckerAccess dataAccess;
-
   @FXML private Text adminName;
   @FXML private Button hideMenuButton;
   @FXML private Button menuUsersButton;
@@ -34,10 +30,8 @@ public class AdminStartPageController extends AbstractController {
    * The method is protected because the method will be called as the user logs in.
    */
   protected void loadAdminInfo() {
-    adminUser = (AdminUser) super.user;
-    accounts = super.accounts;
-    dataAccess = super.dataAccess;
-    String name = adminUser.getFirstname() + " " + adminUser.getLastname();
+    String name = getDataAccess().getLoggedInUser().getFirstname()
+        + " " + getDataAccess().getLoggedInUser().getLastname();
     adminName.setText(name);
     pageTitle.setText("Hjem");
   }
@@ -66,7 +60,7 @@ public class AdminStartPageController extends AbstractController {
   @FXML
   private void goToUsersAction(ActionEvent event) {
     pageTitle.setText("Brukere");
-    setAnchorPane(CONTROLLERS.ADMINOVERVIEW, adminStartPane, adminUser, accounts, dataAccess);
+    setAnchorPane(Controllers.ADMINOVERVIEW, adminStartPane, getDataAccess());
   }
 
   /**
@@ -75,9 +69,9 @@ public class AdminStartPageController extends AbstractController {
    * @param event when user clicks on "Opprett Bruker".
    */
   @FXML
-  private void goToNewUAction(ActionEvent event) {
+  private void goToNewUserAction(ActionEvent event) {
     pageTitle.setText("Opprett bruker");
-    setAnchorPane(CONTROLLERS.CREATEUSER, adminStartPane, adminUser, accounts, dataAccess);
+    setAnchorPane(Controllers.CREATEUSER, adminStartPane, getDataAccess());
   }
 
 
@@ -89,6 +83,6 @@ public class AdminStartPageController extends AbstractController {
    */
   @FXML
   private void logOutAction(ActionEvent event) {
-    setScene(CONTROLLERS.LOGIN, event, null, null, null);
+    setScene(Controllers.LOGIN, event, getDataAccess());
   }
 }

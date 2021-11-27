@@ -188,9 +188,9 @@
                     <noHeaderFiles>true</noHeaderFiles>
                     <stripDebug>true</stripDebug>
                     <noManPages>true</noManPages>
-                    <launcher>salarycheckerfx</launcher>
-                    <jlinkImageName>salarycheckerfx</jlinkImageName>
-                    <jlinkZipName>salarycheckerfx</jlinkZipName>
+                    <launcher>SalaryCheckerFX</launcher>
+                    <jlinkImageName>SalaryCheckerFX</jlinkImageName>
+                    <jlinkZipName>SalaryCheckerFX</jlinkZipName>
                 </configuration>
             </plugin>
 
@@ -200,12 +200,12 @@
                 <artifactId>jpackage-maven-plugin</artifactId>
                 <version>1.4.0</version>
                 <configuration>
-                    <name>SalarycheckerFX</name>
+                    <name>SalaryCheckerFX</name>
                     <appVersion>1.0.0</appVersion>
                     <vendor>it1901</vendor>
                     <destination>target/dist</destination>
                     <module>salarychecker.ui/salarychecker.ui.SalaryCheckerApp</module>
-                    <runtimeImage>target/salarycheckerfx</runtimeImage>
+                    <runtimeImage>target/SalaryCheckerFX</runtimeImage>
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>

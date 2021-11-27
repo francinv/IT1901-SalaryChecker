@@ -1,23 +1,16 @@
 package salarychecker.ui.controllers;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.core.UserValidation;
-import salarychecker.dataaccess.LocalSalaryCheckerAccess;
-import salarychecker.dataaccess.RemoteSalaryCheckerAccess;
-import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * Controller class for the Login-scene.
@@ -28,40 +21,6 @@ public class LoginController extends AbstractController {
   @FXML private TextField password;
   @FXML private Button createButton;
   @FXML private Text errorDisplay;
-
-  private AbstractUser user = super.user;
-  private Accounts accounts;
-  private final UserValidation userval = new UserValidation();
-
-  private SalaryCheckerAccess dataAccess;
-  private SalaryCheckerConfig config;
-
-    /**
-     * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
-     * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
-     * otherwise LocalSalaryCheckerAccess.
-     * @throws IOException
-     * @throws URISyntaxException
-     */
-    @FXML
-    void initialize() throws IOException, URISyntaxException {
-        this.config = new SalaryCheckerConfig();
-        
-        if (config.getProperty("remoteAccess").equals("true")) { 
-
-            setDataAccess(
-                    new RemoteSalaryCheckerAccess(
-                            new URI(config.getProperty("serverURI"))
-                    ));
-
-            System.out.println("Using remote endpoint @ " + config.getProperty("serverURI")); 
-
-        } else {
-            setDataAccess(new LocalSalaryCheckerAccess());
-        }
-        this.dataAccess = super.dataAccess;
-        this.accounts = dataAccess.readAccounts();
-    }
 
   /**
    * This is the method that handles the log-in.
@@ -74,25 +33,23 @@ public class LoginController extends AbstractController {
    */
   @FXML
   void userLogIn(ActionEvent event) throws IOException {
+
     String usernameField = email.getText();
     String passwordField = password.getText();
-
     try {
-      userval.checkValidEmail(usernameField);
-      userval.checkValidPassword(passwordField);
-      userval.isNotExistingUser(usernameField, passwordField, accounts);
-      userval.isValidLogIn(usernameField, passwordField, accounts);
-      user = dataAccess.userLogin(usernameField, passwordField);
+      UserValidation.checkValidEmail(usernameField);
+      UserValidation.checkValidPassword(passwordField);
+      UserValidation.isNotExistingUser(usernameField,
+          passwordField, getDataAccess().readAccounts());
+      UserValidation.isValidLogIn(usernameField, passwordField, getDataAccess().readAccounts());
+      AbstractUser user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
-        setScene(CONTROLLERS.HOME, event, user, accounts, dataAccess);
-      }
-      else if (user instanceof AdminUser){
-        setScene(CONTROLLERS.ADMIN, event, user, accounts, dataAccess);
+        setScene(Controllers.HOME, event, getDataAccess());
+      } else if (user instanceof AdminUser) {
+        setScene(Controllers.ADMIN, event, getDataAccess());
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
-    // } catch (Exception e) {
-    //   errorDisplay.setText(Errors.NOT_REGISTERED.getMessage());
     }
   }
 
@@ -105,15 +62,20 @@ public class LoginController extends AbstractController {
    */
   @FXML
   private void createUsersAction(ActionEvent event) throws IOException {
-    dataAccess.createUser(new User("Seran", "Shanmugathas", "seran@llive.no",
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130));
-    dataAccess.createAdminUser(new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com",
-        "Vandre333!"));
-
-    createButton.setText("Test users created!");
+    try {
+      User user = new User("Test", "User",
+          "test@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0);
+      UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+      user.addUserSale(testsale1);
+      UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+      user.addUserSale(testsale2);
+      dataAccess.createUser(user);
+      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
+          "test@admin.no", "Password123!"));
+      createButton.setText("Test users created!");
+    } catch (Exception e) {
+      createButton.setText(e.getMessage());
+    }
   }
-
-  /*protected void setDataAccess(SalaryCheckerAccess dataAccess) {
-    this.dataAccess = dataAccess;
-  }*/
 }

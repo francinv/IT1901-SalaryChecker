@@ -18,8 +18,8 @@ In order to further ensure a smooth user experience after the final release the 
 - EmailSender.java
 - EncryptDecrypt.java
 - Errors.java
-- IUserObserver.java
-- SalaryCSVReader.java
+- UserObserver.java
+- SalaryCsvReader.java
 - Sale.java
 - UserSale.java
 

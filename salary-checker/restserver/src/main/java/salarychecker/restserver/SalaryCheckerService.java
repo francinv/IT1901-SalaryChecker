@@ -6,10 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import salarychecker.core.AbstractUser;
@@ -32,7 +30,7 @@ public class SalaryCheckerService {
 
   private Accounts accounts;
   private Calculation calculation;
-  private SalaryCheckerPersistence salaryCheckerPersistence;
+  private final static SalaryCheckerPersistence PERSISTENCE = new SalaryCheckerPersistence();
   private Path fileStorageLocation;
 
   /**
@@ -43,8 +41,7 @@ public class SalaryCheckerService {
   public SalaryCheckerService(Accounts accounts) {
     this.accounts = accounts;
     this.calculation = new Calculation();
-    this.salaryCheckerPersistence = new SalaryCheckerPersistence();
-    salaryCheckerPersistence.setFilePath("springbootserver-salarychecker.json");
+    PERSISTENCE.setFilePath("springbootserver-salarychecker.json");
   }
 
   /**
@@ -57,15 +54,19 @@ public class SalaryCheckerService {
     autoSave();
   }
 
-
+  /**
+   * sets properties for storage when file is uploaded.
+   *
+   * @param fileStorageProperties storage path
+   */
   public void setFileStorage(FileStorageProperties fileStorageProperties) {
     this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
         .toAbsolutePath().normalize();
     try {
       Files.createDirectories(this.fileStorageLocation);
-    }
-    catch (Exception e) {
-      throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", e);
+    } catch (Exception e) {
+      throw new FileStorageException(
+        "Could not create the directory where the uploaded files will be stored.", e);
     }
 
   }
@@ -81,18 +82,17 @@ public class SalaryCheckerService {
   } 
 
   public Calculation getCalculation() {
-      return calculation;
+    return calculation;
   }
 
   /**
    * Creates default users from json-file.
-   * 
+   *
    * @return creates two test users if json file is not found.
    */
   public static Accounts createDeafaultAccounts() {
-    SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
     try {
-      Accounts accounts = salaryCheckerPersistence.loadAccounts();
+      Accounts accounts = PERSISTENCE.loadAccounts();
       if (accounts != null) {
         return accounts;
       }
@@ -120,8 +120,8 @@ public class SalaryCheckerService {
   }
 
   /**
-   * Find user by email
-   * 
+   * Find user by email.
+   *
    * @param email to get user by this email
    * @return a abstractUser object
    */
@@ -130,14 +130,22 @@ public class SalaryCheckerService {
   }
 
   /**
-   * Get all users with same employer
-   * 
-   * @param employerEmail
+   * Get all users with same employer.
+   *
+   * @param employerEmail employers email
    * @return a list with AbstractUser objects
    */
   public List<AbstractUser> getUsersByEmployerEmail(String employerEmail) {
     return accounts.getUsersByEmployerEmail(employerEmail);
   }
+  /**
+   * Calculate users UserSale.
+   *
+   * @param calculation calculation object
+   * @param emailOfUser user email
+   * @throws NumberFormatException exception for wrong format
+   * @throws IOException when not found
+   */
 
   public void calculateUsersUserSale(Calculation calculation, String emailOfUser)
       throws NumberFormatException, IOException {
@@ -159,10 +167,10 @@ public class SalaryCheckerService {
     }
   }
 
-   /**
-   * Method to create a new AdminUser. The AdminUser to create is given by the client.
-   * Adds the AdminUser object to accounts.
-   */
+  /**
+  * Method to create a new AdminUser. The AdminUser to create is given by the client.
+  * Adds the AdminUser object to accounts.
+  */
   public void createAdminUser(AdminUser newUser) {
     if (newUser != null) {
       accounts.addUser(newUser);
@@ -187,12 +195,12 @@ public class SalaryCheckerService {
   }
 
   /**
-   * Saves Accounts to disk
+   * Saves Accounts to disk.
    */
   private void autoSave() {
-    if (salaryCheckerPersistence != null) {
+    if (PERSISTENCE != null) {
       try {
-        salaryCheckerPersistence.saveAccounts(accounts);
+        PERSISTENCE.saveAccounts(accounts);
       } catch (IllegalStateException | IOException e) {
         System.err.println("Could not auto-save Accounts: " + e);
       }
@@ -203,6 +211,12 @@ public class SalaryCheckerService {
     User user = (User) getUserByEmail(emailOfUser);
     return user.getUserSale(salesperiod);
   }
+  /**
+   * Removes invalid characters from file name.
+   *
+   * @param file the file
+   * @return normalized file name
+   */
 
   public String storeFile(MultipartFile file) {
     // Normalize file name
@@ -210,8 +224,9 @@ public class SalaryCheckerService {
 
     try {
       // Check if the file's name contains invalid characters
-      if(fileName.contains("..")) {
-        throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+      if (fileName.contains("..")) {
+        throw new FileStorageException("Sorry! Filename contains invalid path sequence " 
+          + fileName);
       }
 
       // Copy file to the target location (Replacing existing file with the same name)
@@ -220,7 +235,8 @@ public class SalaryCheckerService {
 
       return fileName;
     } catch (IOException ex) {
-      throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+      throw new FileStorageException("Could not store file " + fileName 
+        + ". Please try again!", ex);
     }
   }
 

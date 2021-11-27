@@ -3,7 +3,6 @@ package salarychecker.ui.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -37,17 +36,7 @@ public class SalaryCalculationController extends AbstractController {
   @FXML private Text pageTitle;
   @FXML private AnchorPane calculationPane;
 
-  private User user;
-
-
-  /**
-   * Method that sets User and Accounts for this scene.
-   * Need this for updating User and Accounts when a calculation is done.
-   * This method is protected because it will be called outside this class.
-   */
-  protected void setUserAndAccounts() {
-    user = (User) super.user;
-  }
+  private File salaryCsvFile;
 
   /**
    * This method is used to check the salary.
@@ -65,15 +54,16 @@ public class SalaryCalculationController extends AbstractController {
    */
   @FXML
   private void calculateSalary(ActionEvent event) throws IOException {
+    User temp = (User) dataAccess.getLoggedInUser();
     double hours = Double.parseDouble(hoursField.getText());
     int mobileamount = Integer.parseInt(mobileField.getText());
     String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
     String salesperiod = chosenmonth + " " + yearField.getText();
     double paid = Double.parseDouble(paidField.getText());
     Calculation calculation = new Calculation(salesperiod, hours, mobileamount, paid);
-    dataAccess.calculateSale(calculation, user.getEmail());
+    getDataAccess().calculateSale(calculation, temp.getEmail());
 
-    UserSale userSale = dataAccess.getUserSale(salesperiod, user.getEmail());
+    UserSale userSale = getDataAccess().getUserSale(salesperiod, temp.getEmail());
     String expected = String.valueOf(userSale.getExpected());
     String displayPaid = String.valueOf(userSale.getPaid()).toString();
     String diff = String.valueOf(userSale.getDifference());
@@ -90,7 +80,8 @@ public class SalaryCalculationController extends AbstractController {
    * @param event when user clicks on 'Last opp Salgsrapport'.
    */
   @FXML
-  private void uploadAction(ActionEvent event) throws IOException, InterruptedException, URISyntaxException {
+  private void uploadAction(ActionEvent event) throws IOException, 
+      InterruptedException, URISyntaxException {
     Stage stage = (Stage) (((Node) event.getSource()).getScene().getWindow());
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showOpenDialog(stage);
@@ -98,7 +89,12 @@ public class SalaryCalculationController extends AbstractController {
       dataAccess.uploadFile(file);
       fileField.setText(file.getName());
     }
-
   }
+
+  public void setFile(File salaryCsvFile)
+      throws InterruptedException, IOException, URISyntaxException {
+    getDataAccess().uploadFile(salaryCsvFile);
+  }
+
 
 }

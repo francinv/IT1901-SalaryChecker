@@ -27,13 +27,13 @@ public enum Errors {
   NOT_EQUAL_PASSWORD("Passwords does not match."),
   NOT_EQUAL_EMAIL("Emails do not match");
 
-  private final String ERROR_MESSAGE;
+  private final String errorMessage;
 
-  Errors(final String ERROR_MESSAGE) {
-    this.ERROR_MESSAGE = ERROR_MESSAGE;
+  Errors(final String errorMessage) {
+    this.errorMessage = errorMessage;
   }
 
   public String getMessage() {
-    return ERROR_MESSAGE;
+    return errorMessage;
   }
 }

@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 import salarychecker.ui.SalaryCheckerApp;
 
 /**
@@ -12,10 +11,13 @@ import salarychecker.ui.SalaryCheckerApp;
  */
 public class SalaryCheckerConfig {
 
-    private Properties properties;
-
-    public SalaryCheckerConfig() {
-        this.properties = new Properties();
+  private Properties properties;
+  
+  /**
+   * Configures properties.
+   */
+  public SalaryCheckerConfig() {
+    this.properties = new Properties();
 
         // if (isIT()) {
         //     try (InputStream inputStream = new FileInputStream("src/test/resources/ajour/ui/salarychecker.properties")) {
@@ -32,6 +34,7 @@ public class SalaryCheckerConfig {
             }
         // }
     }
+  }
 
     /**
      * By providing a key, this property will return the valye from 

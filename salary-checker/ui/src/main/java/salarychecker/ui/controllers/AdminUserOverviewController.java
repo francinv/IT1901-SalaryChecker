@@ -10,17 +10,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is a class controls the AdminUserOverview - scene.
  */
 public class AdminUserOverviewController extends AbstractController {
 
-
-  private Accounts accounts;
   private List<AbstractUser> tempdata = new ArrayList<>();
 
   @FXML private TableView<User> tableUsers;
@@ -53,10 +49,8 @@ public class AdminUserOverviewController extends AbstractController {
    * enters this scene.
    */
   protected void loadTableView() {
-    accounts = super.accounts;
-    List<AbstractUser> tempuserlist;
-    tempuserlist = accounts.getAccounts().stream().filter(u -> u instanceof User)
-        .collect(Collectors.toList());
+    List<AbstractUser> tempuserlist = getDataAccess().readAccountsWithSameEmployer(
+        getDataAccess().getLoggedInUser().getEmail());
     tempdata.clear();
     for (AbstractUser u : tempuserlist) {
       User user = new User(
@@ -72,7 +66,10 @@ public class AdminUserOverviewController extends AbstractController {
     tempdata = tempdata
         .stream()
         .filter(u -> u.getFirstname()
-            .contains(wantedUser))
+            .contains(wantedUser)
+            || u.getLastname().contains(wantedUser)
+            || u.getEmail().contains(wantedUser)
+        )
         .collect(Collectors.toList());
     updateTableView();
   }
@@ -86,4 +83,5 @@ public class AdminUserOverviewController extends AbstractController {
   private void clearAction(ActionEvent event) {
     searchField.clear();;
   }
+
 }

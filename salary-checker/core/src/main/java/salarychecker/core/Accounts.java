@@ -6,10 +6,10 @@ import java.util.List;
 
 /**
  * Class which contains a list of all registred Users.
- * This class implements IUserObserver, this is needed to
+ * This class implements UserObserver, this is needed to
  * observe changes in User object
  */
-public class Accounts implements IUserObserver {
+public class Accounts implements UserObserver {
 
   protected final List<AbstractUser> accounts = new ArrayList<>();
 
@@ -119,7 +119,7 @@ public class Accounts implements IUserObserver {
   }
   /**
    * get accounts by email.
-   * 
+   *
    * @param email the email
    * @return accounts if they exist, null else
    */
@@ -131,7 +131,7 @@ public class Accounts implements IUserObserver {
   }
   /**
    * gets accouns by employerEmail.
-   * 
+   *
    * @param employerEmail employers email
    * @return users with the same employer.
    */
@@ -140,7 +140,7 @@ public class Accounts implements IUserObserver {
     List<AbstractUser> usersWithSameEmployer = new ArrayList<>();
     for (AbstractUser abstractUser : accounts) {
       if (abstractUser instanceof User) {
-        if (((User)abstractUser).getEmployerEmail().equals(employerEmail)) {
+        if (((User) abstractUser).getEmployerEmail().equals(employerEmail)) {
           usersWithSameEmployer.add(abstractUser);
         }
       }
@@ -148,118 +148,11 @@ public class Accounts implements IUserObserver {
     return usersWithSameEmployer;
   }
 
-  /**
-   * Updates password of a specific user.
-   *
-   * @param user the user
-   * @param password new password
-   */
-  public void updatePassword(User user, String password) {
-    accounts.stream().filter(u -> u.getEmail().equals(user.getEmail()))
-                     .findAny()
-                     .ifPresent(u -> u.setPassword(password));
-  }
 
   /**
-   * Updates email of a specific user.
+   * This method is used when something is changed.
+   * The accounts object will be updated accordingly.
    *
-   * @param user the user
-   * @param email new email
-   */
-  public void updateEmail(User user, String email) {
-    accounts.stream().filter(u -> u.getEmail().equals(user.getEmail()))
-                     .findAny()
-                     .ifPresent(u -> u.setEmail(email));
-  }
-
-  /**
-   * Updates firstname of a specific user.
-   *
-   * @param user the user
-   * @param firstname the firstname
-   */
-  public void updateFirstname(User user, String firstname) {
-    accounts.stream().filter(u -> u.getEmail().equals(user.getEmail()))
-                     .findAny()
-                     .ifPresent(u -> u.setFirstname(firstname));
-  }
-
-  /**
-   * Updates lastname of a specific user.
-   *
-   * @param user the user
-   * @param lastname new lastname
-   */
-  public void updateLastname(User user, String lastname) {
-    accounts.stream().filter(u -> u.getEmail().equals(user.getEmail()))
-                     .findAny()
-                     .ifPresent(u -> u.setLastname(lastname));
-  }
-
-  /**
-   * Updates employer email of a specific user.
-   *
-   * @param user the user
-   * @param employermail the employermail
-   */
-  public void updateEmployerEmail(User user, String employermail) {
-    for (AbstractUser u : accounts) {
-      if (u.getEmail().equals(user.getEmail())) {
-        user = (User) u;
-      }
-    }
-    user.setEmployerEmail(employermail);
-  }
-
-  /**
-   * Updates houre rate of a specific user.
-   *
-   * @param user the user
-   * @param hoursal new hoursal
-   */
-  public void updateHourSal(User user, Double hoursal) {
-    for (AbstractUser u : accounts) {
-      if (u.getEmail().equals(user.getEmail())) {
-        user = (User) u;
-      }
-    }
-    user.setHourRate(hoursal);
-  }
-
-  /**
-   * Updates tax count of a specific user.
-   *
-   * @param user the user
-   * @param taxcount new tax count
-   */
-  public void updateTaxCount(User user, Double taxcount) {
-    for (AbstractUser u : accounts) {
-      if (u.getEmail().equals(user.getEmail())) {
-        user = (User) u;
-      }
-    }
-    user.setHourRate(taxcount);
-  }
-
-  /**
-   * Updates employee number of a specific user.
-   *
-   * @param user the user
-   * @param employeenumber new employee number
-   */
-  public void updateEmployeeNumber(User user, int employeenumber) {
-    for (AbstractUser u : accounts) {
-      if (u.getEmail().equals(user.getEmail())) {
-        user = (User) u;
-      }
-    }
-    user.setHourRate(employeenumber);
-  }
-
-  /**
-   * This method is needed in server, when a client that uses the API,
-   * changes the attribute of a User object.
-   * 
    * @param user        to change
    * @param indexOfUser in list
    */
@@ -268,80 +161,14 @@ public class Accounts implements IUserObserver {
   }
 
   /**
-   * Adds usersale to the user.
-   *
-   * @param user the user
-   * @param usale the user sale
-   */
-  public void addUserSale(User user, UserSale usale) {
-    accounts.stream().filter(u -> u.getEmail().equals(user.getEmail()))
-                     .findAny()
-                     .ifPresent(u -> ((User) u).addUserSale(usale));
-  }
-
-  /**
    * This method is used to inform the observers.
+   * This method is called when anything is changed.
    *
    * @param user the user
-   * @param userSale the usersale
    */
-  public void usersaleAdded(User user, UserSale userSale) {
-    this.addUserSale(user, userSale);
+  public void userInfoChanged(AbstractUser user) {
+    int index = accounts.indexOf(user);
+    this.updateUserObject(user, index);
   }
-
-  /**
-   * This method is used to inform the observers.
-   * The method checks wether the double is a tax count or hour rate,
-   * and than calls the method meant for each of the possibilities.
-   *
-   * @param user the user
-   * @param changeddouble the changed double
-   */
-  public void userInfoDoubleChanged(User user, Double changeddouble) {
-    if (changeddouble.equals(user.getTaxCount())) {
-      updateTaxCount(user, changeddouble);
-    } else if (changeddouble.equals(user.getHourRate())) {
-      updateHourSal(user, changeddouble);
-    }
-  }
-
-  /**
-   * This method is used to inform the observers.
-   *
-   * @param user the user
-   * @param changedTaxCount the changed tax count
-   */
-  public void userInfoTaxCountChanged(User user, Integer changedTaxCount) {
-    if (changedTaxCount.equals(user.getEmployeeNumber())) {
-      updateEmployeeNumber(user, changedTaxCount);
-    }
-  }
-
-  /**
-   * This method is used to inform the observers.
-   * The method checks wether the string is a email, employer email,
-   * password, firstname, or lastname, and than calls the method
-   * meant for each of the possibilities.
-   *
-   * @param user the user
-   * @param changedstring the changed string
-   */
-  public void userInfoStringChanged(User user, String changedstring) {
-    if (changedstring.equals(user.getEmail())) {
-      updateEmail(user, changedstring);
-    } else if (changedstring.equals(user.getEmployerEmail())) {
-      updateEmployerEmail(user, changedstring);
-    } else if (changedstring.equals(user.getPassword())) {
-      updatePassword(user, changedstring);
-    } else if (changedstring.equals(user.getFirstname())) {
-      updateFirstname(user, changedstring);
-    } else if (changedstring.equals(user.getLastname())) {
-      updateLastname(user, changedstring);
-    }
-  }
-
-  @Override
-  public String toString() {
-    return "{ accounts='" + getAccounts() + "'}";
-  }
+  
 }
