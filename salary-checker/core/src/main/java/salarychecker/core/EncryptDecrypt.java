@@ -159,21 +159,18 @@ public class EncryptDecrypt {
 
     SecretKey secretKey = generateKey();
 
-    Cipher cipher;
-    byte[] cipherText = null;
     try {
-      cipher = Cipher.getInstance(ALGORITHM);
+      Cipher cipher = Cipher.getInstance(ALGORITHM);
       cipher.init(Cipher.ENCRYPT_MODE, secretKey);
       storeToKeyStore(alias, secretKey);
-      cipherText = cipher.doFinal(strToEncrypt.getBytes(Charset.forName("UTF-8")));
+      byte[] cipherText = cipher.doFinal(strToEncrypt.getBytes(Charset.forName("UTF-8")));
+      return Base64.getEncoder().encodeToString(cipherText);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException 
        | InvalidKeyException | IllegalBlockSizeException 
        | BadPaddingException e) {
       System.out.println(e.getMessage());
     }
-    
-    return Base64.getEncoder()
-      .encodeToString(cipherText);
+    return null;
   }
 
   /**
@@ -187,19 +184,18 @@ public class EncryptDecrypt {
 
     SecretKey secretKey = loadFromKeyStore(alias);
 
-    Cipher cipher;
-    byte[] plainText = null;
     try {
-      cipher = Cipher.getInstance(ALGORITHM);
+      Cipher cipher = Cipher.getInstance(ALGORITHM);
       cipher.init(Cipher.DECRYPT_MODE, secretKey);
-      plainText = cipher.doFinal(Base64.getDecoder()
+      byte[] plainText = cipher.doFinal(Base64.getDecoder()
         .decode(cipherText));
+      return new String(plainText, StandardCharsets.UTF_8);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException 
       | InvalidKeyException | IllegalBlockSizeException 
       | BadPaddingException e) {
       // TODO Auto-generated catch block
       System.out.println(e.getMessage());
     }
-    return new String(plainText, StandardCharsets.UTF_8);
+    return null;
   }
 }

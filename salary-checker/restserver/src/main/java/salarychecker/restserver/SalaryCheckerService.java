@@ -30,7 +30,7 @@ public class SalaryCheckerService {
 
   private Accounts accounts;
   private Calculation calculation;
-  private SalaryCheckerPersistence salaryCheckerPersistence;
+  private final static SalaryCheckerPersistence PERSISTENCE = new SalaryCheckerPersistence();
   private Path fileStorageLocation;
 
   /**
@@ -41,8 +41,7 @@ public class SalaryCheckerService {
   public SalaryCheckerService(Accounts accounts) {
     this.accounts = accounts;
     this.calculation = new Calculation();
-    this.salaryCheckerPersistence = new SalaryCheckerPersistence();
-    salaryCheckerPersistence.setFilePath("springbootserver-salarychecker.json");
+    PERSISTENCE.setFilePath("springbootserver-salarychecker.json");
   }
 
   /**
@@ -92,9 +91,8 @@ public class SalaryCheckerService {
    * @return creates two test users if json file is not found.
    */
   public static Accounts createDeafaultAccounts() {
-    SalaryCheckerPersistence salaryCheckerPersistence = new SalaryCheckerPersistence();
     try {
-      Accounts accounts = salaryCheckerPersistence.loadAccounts();
+      Accounts accounts = PERSISTENCE.loadAccounts();
       if (accounts != null) {
         return accounts;
       }
@@ -200,9 +198,9 @@ public class SalaryCheckerService {
    * Saves Accounts to disk.
    */
   private void autoSave() {
-    if (salaryCheckerPersistence != null) {
+    if (PERSISTENCE != null) {
       try {
-        salaryCheckerPersistence.saveAccounts(accounts);
+        PERSISTENCE.saveAccounts(accounts);
       } catch (IllegalStateException | IOException e) {
         System.err.println("Could not auto-save Accounts: " + e);
       }
