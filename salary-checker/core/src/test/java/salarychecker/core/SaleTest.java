@@ -22,14 +22,8 @@ public class SaleTest {
     }
 
     @Test
-    public void testConstructor() {
-        Sale emptyConstructor = new Sale();
-        Assertions.assertNull(emptyConstructor.getAnleggStatus());
-    }
-
-    @Test
     public void getMethodTest(){
-        Assertions.assertEquals("17. Mai, 2021", testSale.getSalesID());
+        Assertions.assertEquals("17. Mai, 2021", testSale.getSalesId());
         Assertions.assertEquals("anleggStatusString", testSale.getAnleggStatus());
         Assertions.assertEquals("salgsTypeString", testSale.getSalgsType());
         Assertions.assertEquals("campaignString", testSale.getCampaign());
@@ -43,8 +37,8 @@ public class SaleTest {
 
     @Test
     public void setMethodTest(){
-        testSale.setSalesID("21. September 2021");
-        Assertions.assertEquals("21. September 2021", testSale.getSalesID());
+        testSale.setSalesId("21. September 2021");
+        Assertions.assertEquals("21. September 2021", testSale.getSalesId());
 
         testSale.setAnleggStatus("anleggStatusString2");
         Assertions.assertEquals("anleggStatusString2", testSale.getAnleggStatus());
@@ -76,20 +70,9 @@ public class SaleTest {
 
     @Test
     public void testUpdateProvisjon() {
-        testSale.updateProvisjon(200);
-        assertEquals(250, testSale.getProvisjon());
+        testSale.updateCommission(200);
+        assertEquals(250, testSale.getCommission());
     }
 
-    @Test
-    public void testUpdateProvisjon() {
-        testSale.updateProvisjon(200);
-        assertEquals(250, testSale.getProvisjon());
-    }
-
-    @Test
-    public void testUpdateProvisjon() {
-        testSale.updateProvisjon(200);
-        assertEquals(250, testSale.getProvisjon());
-    }
     
 }

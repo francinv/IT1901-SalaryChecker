@@ -67,8 +67,8 @@ public class Sale {
     this.commission += number;
   }
 
-  public String getSalesID() {
-    return this.salesID;
+  public String getSalesId() {
+    return this.salesId;
   }
 
   public void setSalesId(String salesId) {

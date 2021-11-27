@@ -184,7 +184,8 @@ public class UserValidation {
    *  @param taxCount users tax count
    *  @param hourRate users hour rate
    */
-  public static void checkValidUser(String firstname, String lastname, String email, String password,
+  public static void checkValidUser(
+      String firstname, String lastname, String email, String password,
                              String socialNumber, int employeeNumber, String employerEmail,
                              double taxCount, double hourRate) {
     allFieldsEmpty(firstname, lastname, email, password, socialNumber,
@@ -213,7 +214,8 @@ public class UserValidation {
    *  @param hourRate users hour rate
    *  @throws IllegalArgumentException if all fields are empty
    */
-  public static void allFieldsEmpty(String firstname, String lastname, String email, String password,
+  public static void allFieldsEmpty(
+      String firstname, String lastname, String email, String password,
                              String socialNumber, int employeeNumber, double taxCount,
                              double hourRate) {
     if (firstname.equals("") && lastname.equals("") && email.equals("")

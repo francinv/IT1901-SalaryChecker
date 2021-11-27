@@ -51,7 +51,7 @@ public class Calculation {
   private static final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
   private double calculated;
-  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private static final SalaryCsvReader SALARY_CSV_READER = new SalaryCsvReader();
   private String salesperiod;
   private double hours;
   private int mobileamount;
@@ -78,7 +78,7 @@ public class Calculation {
 
   /**
    * Getter for salesperiod. Eg: "Januar 2021".
-   * 
+   *
    * @return salesperiod of this instance.
    */
   public String getSalesperiod() {
@@ -87,7 +87,7 @@ public class Calculation {
 
   /**
    * Setter for salesperiod. Eg: "Januar 2021".
-   * 
+   *
    * @param salesperiod that we are going to set.
    */
   public void setSalesperiod(String salesperiod) {
@@ -97,7 +97,7 @@ public class Calculation {
 
   /**
    * Get hours that the user has worked.
-   * 
+   *
    * @return hours of work.
    */
   public double getHours() {
@@ -106,7 +106,7 @@ public class Calculation {
 
   /**
    * Set the hours that the user has worked.
-   * 
+   *
    * @param hours for this salesperiod.
    */
   public void setHours(double hours) {
@@ -115,7 +115,7 @@ public class Calculation {
 
   /**
    * Get the amount of mobile-plan sales.
-   * 
+   *
    * @return mobileamount for this instance.
    */
   public int getMobileamount() {
@@ -124,7 +124,7 @@ public class Calculation {
 
   /**
    * Set the amount of mobile-plan sales.
-   * 
+   *
    * @param mobileamount for this instance.
    */
   public void setMobileamount(int mobileamount) {
@@ -133,7 +133,7 @@ public class Calculation {
 
   /**
    * Get the amount that is paid by employeer.
-   * 
+   *
    * @return amount that is paid.
    */
   public double getPaid() {
@@ -142,7 +142,7 @@ public class Calculation {
 
   /**
    * Set the amount that is paid by employeer.
-   * 
+   *
    * @param paid by employeer.
    */
   public void setPaid(double paid) {
@@ -161,14 +161,14 @@ public class Calculation {
   /**
    * Upadtes the list according to salesreport.
    *
-   * @param url location of salesreport
+   * @param pathToFile location of salesreport
    * @throws IOException Signals that an I/O exception of some sort has occurred.
    *                     This class is the general class of exceptions produced by
    *                     failed or interrupted I/O operations.
    */
   public void updateList(String pathToFile) throws IOException {
     FileInputStream pathToReadFile = new FileInputStream(new File(pathToFile));
-    saleslist = SALARY_CSV_READER.CSVtoSale(pathToReadFile);
+    saleslist = SALARY_CSV_READER.csvToSale(pathToReadFile);
   }
 
   /**
@@ -201,9 +201,10 @@ public class Calculation {
         s.updateCommission(50);
       }
 
-      checkIfBunWinBackLeadsContainsCampaign(s);
+      checkIfBundling(s);
       checkIfNySalgContainsCampaign(s);
       checkIfComebackContainsCampaign(s);
+      checkIfLeadsContainsCampaign(s);
     }
   }
 
@@ -242,11 +243,11 @@ public class Calculation {
    * Checks if bun and winback lists or bun and leads list, 
    * contains campagin. If so, do the needed update of commission.
    */
-  public void checkIfBunWinBackLeadsContainsCampaign(Sale s) {
+  public void checkIfBundling(Sale s) {
     if (BUN.contains(s.getProduct()) && WINBACK.contains(s.getCampaign())
           || BUN.contains(s.getProduct()) && LEADS.contains(s.getCampaign())) {
-        s.updateCommission(50);
-      }
+      s.updateCommission(50);
+    }
   }
 
   /**

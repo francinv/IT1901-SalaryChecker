@@ -34,7 +34,7 @@ public abstract class AbstractUser {
   public void setFirstname(String firstname) {
     UserValidation.checkValidFirstname(firstname);
     this.firstname = firstname;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }
@@ -56,7 +56,7 @@ public abstract class AbstractUser {
   public void setLastname(String lastname) {
     UserValidation.checkValidLastname(lastname);
     this.lastname = lastname;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }
@@ -78,7 +78,7 @@ public abstract class AbstractUser {
   public void setEmail(String email) {
     UserValidation.checkValidEmail(email);
     this.email = email;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }
@@ -100,7 +100,7 @@ public abstract class AbstractUser {
   public void setPassword(String password) {
     UserValidation.checkValidPassword(password);
     this.password = password;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }

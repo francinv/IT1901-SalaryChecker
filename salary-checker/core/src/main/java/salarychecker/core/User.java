@@ -100,7 +100,7 @@ public class User extends AbstractUser {
   public void setEmployeeNumber(int employeeNumber) {
     UserValidation.checkValidEmployeeNumber(employeeNumber);
     this.employeeNumber = employeeNumber;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }
@@ -122,7 +122,7 @@ public class User extends AbstractUser {
   public void setEmployerEmail(String employerEmail) {
     UserValidation.checkValidEmail(employerEmail);
     this.employerEmail = employerEmail;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }
@@ -144,7 +144,7 @@ public class User extends AbstractUser {
   public void setTaxCount(double taxCount) {
     UserValidation.checkValidTaxCount(taxCount);
     this.taxCount = taxCount;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }
@@ -166,7 +166,7 @@ public class User extends AbstractUser {
   public void setHourRate(double hourRate) {
     UserValidation.checkValidHourRate(hourRate);
     this.hourRate = hourRate;
-    for (IUserObserver userObserver : userObs) {
+    for (UserObserver userObserver : userObs) {
       userObserver.userInfoChanged(this);
     }
   }
@@ -201,7 +201,7 @@ public class User extends AbstractUser {
   public void addUserSale(UserSale userSale) {
     if (!(isExistingUserSale(userSale))) {
       userSales.add(userSale);
-      for (IUserObserver userObserver : userObs) {
+      for (UserObserver userObserver : userObs) {
         userObserver.userInfoChanged(this);
       }
     }

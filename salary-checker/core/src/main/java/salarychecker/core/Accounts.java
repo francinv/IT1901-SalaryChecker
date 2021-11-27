@@ -152,7 +152,7 @@ public class Accounts implements UserObserver {
   /**
    * This method is used when something is changed.
    * The accounts object will be updated accordingly.
-   * 
+   *
    * @param user        to change
    * @param indexOfUser in list
    */
@@ -165,7 +165,6 @@ public class Accounts implements UserObserver {
    * This method is called when anything is changed.
    *
    * @param user the user
-   * @param changeddouble the changed double
    */
   public void userInfoChanged(AbstractUser user) {
     int index = accounts.indexOf(user);
