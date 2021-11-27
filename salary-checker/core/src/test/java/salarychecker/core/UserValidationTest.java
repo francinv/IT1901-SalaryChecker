@@ -1,5 +1,7 @@
 package salarychecker.core;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,5 +56,6 @@ public class UserValidationTest {
         accounts.addUser(testUser);
         Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isValidLogIn("email@email.com", "Password123!", accounts));
         Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isNotExistingUser("email@emaile.com", "Password123!", accounts));
+        assertThrows(IllegalArgumentException.class, () -> userValidation.allFieldsEmpty("", "", "", "", "", 0, 0, 0));
     }
 }

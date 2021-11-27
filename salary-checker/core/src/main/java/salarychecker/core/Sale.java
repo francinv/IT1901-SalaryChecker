@@ -67,8 +67,8 @@ public class Sale {
     this.provisjon += number;
   }
 
-  public String getSalesDate() {
-    return this.salesId;
+  public String getSalesID() {
+    return this.salesID;
   }
 
   public void setSalesId(String salesId) {
@@ -139,19 +139,4 @@ public class Sale {
     this.product = product;
   }
 
-  @Override
-  public String toString() {
-    return "{"
-      + " Salgs-ID='" + getSalesDate() + "'"
-      + ", Anlegg Status='" + getAnleggStatus() + "'"
-      + ", Salgs Type='" + getSalgsType() + "'"
-      + ", Kampanje='" + getCampaign() + "'"
-      + ", Merke='" + getBrand() + "'"
-      + ", Trippelgaranti='" + getTx3() + "'"
-      + ", Rabatt='" + getRebate() + "'"
-      + ", Norsk VannKraft='" + getNvk() + "'"
-      + ", Produktnavn='" + getProduct() + "'"
-      + ", Provisjon='" + getProvisjon() + "'"
-      + "}";
-  }
 }
