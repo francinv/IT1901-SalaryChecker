@@ -16,6 +16,7 @@ public abstract class AbstractUser {
 
   protected Collection<UserObserver> userObs = new ArrayList<>();
 
+  
   /**
    * Access method for firstname.
    *
@@ -33,8 +34,8 @@ public abstract class AbstractUser {
   public void setFirstname(String firstname) {
     UserValidation.checkValidFirstname(firstname);
     this.firstname = firstname;
-    for (UserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, firstname);
+    for (IUserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -55,8 +56,8 @@ public abstract class AbstractUser {
   public void setLastname(String lastname) {
     UserValidation.checkValidLastname(lastname);
     this.lastname = lastname;
-    for (UserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, lastname);
+    for (IUserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -77,8 +78,8 @@ public abstract class AbstractUser {
   public void setEmail(String email) {
     UserValidation.checkValidEmail(email);
     this.email = email;
-    for (UserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, email);
+    for (IUserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -99,8 +100,8 @@ public abstract class AbstractUser {
   public void setPassword(String password) {
     UserValidation.checkValidPassword(password);
     this.password = password;
-    for (UserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, password);
+    for (IUserObserver userObserver : userObs) {
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -135,13 +136,4 @@ public abstract class AbstractUser {
     return new ArrayList<>(userObs);
   }
 
-  @Override
-  public String toString() {
-    return "{"
-      + " firstname='" + getFirstname() + "'"
-      + ", lastname='" + getLastname() + "'"
-      + ", email='" + getEmail() + "'"
-      + ", password='" + getPassword() + "'"
-      + "}";
-  }
 }

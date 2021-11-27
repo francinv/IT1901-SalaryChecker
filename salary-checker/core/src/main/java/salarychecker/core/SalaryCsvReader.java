@@ -32,15 +32,15 @@ public class SalaryCsvReader {
    * @return saleslist
    * @throws IOException when not found
    */
-
-  public List<Sale> csvToSale(String url) throws IOException {
-    
+  public List<Sale> CSVtoSale(FileInputStream file) throws IOException {
+    InputStream fileToBeRead = file;
     List<List<String>> records = new ArrayList<>();
     List<Integer> indexOfRemove = new ArrayList<>();
 
-    try (Scanner scanner = new Scanner(new File(url));) {
+    try (Scanner scanner = new Scanner(fileToBeRead);) {
       while (scanner.hasNextLine()) {
         records.add(getRecordFromLine(scanner.nextLine()));
+        
       }
     }
     for (List<String> e : records) {
@@ -69,26 +69,26 @@ public class SalaryCsvReader {
     for (List<String> e : records) {
       Sale sale = new Sale();
       if (e.size() == 41) {
-        sale.setSalesId(e.get(0));
-        sale.setAnleggStatus(e.get(14));
-        sale.setSalgsType(e.get(15));
-        sale.setCampaign(e.get(28));
-        sale.setBrand(e.get(30));
-        sale.setTx3(e.get(31));
-        sale.setRebate(e.get(37));
-        sale.setNvk(e.get(38));
-        sale.setProduct(e.get(40));
+        sale.setSalesID(e.get(0).substring(1, e.get(0).length() - 1));
+        sale.setAnleggStatus(e.get(14).substring(1, e.get(14).length() - 1));
+        sale.setSalgsType(e.get(15).substring(1, e.get(15).length() - 1));
+        sale.setCampaign(e.get(28).substring(1, e.get(28).length() - 1));
+        sale.setBrand(e.get(30).substring(1, e.get(30).length() - 1));
+        sale.setTX3(e.get(31).substring(1, e.get(31).length() - 1));
+        sale.setRebate(e.get(37).substring(1, e.get(37).length() - 1));
+        sale.setNVK(e.get(38).substring(1, e.get(38).length() - 1));
+        sale.setProduct(e.get(40).substring(1, e.get(40).length() - 1));
         saleslist.add(sale);
       } else {
-        sale.setSalesId(e.get(0));
-        sale.setAnleggStatus(e.get(14));
-        sale.setSalgsType(e.get(15));
-        sale.setCampaign(e.get(25));
-        sale.setBrand(e.get(27));
-        sale.setTx3(e.get(28));
-        sale.setRebate(e.get(34));
-        sale.setNvk(e.get(35));
-        sale.setProduct(e.get(37));
+        sale.setSalesID(e.get(0).substring(1, e.get(0).length() - 1));
+        sale.setAnleggStatus(e.get(14).substring(1, e.get(14).length() - 1));
+        sale.setSalgsType(e.get(15).substring(1, e.get(15).length() - 1));
+        sale.setCampaign(e.get(25).substring(1, e.get(25).length() - 1));
+        sale.setBrand(e.get(27).substring(1, e.get(27).length() - 1));
+        sale.setTX3(e.get(28).substring(1, e.get(28).length() - 1));
+        sale.setRebate(e.get(34).substring(1, e.get(34).length() - 1));
+        sale.setNVK(e.get(35).substring(1, e.get(35).length() - 1));
+        sale.setProduct(e.get(37).substring(1, e.get(37).length() - 1));
         saleslist.add(sale);
       }
     }
