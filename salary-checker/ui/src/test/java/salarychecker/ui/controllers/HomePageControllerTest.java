@@ -17,8 +17,12 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomePageControllerTest extends ApplicationTest {
-
 
     //HOMEPAGE - VARIABLES
     private Text pageTitle;
@@ -46,37 +49,32 @@ public class HomePageControllerTest extends ApplicationTest {
     private AnchorPane salariesPane;
 
 
-    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+    SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
     User user;
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/HomePage.fxml"));
-        HomepageController homepageController = new HomepageController();
-        loader.setController(homepageController);
-        final Parent parent = loader.load();
-        final Scene scene = new Scene(parent);
-
-        user = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-        createTestUsers();
-        homepageController.setUser(user);
-        homepageController.setAccounts(persistence.loadAccounts());
-        homepageController.loadInfo();
-        stage.setScene(scene);
-        stage.show();
+      FXMLLoader loader = new FXMLLoader();
+      HomepageController controller = new HomepageController();
+      loader.setController(controller);
+      controller.setDataAccess(dataAccess);
+      loader.setLocation(SalaryCheckerApp.class.getResource("views/HomePage.fxml"));
+      createTestUsers();
+      user = (User) dataAccess.userLogin("testhome@live.no", "Password123!");
+      final Parent parent = loader.load();
+      controller.loadInfo();
+      stage.setScene(new Scene(parent));
+      stage.show();
     }
 
     private void createTestUsers() throws IOException {
-        User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-        User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
-
-        Accounts accounts = new Accounts();
-        accounts.addUser(testuser1);
-        accounts.addUser(testuser2);
-
-        persistence.setFilePath("Accounts.json");
-        persistence.saveAccounts(accounts);
-
+        try {
+            dataAccess.createUser(new User("Test", "User",
+                "testhome@live.no", "Password123!", "22030191349",
+                12345, "employeer1@gmail.com", 30.0, 130.0));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @BeforeEach
@@ -138,7 +136,7 @@ public class HomePageControllerTest extends ApplicationTest {
         clickOn(logOutButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/LogIn.fxml")); // load same anchorpane that currentWindow contains
+            FXMLLoader loader = new FXMLLoader(SalaryCheckerApp.class.getResource("views/LogIn.fxml")); // load same anchorpane that currentWindow contains
             LoginController loginController = new LoginController();
             loader.setController(loginController);
             AnchorPane pane = loader.load();
@@ -152,10 +150,6 @@ public class HomePageControllerTest extends ApplicationTest {
         }
     }
 
-
-
-    
-
     private Stage getTopModalStage() {
         // Get a list of windows but ordered from top[0] to bottom[n] ones.
         // It is needed to get the first found modal window.
@@ -168,8 +162,6 @@ public class HomePageControllerTest extends ApplicationTest {
                 .findFirst()
                 .orElse(null);
     }
-
-
 
 }
 

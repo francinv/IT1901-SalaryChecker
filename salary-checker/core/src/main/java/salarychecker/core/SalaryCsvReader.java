@@ -34,7 +34,6 @@ public class SalaryCsvReader {
    */
 
   public List<Sale> csvToSale(String url) throws IOException {
-    
     List<List<String>> records = new ArrayList<>();
     List<Integer> indexOfRemove = new ArrayList<>();
 

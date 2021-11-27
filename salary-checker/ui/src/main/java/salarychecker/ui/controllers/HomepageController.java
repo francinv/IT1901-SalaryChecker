@@ -5,9 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import salarychecker.core.Accounts;
 import salarychecker.core.User;
-import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is the class that controls the HomePage Scene.
@@ -20,10 +18,6 @@ public class HomepageController extends AbstractController {
   @FXML private AnchorPane startPane;
   @FXML private Button hideMenuButton;
 
-  private User user;
-  private Accounts accounts;
-  private SalaryCheckerAccess dataAccess;
-
   /**
    * This is a method that loads the user info.
    * The method is protected because it will be
@@ -31,11 +25,8 @@ public class HomepageController extends AbstractController {
    */
   @FXML
   protected void loadInfo() {
-    user = (User) super.user;
-    accounts = super.accounts;
-    dataAccess = super.dataAccess;
     pageTitle.setText("Hjem");
-    userNameDisplay.setText(user.getFirstname() + " " + user.getLastname());
+    userNameDisplay.setText(dataAccess.getLoggedInUser().getFirstname() + " " + dataAccess.getLoggedInUser().getLastname());
   }
 
   /**
@@ -45,7 +36,7 @@ public class HomepageController extends AbstractController {
    */
   @FXML
   private void logOutAction(ActionEvent event) {
-    setScene(Controllers.LOGIN, event, null, null, null);
+    setScene(Controllers.LOGIN, event, getDataAccess());
   }
 
   /**
@@ -72,7 +63,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToProfileAction(ActionEvent event) {
     pageTitle.setText("Profil");
-    setAnchorPane(Controllers.PROFILE, startPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.PROFILE, startPane, getDataAccess());
   }
 
   /**
@@ -83,7 +74,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToCalcAction(ActionEvent event) {
     pageTitle.setText("Utregning av lønn");
-    setAnchorPane(Controllers.SALARYCALC, startPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.SALARYCALC, startPane, getDataAccess());
   }
 
   /**
@@ -94,7 +85,7 @@ public class HomepageController extends AbstractController {
   @FXML
   private void goToSalAction(ActionEvent event) {
     pageTitle.setText("Mine lønninger");
-    setAnchorPane(Controllers.SALARIES, startPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.SALARIES, startPane, getDataAccess());
   }
 
 

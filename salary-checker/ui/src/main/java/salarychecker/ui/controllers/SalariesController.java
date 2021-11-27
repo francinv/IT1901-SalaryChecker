@@ -24,7 +24,6 @@ public class SalariesController extends AbstractController {
   @FXML private Text pageTitle;
   @FXML private AnchorPane salariesPane;
 
-  private User user;
   private ArrayList<UserSale> tempdata;
 
   /**
@@ -33,8 +32,7 @@ public class SalariesController extends AbstractController {
    * scene is loaded.
    */
   protected void loadTableView() {
-    user = (User) super.user;
-    tempdata = user.getUserSaleList();
+    tempdata = ((User) dataAccess.getLoggedInUser()).getUserSaleList();
     if (!tempdata.isEmpty()) {
       updateTableView();
     }

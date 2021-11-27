@@ -17,7 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.SalaryCheckerApp;
 
 /**
  * Test for SettingsController.
@@ -25,8 +28,8 @@ import salarychecker.json.SalaryCheckerPersistence;
 public class SettingsControllerTest extends ApplicationTest {
 
   User user;
-  SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
-  Accounts accounts = new Accounts();
+  Accounts accounts;
+  private SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
 
   private Button closeButton;
   private TextField changeFirstNameField;
@@ -47,25 +50,18 @@ public class SettingsControllerTest extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/Settings.fxml"));
-    SettingsController settingsController = new SettingsController();
-    loader.setController(settingsController);
-    final Parent parent = loader.load();
-    final Scene scene = new Scene(parent);
-
-    user = new User("Seran", "Shanmugathas", "seran@live.no", 
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
+    FXMLLoader loader = new FXMLLoader();
+    SettingsController controller = new SettingsController();
+    loader.setController(controller);
+    controller.setDataAccess(dataAccess);
+    loader.setLocation(SalaryCheckerApp.class.getResource("views/Settings.fxml"));
     createTestUsers();
-    settingsController.setUser(user);
-    accounts = persistence.loadAccounts();
-    settingsController.setAccounts(accounts);
-    settingsController.loadSettingsInfo();
-    stage.setScene(scene);
+    user = (User) dataAccess.userLogin("testsettings@live.no", "Password123!");
+    final Parent parent = loader.load();
+    controller.loadSettingsInfo();
+    stage.setScene(new Scene(parent));
     stage.show();
   }
-  /**
-   * Tests the settings buttons.
-   */
 
   @BeforeEach
   public void initFields() {
@@ -89,22 +85,22 @@ public class SettingsControllerTest extends ApplicationTest {
 
   @Test
   public void testUpdateName() {
-    writeInFields(changeFirstNameField, "Ser");
-    writeInFields(changeLastNameField, "Shanmugathas");
+    writeInFields(changeFirstNameField, "Tes");
+    writeInFields(changeLastNameField, "User");
     clickOn(saveChangesButton);
     assertEquals("Changes successfully saved.", successMessageDisplay.getText());
-    assertEquals("Ser", changeFirstNameField.getPromptText());
-    assertEquals("Shanmugathas", changeLastNameField.getPromptText());
+    assertEquals("Tes", changeFirstNameField.getPromptText());
+    assertEquals("User", changeLastNameField.getPromptText());
   }
 
   @Test
   public void testUpdateEmail() {
-    writeInFields(changeEmailField, "seran@mail.no");
-    writeInFields(changeConfirmedEmailField, "seran@mail.no");
+    writeInFields(changeEmailField, "test@mail.no");
+    writeInFields(changeConfirmedEmailField, "test@mail.no");
     clickOn(saveChangesButton);
     assertEquals("Changes successfully saved.", successMessageDisplay.getText());
-    assertEquals("seran@mail.no", changeEmailField.getPromptText());
-    assertEquals("seran@mail.no", changeConfirmedEmailField.getPromptText());
+    assertEquals("testsettings@mail.no", changeEmailField.getPromptText());
+    assertEquals("testsettings@mail.no", changeConfirmedEmailField.getPromptText());
   }
 
   @Test
@@ -151,27 +147,27 @@ public class SettingsControllerTest extends ApplicationTest {
 
   @Test
   public void testInvalidInfo() {
-    writeInFields(changeFirstNameField, "S");
-    writeInFields(changeLastNameField, "Shanmugathas");
+    writeInFields(changeFirstNameField, "T");
+    writeInFields(changeLastNameField, "User");
     clickOn(saveChangesButton);
     assertEquals("Name should only contain letters, and be atleast two letters..", 
         errorTextDisplay.getText());
-    assertEquals("Seran", changeFirstNameField.getPromptText());
+    assertEquals("Test", changeFirstNameField.getPromptText());
     clearFields(changeFirstNameField);
     clearFields(changeLastNameField);
 
-    writeInFields(changeEmailField, "s");
-    writeInFields(changeConfirmedEmailField, "s");
+    writeInFields(changeEmailField, "t");
+    writeInFields(changeConfirmedEmailField, "t");
     clickOn(saveChangesButton);
     assertEquals("Invalid email, must be of format: name-part@domain, e.g. example@example.com.", 
         errorTextDisplay.getText());
-    assertEquals("seran@live.no", changeEmailField.getPromptText());
-    assertEquals("seran@live.no", changeConfirmedEmailField.getPromptText());
+    assertEquals("testsettings@live.no", changeEmailField.getPromptText());
+    assertEquals("testsettings@live.no", changeConfirmedEmailField.getPromptText());
     clearFields(changeEmailField);
     clearFields(changeConfirmedEmailField);
 
-    writeInFields(changeEmployerField, "s");
-    writeInFields(changeConfirmedEmployerField, "s");
+    writeInFields(changeEmployerField, "t");
+    writeInFields(changeConfirmedEmployerField, "t");
     clickOn(saveChangesButton);
     assertEquals("Invalid email, must be of format: name-part@domain, e.g. example@example.com.", 
         errorTextDisplay.getText());
@@ -210,26 +206,22 @@ public class SettingsControllerTest extends ApplicationTest {
     assertTrue(profilePane.isVisible());
   }
 
-  private void createTestUsers() throws IOException {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", 
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-    User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", 
-        "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
-
-    Accounts acc = new Accounts();
-    acc.addUser(testuser1);
-    acc.addUser(testuser2);
-
-    persistence.setFilePath("Accounts.json");
-    persistence.saveAccounts(acc);
-  }
-
   private void writeInFields(TextField typeField, String text) {
     clickOn(typeField).write(text);
   }
 
   private void clearFields(TextField typeField) {
     typeField.clear();
+  }
+
+  private void createTestUsers() throws IOException {
+    try {
+      dataAccess.createUser(new User("Test", "User",
+          "testsettings@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
 

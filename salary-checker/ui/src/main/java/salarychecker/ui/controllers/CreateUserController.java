@@ -8,21 +8,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
-import salarychecker.dataaccess.SalaryCheckerAccess;
-import salarychecker.json.SalaryCheckerPersistence;
 
 /**
  * This is the class for controlling CreateUser scene.
  */
 public class CreateUserController extends AbstractController {
 
-  private AdminUser adminUser;
-  private Accounts accounts;
-  private SalaryCheckerAccess dataAccess;
 
   @FXML private AnchorPane firstLastPane;
   @FXML private AnchorPane empemailPane;
@@ -56,9 +49,6 @@ public class CreateUserController extends AbstractController {
    * The method is protected because it will be called from AbstractController.
    */
   protected void loadUserAndAccount() {
-    adminUser = (AdminUser) super.user;
-    accounts = super.accounts;
-    dataAccess = super.dataAccess;
     empemailPane.setVisible(false);
     socialPassPane.setVisible(false);
     wageTaxPane.setVisible(false);
@@ -140,7 +130,6 @@ public class CreateUserController extends AbstractController {
    */
   @FXML
   private void createUserAction(ActionEvent event) throws IOException {
-    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
     if (wageTaxPane.isVisible()) {
       try {
         String tempwage = wageField.getText();
@@ -160,8 +149,8 @@ public class CreateUserController extends AbstractController {
           UserValidation.checkValidTaxCount(tax);
         }
         User user = new User(firstname, lastname, email, password,
-            socialNumber, employeeNumber, adminUser.getEmail(), tax, wage);
-        dataAccess.createUser(user);
+            socialNumber, employeeNumber, getDataAccess().getLoggedInUser().getEmail(), tax, wage);
+        getDataAccess().createUser(user);
         errorMessageDisplay.setFill(Paint.valueOf("#008000"));
         errorMessageDisplay.setText("User created!");
       } catch (IllegalArgumentException e) {

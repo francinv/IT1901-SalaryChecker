@@ -7,11 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
-import salarychecker.core.AdminUser;
-import salarychecker.core.User;
-import salarychecker.core.UserValidation;
+import salarychecker.core.*;
 import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
@@ -24,25 +20,6 @@ public class LoginController extends AbstractController {
   @FXML private Button createButton;
   @FXML private Text errorDisplay;
 
-  private AbstractUser user = super.user;
-  private Accounts accounts;
-
-  private SalaryCheckerAccess dataAccess;
-
-  /**
-   * Initializes the SalaryCheckerAccess by checking salarychecker.properties. 
-   * If the key for remote access is true, the app wil run with RemoteSalaryCheckerAccess, 
-   * otherwise LocalSalaryCheckerAccess.
-   *
-   * @throws IOException if not found
-   * @throws URISyntaxException if string doesn't parse
-   */
-  @FXML
-  void initialize() throws IOException, URISyntaxException {
-    this.dataAccess = super.dataAccess;
-    this.accounts = dataAccess.readAccounts();
-  }
-
   /**
    * This is the method that handles the log-in.
    * It first loads the accounts that are saved in "Accounts.json".
@@ -54,24 +31,22 @@ public class LoginController extends AbstractController {
    */
   @FXML
   void userLogIn(ActionEvent event) throws IOException {
+
     String usernameField = email.getText();
     String passwordField = password.getText();
-
     try {
       UserValidation.checkValidEmail(usernameField);
       UserValidation.checkValidPassword(passwordField);
-      UserValidation.isNotExistingUser(usernameField, passwordField, accounts);
-      UserValidation.isValidLogIn(usernameField, passwordField, accounts);
-      user = dataAccess.userLogin(usernameField, passwordField);
+      UserValidation.isNotExistingUser(usernameField, passwordField, getDataAccess().readAccounts());
+      UserValidation.isValidLogIn(usernameField, passwordField, getDataAccess().readAccounts());
+      AbstractUser user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {
-        setScene(Controllers.HOME, event, user, accounts, dataAccess);
+        setScene(Controllers.HOME, event, getDataAccess());
       } else if (user instanceof AdminUser) {
-        setScene(Controllers.ADMIN, event, user, accounts, dataAccess);
+        setScene(Controllers.ADMIN, event, getDataAccess());
       }
     } catch (IllegalArgumentException e) {
       errorDisplay.setText(e.getMessage());
-      // } catch (Exception e) {
-      //   errorDisplay.setText(Errors.NOT_REGISTERED.getMessage());
     }
   }
 
@@ -85,10 +60,16 @@ public class LoginController extends AbstractController {
   @FXML
   private void createUsersAction(ActionEvent event) throws IOException {
     try {
-      dataAccess.createUser(new User("Seran", "Shanmugathas", "seran@llive.no",
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130));
-      dataAccess.createAdminUser(new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com",
-        "Vandre333!"));
+      User user = new User("Test", "User",
+          "test@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0);
+      UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+      user.addUserSale(testsale1);
+      UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+      user.addUserSale(testsale2);
+      dataAccess.createUser(user);
+      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
+          "test@admin.no", "Password123!"));
       createButton.setText("Test users created!");
     } catch (Exception e) {
       createButton.setText(e.getMessage());
