@@ -17,6 +17,7 @@ public abstract class AbstractUser {
   protected UserValidation userValidation = new UserValidation();
   protected Collection<IUserObserver> userObs = new ArrayList<>();
 
+  
   /**
    * Access method for firstname.
    *
@@ -35,7 +36,7 @@ public abstract class AbstractUser {
     userValidation.checkValidFirstname(firstname);
     this.firstname = firstname;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, firstname);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -57,7 +58,7 @@ public abstract class AbstractUser {
     userValidation.checkValidLastname(lastname);
     this.lastname = lastname;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, lastname);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -79,7 +80,7 @@ public abstract class AbstractUser {
     userValidation.checkValidEmail(email);
     this.email = email;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, email);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -101,7 +102,7 @@ public abstract class AbstractUser {
     userValidation.checkValidPassword(password);
     this.password = password;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged((User) this, password);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -132,13 +133,4 @@ public abstract class AbstractUser {
     return new ArrayList<>(userObs);
   }
 
-  @Override
-  public String toString() {
-    return "{"
-      + " firstname='" + getFirstname() + "'"
-      + ", lastname='" + getLastname() + "'"
-      + ", email='" + getEmail() + "'"
-      + ", password='" + getPassword() + "'"
-      + "}";
-  }
 }

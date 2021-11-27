@@ -1,5 +1,7 @@
 package salarychecker.core;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,16 +50,12 @@ public class Calculation {
   private static final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
   private double calculated;
-  private User user;
   private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
   private String salesperiod;
   private double hours;
   private int mobileamount;
   private double paid;
 
-  public Calculation(User user) {
-    this.user = user;
-  }
   /**
    * Constructor for initializing a calculation object.
    * 
@@ -75,37 +73,77 @@ public class Calculation {
   }
 
   public Calculation() {
-
   }
 
+  /**
+   * Getter for salesperiod. Eg: "Januar 2021".
+   * 
+   * @return salesperiod of this instance.
+   */
   public String getSalesperiod() {
     return salesperiod;
   }
 
+  /**
+   * Setter for salesperiod. Eg: "Januar 2021".
+   * 
+   * @param salesperiod that we are going to set.
+   */
   public void setSalesperiod(String salesperiod) {
     this.salesperiod = salesperiod;
   }
 
+
+  /**
+   * Get hours that the user has worked.
+   * 
+   * @return hours of work.
+   */
   public double getHours() {
     return hours;
   }
 
+  /**
+   * Set the hours that the user has worked.
+   * 
+   * @param hours for this salesperiod.
+   */
   public void setHours(double hours) {
     this.hours = hours;
   }
 
+  /**
+   * Get the amount of mobile-plan sales.
+   * 
+   * @return mobileamount for this instance.
+   */
   public int getMobileamount() {
     return mobileamount;
   }
 
+  /**
+   * Set the amount of mobile-plan sales.
+   * 
+   * @param mobileamount for this instance.
+   */
   public void setMobileamount(int mobileamount) {
     this.mobileamount = mobileamount;
   }
 
+  /**
+   * Get the amount that is paid by employeer.
+   * 
+   * @return amount that is paid.
+   */
   public double getPaid() {
     return paid;
   }
 
+  /**
+   * Set the amount that is paid by employeer.
+   * 
+   * @param paid by employeer.
+   */
   public void setPaid(double paid) {
     this.paid = paid;
   }
@@ -127,8 +165,9 @@ public class Calculation {
    *                     This class is the general class of exceptions produced by
    *                     failed or interrupted I/O operations.
    */
-  public void updateList(String url) throws IOException {
-    saleslist = SALARY_CSV_READER.CSVtoSale(url);
+  public void updateList(String pathToFile) throws IOException {
+    FileInputStream pathToReadFile = new FileInputStream(new File(pathToFile));
+    saleslist = SALARY_CSV_READER.CSVtoSale(pathToReadFile);
   }
 
   /**
@@ -296,16 +335,6 @@ public class Calculation {
    * Calculates just the hour salary.
    *
    * @param hours number of worked hours
-   */
-  public void hourSalary(double hours) {
-    double hoursal = user.getHourRate() * hours;
-    calculated += hoursal;
-  }
-
-  /**
-   * Calculates just the hour salary.
-   *
-   * @param hours number of worked hours
    * @param user the user
    */
   public void hourSalary(double hours, User user) {
@@ -320,15 +349,8 @@ public class Calculation {
    */
 
   public double getCalculated() {
-    return calculated;
-  }
-
-  /**
-   * Removes tax from calculated.
-   */
-
-  public void taxDeduction() {
-    calculated = (calculated * ((100 - user.getTaxCount()) / 100));
+    double expectedCalc = Math.round(calculated * 10) / 10.0;
+    return expectedCalc;
   }
 
   /**
@@ -339,32 +361,6 @@ public class Calculation {
 
   public void taxDeduction(User user) {
     calculated = (calculated * ((100 - user.getTaxCount()) / 100));
-  }
-
-  /**
-   * Do the full calculation.
-   *
-   * @param url to the file
-   * @param hours total hours of working
-   * @param mobileamount amount of mobile
-   * @param salesperiod the period the sales are done.
-   * @param paid the amount that were paid by employer.
-   * @throws IOException Signals that an attempt to open the file
-   *                               denoted by a specified pathname has failed.
-   */
-
-  public void doCalculation(
-      String url, double hours, int mobileamount, String salesperiod, double paid)
-      throws IOException {
-    updateList(url);
-    removeUnwanted();
-    updateElectricityCommission();
-    calculateElectricityCommission();
-    addMobile(mobileamount);
-    hourSalary(hours);
-    taxDeduction();
-    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
-    this.user.addUserSale(new UserSale(salesperiod, expectedCalc, paid));
   }
 
   /**
@@ -386,9 +382,8 @@ public class Calculation {
     addMobile(mobileamount);
     hourSalary(hours, user);
     taxDeduction(user);
-    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
-    user.addUserSale(new UserSale(this.salesperiod, expectedCalc, this.paid));
+    
+    user.addUserSale(new UserSale(this.salesperiod, getCalculated(), this.paid));
   }
-
 
 }

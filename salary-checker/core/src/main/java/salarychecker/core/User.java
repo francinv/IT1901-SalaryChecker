@@ -92,7 +92,7 @@ public class User extends AbstractUser {
     userValidation.checkValidEmployeeNumber(employeeNumber);
     this.employeeNumber = employeeNumber;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoTaxCountChanged(this, employeeNumber);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -114,7 +114,7 @@ public class User extends AbstractUser {
     userValidation.checkValidEmail(employerEmail);
     this.employerEmail = employerEmail;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoStringChanged(this, employerEmail);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -136,7 +136,7 @@ public class User extends AbstractUser {
     userValidation.checkValidTaxCount(taxCount);
     this.taxCount = taxCount;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoDoubleChanged(this, taxCount);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -158,7 +158,7 @@ public class User extends AbstractUser {
     userValidation.checkValidHourRate(hourRate);
     this.hourRate = hourRate;
     for (IUserObserver userObserver : userObs) {
-      userObserver.userInfoDoubleChanged(this, hourRate);
+      userObserver.userInfoChanged(this);
     }
   }
 
@@ -193,7 +193,7 @@ public class User extends AbstractUser {
     if (!(isExistingUserSale(userSale))) {
       userSales.add(userSale);
       for (IUserObserver userObserver : userObs) {
-        userObserver.usersaleAdded(this, userSale);
+        userObserver.userInfoChanged(this);
       }
     }
   }
@@ -203,19 +203,4 @@ public class User extends AbstractUser {
   }
 
 
-  @Override
-  public String toString() {
-    return "{"
-      + " firstname='" + getFirstname() + "'"
-      + ", lastname='" + getLastname() + "'"
-      + ", email='" + getEmail() + "'"
-      + ", password='" + getPassword() + "'"
-      + ", socialNumber='" + getSocialNumber() + "'"
-      + ", employeeNumber='" + getEmployeeNumber() + "'"
-      + ", employerEmail='" + getEmployerEmail() + "'"
-      + ", taxCount='" + getTaxCount() + "'"
-      + ", hourRate='" + getHourRate() + "'"
-      + ", userSales='" + getUserSaleList() + "'"
-      + "}";
-  }
 }
