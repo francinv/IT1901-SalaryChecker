@@ -29,8 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AdminStartPageControllerTest extends ApplicationTest {
 
-    AdminUser adminUser;
-    SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+    private AdminUser adminUser;
+    private SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
 
     private static Text adminName;
     private static Button logOutButton;
