@@ -9,15 +9,17 @@ import javafx.scene.text.Text;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is the class that controls the Settings-scene.
  * We have methods that changes the profile information of a specific user.
  */
 public class SettingsController extends AbstractController {
-/*
+
   private User user;
-  private int index;
+  private Accounts accounts;
+  private SalaryCheckerAccess dataAccess;
 
   //FXML VARIABLES
   @FXML private TextField changeFirstNameField;
@@ -36,12 +38,14 @@ public class SettingsController extends AbstractController {
   @FXML private AnchorPane settingsPane;
 
 
-  *//**
+  /**
    * Method that is called from HomepageController.
    * We use this method to load existing user information as a prompt text to Text Fields.
-   *//*
-  public void loadSettingsInfo() throws IOException {
-    user = (User) getDataAccess().getLoggedInUser();
+   */
+  public void loadSettingsInfo() {
+    user = (User) super.user;
+    accounts = super.accounts;
+    dataAccess = super.dataAccess;
     changeFirstNameField.setPromptText(user.getFirstname());
     changeLastNameField.setPromptText(user.getLastname());
     changeEmailField.setPromptText(user.getEmail());
@@ -53,13 +57,13 @@ public class SettingsController extends AbstractController {
     changeEmployeeNumberField.setPromptText(String.valueOf(user.getEmployeeNumber()));
   }
 
-  *//**
+  /**
    * This is a method that saves the information that is changed.
    * If the field is empty nothing happens to that variable.
    * The form uses uservalidation to validate, if something is written.
    *
    * @param event when user clicks on 'Lagre endringer'
-   *//*
+   */
   @FXML
   public void saveChangesAction(ActionEvent event) throws IOException {
     try {
@@ -126,19 +130,7 @@ public class SettingsController extends AbstractController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      Accounts accounts = getDataAccess().readAccounts();
-      User temp =
-          (User) accounts.getAccounts()
-              .stream()
-              .filter(u -> u.getEmail()
-                  .equals(user.getEmail()))
-              .findAny()
-              .orElse(null);
-      index = accounts.getAccounts().indexOf(accounts.getUser(user.getEmail()));
-      if (index == -1) {
-        throw new IllegalStateException("Something happened when setting user.");
-      }
-      getDataAccess().updateUserAttributes(user, index);
+      dataAccess.updateUserAttributes(user, accounts.indexOf(user));
       loadSettingsInfo();
     } catch (IllegalArgumentException e) {
       errorTextDisplay.setText(e.getMessage());
@@ -147,23 +139,23 @@ public class SettingsController extends AbstractController {
 
   }
 
-  *//**
+  /**
    * Helper method to clear fields.
    *
    * @param wantedField the field that needs to be cleared.
-   *//*
+   */
   void clearFields(TextField wantedField) {
     wantedField.clear();
   }
 
-  *//**
-   * Method that closes the scene and goes back to views/HomePage.fxml
+  /**
+   * Method that closes the scene and goes back to views/HomePage.fxml 
    * with updated user information.
    *
    * @param event when clicked on 'Lukk'
-   *//*
+   */
   @FXML
   public void closeButtonAction(ActionEvent event) {
-    setAnchorPane(Controllers.PROFILE, settingsPane, getDataAccess());
-  }*/
+    setAnchorPane(Controllers.PROFILE, settingsPane, user, accounts, dataAccess);
+  }
 }

@@ -7,13 +7,11 @@ import org.junit.jupiter.api.Test;
 public class UserValidationTest {
 
     private User testUser;
-    private UserValidation userValidation;
 
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "Password!123", 
             "22010192834", 33333, "employeremail@email.com", 35.5, 130.0);
-        userValidation = new UserValidation();
     }
 
     @Test
