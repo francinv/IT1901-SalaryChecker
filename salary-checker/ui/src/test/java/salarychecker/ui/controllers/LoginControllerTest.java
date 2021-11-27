@@ -12,11 +12,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.junit.jupiter.api.*;
+import salarychecker.core.AdminUser;
+import salarychecker.core.User;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
+import salarychecker.ui.SalaryCheckerApp;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -34,19 +36,22 @@ public class LoginControllerTest extends ApplicationTest {
     private Button logInButton;
     private Text errorDisplay;
     private Button createButton;
+    private SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
 
 
     @Override
     public void start(final Stage stage) throws Exception {
-        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/LogIn.fxml"));
-        LoginController loginController = new LoginController();
-        fxmlLoader.setController(loginController);
-        final Parent parent = fxmlLoader.load();
-        final Scene scene = new Scene(parent);
-        stage.setScene(scene);
+        FXMLLoader loader = new FXMLLoader();
+        LoginController controller = new LoginController();
+        loader.setController(controller);
+        controller.setDataAccess(dataAccess);
+        loader.setLocation(SalaryCheckerApp.class.getResource("views/LogIn.fxml"));
+        createTestUsers();
+        dataAccess.userLogin("test@live.no", "Password123!");
+        final Parent parent = loader.load();
+        stage.setScene(new Scene(parent));
         stage.show();
     }
-
 
     @BeforeEach
     public void initFields() {
@@ -61,18 +66,17 @@ public class LoginControllerTest extends ApplicationTest {
     @Order(1)
     public void testCreateUsersButtonWorks(){
         clickOn(createButton);
-        assertEquals("Test users created!", createButton.getText());
-        assertEquals("0x008000ff", createButton.getTextFill().toString());
+        assertEquals("User already exists!", createButton.getText());
     }
 
     @Test
     @Order(2)
     public void testLoginUser() {
-        writeInLoginFields("seran@live.no", "Password123!");
+        writeInLoginFields("testlogin@live.no", "Password123!");
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/HomePage.fxml")); // load same anchorpane that currentWindow contains
+            FXMLLoader loader = new FXMLLoader(SalaryCheckerApp.class.getResource("views/HomePage.fxml")); // load same anchorpane that currentWindow contains
             HomepageController homepageController = new HomepageController();
             loader.setController(homepageController);
             AnchorPane pane = loader.load();
@@ -89,11 +93,11 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     @Order(3)
     public void testLogInAdminUser() {
-        writeInLoginFields("francin.vinc@gmail.com", "Vandre333!");
+        writeInLoginFields("testlogin@admin.no", "Password123!");
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/AdminStartPage.fxml")); // load same anchorpane that currentWindow contains
+            FXMLLoader loader = new FXMLLoader(SalaryCheckerApp.class.getResource("views/AdminStartPage.fxml")); // load same anchorpane that currentWindow contains
             AdminStartPageController adminStartPageController = new AdminStartPageController();
             loader.setController(adminStartPageController);
             AnchorPane pane = loader.load();
@@ -110,7 +114,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     @Order(4)
     public void testInvalidEmail() {
-        writeInLoginFields("s", "Password123!");
+        writeInLoginFields("t", "Password123!");
         clickOn(logInButton);
         assertEquals("Invalid email, must be of format: name-part@domain, e.g. example@example.com.", errorDisplay.getText());
     }
@@ -118,7 +122,7 @@ public class LoginControllerTest extends ApplicationTest {
     @Test
     @Order(5)
     public void testInvalidPwd() {
-        writeInLoginFields("seran@live.no", "P");
+        writeInLoginFields("testlogin@live.no", "P");
         clickOn(logInButton);
         assertEquals("Invalid password, must be at least 8 characters and contain at least 1 digit and 1 lower and uppercase letter.", errorDisplay.getText());
     }
@@ -156,4 +160,15 @@ public class LoginControllerTest extends ApplicationTest {
                 .orElse(null);
     }
 
+    private void createTestUsers() throws IOException {
+        try {
+            dataAccess.createUser(new User("Test", "User",
+                "testlogin@live.no", "Password123!", "22030191349",
+                12345, "employeer1@gmail.com", 30.0, 130.0));
+            dataAccess.createAdminUser(new AdminUser("Test", "Admin",
+                "testlogin@admin.no", "Password123!"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

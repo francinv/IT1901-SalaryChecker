@@ -14,7 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.User;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,28 +39,22 @@ public class SalaryCalculationControllerTest extends ApplicationTest {
 
   User user;
 
-  SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+  private SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = 
-        new FXMLLoader(getClass().getResource("views/SalaryCalculation.fxml"));
-    SalaryCalculationController salaryCalculationController = new SalaryCalculationController();
-    loader.setController(salaryCalculationController);
-    final Parent parent = loader.load();
-    final Scene scene = new Scene(parent);
-
-    user = new User("Seran", "Shanmugathas", "seran@live.no", 
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
+    FXMLLoader loader = new FXMLLoader();
+    SalaryCalculationController controller = new SalaryCalculationController();
+    loader.setController(controller);
+    controller.setDataAccess(dataAccess);
+    loader.setLocation(SalaryCheckerApp.class.getResource("views/SalaryCalculation.fxml"));
     createTestUsers();
-    Accounts accounts = persistence.loadAccounts();
-    salaryCalculationController.setUser(user);
-    salaryCalculationController.setAccounts(accounts);
-    salaryCalculationController.setUserAndAccounts();
+    user = (User) dataAccess.userLogin("testcalc@live.no", "Password123!");
     URL url = getClass().getResource("SalesReport.csv");
     File file = new File(url.getFile());
-    salaryCalculationController.setURL(file.getAbsolutePath());
-    stage.setScene(scene);
+    controller.setFile(file);
+    final Parent parent = loader.load();
+    stage.setScene(new Scene(parent));
     stage.show();
   }
 
@@ -95,17 +92,13 @@ public class SalaryCalculationControllerTest extends ApplicationTest {
 
 
   private void createTestUsers() throws IOException {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", 
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130.0);
-    User testuser2 = new User("Francin", "Vincent", "francin.vinc@gmail.com", 
-        "Vandre333!", "29059848796", 34567, "employeer2@gmail.com", 23.0, 130.0);
-
-    Accounts acc = new Accounts();
-    acc.addUser(testuser1);
-    acc.addUser(testuser2);
-
-    persistence.setFilePath("Accounts.json");
-    persistence.saveAccounts(acc);
+    try {
+      dataAccess.createUser(new User("Test", "User",
+          "testcalc@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }*/
 
 }

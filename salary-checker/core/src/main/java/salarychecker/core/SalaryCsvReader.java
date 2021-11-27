@@ -98,5 +98,4 @@ public class SalaryCsvReader {
     }
     return values;
   }
-
 }

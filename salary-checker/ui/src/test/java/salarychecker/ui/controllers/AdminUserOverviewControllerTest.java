@@ -10,10 +10,11 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
-import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
+import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AdminUserOverviewControllerTest extends ApplicationTest {
 
   AdminUser adminUser;
-  SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+  SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
 
   private Button searchButton;
   private Button clearButton;
@@ -31,19 +32,16 @@ public class AdminUserOverviewControllerTest extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/AdminUserOverview.fxml"));
-    AdminUserOverviewController adminUserOverviewController = new AdminUserOverviewController();
-    loader.setController(adminUserOverviewController);
+    FXMLLoader loader = new FXMLLoader();
+    AdminUserOverviewController controller = new AdminUserOverviewController();
+    loader.setController(controller);
+    controller.setDataAccess(dataAccess);
+    loader.setLocation(SalaryCheckerApp.class.getResource("views/AdminUserOverview.fxml"));
+    createTestUsers();
+    adminUser = (AdminUser) dataAccess.userLogin("employeer1@gmail.com", "Vandre333!");
     final Parent parent = loader.load();
-    final Scene scene = new Scene(parent);
-
-    adminUser = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
-    createTestUser();
-    adminUserOverviewController.setUser(adminUser);
-    persistence.setFilePath("Accounts.json");
-    adminUserOverviewController.setAccounts(persistence.loadAccounts());
-    adminUserOverviewController.loadTableView();
-    stage.setScene(scene);
+    controller.loadTableView();
+    stage.setScene(new Scene(parent));
     stage.show();
   }
 
@@ -57,40 +55,36 @@ public class AdminUserOverviewControllerTest extends ApplicationTest {
 
   @Test
   public void testTableViewLoaded() {
-    assertEquals("Seran", tableUsers.getItems().get(0).getFirstname());
-    assertEquals("Jakob", tableUsers.getItems().get(1).getFirstname());
+    assertEquals("Test", tableUsers.getItems().get(0).getFirstname());
   }
 
   @Test
   public void testResetSearchField() {
-    clickOn(searchField).write("Hello");
-    assertEquals("Hello", searchField.getText());
+    clickOn(searchField).write("Test");
+    assertEquals("Test", searchField.getText());
     clickOn(clearButton);
     assertEquals("", searchField.getText());
   }
 
   @Test
   public void testSearch() {
-    clickOn(searchField).write("Se");
+    clickOn(searchField).write("Te");
     clickOn(searchButton);
-    assertEquals("Seran", tableUsers.getItems().get(0).getFirstname());
+    assertEquals("Test", tableUsers.getItems().get(0).getFirstname());
   }
 
-  private void createTestUser() throws IOException {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no",
-        "Password123!", "22030191349", 12345,
-        "employeer1@gmail.com", 30.0, 130);
-    User testuser2 = new User("Jakob", "Kessler", "jakob@mail.no",
-        "Password123!", "22020312345", 12345,
-        "employeer1@gmail.com", 30.0, 130);
-    AdminUser admintest = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
-
-    Accounts acc = new Accounts();
-    acc.addUser(testuser1);
-    acc.addUser(testuser2);
-    acc.addUser(admintest);
-
-    persistence.setFilePath("Accounts.json");
-    persistence.saveAccounts(acc);
+  private void createTestUsers() throws IOException {
+    try {
+      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
+          "employeer1@gmail.com", "Vandre333!"));
+      dataAccess.createUser(new User("Test", "User",
+          "test@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0));
+      dataAccess.createUser(new User("TestTwo", "User",
+          "test2@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 }

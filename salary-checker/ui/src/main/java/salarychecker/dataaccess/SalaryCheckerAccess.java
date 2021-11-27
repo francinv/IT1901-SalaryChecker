@@ -98,4 +98,6 @@ public interface SalaryCheckerAccess {
   public void uploadFile(File file) throws IOException, InterruptedException, URISyntaxException;  
   
   public UserSale getUserSale(String salesperiod, String emailOfUser);
+
+  public AbstractUser getLoggedInUser();
 }

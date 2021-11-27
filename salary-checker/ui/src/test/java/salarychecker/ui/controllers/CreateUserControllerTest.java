@@ -14,7 +14,11 @@ import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserValidation;
+import salarychecker.dataaccess.LocalSalaryCheckerAccess;
+import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
+import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
 
@@ -23,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CreateUserControllerTest extends ApplicationTest {
 
   private AdminUser adminUser;
-  private SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
+  private SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
 
   private Button createUserButton;
   private Button goBackButton;
@@ -66,19 +70,16 @@ public class CreateUserControllerTest extends ApplicationTest {
 
   @Override
   public void start(final Stage stage) throws Exception {
-    final FXMLLoader loader = new FXMLLoader(getClass().getResource("views/CreateUser.fxml"));
-    CreateUserController createUserController = new CreateUserController();
-    loader.setController(createUserController);
+    FXMLLoader loader = new FXMLLoader();
+    CreateUserController controller = new CreateUserController();
+    loader.setController(controller);
+    controller.setDataAccess(dataAccess);
+    loader.setLocation(SalaryCheckerApp.class.getResource("views/CreateUser.fxml"));
+    createTestUsers();
+    adminUser = (AdminUser) dataAccess.userLogin("testcreate@gmail.com", "Vandre333!");
     final Parent parent = loader.load();
-    final Scene scene = new Scene(parent);
-
-    adminUser = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
-    createTestUser();
-    createUserController.setUser(adminUser);
-    persistence.setFilePath("Accounts.json");
-    createUserController.setAccounts(persistence.loadAccounts());
-    createUserController.loadUserAndAccount();
-    stage.setScene(scene);
+    controller.loadUserAndAccount();
+    stage.setScene(new Scene(parent));
     stage.show();
   }
 
@@ -179,17 +180,15 @@ public class CreateUserControllerTest extends ApplicationTest {
     clickOn(wantedField).write(write);
   }
 
-  private void createTestUser() throws IOException {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no", "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
-    AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com", "Vandre333!");
-
-    Accounts acc = new Accounts();
-    acc.addUser(testuser1);
-    acc.addUser(testuser2);
-
-    persistence.setFilePath("Accounts.json");
-    persistence.saveAccounts(acc);
+  private void createTestUsers() throws IOException {
+    try {
+      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
+          "testcreate@gmail.com", "Vandre333!"));
+      dataAccess.createUser(new User("Test", "User",
+          "testcreate@live.no", "Password123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
-
-
 }

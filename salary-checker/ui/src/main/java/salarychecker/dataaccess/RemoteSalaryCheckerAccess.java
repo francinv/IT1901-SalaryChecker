@@ -31,6 +31,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
   private final URI baseUri;
   private ObjectMapper objectMapper;
   private Accounts accounts;
+  private AbstractUser user = new User();
 
   /**
    * This constructor initialize the objectmapper used for serializing, 
@@ -339,6 +340,10 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override public AbstractUser getLoggedInUser() {
+    return user;
   }
 
 

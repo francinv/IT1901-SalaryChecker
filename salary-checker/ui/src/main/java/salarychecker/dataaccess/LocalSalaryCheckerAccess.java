@@ -18,6 +18,7 @@ import salarychecker.json.SalaryCheckerPersistence;
 public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
   private Accounts accounts;
+  private AbstractUser user = new User();
   private final SalaryCheckerPersistence persistence = new SalaryCheckerPersistence();
   private File salaryCsv;
 
@@ -33,6 +34,7 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
       try {
         persistence.saveAccounts(accounts);
       } catch (IllegalStateException | IOException e1) {
+        System.out.println("Her er feilen");
         System.out.println(e1.getMessage());
       }
     }
@@ -58,7 +60,8 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
 
   @Override
   public AbstractUser userLogin(String email, String password) {
-    return accounts.getUser(email, password);
+    this.user = accounts.getUser(email, password);
+    return user;
   }
 
   @Override
@@ -134,5 +137,7 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
       e.printStackTrace();
     }
   }
+
+  public AbstractUser getLoggedInUser() { return this.user;}
 
 }
