@@ -1,5 +1,7 @@
 package salarychecker.core;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +16,14 @@ public class SaleTest {
     }
 
     @Test
+    public void testConstructor() {
+        Sale emptyConstructor = new Sale();
+        Assertions.assertNull(emptyConstructor.getAnleggStatus());
+    }
+
+    @Test
     public void getMethodTest(){
-        Assertions.assertEquals("17. Mai, 2021", testSale.getSalesDate());
+        Assertions.assertEquals("17. Mai, 2021", testSale.getSalesId());
         Assertions.assertEquals("anleggStatusString", testSale.getAnleggStatus());
         Assertions.assertEquals("salgsTypeString", testSale.getSalgsType());
         Assertions.assertEquals("campaignString", testSale.getCampaign());
@@ -30,7 +38,7 @@ public class SaleTest {
     @Test
     public void setMethodTest(){
         testSale.setSalesId("21. September 2021");
-        Assertions.assertEquals("21. September 2021", testSale.getSalesDate());
+        Assertions.assertEquals("21. September 2021", testSale.getSalesId());
 
         testSale.setAnleggStatus("anleggStatusString2");
         Assertions.assertEquals("anleggStatusString2", testSale.getAnleggStatus());
@@ -59,5 +67,12 @@ public class SaleTest {
         testSale.setCommission(60.0);
         Assertions.assertEquals(60.0, testSale.getCommission());
     }
+
+    @Test
+    public void testUpdateProvisjon() {
+        testSale.updateCommission(200);
+        assertEquals(250, testSale.getCommission());
+    }
+
     
 }

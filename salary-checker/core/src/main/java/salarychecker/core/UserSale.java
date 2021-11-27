@@ -68,18 +68,4 @@ public class UserSale {
     this.difference = getExpected() - getPaid();
   }
 
-  @Override
-  public String toString() {
-    return "{"
-      + " salesperiod='" + getSalesperiod() + "'"
-      + ", expected='" + getExpected() + "'"
-      + ", paid='" + getPaid() + "'"
-      + ", difference='" + getDifference() + "'"
-      + "}";
-  }
-
-  public static void main(String[] args) {
-    UserSale userSale = new UserSale("August 2021", 15000.0, 10000.0);
-    System.out.println(userSale);
-  }
 }
