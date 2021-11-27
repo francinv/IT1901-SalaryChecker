@@ -85,5 +85,11 @@ public class SaleTest {
         testSale.updateProvisjon(200);
         assertEquals(250, testSale.getProvisjon());
     }
+
+    @Test
+    public void testUpdateProvisjon() {
+        testSale.updateProvisjon(200);
+        assertEquals(250, testSale.getProvisjon());
+    }
     
 }
