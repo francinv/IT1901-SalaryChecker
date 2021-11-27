@@ -1,14 +1,16 @@
 package salarychecker.ui.controllers;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import salarychecker.core.*;
-import salarychecker.dataaccess.SalaryCheckerAccess;
+import salarychecker.core.AbstractUser;
+import salarychecker.core.AdminUser;
+import salarychecker.core.User;
+import salarychecker.core.UserSale;
+import salarychecker.core.UserValidation;
 
 /**
  * Controller class for the Login-scene.
@@ -37,7 +39,8 @@ public class LoginController extends AbstractController {
     try {
       UserValidation.checkValidEmail(usernameField);
       UserValidation.checkValidPassword(passwordField);
-      UserValidation.isNotExistingUser(usernameField, passwordField, getDataAccess().readAccounts());
+      UserValidation.isNotExistingUser(usernameField,
+          passwordField, getDataAccess().readAccounts());
       UserValidation.isValidLogIn(usernameField, passwordField, getDataAccess().readAccounts());
       AbstractUser user = dataAccess.userLogin(usernameField, passwordField);
       if (user instanceof User) {

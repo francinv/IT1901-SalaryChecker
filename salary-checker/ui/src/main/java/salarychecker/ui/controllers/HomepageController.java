@@ -26,7 +26,8 @@ public class HomepageController extends AbstractController {
   @FXML
   protected void loadInfo() {
     pageTitle.setText("Hjem");
-    userNameDisplay.setText(dataAccess.getLoggedInUser().getFirstname() + " " + dataAccess.getLoggedInUser().getLastname());
+    userNameDisplay.setText(dataAccess.getLoggedInUser().getFirstname()
+        + " " + dataAccess.getLoggedInUser().getLastname());
   }
 
   /**

@@ -30,8 +30,8 @@ public class AdminStartPageController extends AbstractController {
    * The method is protected because the method will be called as the user logs in.
    */
   protected void loadAdminInfo() {
-    String name = getDataAccess().getLoggedInUser().getFirstname() +
-        " " + getDataAccess().getLoggedInUser().getLastname();
+    String name = getDataAccess().getLoggedInUser().getFirstname()
+        + " " + getDataAccess().getLoggedInUser().getLastname();
     adminName.setText(name);
     pageTitle.setText("Hjem");
   }

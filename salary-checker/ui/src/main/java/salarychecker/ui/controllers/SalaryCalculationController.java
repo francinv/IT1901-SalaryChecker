@@ -91,7 +91,8 @@ public class SalaryCalculationController extends AbstractController {
     }
   }
 
-  public void setFile(File salaryCsvFile) throws InterruptedException, IOException, URISyntaxException {
+  public void setFile(File salaryCsvFile)
+      throws InterruptedException, IOException, URISyntaxException {
     getDataAccess().uploadFile(salaryCsvFile);
   }
 

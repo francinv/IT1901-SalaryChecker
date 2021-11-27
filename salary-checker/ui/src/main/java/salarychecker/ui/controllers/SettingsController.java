@@ -18,8 +18,6 @@ import salarychecker.dataaccess.SalaryCheckerAccess;
 public class SettingsController extends AbstractController {
 
   private User user;
-  private Accounts accounts;
-  private SalaryCheckerAccess dataAccess;
 
   //FXML VARIABLES
   @FXML private TextField changeFirstNameField;
@@ -43,9 +41,7 @@ public class SettingsController extends AbstractController {
    * We use this method to load existing user information as a prompt text to Text Fields.
    */
   public void loadSettingsInfo() {
-    user = (User) super.user;
-    accounts = super.accounts;
-    dataAccess = super.dataAccess;
+    user = (User) getDataAccess().getLoggedInUser();
     changeFirstNameField.setPromptText(user.getFirstname());
     changeLastNameField.setPromptText(user.getLastname());
     changeEmailField.setPromptText(user.getEmail());
@@ -130,7 +126,7 @@ public class SettingsController extends AbstractController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      dataAccess.updateUserAttributes(user, accounts.indexOf(user));
+      dataAccess.updateUserAttributes(user, getDataAccess().readAccounts().getAccounts().indexOf(user));
       loadSettingsInfo();
     } catch (IllegalArgumentException e) {
       errorTextDisplay.setText(e.getMessage());
@@ -156,6 +152,6 @@ public class SettingsController extends AbstractController {
    */
   @FXML
   public void closeButtonAction(ActionEvent event) {
-    setAnchorPane(Controllers.PROFILE, settingsPane, user, accounts, dataAccess);
+    setAnchorPane(Controllers.PROFILE, settingsPane, getDataAccess());
   }
 }

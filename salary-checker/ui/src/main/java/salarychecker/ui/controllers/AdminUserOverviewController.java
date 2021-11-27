@@ -66,9 +66,9 @@ public class AdminUserOverviewController extends AbstractController {
     tempdata = tempdata
         .stream()
         .filter(u -> u.getFirstname()
-            .contains(wantedUser) ||
-            u.getLastname().contains(wantedUser) ||
-            u.getEmail().contains(wantedUser)
+            .contains(wantedUser)
+            || u.getLastname().contains(wantedUser)
+            || u.getEmail().contains(wantedUser)
         )
         .collect(Collectors.toList());
     updateTableView();
