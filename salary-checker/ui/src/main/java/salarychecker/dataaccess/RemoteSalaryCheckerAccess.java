@@ -165,7 +165,11 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
       if (httpResponse.body().contains("employeeNumber")) {
+        this.user = objectMapper.readValue(httpResponse.body(), User.class);
         return objectMapper.readValue(httpResponse.body(), User.class);
+      }
+      else {
+        this.user = objectMapper.readValue(httpResponse.body(), AdminUser.class);
       }
       return objectMapper.readValue(httpResponse.body(), AdminUser.class);
     } catch (IOException | InterruptedException e) {
@@ -342,8 +346,9 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     }
   }
 
-  @Override public AbstractUser getLoggedInUser() {
-    return user;
+  @Override 
+  public AbstractUser getLoggedInUser() {
+    return this.user;
   }
 
 

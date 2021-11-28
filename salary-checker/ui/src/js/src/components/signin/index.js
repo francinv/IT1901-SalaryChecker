@@ -37,8 +37,8 @@ export default function SignInComp() {
     setAccounts(tempaccounts);
   }
 
-  const fetchUser = async (email) => {
-    tempUser = await fetchUserFromServer(email);
+  const fetchUser = async (email, password) => {
+    tempUser = await fetchUserFromServer(email, password);
     setActiveUser(tempUser);
   }
 
@@ -49,17 +49,15 @@ export default function SignInComp() {
   const HandleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    fetchUser(data.get('email'));
+    fetchUser(data.get('email'), data.get('password'));
     if (tempUser !== undefined) {
-      if (tempUser.password === data.get('password')){
-        logIn();
-        var size = Object.keys(tempUser).length;
+      var size = Object.keys(tempUser).length;
         if ( size > 5) {
           setUserType('U');
         } else {
           setUserType('A');
         }
-      }
+        logIn();
     }
   };
 
