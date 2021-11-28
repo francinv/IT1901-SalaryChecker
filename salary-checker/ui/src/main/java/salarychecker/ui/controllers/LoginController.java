@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import salarychecker.core.AbstractUser;
-import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
