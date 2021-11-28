@@ -30,7 +30,7 @@ public class AccountsTest {
         accounts.addUser(user1);
         assertTrue(2 == accounts.getAccounts().size());
         assertTrue(accounts.iterator().hasNext());
-        assertThrows(IllegalArgumentException.class, () -> accounts.addUser(user));
+        assertThrows(IllegalStateException.class, () -> accounts.addUser(user));
         accounts.usersaleAdded(user, new UserSale("Januar 2021", 15000, 10000));
         assertNotNull(((User) accounts.getAccounts().get(0)).getUserSaleList().get(0));
     }
@@ -87,7 +87,7 @@ public class AccountsTest {
         assertEquals(22.0, user.getTaxCount());
         accounts.userInfoDoubleChanged(user, 131.0);
         assertNotEquals(131.0, user.getHourRate());
-        accounts.userInfoIntChanged(user, 66638);
+        accounts.userInfoTaxCountChanged(user, 66638);
         assertEquals(66638, user.getEmployeeNumber());
     }
 }

@@ -45,14 +45,14 @@ public class UserValidationTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setEmployeeNumber(0));
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setEmployerEmail(""));
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setTaxCount(0));
-        Assertions.assertDoesNotThrow(() -> userValidation.checkValidUser(firstname, lastname, email, password, 
+        Assertions.assertDoesNotThrow(() -> UserValidation.checkValidUser(firstname, lastname, email, password, 
             socialNumber, employeeNumber, employerEmail, taxCount, hourRate ));
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isEqualPassword("password1", "password2"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isEqualEmail("email1", "email2"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isEqualPassword("password1", "password2"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isEqualEmail("email1", "email2"));
         Accounts accounts = new Accounts();
         accounts.addUser(testUser);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isValidLogIn("email@email.com", "Password123!", accounts));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isNotExistingUser("email@emaile.com", "Password123!", accounts));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isValidLogIn("email@email.com", "Password123!", accounts));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isNotExistingUser("email@emaile.com", "Password123!", accounts));
     }
 }

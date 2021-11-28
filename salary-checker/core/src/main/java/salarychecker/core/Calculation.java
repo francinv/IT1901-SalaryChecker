@@ -7,216 +7,386 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class for calcualting a users salary based on SalesReport. In the 
+ * future this app will do the calualtion of more SalesReporsts.
+ */
+
 public class Calculation {
 
-    private List<Sale> saleslist = new ArrayList<Sale>();
+  private List<Sale> saleslist = new ArrayList<>();
 
-    private List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
-    private List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
-    private List<String> COMEBACK = Arrays.asList("FK lista", "Lokal lista");
-    private List<String> LEADS = Arrays.asList("Bring Flytt", "Bring Prospect", "Diverese leads fjordkraft", "Flytt FK",  "Posten", "Småbaser", "Strøm.com",
-     "Strømleverandøren", "Diverese leads FK", "CPH leads", "Eiendomsregisteret TK", "Leads KS", "Småbaser", "Tjenestetorget.no", "Coop/Trumf");
+  private static final List<String> NYSALG = Arrays.asList("Nysalg FK", "Borettslag", "Nysalg TK");
+  private static final List<String> WINBACK = Arrays.asList("WB FK", "WB Lokal", "WB TK");
+  private static final List<String> COMEBACK = Arrays.asList("FK lista", "Lokal lista");
+  private static final List<String> LEADS = Arrays.asList("Bring Flytt", "Bring Prospect",
+      "Diverese leads fjordkraft", "Flytt FK", "Posten", "Småbaser", "Strøm.com",
+      "Strømleverandøren", "Diverese leads FK", "CPH leads", "Eiendomsregisteret TK",
+      "Leads KS", "Småbaser", "Tjenestetorget.no", "Coop/Trumf");
 
-    private List<String> ORG = Arrays.asList("Agrol Spotpris", "Bergen Huseierforening - Topp 5 Garanti", "BOB Garanti", "BOB Spotpris", "Bobilforeningen Spotpris",
-    "Farmaceutene Spotpris", "Industri Energi - Garanti", "Industri Energi - Spotpris", "Innkjøpspris Borettslag", "Jordmorforeningen Spotpris", "KNIF Spotpris",
-    "KNIF 50 Sikret","LOfavør Garanti", "LOfavør Spotpris", "Norges Eiendomsmeglerforbund Spotpris", "Norsk Narkotikapolitiforening Spotpris", "Samfunnsviterene Spotpris Fornybar",
-    "Vestbo Spotpris", "Visma Spotpris", "LO Favør Spotpris", "LO Favør Topp 3 Garanti", "Ranheim Fotball", "Studentsamskipnaden", "TOBB Garanti", "TOBB Spotpris",
-    "Garantipris", "Coop / Trumf");
+  private static final List<String> ORG = Arrays.asList("Agrol Spotpris",
+      "Bergen Huseierforening - Topp 5 Garanti", "BOB Garanti", "BOB Spotpris",
+      "Bobilforeningen Spotpris", "Farmaceutene Spotpris", "Industri Energi - Garanti",
+      "Industri Energi - Spotpris", "Innkjøpspris Borettslag", "Jordmorforeningen Spotpris",
+      "KNIF Spotpris", "KNIF 50 Sikret", "LOfavør Garanti", "LOfavør Spotpris",
+      "Norges Eiendomsmeglerforbund Spotpris", "Norsk Narkotikapolitiforening Spotpris",
+      "Samfunnsviterene Spotpris Fornybar", "Vestbo Spotpris", "Visma Spotpris",
+      "LO Favør Spotpris", "LO Favør Topp 3 Garanti", "Ranheim Fotball", "Studentsamskipnaden",
+      "TOBB Garanti", "TOBB Spotpris", "Garantipris", "Coop / Trumf");
 
-    private List<String> VAR = Arrays.asList("Forutsigbar", "Garantistrøm", "Garantistrøm Oktober-kampanje","Garantistrøm September-kampanje", "Garantistrøm Kampanje Høst 2021",
-     "Garantistrøm Kampanje Vår 2021", "Garantistrøm Standard", "Garantistrøm Nord", "Garantipris", "Garantistrøm Kampanje Høst");
+  private static final List<String> VAR = Arrays.asList("Forutsigbar", "Garantistrøm",
+      "Garantistrøm Oktober-kampanje", "Garantistrøm September-kampanje",
+      "Garantistrøm Kampanje Høst 2021", "Garantistrøm Kampanje Vår 2021", "Garantistrøm Standard",
+      "Garantistrøm Nord", "Garantipris", "Garantistrøm Kampanje Høst");
 
-    private List<String> NSPOT = Arrays.asList("Strøm til Spotpris", "Strøm til Spotpris Kampanje", "Solstrøm", "Trønderspot", "Trønderspot Kampanje", "Elbil-avtalen");
+  private static final List<String> NSPOT = Arrays.asList("Strøm til Spotpris",
+      "Strøm til Spotpris Kampanje", "Solstrøm", "Trønderspot", "Trønderspot Kampanje",
+      "Elbil-avtalen");
 
-    private List<String> RSPOT = Arrays.asList("Trønderspot Spesial", "Strøm til Spotpris Spesial");
+  private static final List<String> RSPOT = Arrays.asList("Trønderspot Spesial",
+      "Strøm til Spotpris Spesial");
 
-    private List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
+  private static final List<String> BUN = Arrays.asList("EuroBonus-avtalen", "PowerSpot");
 
-    private double calculated;
-    private User user;
-    private SalaryCSVReader salaryCSVReader = new SalaryCSVReader();
+  private double calculated;
+  private User user;
+  private static final SalaryCSVReader SALARY_CSV_READER = new SalaryCSVReader();
+  private String salesperiod;
+  private double hours;
+  private int mobileamount;
+  private double paid;
 
-    public Calculation(User user){
-        this.user = user;
+  public Calculation(User user) {
+    this.user = user;
+  }
+  /**
+   * Constructor for initializing a calculation object.
+   * 
+   * @param salesperiod sales period
+   * @param hours working hours
+   * @param mobileamount mobile amount
+   * @param paid paid salary
+   */
+
+  public Calculation(String salesperiod, double hours, int mobileamount, double paid) {
+    this.salesperiod = salesperiod;
+    this.hours = hours;
+    this.mobileamount = mobileamount;
+    this.paid = paid;
+  }
+
+  public Calculation() {
+
+  }
+
+  public String getSalesperiod() {
+    return salesperiod;
+  }
+
+  public void setSalesperiod(String salesperiod) {
+    this.salesperiod = salesperiod;
+  }
+
+  public double getHours() {
+    return hours;
+  }
+
+  public void setHours(double hours) {
+    this.hours = hours;
+  }
+
+  public int getMobileamount() {
+    return mobileamount;
+  }
+
+  public void setMobileamount(int mobileamount) {
+    this.mobileamount = mobileamount;
+  }
+
+  public double getPaid() {
+    return paid;
+  }
+
+  public void setPaid(double paid) {
+    this.paid = paid;
+  }
+
+  /**
+   * Access method for saleslist.
+   *
+   * @return copy of saleslist
+   */
+  public List<Sale> getSaleslist() {
+    return new ArrayList<>(saleslist);
+  }
+
+  /**
+   * Upadtes the list according to salesreport.
+   *
+   * @param url location of salesreport
+   * @throws IOException Signals that an I/O exception of some sort has occurred.
+   *                     This class is the general class of exceptions produced by
+   *                     failed or interrupted I/O operations.
+   */
+  public void updateList(String url) throws IOException {
+    saleslist = SALARY_CSV_READER.CSVtoSale(url);
+  }
+
+  /**
+   * Removes all the unwanted sales from saleslist.
+   */
+  public void removeUnwanted() {
+    saleslist = saleslist.stream()
+        .filter(s -> s.getAnleggStatus().equals("23-Etablert"))
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Updates electricity comissions.
+   */
+  public void updateElectricityCommission() {
+    for (Sale s : saleslist) {
+
+      if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")) {
+        s.setCommission(75);
+      }
+      if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")) {
+        s.setCommission(50);
+      }
+      if (s.getTX3().equals("Ja") && s.getNVK().equals("Ja")) {
+        s.setCommission(125);
+      }
+
+      if (s.getSalgsType().equals("Produktbytte") && WINBACK.contains(s.getCampaign())
+          || s.getSalgsType().equals("Produktbytte") && LEADS.contains(s.getCampaign())) {
+        s.updateCommission(50);
+      }
+
+      checkIfBunWinBackLeadsContainsCampaign(s);
+      checkIfNySalgContainsCampaign(s);
+      checkIfComebackContainsCampaign(s);
     }
+  }
 
-    public List<Sale> getSaleslist() {
-        return new ArrayList<>(saleslist);
-    }
-
-    public void updateList(String url) throws IOException {
-        saleslist = salaryCSVReader.csvToBean(url);
-    }
-
-    public void removeUnwanted() {
-        saleslist = saleslist.stream()
-                    .filter(s->s.getAnleggStatus().equals("23-Etablert"))
-                    .collect(Collectors.toList());
-    }
-
-    public void updateElectricityCommission() {
-        for (Sale s : saleslist) {
-
-            if (s.getTX3().equals("Ja") && s.getNVK().equals("Nei")){
-                s.setProvisjon(75);
-            }
-            if (s.getNVK().equals("Ja") && s.getTX3().equals("Nei")){
-                s.setProvisjon(50);
-            }
-            if (s.getTX3().equals("Ja") && s.getNVK().equals("Ja")){
-                s.setProvisjon(125);
-            }
-
-            if (s.getSalgsType().equals("Produktbytte") && WINBACK.contains(s.getCampaign()) || s.getSalgsType().equals("Produktbytte") && LEADS.contains(s.getCampaign())) {
-                s.updateProvisjon(50);
-            }
-
-            if (BUN.contains(s.getProduct()) && WINBACK.contains(s.getCampaign()) || BUN.contains(s.getProduct()) && LEADS.contains(s.getCampaign())) {
-                s.updateProvisjon(50);
-            }
-
-            if(NYSALG.contains(s.getCampaign())) {
-                
-                if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())){
-                    s.updateProvisjon(225);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-25);
-                    }
-                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                        s.updateProvisjon(-50);
-                    }
-                }
-                if (NSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(200);
-                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                        s.updateProvisjon(-25);
-                    }
-                }
-                if (RSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(175);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-25);
-                    }
-                }
-                
-            }
-
-            if (WINBACK.contains(s.getCampaign())) {
-                if(ORG.contains(s.getProduct()) ||  VAR.contains(s.getProduct())) {
-                    s.updateProvisjon(110);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-30);
-                    }
-                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                        s.updateProvisjon(-60);
-                    }
-                }
-                if (NSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(80);
-                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                        s.updateProvisjon(-30);
-                    }
-                }
-                if (RSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(50);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-25);
-                    }
-                }
-
-            }
-
-            if(COMEBACK.contains(s.getCampaign())){
-
-                if(ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
-                    s.updateProvisjon(175);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-25);
-                    }
-                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                        s.updateProvisjon(-50);
-                    }
-                }
-                if (NSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(150);
-                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                        s.updateProvisjon(-25);
-                    }
-                }
-                if (RSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(125);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-25);
-                    }
-                }
-            }
-            
-            if(LEADS.contains(s.getCampaign())) {
-                if(ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
-                    s.updateProvisjon(150);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-35);
-                    }
-                    if(s.getRebate().equals("750") || s.getRebate().equals("1000")){
-                        s.updateProvisjon(-70);
-                    }
-                }
-                if (NSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(115);
-                    if (s.getRebate().equals("300") || s.getRebate().equals("500") || s.getRebate().equals("750") || s.getRebate().equals("1000") ) {
-                        s.updateProvisjon(-15);
-                    }
-                }
-                if (RSPOT.contains(s.getProduct())) {
-                    s.updateProvisjon(100);
-                    if (s.getRebate().equals("500")){
-                        s.updateProvisjon(-50);
-                    }
-                }
-            } 
-            System.out.println(s.getProvisjon());
+  /**
+   * Checks if comeback contains campagin, an do the needed 
+   * update of commission.
+   */
+  public void checkIfComebackContainsCampaign(Sale s) {
+    if (COMEBACK.contains(s.getCampaign())) {
+      if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+        s.updateCommission(175);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
         }
-    }
-
-    public void calculateElectricityCommission() {
-        for (Sale s : saleslist) {
-            calculated += s.getProvisjon();
+        if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-50);
         }
+      }
+      if (NSPOT.contains(s.getProduct())) {
+        s.updateCommission(150);
+        if (s.getRebate().equals("300") || s.getRebate().equals("500")
+            || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-25);
+        }
+      }
+      if (RSPOT.contains(s.getProduct())) {
+        s.updateCommission(125);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
+        }
+      }
     }
+  }
 
-    public void addMobile(int amount) {
-        int per = 200;
-        int mobcommission = per * amount;
-        calculated += mobcommission;
-    }
+  /**
+   * Checks if bun and winback lists or bun and leads list, 
+   * contains campagin. If so, do the needed update of commission.
+   */
+  public void checkIfBunWinBackLeadsContainsCampaign(Sale s) {
+    if (BUN.contains(s.getProduct()) && WINBACK.contains(s.getCampaign())
+          || BUN.contains(s.getProduct()) && LEADS.contains(s.getCampaign())) {
+        s.updateCommission(50);
+      }
+  }
 
-    public void hourSalary(double hours) {
-        double hoursal = user.getHourRate() * hours;
-        calculated += hoursal;
+  /**
+   * Checks if nysalg contains campagin, If so, do the needed 
+   * update of commission.
+   */
+  public void checkIfNySalgContainsCampaign(Sale s) {
+    if (NYSALG.contains(s.getCampaign())) {
+      if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+        s.updateCommission(225);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
+        }
+        if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-50);
+        }
+      }
+      if (NSPOT.contains(s.getProduct())) {
+        s.updateCommission(200);
+        if (s.getRebate().equals("300") || s.getRebate().equals("500")
+            || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-25);
+        }
+      }
+      if (RSPOT.contains(s.getProduct())) {
+        s.updateCommission(175);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
+        }
+      }
     }
+  }
 
-    public double getCalculated() {
-        return calculated;
+  /**
+   * Checks if leads list contains campagin, If so, do the needed 
+   * update of commission.
+   */
+  public void checkIfLeadsContainsCampaign(Sale s) {
+    if (LEADS.contains(s.getCampaign())) {
+      if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+        s.updateCommission(150);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-35);
+        }
+        if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-70);
+        }
+      }
+      if (NSPOT.contains(s.getProduct())) {
+        s.updateCommission(115);
+        if (s.getRebate().equals("300") || s.getRebate().equals("500")
+            || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-15);
+        }
+      }
+      if (RSPOT.contains(s.getProduct())) {
+        s.updateCommission(100);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-50);
+        }
+      }
     }
+  }
 
-    public void taxDeduction() {
-        calculated = (calculated * ((100-user.getTaxCount())/100));
+  /**
+   * Calculates electricity comission.
+   */
+  public void calculateElectricityCommission() {
+    for (Sale s : saleslist) {
+      calculated += s.getCommission();
     }
+  }
 
-    /**
-     *
-     * @param url
-     * @param hours
-     * @param mobileamount
-     * @throws FileNotFoundException
-     */
-    public void doCalculation(String url, double hours, int mobileamount) throws IOException {
-        updateList(url);
-        removeUnwanted();
-        updateElectricityCommission();
-        calculateElectricityCommission();
-        addMobile(mobileamount);
-        hourSalary(hours);
-        taxDeduction();
-    }
+  /**
+   * Method to add mobile.
+   *
+   * @param amount ampount to add
+   */
+  public void addMobile(int amount) {
+    int per = 200;
+    int mobcommission = per * amount;
+    calculated += mobcommission;
+  }
+
+  /**
+   * Calculates just the hour salary.
+   *
+   * @param hours number of worked hours
+   */
+  public void hourSalary(double hours) {
+    double hoursal = user.getHourRate() * hours;
+    calculated += hoursal;
+  }
+
+  /**
+   * Calculates just the hour salary.
+   *
+   * @param hours number of worked hours
+   * @param user the user
+   */
+  public void hourSalary(double hours, User user) {
+    double hoursal = user.getHourRate() * hours;
+    calculated += hoursal;
+  }
+
+  /**
+   * Access method for calculated.
+   *
+   * @return the calculated
+   */
+
+  public double getCalculated() {
+    return calculated;
+  }
+
+  /**
+   * Removes tax from calculated.
+   */
+
+  public void taxDeduction() {
+    calculated = (calculated * ((100 - user.getTaxCount()) / 100));
+  }
+
+  /**
+   * Removes tax from calculated according to the TaxCount.
+   *
+   * @param user the User.
+   */
+
+  public void taxDeduction(User user) {
+    calculated = (calculated * ((100 - user.getTaxCount()) / 100));
+  }
+
+  /**
+   * Do the full calculation.
+   *
+   * @param url to the file
+   * @param hours total hours of working
+   * @param mobileamount amount of mobile
+   * @param salesperiod the period the sales are done.
+   * @param paid the amount that were paid by employer.
+   * @throws IOException Signals that an attempt to open the file
+   *                               denoted by a specified pathname has failed.
+   */
+
+  public void doCalculation(
+      String url, double hours, int mobileamount, String salesperiod, double paid)
+      throws IOException {
+    updateList(url);
+    removeUnwanted();
+    updateElectricityCommission();
+    calculateElectricityCommission();
+    addMobile(mobileamount);
+    hourSalary(hours);
+    taxDeduction();
+    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
+    this.user.addUserSale(new UserSale(salesperiod, expectedCalc, paid));
+  }
+
+  /**
+   * This method do the full calculation. This method is needed by API.
+   *
+   * @param url to the SalesReport.
+   * @param user the user.
+   * @throws FileNotFoundException Signals that an attempt to open the file
+   *                                denoted by a specified pathname has failed.
+   */
+  
+  public void doCalculation(
+      String url, User user)
+      throws IOException {
+    updateList(url);
+    removeUnwanted();
+    updateElectricityCommission();
+    calculateElectricityCommission();
+    addMobile(mobileamount);
+    hourSalary(hours, user);
+    taxDeduction(user);
+    double expectedCalc = Math.round(getCalculated() * 10) / 10.0;
+    user.addUserSale(new UserSale(this.salesperiod, expectedCalc, this.paid));
+  }
 }

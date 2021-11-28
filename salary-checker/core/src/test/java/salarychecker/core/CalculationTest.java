@@ -34,7 +34,7 @@ public class CalculationTest {
     private void testDoCalculation() {
         String url = new File(getClass().getResource("SalesReport.csv").getFile()).getAbsolutePath();
         
-        assertDoesNotThrow(() -> calculation.doCalculation(url, 50, 5));
+        assertDoesNotThrow(() -> calculation.doCalculation(url, 50, 5, "Januar 2021", 10000.0));
         assertTrue(calculation.getSaleslist().size() > 0);
         
 

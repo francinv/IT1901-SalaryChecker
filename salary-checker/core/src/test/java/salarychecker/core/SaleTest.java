@@ -24,12 +24,12 @@ public class SaleTest {
         Assertions.assertEquals("rebateString", testSale.getRebate());
         Assertions.assertEquals("NVKString", testSale.getNVK());
         Assertions.assertEquals("productString", testSale.getProduct());
-        Assertions.assertEquals(50.0, testSale.getProvisjon());
+        Assertions.assertEquals(50.0, testSale.getCommission());
     }
 
     @Test
     public void setMethodTest(){
-        testSale.setSaleDate("21. September 2021");
+        testSale.setSalesID("21. September 2021");
         Assertions.assertEquals("21. September 2021", testSale.getSalesDate());
 
         testSale.setAnleggStatus("anleggStatusString2");
@@ -56,8 +56,8 @@ public class SaleTest {
         testSale.setProduct("productString2");
         Assertions.assertEquals("productString2", testSale.getProduct());
 
-        testSale.setProvisjon(60.0);
-        Assertions.assertEquals(60.0, testSale.getProvisjon());
+        testSale.setCommission(60.0);
+        Assertions.assertEquals(60.0, testSale.getCommission());
     }
     
 }
