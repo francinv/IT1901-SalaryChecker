@@ -18,7 +18,7 @@ public class CalculationTest {
     
     private Calculation calculation;
     private User user;
-    private final Path path = Path.of(getClass().getResource("SalesReport.csv").getFile());
+    private final String path = new File(getClass().getResource("SalesReport.csv").getFile()).getAbsolutePath();
 
     @BeforeEach
     void setUp() {
@@ -49,7 +49,7 @@ public class CalculationTest {
         assertEquals(10000.0, calculation.getPaid());
     }
 
-    /*@Test
+    @Test
     public void testMethods() throws IOException {
         calculation.updateList(path);
         assertEquals(72, calculation.getSaleslist().size());
@@ -63,28 +63,28 @@ public class CalculationTest {
         assertEquals(80, calculation.getSaleslist().get(14).getCommission());
         assertEquals(150, calculation.getSaleslist().get(27).getCommission());
         calculation.calculateElectricityCommission();
-        assertEquals(7670, calculation.getCalculated());
+        assertEquals(7400, calculation.getCalculated());
         calculation.addMobile(5);
-        assertEquals(8670, calculation.getCalculated());
+        assertEquals(8400, calculation.getCalculated());
         calculation.hourSalary(100.0, user);
-        assertEquals(21670, calculation.getCalculated());
+        assertEquals(21400, calculation.getCalculated());
         calculation.taxDeduction(user);
-        assertEquals(16642.6, calculation.getCalculated());
-    }*/
+        assertEquals(16435.2, calculation.getCalculated());
+    }
 
 
-    /*@Test
+    @Test
     public void testDoCalculation() throws IOException {
         Calculation fullCalc = new Calculation("Januar 2021", 100.0, 5, 10000.0);
         fullCalc.doCalculation(path, user);
         List<UserSale> tempSales = new ArrayList<>();
-        UserSale userSale = new UserSale("Januar 2021", 16642.6, 10000.0);
+        UserSale userSale = new UserSale("Januar 2021", 16435.2, 10000.0);
         tempSales.add(userSale);
         assertEquals(tempSales.get(0).getSalesperiod(), user.getUserSaleList().get(0).getSalesperiod());
         assertEquals(tempSales.get(0).getDifference(), user.getUserSaleList().get(0).getDifference());
         assertEquals(tempSales.get(0).getExpected(), user.getUserSaleList().get(0).getExpected());
         assertEquals(tempSales.get(0).getPaid(), user.getUserSaleList().get(0).getPaid());
         assertEquals(userSale.getExpected(), user.getUserSale("Januar 2021").getExpected());
-    }*/
+    }
 
 }
