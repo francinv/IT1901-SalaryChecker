@@ -11,20 +11,21 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
-import salarychecker.json.SalaryCheckerPersistence;
 import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,21 +61,11 @@ public class HomePageControllerTest extends ApplicationTest {
       controller.setDataAccess(dataAccess);
       loader.setLocation(SalaryCheckerApp.class.getResource("views/HomePage.fxml"));
       createTestUsers();
-      user = (User) dataAccess.userLogin("testhome@live.no", "Password123!");
+      user = (User) dataAccess.userLogin("ola@live.no", "Password123!");
       final Parent parent = loader.load();
       controller.loadInfo();
       stage.setScene(new Scene(parent));
       stage.show();
-    }
-
-    private void createTestUsers() throws IOException {
-        try {
-            dataAccess.createUser(new User("Test", "User",
-                "testhome@live.no", "Password123!", "22030191349",
-                12345, "employeer1@gmail.com", 30.0, 130.0));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     @BeforeEach
@@ -147,6 +138,26 @@ public class HomePageControllerTest extends ApplicationTest {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void createTestUsers() throws IOException {
+        try {
+            dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+                "boss@mail.com", "Vandre333!"));
+            User user = new User("Ola", "Nordmann",
+                "ola@live.no", "Password123!", "22030191349",
+                12345, "boss@mail.com", 30.0, 130.0);
+            UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+            user.addUserSale(testsale1);
+            UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+            user.addUserSale(testsale2);
+            dataAccess.createUser(user);
+            dataAccess.createUser(new User("Peter", "Nordmann",
+                "peter@live.no", "Test123!", "22030191349",
+                12345, "employeer1@gmail.com", 30.0, 130.0));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

@@ -7,16 +7,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -38,8 +41,9 @@ public class AdminUserOverviewControllerTest extends ApplicationTest {
     controller.setDataAccess(dataAccess);
     loader.setLocation(SalaryCheckerApp.class.getResource("views/AdminUserOverview.fxml"));
     createTestUsers();
-    adminUser = (AdminUser) dataAccess.userLogin("employeer1@gmail.com", "Vandre333!");
+    adminUser = (AdminUser) dataAccess.userLogin("boss@mail.com", "Vandre333!");
     final Parent parent = loader.load();
+    createTestUsers();
     controller.loadTableView();
     stage.setScene(new Scene(parent));
     stage.show();
@@ -55,33 +59,38 @@ public class AdminUserOverviewControllerTest extends ApplicationTest {
 
   @Test
   public void testTableViewLoaded() {
-    assertEquals("Test", tableUsers.getItems().get(0).getFirstname());
+    assertEquals("Ola", tableUsers.getItems().get(0).getFirstname());
   }
 
   @Test
   public void testResetSearchField() {
-    clickOn(searchField).write("Test");
-    assertEquals("Test", searchField.getText());
+    clickOn(searchField).write("Ola");
+    assertEquals("Ola", searchField.getText());
     clickOn(clearButton);
     assertEquals("", searchField.getText());
   }
 
   @Test
   public void testSearch() {
-    clickOn(searchField).write("Te");
+    clickOn(searchField).write("Ol");
     clickOn(searchButton);
-    assertEquals("Test", tableUsers.getItems().get(0).getFirstname());
+    assertEquals("Ola", tableUsers.getItems().get(0).getFirstname());
   }
 
   private void createTestUsers() throws IOException {
     try {
-      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
-          "employeer1@gmail.com", "Vandre333!"));
-      dataAccess.createUser(new User("Test", "User",
-          "test@live.no", "Password123!", "22030191349",
-          12345, "employeer1@gmail.com", 30.0, 130.0));
-      dataAccess.createUser(new User("TestTwo", "User",
-          "test2@live.no", "Password123!", "22030191349",
+      dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+          "boss@mail.com", "Vandre333!"));
+      User user = new User("Ola", "Nordmann",
+          "ola@live.no", "Password123!", "22030191349",
+          12345, "boss@mail.com", 30.0, 130.0);
+      UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+      user.addUserSale(testsale1);
+      UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+      user.addUserSale(testsale2);
+      dataAccess.createUser(user);
+      dataAccess.createUser(new User("Peter", "Nordmann",
+          "peter@live.no", "Test123!", "22030191349",
           12345, "employeer1@gmail.com", 30.0, 130.0));
     } catch (Exception e) {
       System.out.println(e.getMessage());

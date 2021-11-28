@@ -3,14 +3,18 @@ package salarychecker.ui.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
+import java.nio.file.Path;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
@@ -34,7 +38,7 @@ public class SalariesControllerTest extends ApplicationTest {
     controller.setDataAccess(dataAccess);
     loader.setLocation(SalaryCheckerApp.class.getResource("views/Salaries.fxml"));
     createTestUsers();
-    user = (User) dataAccess.userLogin("testsalaries@live.no", "Password123!");
+    user = (User) dataAccess.userLogin("ola@live.no", "Password123!");
     final Parent parent = loader.load();
     controller.loadTableView();
     stage.setScene(new Scene(parent));
@@ -58,21 +62,27 @@ public class SalariesControllerTest extends ApplicationTest {
     assertEquals(13000.0, userSale2.getExpected());
     assertEquals(8000.0, userSale2.getPaid());
     assertEquals(5000.0, userSale2.getDifference());
-  }
 
+  }
 
   private void createTestUsers() throws IOException {
     try {
-      User user = new User("Test", "User",
-          "testsalaries@live.no", "Password123!", "22030191349",
-          12345, "employeer1@gmail.com", 30.0, 130.0);
+      dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+          "boss@mail.com", "Vandre333!"));
+      User user = new User("Ola", "Nordmann",
+          "ola@live.no", "Password123!", "22030191349",
+          12345, "boss@mail.com", 30.0, 130.0);
       UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
       user.addUserSale(testsale1);
       UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
       user.addUserSale(testsale2);
       dataAccess.createUser(user);
+      dataAccess.createUser(new User("Peter", "Nordmann",
+          "peter@live.no", "Test123!", "22030191349",
+          12345, "employeer1@gmail.com", 30.0, 130.0));
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
   }
+
 }

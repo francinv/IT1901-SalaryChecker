@@ -15,6 +15,7 @@ import javafx.stage.Window;
 import org.junit.jupiter.api.*;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerApp;
@@ -23,6 +24,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +37,6 @@ public class LoginControllerTest extends ApplicationTest {
     private PasswordField passwordField;
     private Button logInButton;
     private Text errorDisplay;
-    private Button createButton;
     private SalaryCheckerAccess dataAccess = new LocalSalaryCheckerAccess();
 
 
@@ -47,7 +48,7 @@ public class LoginControllerTest extends ApplicationTest {
         controller.setDataAccess(dataAccess);
         loader.setLocation(SalaryCheckerApp.class.getResource("views/LogIn.fxml"));
         createTestUsers();
-        dataAccess.userLogin("test@live.no", "Password123!");
+        dataAccess.userLogin("ola@live.no", "Password123!");
         final Parent parent = loader.load();
         stage.setScene(new Scene(parent));
         stage.show();
@@ -59,20 +60,11 @@ public class LoginControllerTest extends ApplicationTest {
         passwordField = lookup("#password").query();
         logInButton = lookup("#logIn").query();
         errorDisplay = lookup("#errorDisplay").query();
-        createButton = lookup("#createButton").query();
     }
 
     @Test
-    @Order(1)
-    public void testCreateUsersButtonWorks(){
-        clickOn(createButton);
-        assertEquals("User already exists!", createButton.getText());
-    }
-
-    @Test
-    @Order(2)
     public void testLoginUser() {
-        writeInLoginFields("testlogin@live.no", "Password123!");
+        writeInLoginFields("ola@live.no", "Password123!");
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
@@ -91,9 +83,8 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(3)
     public void testLogInAdminUser() {
-        writeInLoginFields("testlogin@admin.no", "Password123!");
+        writeInLoginFields("boss@mail.com", "Vandre333!");
         clickOn(logInButton);
         Window currentWindow = window(getTopModalStage().getScene());
         try {
@@ -112,7 +103,6 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(4)
     public void testInvalidEmail() {
         writeInLoginFields("t", "Password123!");
         clickOn(logInButton);
@@ -120,15 +110,13 @@ public class LoginControllerTest extends ApplicationTest {
     }
 
     @Test
-    @Order(5)
     public void testInvalidPwd() {
-        writeInLoginFields("testlogin@live.no", "P");
+        writeInLoginFields("ola@live.no", "P");
         clickOn(logInButton);
         assertEquals("Invalid password, must be at least 8 characters and contain at least 1 digit and 1 lower and uppercase letter.", errorDisplay.getText());
     }
 
     @Test
-    @Order(6)
     public void testNonExistingUser() {
         writeInLoginFields("fxtest@gmail.no", "Test123!");
         clickOn(logInButton);
@@ -147,6 +135,26 @@ public class LoginControllerTest extends ApplicationTest {
         clickOn(passwordField).write(pwd);
     }
 
+    private void createTestUsers() throws IOException {
+        try {
+            dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+                "boss@mail.com", "Vandre333!"));
+            User user = new User("Ola", "Nordmann",
+                "ola@live.no", "Password123!", "22030191349",
+                12345, "boss@mail.com", 30.0, 130.0);
+            UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+            user.addUserSale(testsale1);
+            UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+            user.addUserSale(testsale2);
+            dataAccess.createUser(user);
+            dataAccess.createUser(new User("Peter", "Nordmann",
+                "peter@live.no", "Test123!", "22030191349",
+                12345, "employeer1@gmail.com", 30.0, 130.0));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private Stage getTopModalStage() {
         // Get a list of windows but ordered from top[0] to bottom[n] ones.
         // It is needed to get the first found modal window.
@@ -158,17 +166,5 @@ public class LoginControllerTest extends ApplicationTest {
                 .filter(window -> window instanceof Stage)
                 .findFirst()
                 .orElse(null);
-    }
-
-    private void createTestUsers() throws IOException {
-        try {
-            dataAccess.createUser(new User("Test", "User",
-                "testlogin@live.no", "Password123!", "22030191349",
-                12345, "employeer1@gmail.com", 30.0, 130.0));
-            dataAccess.createAdminUser(new AdminUser("Test", "Admin",
-                "testlogin@admin.no", "Password123!"));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

@@ -9,6 +9,7 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import salarychecker.core.Accounts;
@@ -17,14 +18,13 @@ import salarychecker.core.User;
 import salarychecker.ui.controllers.SalaryCheckerConfig;
 
 public class RemoteSalaryCheckerAccessTest {
-    
-    private WireMockConfiguration wireMockConfig;
+
+    /*private WireMockConfiguration wireMockConfig;
     private WireMockServer wireMockServer;
 
     private RemoteSalaryCheckerAccess remoteSalaryCheckerAccess;
 
-    @BeforeAll
-    public void setup() throws URISyntaxException {
+    @BeforeEach void setup() throws URISyntaxException {
         wireMockConfig = WireMockConfiguration.wireMockConfig().port(8080);
         wireMockServer = new WireMockServer(wireMockConfig.portNumber());
         wireMockServer.start();
@@ -32,7 +32,7 @@ public class RemoteSalaryCheckerAccessTest {
         SalaryCheckerConfig salaryCheckerConfig = new SalaryCheckerConfig();
         remoteSalaryCheckerAccess = new RemoteSalaryCheckerAccess(
             new URI(salaryCheckerConfig.getProperty("serverURI"))
-            );
+        );
 
         final User employee1 = new User("Ola", "Nordmann", "olanordmann@gmail.com",
             "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
@@ -131,5 +131,5 @@ public class RemoteSalaryCheckerAccessTest {
     public RemoteSalaryCheckerAccess getRemoteSalaryCheckerAccess() {
         return remoteSalaryCheckerAccess;
     }
-
+*/
 }

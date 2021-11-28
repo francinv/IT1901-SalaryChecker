@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -18,6 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerApp;
@@ -48,7 +51,6 @@ public class ProfileControllerTest extends ApplicationTest{
         changeProfileButton = lookup("#changeProfileButton").query();
     }
 
-    
     @Override
     public void start(final Stage stage) throws Exception {
       FXMLLoader loader = new FXMLLoader();
@@ -57,13 +59,13 @@ public class ProfileControllerTest extends ApplicationTest{
       controller.setDataAccess(dataAccess);
       loader.setLocation(SalaryCheckerApp.class.getResource("views/Profile.fxml"));
       createTestUsers();
-      user = (User) dataAccess.userLogin("testprofile@live.no", "Password123!");
+      user = (User) dataAccess.userLogin("ola@live.no", "Password123!");
       final Parent parent = loader.load();
       controller.loadProfileInfo();
       stage.setScene(new Scene(parent));
       stage.show();
     }
-    
+
     @Test
     public void correctProfileInfoLoaded(){
         String name = user.getFirstname() + " " + user.getLastname();
@@ -88,15 +90,24 @@ public class ProfileControllerTest extends ApplicationTest{
         assertTrue(settingsPane.isVisible());
     }
 
-  private void createTestUsers() throws IOException {
-    try {
-      dataAccess.createUser(new User("Test", "User",
-          "testprofile@live.no", "Password123!", "22030191349",
-          12345, "employeer1@gmail.com", 30.0, 130.0));
-      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
-          "testprofile@admin.no", "Password123!"));
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
+    private void createTestUsers() throws IOException {
+        try {
+            dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+                "boss@mail.com", "Vandre333!"));
+            User user = new User("Ola", "Nordmann",
+                "ola@live.no", "Password123!", "22030191349",
+                12345, "boss@mail.com", 30.0, 130.0);
+            UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+            user.addUserSale(testsale1);
+            UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+            user.addUserSale(testsale2);
+            dataAccess.createUser(user);
+            dataAccess.createUser(new User("Peter", "Nordmann",
+                "peter@live.no", "Test123!", "22030191349",
+                12345, "employeer1@gmail.com", 30.0, 130.0));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
-  }
+
 }
