@@ -85,3 +85,23 @@
     -fx-text-fill: #ffffff;
     -fx-font-family: "Quicksand";
 }
+
+#hourWageField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#saveChangesButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+}
+
+#saveChangesButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
