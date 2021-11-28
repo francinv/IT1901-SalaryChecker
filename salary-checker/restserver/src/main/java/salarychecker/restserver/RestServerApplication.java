@@ -25,10 +25,10 @@ public class RestServerApplication {
     SpringApplication.run(RestServerApplication.class, args);
   }
 
-  @Bean
-  public Module objectMapperModule() {
-    return SalaryCheckerPersistence.createJacksonModule();
-  }
+  // @Bean
+  // public Module objectMapperModule() {
+  //   return SalaryCheckerPersistence.createJacksonModule();
+  // }
 
   /**
    * Enable CORS.
@@ -44,6 +44,7 @@ public class RestServerApplication {
         registry
                 .addMapping("/salarychecker/**")
                 .allowedOrigins("http://localhost:3000")
+                .allowedOrigins("https://salarycheckergr2111.herokuapp.com/")
                 .allowedMethods("PUT", "POST", "GET");
       }
     };
