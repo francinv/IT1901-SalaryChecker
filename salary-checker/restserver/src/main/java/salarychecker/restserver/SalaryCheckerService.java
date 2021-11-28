@@ -119,6 +119,19 @@ public class SalaryCheckerService {
     return acc;
   }
 
+  public SalaryCheckerPersistence getPersistence() {
+    return PERSISTENCE;
+  }
+
+  /**
+   * Sets the location of JSON file.
+   *
+   * @param fileName name of JSON file.
+   */
+  public void setPersistenceLocation(String fileName) {
+    PERSISTENCE.setFilePath(fileName);
+  }
+
   /**
    * Find user by email.
    *
@@ -197,14 +210,12 @@ public class SalaryCheckerService {
   /**
    * Saves Accounts to disk.
    */
-  private void autoSave() {
-    if (PERSISTENCE != null) {
+  protected void autoSave() {
       try {
         PERSISTENCE.saveAccounts(accounts);
       } catch (IllegalStateException | IOException e) {
         System.err.println("Could not auto-save Accounts: " + e);
       }
-    }
   }
 
   public UserSale getUserSale(String salesperiod, String emailOfUser) {
@@ -240,4 +251,11 @@ public class SalaryCheckerService {
     }
   }
 
+
+  public static void main(String[] args) {
+    Accounts accounts = new Accounts();
+    accounts.addUser(new AdminUser("Firstname", "Lastname", "sera2n@live.no", "Password123!"));
+    SalaryCheckerService salaryCheckerService = new SalaryCheckerService(accounts);
+    System.out.println(salaryCheckerService.getAccounts());
+  }
 }
