@@ -6,10 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
-import salarychecker.dataaccess.SalaryCheckerAccess;
 
 /**
  * This is the class that controls the Settings-scene.
@@ -126,7 +124,8 @@ public class SettingsController extends AbstractController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      dataAccess.updateUserAttributes(user, getDataAccess().readAccounts().getAccounts().indexOf(user));
+      dataAccess.updateUserAttributes(user, 
+          getDataAccess().readAccounts().getAccounts().indexOf(user));
       loadSettingsInfo();
     } catch (IllegalArgumentException e) {
       errorTextDisplay.setText(e.getMessage());

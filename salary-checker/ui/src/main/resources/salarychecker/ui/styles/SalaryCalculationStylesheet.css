@@ -1,7 +1,4 @@
-#calculationPane{
-    -fx-height:850;
-    -fx-width: 1340;
-}
+
 
 #calculateButton{
     -fx-background-color: #ffff; 
@@ -56,4 +53,10 @@
     -fx-background-insets: 0, 0 0 3 0 ;
     -fx-background-radius: 0 ;  
     -fx-font-family: "Quicksand";
+}
+
+#monthDropdown{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand"; 
 }

@@ -8,12 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -102,7 +100,8 @@ class RestServerApplicationTests {
     assertNotNull(this.salaryCheckerService.getUserByEmail("seran@live.no"));
     this.salaryCheckerService.createAdminUser(adminUser);
     assertNotNull(this.salaryCheckerService.getUserByEmail("hammad@live.no"));
-    assertThrows(IllegalStateException.class, () -> this.salaryCheckerService.createAdminUser(adminUser));
+    assertThrows(IllegalStateException.class, 
+        () -> this.salaryCheckerService.createAdminUser(adminUser));
 
     String userAsJson = objectMapper.writeValueAsString(user);
     String adminUserAsJson = objectMapper.writeValueAsString(adminUser);
@@ -167,8 +166,9 @@ class RestServerApplicationTests {
 
   @AfterAll 
   public void tearDown() {
-    Path.of(System.getProperty("user.home")+ "salarychecker-restservertest.json").toFile().delete();
-}
+    Path.of(System.getProperty("user.home") 
+        + "salarychecker-restservertest.json").toFile().delete();
+  }
 
   private String getUrl(String... segments) {
     String url = "/" + SalaryCheckerController.SALARY_CHECKER_SERVICE_PATH;

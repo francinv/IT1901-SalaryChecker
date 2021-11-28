@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -32,7 +31,7 @@ public class SalaryCheckerService {
 
   private Accounts accounts;
   private Calculation calculation;
-  private final static SalaryCheckerPersistence PERSISTENCE = new SalaryCheckerPersistence();
+  private static final SalaryCheckerPersistence PERSISTENCE = new SalaryCheckerPersistence();
   private Path fileStorageLocation;
 
   /**
@@ -217,11 +216,11 @@ public class SalaryCheckerService {
    * Saves Accounts to disk.
    */
   protected void autoSave() {
-      try {
-        PERSISTENCE.saveAccounts(accounts);
-      } catch (IllegalStateException | IOException e) {
-        System.err.println("Could not automatically save the accounts: " + e);
-      }
+    try {
+      PERSISTENCE.saveAccounts(accounts);
+    } catch (IllegalStateException | IOException e) {
+      System.err.println("Could not automatically save the accounts: " + e);
+    }
   }
 
   public UserSale getUserSale(String salesperiod, String emailOfUser) {
@@ -248,7 +247,8 @@ public class SalaryCheckerService {
       try {
         // Check if the file's name contains invalid characters
         if (fileName.contains("..")) {
-          throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+          throw new FileStorageException("Sorry! Filename contains invalid path sequence " 
+              + fileName);
         }
 
 
@@ -256,7 +256,8 @@ public class SalaryCheckerService {
         Path targetLocation = this.fileStorageLocation.resolve(fileName);
         Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
       } catch (IOException ex) {
-        throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+        throw new FileStorageException("Could not store file " + fileName 
+            + ". Please try again!", ex);
       }
     }
     return fileName;
