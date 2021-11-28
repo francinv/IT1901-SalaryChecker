@@ -242,7 +242,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                     .POST(BodyPublishers.ofString(json))
                     .build();
 
-      final HttpResponse<String> httpResponse = HttpClient.newBuilder()
+      HttpClient.newBuilder()
                       .build()
                       .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
@@ -312,8 +312,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
     var request = MutableRequest.POST("http://localhost:8080/salarychecker/uploadFile", multipartBody)
         .header("Content-Type", "multipart/form-data");
 
-    final HttpResponse<String> httpResponse = 
-        client.send(request, HttpResponse.BodyHandlers.ofString());
+    client.send(request, HttpResponse.BodyHandlers.ofString());
   }
 
   @Override
