@@ -37,4 +37,3 @@ public class SalaryCheckerRemoteApp extends Application {
     launch(args);
   }
 }
-

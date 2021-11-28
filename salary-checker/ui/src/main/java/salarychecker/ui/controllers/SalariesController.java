@@ -42,7 +42,7 @@ public class SalariesController extends AbstractController {
    * This method updates the table view.
    * It iterates through tempdata, and adds it to the tableview.
    */
-  void updateTableView() {
+  protected void updateTableView() {
     salariesTable.getItems().clear();
     periodColumn.setCellValueFactory(new PropertyValueFactory<>("salesperiod"));
     paidColumn.setCellValueFactory(new PropertyValueFactory<>("expected"));
@@ -53,6 +53,4 @@ public class SalariesController extends AbstractController {
       salariesTable.getItems().add(userSale);
     }
   }
-
-
 }

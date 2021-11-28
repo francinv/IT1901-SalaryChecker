@@ -87,6 +87,4 @@ public class HomepageController extends AbstractController {
     pageTitle.setText("Mine lønninger");
     setAnchorPane(Controllers.SALARIES, startPane, getDataAccess());
   }
-
-
 }

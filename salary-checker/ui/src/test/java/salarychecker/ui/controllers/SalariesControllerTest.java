@@ -3,14 +3,12 @@ package salarychecker.ui.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -85,4 +83,7 @@ public class SalariesControllerTest extends ApplicationTest {
     }
   }
 
+  public User getUser() {
+    return user;
+  }
 }

@@ -23,7 +23,6 @@ import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -34,6 +34,7 @@ public class SalaryCalculationController extends AbstractController {
   @FXML private ComboBox<String> monthDropdown;
   @FXML private TextField yearField;
   @FXML private Text pageTitle;
+  @FXML private Text errorText;
   @FXML private AnchorPane calculationPane;
 
 
@@ -53,22 +54,26 @@ public class SalaryCalculationController extends AbstractController {
    */
   @FXML
   private void calculateSalary(ActionEvent event) throws IOException {
-    User temp = (User) dataAccess.getLoggedInUser();
-    double hours = Double.parseDouble(hoursField.getText());
-    int mobileamount = Integer.parseInt(mobileField.getText());
-    String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
-    String salesperiod = chosenmonth + " " + yearField.getText();
-    double paid = Double.parseDouble(paidField.getText());
-    Calculation calculation = new Calculation(salesperiod, hours, mobileamount, paid);
-    getDataAccess().calculateSale(calculation, temp.getEmail());
+    try {
+      User temp = (User) dataAccess.getLoggedInUser();
+      double hours = Double.parseDouble(hoursField.getText());
+      int mobileamount = Integer.parseInt(mobileField.getText());
+      String chosenmonth = monthDropdown.getSelectionModel().getSelectedItem();
+      String salesperiod = chosenmonth + " " + yearField.getText();
+      double paid = Double.parseDouble(paidField.getText());
+      Calculation calculation = new Calculation(salesperiod, hours, mobileamount, paid);
+      getDataAccess().calculateSale(calculation, temp.getEmail());
 
-    UserSale userSale = getDataAccess().getUserSale(salesperiod, temp.getEmail());
-    String expected = String.valueOf(userSale.getExpected());
-    String displayPaid = String.valueOf(userSale.getPaid()).toString();
-    String diff = String.valueOf(userSale.getDifference());
-    expectedText.setText(expected);
-    paidText.setText(displayPaid);
-    differenceText.setText(diff);
+      UserSale userSale = getDataAccess().getUserSale(salesperiod, temp.getEmail());
+      String expected = String.valueOf(userSale.getExpected());
+      String displayPaid = String.valueOf(userSale.getPaid()).toString();
+      String diff = String.valueOf(userSale.getDifference());
+      expectedText.setText(expected);
+      paidText.setText(displayPaid);
+      differenceText.setText(diff);
+    } catch (Exception e) {
+      errorText.setText("Something went wrong");
+    }
   }
 
   /**
@@ -94,6 +99,4 @@ public class SalaryCalculationController extends AbstractController {
       throws InterruptedException, IOException, URISyntaxException {
     getDataAccess().uploadFile(salaryCsvFile);
   }
-
-
 }

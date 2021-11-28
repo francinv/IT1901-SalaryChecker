@@ -7,10 +7,10 @@ package salarychecker.core;
  */
 public class UserSale {
 
-  String salesperiod;
-  double expected;
-  double paid;
-  double difference;
+  private String salesperiod;
+  private double expected;
+  private double paid;
+  private double difference;
 
   /**
    * Constructor for UserSale, a salesperiod, ie: October 2021.

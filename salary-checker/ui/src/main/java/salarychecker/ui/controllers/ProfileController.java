@@ -59,5 +59,4 @@ public class ProfileController extends AbstractController {
   private void changeProfileAction(ActionEvent event) {
     setAnchorPane(Controllers.SETTINGS, profilePane, getDataAccess());
   }
-
 }
