@@ -109,7 +109,7 @@ class RestServerApplicationTests {
     mockMvc.perform(MockMvcRequestBuilders.post(getUrl("create-user"))
                                 .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
                                 .content(userAsJson).accept(MediaType.APPLICATION_JSON))
-                                .andExpect(MockMvcResultMatchers.status().isOk());
+                                .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
     mockMvc.perform(MockMvcRequestBuilders.post(getUrl("create-user", "admin"))
            .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
