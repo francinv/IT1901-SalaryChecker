@@ -10,9 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -161,7 +163,12 @@ class RestServerApplicationTests {
     mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
                                 .accept(MediaType.APPLICATION_JSON))
            .andExpect(MockMvcResultMatchers.status().isOk());
-  }*/
+  }
+
+  @AfterAll 
+  public void tearDown() {
+    Path.of(System.getProperty("user.home")+ "salarychecker-restservertest.json").toFile().delete();
+}
 
   private String getUrl(String... segments) {
     String url = "/" + SalaryCheckerController.SALARY_CHECKER_SERVICE_PATH;

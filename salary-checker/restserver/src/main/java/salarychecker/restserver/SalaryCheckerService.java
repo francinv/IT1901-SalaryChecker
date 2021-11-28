@@ -100,7 +100,7 @@ public class SalaryCheckerService {
       }
     } catch (IllegalStateException | IOException e) {
       System.out.println("Could not read json file." 
-                            + "\n Rigging Accounts manually ("
+                            + "\n Manually creating users. ("
                             + e + ")");
     }
     return manuallyCreateAccounts();
@@ -220,7 +220,7 @@ public class SalaryCheckerService {
       try {
         PERSISTENCE.saveAccounts(accounts);
       } catch (IllegalStateException | IOException e) {
-        System.err.println("Could not auto-save Accounts: " + e);
+        System.err.println("Could not automatically save the accounts: " + e);
       }
   }
 
