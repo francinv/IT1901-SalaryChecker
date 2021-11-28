@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
@@ -203,4 +202,7 @@ public class CreateUserControllerTest extends ApplicationTest {
     clickOn(wantedField).write(write);
   }
 
+  public AdminUser getAdminUser() {
+      return adminUser;
+  }
 }
