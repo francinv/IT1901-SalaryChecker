@@ -225,4 +225,3 @@ cd target/SalaryCheckerFX/bin
 
 
 
-
