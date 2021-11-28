@@ -54,3 +54,9 @@
     -fx-background-radius: 0 ;  
     -fx-font-family: "Quicksand";
 }
+
+#monthDropdown{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand"; 
+}
