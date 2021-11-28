@@ -24,10 +24,6 @@ import javax.crypto.SecretKey;
 
 /**
  * Class to encrypt and decrypt user information.
- *
- * @author serans
- * @author jakobk
- * @author francinv
  */
 public class EncryptDecrypt {
 
