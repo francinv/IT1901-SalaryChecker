@@ -70,7 +70,7 @@ mvn clean install
 mvn spring-boot:run -pl restserver
 
 4)
-yarn #Trenger kommando!
+https://salarycheckergr2111.herokuapp.com/
 ```
 ## How to get started using SalaryChecker:
 The SalaryChecker application is meant for two seperate user-groups. 
