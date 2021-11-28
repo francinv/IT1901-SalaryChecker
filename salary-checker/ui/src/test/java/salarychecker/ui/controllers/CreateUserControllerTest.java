@@ -94,8 +94,8 @@ public class CreateUserControllerTest extends ApplicationTest {
 
   @Test
   public void testCreateUser() throws IOException {
-    Path.of(System.getProperty("user.home"), "Accounts.json").toFile().delete();
-    Path.of(System.getProperty("user.home"), "SalarycheckerKeystore.jks").toFile().delete();
+    Path.of(System.getProperty("user.home"), "/.salarychecker/Accounts.json").toFile().delete();
+    Path.of(System.getProperty("user.home"), "/.salarychecker/SalarycheckerKeystore.jks").toFile().delete();
     createTestUsers();
     clickOn(goOnButton);
     assertEquals("Please enter a name.",errorMessageDisplay.getText());

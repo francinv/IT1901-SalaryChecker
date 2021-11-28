@@ -73,7 +73,7 @@ public class SalaryCheckerAppIT extends ApplicationTest {
   }
 
   @AfterAll static void tearDown() {
-    Path.of(System.getProperty("user.home") + "Accounts.json").toFile().delete();
+    Path.of(System.getProperty("user.home") + "/.salarychecker/" + "Accounts.json").toFile().delete();
   }
     
   @Test

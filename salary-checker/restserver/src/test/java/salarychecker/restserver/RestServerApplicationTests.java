@@ -167,7 +167,7 @@ class RestServerApplicationTests {
   @AfterAll 
   public void tearDown() {
     Path.of(System.getProperty("user.home") 
-        + "salarychecker-restservertest.json").toFile().delete();
+        + "/.salarychecker/" + "salarychecker-restservertest.json").toFile().delete();
   }
 
   private String getUrl(String... segments) {

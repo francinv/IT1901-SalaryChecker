@@ -59,7 +59,7 @@ public class EncryptDecrypt {
    */
   public void storeToKeyStore(String alias, SecretKey secretKey) {
 
-    String path = System.getProperty("user.home") + "/SalarycheckerKeystore.jks";
+    String path = System.getProperty("user.home") + "/.salarychecker/SalarycheckerKeystore.jks";
     File file = new File(path);
     char[] jksPassword = "changeit".toCharArray();
     InputStream readCert = null;
@@ -106,7 +106,7 @@ public class EncryptDecrypt {
    */
   public SecretKey loadFromKeyStore(String alias) {
 
-    String path = System.getProperty("user.home") + "/SalarycheckerKeystore.jks";
+    String path = System.getProperty("user.home") + "/.salarychecker/SalarycheckerKeystore.jks";
     char[] jksPassword = "changeit".toCharArray();
 
     try {
