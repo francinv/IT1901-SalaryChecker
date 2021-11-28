@@ -59,8 +59,8 @@ public class CalculationTest {
         }
         calculation.updateElectricityCommission();
         assertEquals(57, calculation.getSaleslist().size());
-        assertEquals(80, calculation.getSaleslist().get(14).getProvisjon());
-        assertEquals(150, calculation.getSaleslist().get(27).getProvisjon());
+        assertEquals(80, calculation.getSaleslist().get(14).getCommission());
+        assertEquals(150, calculation.getSaleslist().get(27).getCommission());
         calculation.calculateElectricityCommission();
         assertEquals(7670, calculation.getCalculated());
         calculation.addMobile(5);
