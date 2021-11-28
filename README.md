@@ -140,7 +140,7 @@ In this sprint we will continue to add more functionality. The goal is that afte
 
 **US-5:** As a user, I want to see previously calculated salaries.
 
-**US-6:** As a user, I want to send an email to the employer. | *This user story can be changed or pushed to sprint 3.*
+**US-6:** As a user, I want to send an email to the employer. | *This user story can be changed or pushed to sprint 3.* |  
 
 **Read more about it here:** [Release 2](docs/release2/) 
 
