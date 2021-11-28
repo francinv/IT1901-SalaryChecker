@@ -37,7 +37,7 @@ public class EncryptDecrypt {
     try {
       keyStore = KeyStore.getInstance("JCEKS");
     } catch (KeyStoreException e) {
-      System.out.println(e.getMessage());
+      e.getMessage();
     }
   }
 
@@ -78,7 +78,7 @@ public class EncryptDecrypt {
       keyStore.store(writStream, jksPassword);
     } catch (IOException | NoSuchAlgorithmException 
       | CertificateException | KeyStoreException e) {
-      System.out.println(e.getMessage());
+      e.getMessage();
     } finally {
       try {
         if (readCert != null) {
@@ -118,7 +118,7 @@ public class EncryptDecrypt {
 
     } catch (UnrecoverableKeyException | CertificateException 
         | KeyStoreException | NoSuchAlgorithmException | IOException e) {
-      System.out.println(e.getMessage());
+      e.getMessage();
     }
     return null;
   }
@@ -138,8 +138,7 @@ public class EncryptDecrypt {
       keyGenerator.init(n);
       key = keyGenerator.generateKey();
     } catch (NoSuchAlgorithmException e) {
-      // TODO Auto-generated catch block
-      System.out.println(e.getMessage());
+      e.getMessage();
     }
     return key;
   }
@@ -164,7 +163,7 @@ public class EncryptDecrypt {
     } catch (NoSuchAlgorithmException | NoSuchPaddingException 
        | InvalidKeyException | IllegalBlockSizeException 
        | BadPaddingException e) {
-      System.out.println(e.getMessage());
+      e.getMessage();
     }
     return null;
   }
@@ -189,8 +188,7 @@ public class EncryptDecrypt {
     } catch (NoSuchAlgorithmException | NoSuchPaddingException 
       | InvalidKeyException | IllegalBlockSizeException 
       | BadPaddingException e) {
-      // TODO Auto-generated catch block
-      System.out.println(e.getMessage());
+      e.getMessage();
     }
     return null;
   }

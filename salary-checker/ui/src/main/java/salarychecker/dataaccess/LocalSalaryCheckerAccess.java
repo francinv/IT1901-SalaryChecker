@@ -34,7 +34,6 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
       try {
         persistence.saveAccounts(accounts);
       } catch (IllegalStateException | IOException e1) {
-        System.out.println("Her er feilen");
         System.out.println(e1.getMessage());
       }
     }

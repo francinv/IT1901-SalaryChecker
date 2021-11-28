@@ -143,7 +143,7 @@ public class AdminStartPageControllerTest extends ApplicationTest {
                 "peter@live.no", "Test123!", "22030191349",
                 12345, "employeer1@gmail.com", 30.0, 130.0));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         }
     }
 
