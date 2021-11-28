@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -25,10 +24,6 @@ import javax.crypto.SecretKey;
 
 /**
  * Class to encrypt and decrypt user information.
- *
- * @author serans
- * @author jakobk
- * @author francinv
  */
 public class EncryptDecrypt {
 
@@ -42,7 +37,7 @@ public class EncryptDecrypt {
     try {
       keyStore = KeyStore.getInstance("JCEKS");
     } catch (KeyStoreException e) {
-      e.printStackTrace();
+      e.getMessage();
     }
   }
 
@@ -61,20 +56,10 @@ public class EncryptDecrypt {
    *
    * @param alias the alias
    * @param secretKey the secret key
-   * @throws KeyStoreException This is the generic KeyStore exception.
-   * @throws IOException Signals that an I/O exception of some sort has occurred.
-   *                     This class is the general class of exceptions produced by
-   *                     failed or interrupted I/O operations.
-   * @throws CertificateException This exception indicates one of a variety of certificate
-   *                              problems.
-   * @throws NoSuchAlgorithmException This exception is thrown when a particular cryptographic
-   *                                  algorithm is requested but is not available in the
-   *                                  environment.
    */
-  public void storeToKeyStore(String alias, SecretKey secretKey) throws KeyStoreException,
-      NoSuchAlgorithmException, CertificateException, IOException {
+  public void storeToKeyStore(String alias, SecretKey secretKey) {
 
-    String path = System.getProperty("user.home") + "/SalarycheckerKeystore.jks";
+    String path = System.getProperty("user.home") + "/.salarychecker/SalarycheckerKeystore.jks";
     File file = new File(path);
     char[] jksPassword = "changeit".toCharArray();
     InputStream readCert = null;
@@ -91,8 +76,9 @@ public class EncryptDecrypt {
       keyStore.setKeyEntry(alias, secretKey, jksPassword, null);
       writStream = new FileOutputStream(path);
       keyStore.store(writStream, jksPassword);
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (IOException | NoSuchAlgorithmException 
+      | CertificateException | KeyStoreException e) {
+      e.getMessage();
     } finally {
       try {
         if (readCert != null) {
@@ -120,7 +106,7 @@ public class EncryptDecrypt {
    */
   public SecretKey loadFromKeyStore(String alias) {
 
-    String path = System.getProperty("user.home") + "/SalarycheckerKeystore.jks";
+    String path = System.getProperty("user.home") + "/.salarychecker/SalarycheckerKeystore.jks";
     char[] jksPassword = "changeit".toCharArray();
 
     try {
@@ -130,9 +116,9 @@ public class EncryptDecrypt {
       readStream.close();
       return secretKey;
 
-    } catch (UnrecoverableKeyException | CertificateException
-      | KeyStoreException | NoSuchAlgorithmException | IOException e) {
-      e.printStackTrace();
+    } catch (UnrecoverableKeyException | CertificateException 
+        | KeyStoreException | NoSuchAlgorithmException | IOException e) {
+      e.getMessage();
     }
     return null;
   }
@@ -141,16 +127,19 @@ public class EncryptDecrypt {
    * Generates a seceret key. The key size is set to 128 bits.
    *
    * @return a generated secretKey
-   * @throws NoSuchAlgorithmException This exception is thrown when a particular
-   *                                  cryptographic algorithm is requested but is
-   *                                  not available in the environment.
    */
-  public SecretKey generateKey() throws NoSuchAlgorithmException {
+  public SecretKey generateKey() {
     //Key size
     int n = 128;
-    KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-    keyGenerator.init(n);
-    SecretKey key = keyGenerator.generateKey();
+    KeyGenerator keyGenerator;
+    SecretKey key = null;
+    try {
+      keyGenerator = KeyGenerator.getInstance("AES");
+      keyGenerator.init(n);
+      key = keyGenerator.generateKey();
+    } catch (NoSuchAlgorithmException e) {
+      e.getMessage();
+    }
     return key;
   }
 
@@ -160,38 +149,23 @@ public class EncryptDecrypt {
    * @param strToEncrypt the string to encrypt
    * @param alias the alias used to save in key store
    * @return the string encrypted
-   * @throws NoSuchPaddingException This exception is thrown when a particular padding mechanism
-   *                                is requested but is not available in the environment.
-   * @throws NoSuchAlgorithmException This exception is thrown when a particular cryptographic
-   *                                  algorithm is requested but is not available in the
-   *                                  environment.
-   * @throws InvalidAlgorithmParameterException This is the exception for invalid or inappropriate
-   *                                            algorithm parameters.
-   * @throws InvalidKeyException This is the exception for invalid Keys (invalid encoding,
-   *                             wrong length, uninitialized, etc).
-   * @throws BadPaddingException This exception is thrown when a particular padding mechanism is
-   *                             expected for the input data but the data is not padded properly.
-   * @throws IllegalBlockSizeException This exception is thrown when the length of data provided
-   *                                   to a block cipher is incorrect, i.e., does not match the
-   *                                   block size of the cipher.
    */
-  public String encrypt(String strToEncrypt, String alias)
-      throws NoSuchPaddingException, NoSuchAlgorithmException,
-      InvalidAlgorithmParameterException, InvalidKeyException,
-      BadPaddingException, IllegalBlockSizeException {
+  public String encrypt(String strToEncrypt, String alias) {
 
     SecretKey secretKey = generateKey();
 
-    Cipher cipher = Cipher.getInstance(ALGORITHM);
-    cipher.init(Cipher.ENCRYPT_MODE, secretKey);
     try {
+      Cipher cipher = Cipher.getInstance(ALGORITHM);
+      cipher.init(Cipher.ENCRYPT_MODE, secretKey);
       storeToKeyStore(alias, secretKey);
-    } catch (KeyStoreException | CertificateException | IOException e) {
-      e.printStackTrace();
+      byte[] cipherText = cipher.doFinal(strToEncrypt.getBytes(Charset.forName("UTF-8")));
+      return Base64.getEncoder().encodeToString(cipherText);
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException 
+       | InvalidKeyException | IllegalBlockSizeException 
+       | BadPaddingException e) {
+      e.getMessage();
     }
-    byte[] cipherText = cipher.doFinal(strToEncrypt.getBytes(Charset.forName("UTF-8")));
-    return Base64.getEncoder()
-      .encodeToString(cipherText);
+    return null;
   }
 
   /**
@@ -200,32 +174,22 @@ public class EncryptDecrypt {
    * @param cipherText the string to decrypt
    * @param alias the alias used to save in key store
    * @return the string decrypted
-   * @throws NoSuchPaddingException This exception is thrown when a particular padding mechanism
-   *                                is requested but is not available in the environment.
-   * @throws NoSuchAlgorithmException This exception is thrown when a particular cryptographic
-   *                                  algorithm is requested but is not available in the
-   *                                  environment.
-   * @throws InvalidAlgorithmParameterException This is the exception for invalid or inappropriate
-   *                                            algorithm parameters.
-   * @throws InvalidKeyException This is the exception for invalid Keys (invalid encoding,
-   *                             wrong length, uninitialized, etc).
-   * @throws BadPaddingException This exception is thrown when a particular padding mechanism is
-   *                             expected for the input data but the data is not padded properly.
-   * @throws IllegalBlockSizeException This exception is thrown when the length of data provided
-   *                                   to a block cipher is incorrect, i.e., does not match the
-   *                                   block size of the cipher.
    */
-  public String decrypt(String cipherText, String alias)
-      throws NoSuchPaddingException, NoSuchAlgorithmException,
-      InvalidAlgorithmParameterException, InvalidKeyException,
-      BadPaddingException, IllegalBlockSizeException {
+  public String decrypt(String cipherText, String alias) {
 
     SecretKey secretKey = loadFromKeyStore(alias);
 
-    Cipher cipher = Cipher.getInstance(ALGORITHM);
-    cipher.init(Cipher.DECRYPT_MODE, secretKey);
-    byte[] plainText = cipher.doFinal(Base64.getDecoder()
-      .decode(cipherText));
-    return new String(plainText, StandardCharsets.UTF_8);
+    try {
+      Cipher cipher = Cipher.getInstance(ALGORITHM);
+      cipher.init(Cipher.DECRYPT_MODE, secretKey);
+      byte[] plainText = cipher.doFinal(Base64.getDecoder()
+        .decode(cipherText));
+      return new String(plainText, StandardCharsets.UTF_8);
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException 
+      | InvalidKeyException | IllegalBlockSizeException 
+      | BadPaddingException e) {
+      e.getMessage();
+    }
+    return null;
   }
 }

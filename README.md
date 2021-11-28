@@ -1,17 +1,107 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111)
-[![pipeline status](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/badges/96-setup-pipeline/pipeline.svg)](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/-/commits/96-setup-pipeline)
-[![coverage report](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/badges/96-setup-pipeline/coverage.svg)](https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111/-/commits/96-setup-pipeline) 
 # Salary Checker :computer:
 
 This repo contains a multi-module, multi-package javafx project for checking salary. This application is mainly meant for people who work on commision. 
 The app will calculate if you have been paid the correct amount based on your sales. You can read more about the project here: [Salary Checker](salary-checker/README.md).
 
-## Building and running the project
 
-1. `mvn clean install` | tells Maven to do the clean phase in each module before running the install phase for each module. In addition all the tests will also be run.
-     
-     If you want to skip the tests: `mvn clean install -Dskiptests`
-2. `mvn -pl ui javafx:run` | tells Maven to run the app from the UI module. 
+## Building and running the project:
+
+The application can be ran in three different ways. A step by step guide on how to perform each way is provided below.
+
+#### Note:
+This project is built up with maven and subsequently, if maven is not installed, one needs to use the **./mvnw** command instead of **mvn**. This does not apply if the application is ran from gitpod.  
+
+Furthermore, only admin-users added by developers can use the application as admins.
+
+Due to the size of the UI-test the app seemlingly stops building at random times. If this happens UI-tests can be skipped.
+See bottom of page.
+
+
+### Running application with local access:
+1) Navigate to salary-checker directory.
+2) Install dependencies and run tests.
+3) Run javafx client application.
+
+```sh
+1)
+cd salary-checker
+
+2)
+mvn clean install
+#Tests can be skipped by using "mvn clean install -DskipTests"
+
+
+3)
+mvn javafx:run -pl ui
+```
+### Running application with remote access:
+1) Navigate to salary-checker directory.
+2) Install dependencies and run tests.
+3) Start server. 
+4) Run javafx client application.
+
+```sh
+1)
+cd salary-checker
+
+2)
+mvn clean install
+#Tests can be skipped by using "mvn clean install -DskipTests"
+
+3)
+mvn spring-boot:run -pl restserver
+
+4)
+mvn javafx:run -pl ui -P remoteapp
+```
+### Running application with react client:
+1) Navigate to salary-checker directory.
+2) Install dependencies and run tests.
+3) Start server.
+3) Run react client application.
+
+```sh
+1)
+cd salary-checker
+
+2)
+mvn clean install
+#Tests can be skipped by using "mvn clean install -DskipTests"
+
+3)
+mvn spring-boot:run -pl restserver
+
+4)
+https://salarycheckergr2111.herokuapp.com/
+```
+## How to get started using SalaryChecker:
+The SalaryChecker application is meant for two seperate user-groups. 
+Employers, from this point on referenced as admin in the guide, 
+and Employees, from this point on referneced as user in the guide. 
+
+A user is meant to be able to calculate his salary by uploading a sales report and view his past salares.
+
+An admin is meant to be able to create users and have an overview of all users using the application.
+
+### Before logging in: 
+Create test users by clicking the "Create test users" button. 
+This will create two test users. One **Admin** and one **User**. 
+
+### Log in: 
+Whohever uses the application is now able to log in with the test-credentials.
+
+Logging in as a user: 
+E-Mail: test@live.no
+Password: Password123!
+
+Logging in as an admin: 
+
+E-Mail: test@admin.no
+Password: Password123!
+
+Both methods will lead to a start page. From here both a user and admin can navigate to their respective 
+functionality via the menu to the left. 
 
 ## Organization of the code:
 
@@ -50,7 +140,7 @@ In this sprint we will continue to add more functionality. The goal is that afte
 
 **US-5:** As a user, I want to see previously calculated salaries.
 
-**US-6:** As a user, I want to send an email to the employer. | *This user story can be changed or pushed to sprint 3.*
+**US-6:** As a user, I want to send an email to the employer. | *This user story can be changed or pushed to sprint 3.* |  
 
 **Read more about it here:** [Release 2](docs/release2/) 
 
@@ -69,3 +159,10 @@ _____________________________________________________________
 *This plan is tentative, so the plan can be changed as we develop. The finished product for the sprint will be documented in 
 the respective release folders.* 
 
+
+
+### Continuation from Note:
+
+The application is able to build, but not consistently, due to the size of UI-tests.
+
+[Picture](docs/Pictures/BuilSuccess.jpg)

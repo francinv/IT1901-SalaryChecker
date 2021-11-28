@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="salariesPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/SalariesStylesheet.css">
+   <children>
+      <TableView fx:id="salariesTable" layoutX="44.0" layoutY="32.0" prefHeight="602.0" prefWidth="866.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="32.0">
+        <columns>
+          <TableColumn fx:id="periodColumn" prefWidth="262.0" sortType="DESCENDING" text="Måned, År" />
+          <TableColumn fx:id="paidColumn" prefWidth="220.0" text="Utbetalt Nettolønn" />
+            <TableColumn fx:id="expectedColumn" prefWidth="188.0" text="Forventet Lønn" />
+            <TableColumn fx:id="differenceColumn" prefWidth="169.0" text="Differanse" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

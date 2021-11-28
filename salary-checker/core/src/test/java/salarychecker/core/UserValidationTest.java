@@ -1,5 +1,7 @@
 package salarychecker.core;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,13 +9,11 @@ import org.junit.jupiter.api.Test;
 public class UserValidationTest {
 
     private User testUser;
-    private UserValidation userValidation;
 
     @BeforeEach
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "Password!123", 
             "22010192834", 33333, "employeremail@email.com", 35.5, 130.0);
-        userValidation = new UserValidation();
     }
 
     @Test
@@ -45,14 +45,15 @@ public class UserValidationTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setEmployeeNumber(0));
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setEmployerEmail(""));
         Assertions.assertThrows(IllegalArgumentException.class, () -> wrongUser.setTaxCount(0));
-        Assertions.assertDoesNotThrow(() -> userValidation.checkValidUser(firstname, lastname, email, password, 
+        Assertions.assertDoesNotThrow(() -> UserValidation.checkValidUser(firstname, lastname, email, password, 
             socialNumber, employeeNumber, employerEmail, taxCount, hourRate ));
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isEqualPassword("password1", "password2"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isEqualEmail("email1", "email2"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isEqualPassword("password1", "password2"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isEqualEmail("email1", "email2"));
         Accounts accounts = new Accounts();
         accounts.addUser(testUser);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isValidLogIn("email@email.com", "Password123!", accounts));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isNotExistingUser("email@emaile.com", "Password123!", accounts));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isValidLogIn("email@email.com", "Password123!", accounts));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isNotExistingUser("email@emaile.com", "Password123!", accounts));
+        assertThrows(IllegalArgumentException.class, () -> UserValidation.allFieldsEmpty("", "", "", "", "", 0, 0, 0));
     }
 }

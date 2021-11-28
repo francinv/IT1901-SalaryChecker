@@ -2,15 +2,15 @@ package salarychecker.core;
 
 /**
  * Class to specify a sale for a user. This class translates
- * the SalesReport to java class, with help of {@link SalaryCSVReader}
+ * the SalesReport to java class, with help of {@link SalaryCsvReader}
  * and {@link Sale}.
  */
 public class UserSale {
 
-  String salesperiod;
-  Double expected;
-  Double paid;
-  Double difference;
+  private String salesperiod;
+  private double expected;
+  private double paid;
+  private double difference;
 
   /**
    * Constructor for UserSale, a salesperiod, ie: October 2021.
@@ -44,23 +44,23 @@ public class UserSale {
     this.salesperiod = salesperiod;
   }
 
-  public Double getExpected() {
+  public double getExpected() {
     return this.expected;
   }
 
-  public void setExpected(Double expected) {
+  public void setExpected(double expected) {
     this.expected = expected;
   }
 
-  public Double getPaid() {
+  public double getPaid() {
     return this.paid;
   }
 
-  public void setPaid(Double paid) {
+  public void setPaid(double paid) {
     this.paid = paid;
   }
 
-  public Double getDifference() {
+  public double getDifference() {
     return this.difference;
   }
 
@@ -68,13 +68,4 @@ public class UserSale {
     this.difference = getExpected() - getPaid();
   }
 
-  @Override
-  public String toString() {
-    return "{"
-      + " salesperiod='" + getSalesperiod() + "'"
-      + ", expected='" + getExpected() + "'"
-      + ", paid='" + getPaid() + "'"
-      + ", difference='" + getDifference() + "'"
-      + "}";
-  }
 }

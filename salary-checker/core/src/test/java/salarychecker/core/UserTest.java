@@ -1,6 +1,7 @@
 package salarychecker.core;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,15 +18,19 @@ public class UserTest {
     public void setUp() {
         testUser = new User("Firstname", "Lastname", "email@email.com", "password!123", 
             "22019893456", 33333, "employer_email@email.com", 35.5, 132.0);
-
         testPeriod = new UserSale("PeriodString" , 1000.0, 500.0);
         testPeriod.setDifference();
     }
 
     @Test
-    public void testConstructor() {
+    public void testConstructors() {
         User emptyConstructor = new User();
         Assertions.assertNull(emptyConstructor.getEmail());
+        User smallConstructor = new User("Firstname", "Lastname", "email@email.com", 12345);
+        assertEquals("Firstname", smallConstructor.getFirstname());
+        assertEquals("Lastname", smallConstructor.getLastname());
+        assertEquals("email@email.com", smallConstructor.getEmail());
+        assertEquals(12345, smallConstructor.getEmployeeNumber());
     }
 
     @Test
@@ -43,6 +48,9 @@ public class UserTest {
 
     @Test
     public void testSetMethods() {
+        Accounts accounts = new Accounts();
+        accounts.addUser(testUser);
+        testUser.addObserver(accounts);
         testUser.setFirstname("Sander");
         Assertions.assertNotEquals("Firstname", testUser.getFirstname());
         testUser.setLastname("Olsen");
@@ -87,6 +95,12 @@ public class UserTest {
         assertTrue(testUser.getUserObs().size() == 1);
         testUser.removeObserver(accounts);
         assertFalse(testUser.getUserObs().size() == 1);
+    }
+
+    @Test
+    public void testGetUserSale() {
+        testUser.addUserSale(testPeriod);
+        assertEquals(testPeriod, testUser.getUserSale("PeriodString"));
     }
 
 }

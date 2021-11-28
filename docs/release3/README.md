@@ -64,6 +64,18 @@
 ## Userstory for release 3: 
     "An employer wishes to check if he has made any errors regarding paychecks. He loggs into the client-application, and gets an overview of users. He checks every indiviual user and checks for differences in expected and actual payout."
 
+## Eventual further development:
+> After sprint 3 the group feels like the app satisfies its main purpose. A User is able to calculate his salary, and check if he was paid the correct amount. Althoogh the group feels like it has created a usefull and problem-solving application, there are still elements of functionality that could have been added. 
+
+> First and foremost, SalaryChecker is currently only compatible with one specific company. This is because the calculation-process takes company-specific parameters such as product-names and bonuses. This is something the group would change in further development. Ideally an admin would be able to set company-specific calculation-methods which would make the application more universal and for all businesses operating with commision-based salaries. 
+
+> Furthermore there are non-implemented elements of functionality that could have been usefull in the SalaryChecker application. 
+1) A user should be able to notify an admin if he encountes a difference in paid and calculated salary. 
+2) A user should be able to se his monthly working-hours in a table view.
+3) An admin should be able to access the users table-view of previous salaries. 
+
+> The group thinks that the above-mentioned additions would make the application more complete. However, we did not have the time nescescarry to implement them. 
+
 ## Afterthoughts and discussion in hindsight of final release:
 > After every larger project, including this one, thoughts of evaluation arise. What went well? What could have been done better? Did any changes along the way have a positive or negative impact? The group has chosen to include this segment in an attempt to convey a better understanding of our work, to learn from this experience, and possibly give tips to potential readers and users of this program. 
 

@@ -5,45 +5,45 @@ package salarychecker.core;
  */
 public class Sale {
 
-  private String saleDate;
+  private String salesId;
   private String anleggStatus;
   private String salgsType;
   private String campaign;
   private String brand;
-  private String TX3;
+  private String tx3;
   private String rebate;
-  private String NVK;
+  private String nvk;
   private String product;
-  private double provisjon;
+  private double commission;
 
   /**
    * Creates Sale with all relevant parameters.
    *
-   * @param saleDate date of sale
+   * @param salesId date of sale
    * @param anleggStatus status
    * @param salgsType type of sale
    * @param campaign campaign
    * @param brand brand
-   * @param TX3 TX3
+   * @param tx3 tx3
    * @param rebate discount on sale
-   * @param NVK NVK
+   * @param nvk nvk
    * @param product product of sale
-   * @param provisjon commission
+   * @param commission commission
    */
-  public Sale(String saleDate, String anleggStatus, String salgsType, String campaign,
-              String brand, String TX3, String rebate, String NVK, String product,
-              Double provisjon) {
+  public Sale(String salesId, String anleggStatus, String salgsType, String campaign,
+              String brand, String tx3, String rebate, String nvk, String product,
+              double commission) {
 
-    this.saleDate = saleDate;
+    this.salesId = salesId;
     this.anleggStatus = anleggStatus;
     this.salgsType = salgsType;
     this.campaign = campaign;
     this.brand = brand;
-    this.TX3 = TX3;
+    this.tx3 = tx3;
     this.rebate = rebate;
-    this.NVK = NVK;
+    this.nvk = nvk;
     this.product = product;
-    this.provisjon = provisjon;
+    this.commission = commission;
   }
 
   /**
@@ -55,24 +55,24 @@ public class Sale {
   /**
    * Set and get methods.
    */
-  public double getProvisjon() {
-    return this.provisjon;
+  public double getCommission() {
+    return this.commission;
   }
 
-  public void setProvisjon(double provisjon) {
-    this.provisjon = provisjon;
+  public void setCommission(double commission) {
+    this.commission = commission;
   }
 
-  public void updateProvisjon(int number) {
-    this.provisjon += number;
+  public void updateCommission(int number) {
+    this.commission += number;
   }
 
-  public String getSalesDate() {
-    return this.saleDate;
+  public String getSalesId() {
+    return this.salesId;
   }
 
-  public void setSaleDate(String salgsDato) {
-    this.saleDate = salgsDato;
+  public void setSalesId(String salesId) {
+    this.salesId = salesId;
   }
 
   public String getAnleggStatus() {
@@ -107,12 +107,12 @@ public class Sale {
     this.brand = brand;
   }
 
-  public String getTX3() {
-    return this.TX3;
+  public String getTx3() {
+    return this.tx3;
   }
 
-  public void setTX3(String TX3) {
-    this.TX3 = TX3;
+  public void setTx3(String tx3) {
+    this.tx3 = tx3;
   }
 
   public String getRebate() {
@@ -123,12 +123,12 @@ public class Sale {
     this.rebate = rebate;
   }
 
-  public String getNVK() {
-    return this.NVK;
+  public String getNvk() {
+    return this.nvk;
   }
 
-  public void setNVK(String NVK) {
-    this.NVK = NVK;
+  public void setNvk(String nvk) {
+    this.nvk = nvk;
   }
 
   public String getProduct() {
@@ -139,19 +139,4 @@ public class Sale {
     this.product = product;
   }
 
-  @Override
-  public String toString() {
-    return "{"
-      + " Salgs-ID='" + getSalesDate() + "'"
-      + ", Anlegg Status='" + getAnleggStatus() + "'"
-      + ", Salgs Type='" + getSalgsType() + "'"
-      + ", Kampanje='" + getCampaign() + "'"
-      + ", Merke='" + getBrand() + "'"
-      + ", Trippelgaranti='" + getTX3() + "'"
-      + ", Rabatt='" + getRebate() + "'"
-      + ", Norsk VannKraft='" + getNVK() + "'"
-      + ", Produktnavn='" + getProduct() + "'"
-      + ", Provisjon='" + getProvisjon() + "'"
-      + "}";
-  }
 }

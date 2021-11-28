@@ -1,10 +1,12 @@
 package salarychecker.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +14,9 @@ import org.junit.jupiter.api.Test;
 public class AccountsTest {
 
     private Accounts accounts;
-    private User user;
-    private User user1;
-    private User user2;
+    private AbstractUser user;
+    private AbstractUser user1;
+    private AbstractUser user2;
     
     @BeforeEach
     void setUp(){
@@ -30,8 +32,8 @@ public class AccountsTest {
         accounts.addUser(user1);
         assertTrue(2 == accounts.getAccounts().size());
         assertTrue(accounts.iterator().hasNext());
-        assertThrows(IllegalArgumentException.class, () -> accounts.addUser(user));
-        accounts.usersaleAdded(user, new UserSale("Januar 2021", 15000, 10000));
+        assertThrows(IllegalStateException.class, () -> accounts.addUser(user));
+        ((User) user).addUserSale(new UserSale("August 2021", 10000.0, 5000.0));
         assertNotNull(((User) accounts.getAccounts().get(0)).getUserSaleList().get(0));
     }
     
@@ -62,8 +64,25 @@ public class AccountsTest {
     }
 
     @Test
-     public void getUserTest(){
+    public void getUserEmailAndPasswordTest(){
         assertEquals(user, accounts.getUser("jensen@salarychecker.com", "Jensen123!"));
+        assertNull(accounts.getUser("jensen@salarychecker.com", "Jensen12345!"));
+    }
+
+    @Test
+    public void getUserByEmailTest() {
+        assertEquals(user, accounts.getUser("jensen@salarychecker.com"));
+    }
+
+    @Test
+    public void getUsersByEmployerEmailTest() {
+        accounts.addUser(user1);
+        accounts.addUser(user2);
+        List<AbstractUser> usersWithSameEmployer = accounts.getUsersByEmployerEmail("sjef@salarychecker.com");
+        assertEquals(3, usersWithSameEmployer.size());
+        assertTrue(usersWithSameEmployer.contains(user1));
+        assertTrue(usersWithSameEmployer.contains(user2));
+        assertTrue(usersWithSameEmployer.contains(user));
     }
 
     @Test
@@ -72,22 +91,16 @@ public class AccountsTest {
     }
 
     @Test
-    public void testUpdateMethods(){
-        accounts.userInfoStringChanged(user, "Jens");
-        assertEquals("Jens", user.getFirstname());
-        accounts.userInfoStringChanged(user, "Jensen");
-        assertEquals("Jensen", user.getLastname());
-        accounts.userInfoStringChanged(user, "jensen@salarychecker.com");
-        assertEquals("jensen@salarychecker.com", user.getEmail());
-        accounts.userInfoStringChanged(user, "sjef@salarychecker.com");
-        assertEquals("sjef@salarychecker.com", user.getEmployerEmail());
-        accounts.userInfoStringChanged(user, "Jensen123!");
-        assertEquals("Jensen123!", user.getPassword());
-        accounts.userInfoDoubleChanged(user, 22.0);
-        assertEquals(22.0, user.getTaxCount());
-        accounts.userInfoDoubleChanged(user, 131.0);
-        assertNotEquals(131.0, user.getHourRate());
-        accounts.userInfoTaxCountChanged(user, 66638);
-        assertEquals(66638, user.getEmployeeNumber());
+    public void testUpdateUserObject() {
+        user.setEmail("jensen@salarychecker.no");
+        accounts.updateUserObject(user, 0);
+        assertEquals("jensen@salarychecker.no", accounts.getAccounts().get(0).getEmail());
+    }
+
+    @Test
+    public void testUserInfoChanged() {
+        user.setEmail("jensen@salarychecker.no");
+        accounts.userInfoChanged(user);
+        assertEquals("jensen@salarychecker.no", accounts.getAccounts().get(0).getEmail());
     }
 }

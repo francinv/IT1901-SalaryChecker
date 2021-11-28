@@ -33,10 +33,4 @@ public class UserSaleTest {
         testUserSale.setPaid(2500.0);
         Assertions.assertEquals(2500.0, testUserSale.getPaid());
     }
-    /** Is a toString-Test nescessary? 
-    @Test
-    public void testToString(){
-
-    } */
-    
 }

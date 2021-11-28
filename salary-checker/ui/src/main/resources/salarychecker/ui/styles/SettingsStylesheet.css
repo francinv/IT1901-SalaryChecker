@@ -1,0 +1,107 @@
+#settingsPane{
+    -fx-height:850;
+    -fx-width: 1340;
+}
+
+#changeFirstNameField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeLastNameField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeEmailField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeConfirmedEmailField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeEmployerField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeConfirmedEmployerField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changePasswordField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeConfirmedPasswordField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeTaxBracketField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#changeEmployeeNumberField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#closeButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+}
+
+#closeButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: rgb(112, 4, 4);
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
+
+#hourWageField{
+    -fx-background-color: -fx-text-box-border, -fx-background ;
+    -fx-background-insets: 0, 0 0 3 0 ;
+    -fx-background-radius: 0 ;  
+    -fx-font-family: "Quicksand";
+}
+
+#saveChangesButton{
+    -fx-background-color: #ffff; 
+    -fx-border-color: #333;
+    -fx-font-family: "Quicksand";
+}
+
+#saveChangesButton:hover{
+    -fx-transition-duration: 0.4s;
+    -fx-background-color: #333;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Quicksand";
+}
