@@ -246,7 +246,6 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
                       .build()
                       .send(httpRequest, HttpResponse.BodyHandlers.ofString());
 
-      System.out.println(httpResponse);
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
@@ -315,8 +314,6 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
 
     final HttpResponse<String> httpResponse = 
         client.send(request, HttpResponse.BodyHandlers.ofString());
-    System.out.println(httpResponse.body());
-    System.out.println(httpResponse.statusCode());
   }
 
   @Override
