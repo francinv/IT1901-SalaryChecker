@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import salarychecker.core.User;
 
 /**
  * This is the class that controls the HomePage Scene.

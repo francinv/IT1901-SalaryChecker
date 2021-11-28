@@ -162,7 +162,7 @@ public class Calculation {
   /**
    * Upadtes the list according to salesreport.
    *
-   * @param pathToFile location of salesreport
+   * @param path location of salesreport
    * @throws IOException Signals that an I/O exception of some sort has occurred.
    *                     This class is the general class of exceptions produced by
    *                     failed or interrupted I/O operations.
@@ -383,7 +383,7 @@ public class Calculation {
   /**
    * This method do the full calculation. This method is needed by API.
    *
-   * @param url to the SalesReport.
+   * @param path to the SalesReport.
    * @param user the user.
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                                denoted by a specified pathname has failed.

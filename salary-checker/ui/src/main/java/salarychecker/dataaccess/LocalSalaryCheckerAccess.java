@@ -139,6 +139,8 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     }
   }
 
-  public AbstractUser getLoggedInUser() { return this.user;}
+  public AbstractUser getLoggedInUser() { 
+    return this.user;
+  }
 
 }

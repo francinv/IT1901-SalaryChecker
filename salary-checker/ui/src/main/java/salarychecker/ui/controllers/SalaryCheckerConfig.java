@@ -1,6 +1,5 @@
 package salarychecker.ui.controllers;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -26,15 +25,15 @@ public class SalaryCheckerConfig {
     }
   }
 
-    /**
-     * By providing a key, this property will return the valye from 
-     * salarychecker.properties.
-     *
-     * @param key the key
-     * @return the value of the key
-     */
-    public String getProperty(String key) {
-        return properties.getProperty(key);
-    }
+  /**
+   * By providing a key, this property will return the valye from 
+   * salarychecker.properties.
+   *
+   * @param key the key
+   * @return the value of the key
+   */
+  public String getProperty(String key) {
+    return properties.getProperty(key);
+  }
 
 }
