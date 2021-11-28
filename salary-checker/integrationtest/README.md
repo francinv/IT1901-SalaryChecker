@@ -4,3 +4,8 @@ The group has strived towards writing test-code for all classes and methods in t
 
 ## Implementation of Integrationtest in SalaryChecker
 The integrationtest-module verifies that the javafx client application properly connects and communicates with a spring boot server. 
+
+By using maven and the safe-fail plugin the integrationtest-module, when testing, will start the server-application with a test-configuration.
+
+### Note: 
+The group feels like the integrationtest could have been more thourogh by testing more methods. However, the group chose to downprioritize this due to time-limits.

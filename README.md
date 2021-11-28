@@ -12,11 +12,12 @@ The application can be ran in three different ways. A step by step guide on how 
 #### Note:
 This project is built up with maven and subsequently, if maven is not installed, one needs to use the **./mvnw** command instead of **mvn**. This does not apply if the application is ran from gitpod.  
 
+Furthermore, only admin-users added by developers can use the application as admins.
+
 
 ### Running application with local access:
 1) Navigate to salary-checker directory.
 2) Install dependencies and run tests.
-3) Start server.
 3) Run javafx client application.
 
 ```sh
@@ -27,10 +28,8 @@ cd salary-checker
 mvn clean install
 #Tests can be skipped by using "mvn clean install -DskipTests"
 
-3)
-mvn spring-boot:run -pl restserver
 
-4)
+3)
 mvn javafx:run -pl ui
 ```
 ### Running application with remote access:
@@ -73,8 +72,33 @@ mvn spring-boot:run -pl restserver
 4)
 yarn #Trenger kommando!
 ```
+## How to get started using SalaryChecker:
+The SalaryChecker application is meant for two seperate user-groups. 
+Employers, from this point on referenced as admin in the guide, 
+and Employees, from this point on referneced as user in the guide. 
 
+A user is meant to be able to calculate his salary by uploading a sales report and view his past salares.
 
+An admin is meant to be able to create users and have an overview of all users using the application.
+
+### Before logging in: 
+Create test users by clicking the "Create test users" button. 
+This will create two test users. One **Admin** and one **User**. 
+
+### Log in: 
+Whohever uses the application is now able to log in with the test-credentials.
+
+Logging in as a user: 
+E-Mail: test@live.no
+Password: Password123!
+
+Logging in as an admin: 
+
+E-Mail: test@admin.no
+Password: Password123!
+
+Both methods will lead to a start page. From here both a user and admin can navigate to their respective 
+functionality via the menu to the left. 
 
 ## Organization of the code:
 
