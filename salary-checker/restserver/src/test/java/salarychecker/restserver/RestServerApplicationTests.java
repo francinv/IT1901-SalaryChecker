@@ -8,8 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -24,6 +27,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import salarychecker.core.AbstractUser;
+import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.json.SalaryCheckerPersistence;
@@ -49,8 +53,11 @@ class RestServerApplicationTests {
   }
 
   @BeforeAll
-  public void setup() {
+  public void setup() throws IllegalStateException, IOException {
     objectMapper = SalaryCheckerPersistence.createObjectMapper();
+    salaryCheckerService = new SalaryCheckerService(new Accounts());
+    salaryCheckerService.setPersistenceLocation("salarychecker-restservertest.json");
+    salaryCheckerService.autoSave();
 
     final User employee1 = new User("Ola", "Nordmann", "olanordmann@gmail.com",
         "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
@@ -76,7 +83,11 @@ class RestServerApplicationTests {
   public void testGetUser() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get(getUrl("user?email=olanordmann@gmail.com"))
                                           .accept(MediaType.APPLICATION_JSON))
-           .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+           .andExpect(MockMvcResultMatchers.status().isNotFound()).andReturn();
+    
+    mockMvc.perform(MockMvcRequestBuilders.get(getUrl("user?email=vidar@gmail.com"))
+                                  .accept(MediaType.APPLICATION_JSON))
+           .andExpect(MockMvcResultMatchers.status().isNotFound()).andReturn();
   }
 
   @Test
@@ -87,8 +98,9 @@ class RestServerApplicationTests {
         "Password123!");
     this.salaryCheckerService.createUser(user);
     assertNotNull(this.salaryCheckerService.getUserByEmail("seran@live.no"));
-    assertThrows(IllegalStateException.class, () -> {
-      this.salaryCheckerService.createAdminUser(adminUser); });
+    this.salaryCheckerService.createAdminUser(adminUser);
+    assertNotNull(this.salaryCheckerService.getUserByEmail("hammad@live.no"));
+    assertThrows(IllegalStateException.class, () -> this.salaryCheckerService.createAdminUser(adminUser));
 
     String userAsJson = objectMapper.writeValueAsString(user);
     String adminUserAsJson = objectMapper.writeValueAsString(adminUser);
@@ -120,7 +132,7 @@ class RestServerApplicationTests {
   public void testGetUsersByEmployerEmail() throws Exception {
     List<AbstractUser> employees = 
         this.salaryCheckerService.getUsersByEmployerEmail("employeer1@gmail.com");
-    assertTrue(employees.size() == 3);
+    assertFalse(employees.size() == 5);
     assertTrue(employees.stream().allMatch(user -> 
         ((User) user).getEmployerEmail().equals("employeer1@gmail.com")));
 
@@ -134,23 +146,20 @@ class RestServerApplicationTests {
   @Test
   public void testUpdateUserAttributes() throws Exception {
     Iterator<AbstractUser> iterator = salaryCheckerService.getAccounts().iterator();
-    User updatedUser = new User("Ola", "Nordmann", "olanordmannEmail2@gmail.com",
+    User updatedUser = new User("Ola", "Nordmann", "nordmannola@gmail.com",
         "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
 
-    String updatedUserAsString = objectMapper.writeValueAsString(updatedUser);
-
     if (iterator.hasNext()) {
-      assertEquals("seran@live.no", iterator.next().getEmail());
+      assertEquals("olanordmann@gmail.com", iterator.next().getEmail());
     }
     if (iterator.hasNext()) {
       this.salaryCheckerService.updateUserAttributes(updatedUser, 0);
-      assertNotNull(salaryCheckerService.getUserByEmail("olanordmannEmail2@gmail.com"));
+      assertNotNull(salaryCheckerService.getUserByEmail("nordmannola@gmail.com"));
       assertNull(salaryCheckerService.getUserByEmail("seran@live.no"));
     }
 
-    mockMvc.perform(MockMvcRequestBuilders.put(getUrl("user", "update-profile"))
-                                .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
-                                .content(updatedUserAsString).accept(MediaType.APPLICATION_JSON))
+    mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
+                                .accept(MediaType.APPLICATION_JSON))
            .andExpect(MockMvcResultMatchers.status().isOk());
   }*/
 

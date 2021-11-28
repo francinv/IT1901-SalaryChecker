@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-public class SalaryCSVReaderTest {
+public class SalaryCsvReaderTest {
     private List<Sale> someRead = new ArrayList<Sale>();
 
     private SalaryCsvReader testReader;
