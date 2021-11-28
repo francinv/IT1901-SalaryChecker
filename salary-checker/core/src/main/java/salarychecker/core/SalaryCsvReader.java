@@ -1,9 +1,7 @@
 package salarychecker.core;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,10 +25,11 @@ public class SalaryCsvReader {
    */
   public List<Sale> csvToSale(FileInputStream file) throws IOException {
     InputStream fileToBeRead = file;
+    Reader fileReader = new InputStreamReader(fileToBeRead, StandardCharsets.UTF_8);
     List<List<String>> records = new ArrayList<>();
     List<Integer> indexOfRemove = new ArrayList<>();
 
-    try (Scanner scanner = new Scanner(fileToBeRead);) {
+    try (Scanner scanner = new Scanner(fileReader);) {
       while (scanner.hasNextLine()) {
         records.add(getRecordFromLine(scanner.nextLine()));
         

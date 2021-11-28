@@ -2,6 +2,7 @@ package salarychecker.dataaccess;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
@@ -119,8 +120,8 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     return user.getUserSale(salesperiod);
   }
 
-  public String getFilePath() {
-    return this.salaryCsv.getAbsolutePath();
+  public Path getFilePath() {
+    return this.salaryCsv.toPath();
   }
 
   public String getFileName() {

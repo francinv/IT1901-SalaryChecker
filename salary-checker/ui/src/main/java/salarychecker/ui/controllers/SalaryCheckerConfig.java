@@ -1,5 +1,6 @@
 package salarychecker.ui.controllers;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -17,23 +18,23 @@ public class SalaryCheckerConfig {
    */
   public SalaryCheckerConfig() {
     this.properties = new Properties();
-
-    try (InputStream inputStream = 
-            SalaryCheckerApp.class.getResourceAsStream("salarychecker.properties")) {
+    try (InputStream inputStream =
+        SalaryCheckerApp.class.getResourceAsStream("salarychecker.properties")) {
       properties.load(inputStream);
     } catch (IOException e) {
       throw new IllegalStateException("Could not load salarychecker.properties");
     }
   }
 
-  /**
-   * By providing a key, this property will return the valye from 
-   * salarychecker.properties.
-   *
-   * @param key the key
-   * @return the value of the key
-   */
-  public String getProperty(String key) {
-    return properties.getProperty(key);
-  }
+    /**
+     * By providing a key, this property will return the valye from 
+     * salarychecker.properties.
+     *
+     * @param key the key
+     * @return the value of the key
+     */
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
 }

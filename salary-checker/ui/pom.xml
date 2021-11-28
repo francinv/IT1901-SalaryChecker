@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>gr2111</groupId>
+        <groupId>gr2111.salarychecker</groupId>
         <artifactId>salary-checker</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>..</relativePath>
@@ -18,12 +18,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>gr2111</groupId>
+            <groupId>gr2111.salarychecker</groupId>
             <artifactId>salary-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>gr2111</groupId>
+            <groupId>gr2111.salarychecker</groupId>
             <artifactId>salary-json</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -98,19 +98,19 @@
 
     <profiles>
         <profile>
-            <id>fontawesome</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.openjfx</groupId>
-                        <artifactId>javafx-maven-plugin</artifactId>
-                        <version>0.0.6</version>
-                        <configuration>                    
-                            <mainClass>de.jensd.fx.glyphs.fontawesome.demo.FontAwesomeIconsDemoApp</mainClass>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <id>headless</id>
+            <properties>
+                <headlessTests>true</headlessTests>
+            </properties>
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/org.testfx/openjfx-monocle -->
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>jdk-12.0.1+2</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>remoteapp</id>

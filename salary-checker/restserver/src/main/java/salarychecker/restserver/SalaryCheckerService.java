@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -108,14 +110,18 @@ public class SalaryCheckerService {
    * Method that creates two test users.
    */
   private static Accounts manuallyCreateAccounts() {
-    User testuser1 = new User("Seran", "Shanmugathas", "seran@live.no",
-        "Password123!", "22030191349", 12345, "employeer1@gmail.com", 30.0, 130);
-    AdminUser testuser2 = new AdminUser("Francin", "Vincent", "francin.vinc@gmail.com",
-        "Vandre333!");
-
+    User user = new User("Test", "User",
+        "test@live.no", "Password123!", "22030191349",
+        12345, "employeer1@gmail.com", 30.0, 130.0);
+    UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+    user.addUserSale(testsale1);
+    UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+    user.addUserSale(testsale2);
+    AdminUser adminUser = new AdminUser("Test", "Admin",
+        "test@admin.no", "Password123!");
     Accounts acc = new Accounts();
-    acc.addUser(testuser1);
-    acc.addUser(testuser2);
+    acc.addUser(user);
+    acc.addUser(adminUser);
     return acc;
   }
 
@@ -164,8 +170,8 @@ public class SalaryCheckerService {
       throws NumberFormatException, IOException {
     User user = (User) accounts.getUser(emailOfUser);
     int index = accounts.indexOf(user);
-    String url = "/Library/SalaryChecker/SalesReport.csv";
-    calculation.doCalculation(url, user);
+    Path path = this.fileStorageLocation.resolve("SalesReport.csv");
+    calculation.doCalculation(path, user);
     this.updateUserAttributes(user, index);
   }
 
@@ -231,31 +237,28 @@ public class SalaryCheckerService {
 
   public String storeFile(MultipartFile file) {
     // Normalize file name
-    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
-    try {
-      // Check if the file's name contains invalid characters
-      if (fileName.contains("..")) {
-        throw new FileStorageException("Sorry! Filename contains invalid path sequence " 
-          + fileName);
-      }
-
-      // Copy file to the target location (Replacing existing file with the same name)
-      Path targetLocation = this.fileStorageLocation.resolve(fileName);
-      Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-      return fileName;
-    } catch (IOException ex) {
-      throw new FileStorageException("Could not store file " + fileName 
-        + ". Please try again!", ex);
+    String fileName = null;
+    if (file != null) {
+      fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
     }
-  }
+    if (fileName == null) {
+      fileName = "";
+    }
+    if (fileName != null) {
+      try {
+        // Check if the file's name contains invalid characters
+        if (fileName.contains("..")) {
+          throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+        }
 
 
-  public static void main(String[] args) {
-    Accounts accounts = new Accounts();
-    accounts.addUser(new AdminUser("Firstname", "Lastname", "sera2n@live.no", "Password123!"));
-    SalaryCheckerService salaryCheckerService = new SalaryCheckerService(accounts);
-    System.out.println(salaryCheckerService.getAccounts());
+        // Copy file to the target location (Replacing existing file with the same name)
+        Path targetLocation = this.fileStorageLocation.resolve(fileName);
+        Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+      } catch (IOException ex) {
+        throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+      }
+    }
+    return fileName;
   }
 }

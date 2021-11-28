@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -166,9 +167,24 @@ public class Calculation {
    *                     This class is the general class of exceptions produced by
    *                     failed or interrupted I/O operations.
    */
-  public void updateList(String pathToFile) throws IOException {
-    FileInputStream pathToReadFile = new FileInputStream(new File(pathToFile));
-    saleslist = SALARY_CSV_READER.csvToSale(pathToReadFile);
+  public void updateList(Path path) {
+    FileInputStream pathToReadFile = null;
+    File file = path.toFile();
+    try {
+      pathToReadFile = new FileInputStream(file);
+      saleslist = SALARY_CSV_READER.csvToSale(pathToReadFile);
+    } catch (IOException e) {
+      System.err.println(e.getMessage());
+    } finally {
+      if (pathToReadFile != null) {
+        try {
+          pathToReadFile.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
   }
 
   /**
@@ -374,9 +390,9 @@ public class Calculation {
    */
   
   public void doCalculation(
-      String url, User user)
+      Path path, User user)
       throws IOException {
-    updateList(url);
+    updateList(path);
     removeUnwanted();
     updateElectricityCommission();
     calculateElectricityCommission();

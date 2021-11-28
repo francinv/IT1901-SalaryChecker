@@ -161,7 +161,7 @@ class RestServerApplicationTests {
     mockMvc.perform(MockMvcRequestBuilders.get(getUrl())
                                 .accept(MediaType.APPLICATION_JSON))
            .andExpect(MockMvcResultMatchers.status().isOk());
-  }
+  }*/
 
   private String getUrl(String... segments) {
     String url = "/" + SalaryCheckerController.SALARY_CHECKER_SERVICE_PATH;

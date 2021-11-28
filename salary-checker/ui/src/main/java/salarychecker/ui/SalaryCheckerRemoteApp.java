@@ -15,17 +15,15 @@ import salarychecker.ui.controllers.SalaryCheckerConfig;
  */
 public class SalaryCheckerRemoteApp extends Application {
 
-  protected static Stage stg;
-  private SalaryCheckerConfig config;
+  private SalaryCheckerConfig config = new SalaryCheckerConfig();
 
   @Override
   public void start(Stage stage) throws Exception {
+    URI uri = new URI(config.getProperty("serverURI"));
     FXMLLoader loader = new FXMLLoader();
     LoginController controller = new LoginController();
     controller.setDataAccess(
-        new RemoteSalaryCheckerAccess(
-                new URI(config.getProperty("serverURI"))
-        )
+        new RemoteSalaryCheckerAccess(uri)
     );
     loader.setController(controller);
     loader.setLocation(SalaryCheckerApp.class.getResource("views/LogIn.fxml"));
