@@ -5,10 +5,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.*;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import salarychecker.core.*;
+
+import salarychecker.core.AbstractUser;
+import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
+import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.dataaccess.RemoteSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.internal.SalaryCheckerModule;
@@ -21,6 +30,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class SalaryCheckerAppIT extends ApplicationTest {
@@ -52,6 +62,7 @@ public class SalaryCheckerAppIT extends ApplicationTest {
         stage.setScene(new Scene(parent));
         stage.show();
     }
+    
     @BeforeAll
     public static void setupHeadless() {
         SalaryCheckerApp.supportHeadless();
@@ -65,6 +76,7 @@ public class SalaryCheckerAppIT extends ApplicationTest {
     @AfterAll static void tearDown() {
         Path.of(System.getProperty("user.home")+"Accounts.json").toFile().delete();
     }
+    
     @Test
     @DisplayName("Client can read all users")
     void clientCanReadAllUsers() {
@@ -73,7 +85,7 @@ public class SalaryCheckerAppIT extends ApplicationTest {
             List<AbstractUser> readAccounts = accounts.getAccounts();
 
             for (int i = 0; i < readAccounts.size(); i++) {
-                Assertions.assertEquals(testList.get(i).getEmail(), readAccounts.get(i).getEmail());
+                assertEquals(testList.get(i).getEmail(), readAccounts.get(i).getEmail());
             }
         } catch (IOException e) {
             fail();
