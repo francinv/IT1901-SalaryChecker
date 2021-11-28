@@ -99,6 +99,4 @@ public class SalaryCalculationController extends AbstractController {
       throws InterruptedException, IOException, URISyntaxException {
     getDataAccess().uploadFile(salaryCsvFile);
   }
-
-
 }

@@ -35,5 +35,4 @@ public class SalaryCheckerConfig {
   public String getProperty(String key) {
     return properties.getProperty(key);
   }
-
 }

@@ -31,7 +31,7 @@ public class AdminUserOverviewController extends AbstractController {
    * This method updates the table view.
    * It iterates through tempdata, and adds it to the tableview.
    */
-  void updateTableView() {
+  protected void updateTableView() {
     tableUsers.getItems().clear();
     fnameCol.setCellValueFactory(new PropertyValueFactory<>("firstname"));
     lnameCol.setCellValueFactory(new PropertyValueFactory<>("lastname"));
