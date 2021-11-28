@@ -62,7 +62,7 @@ public abstract class AbstractController {
     this.dataAccess = dataAccess;
   }
 
-  protected SalaryCheckerAccess getDataAccess() {
+  public SalaryCheckerAccess getDataAccess() {
     return this.dataAccess;
   }
 

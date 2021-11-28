@@ -33,7 +33,7 @@ public class SalaryCheckerConfig {
                 throw new IllegalStateException("Could not load salarychecker.properties");
             }
         // }
-    }
+    //}
   }
 
     /**

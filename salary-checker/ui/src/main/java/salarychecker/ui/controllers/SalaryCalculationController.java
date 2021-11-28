@@ -36,7 +36,6 @@ public class SalaryCalculationController extends AbstractController {
   @FXML private Text pageTitle;
   @FXML private AnchorPane calculationPane;
 
-  private File salaryCsvFile;
 
   /**
    * This method is used to check the salary.

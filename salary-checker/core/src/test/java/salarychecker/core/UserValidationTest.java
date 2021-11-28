@@ -52,8 +52,8 @@ public class UserValidationTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isEqualEmail("email1", "email2"));
         Accounts accounts = new Accounts();
         accounts.addUser(testUser);
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isValidLogIn("email@email.com", "Password123!", accounts));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userValidation.isNotExistingUser("email@emaile.com", "Password123!", accounts));
-        assertThrows(IllegalArgumentException.class, () -> userValidation.allFieldsEmpty("", "", "", "", "", 0, 0, 0));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isValidLogIn("email@email.com", "Password123!", accounts));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> UserValidation.isNotExistingUser("email@emaile.com", "Password123!", accounts));
+        assertThrows(IllegalArgumentException.class, () -> UserValidation.allFieldsEmpty("", "", "", "", "", 0, 0, 0));
     }
 }
