@@ -8,9 +8,9 @@ export const fetchAccountsFromServer = () => {
     return response;
 };
 
-export const fetchUserFromServer = (email) => {
-  let url = `http://localhost:8080/salarychecker/user?email=${email}`
-  const axe = axios.get(url);
+export const fetchUserFromServer = (email, password) => {
+  let url = `http://localhost:8080/salarychecker/login?email=${email}&password=${password}`
+  const axe = axios.post(url);
   const response = axe.then(response => response.data);
   return response;
 }

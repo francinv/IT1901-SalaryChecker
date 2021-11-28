@@ -9,11 +9,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import salarychecker.core.Accounts;
+import salarychecker.core.AdminUser;
 import salarychecker.core.User;
+import salarychecker.core.UserSale;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
 import salarychecker.json.SalaryCheckerPersistence;
@@ -22,12 +25,13 @@ import salarychecker.ui.SalaryCheckerApp;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SalaryCalculationControllerTest extends ApplicationTest {
 
-  /*private ComboBox<String> monthDropdown;
+  private ComboBox<String> monthDropdown;
   private TextField yearField;
   private TextField hoursField;
   private TextField mobileField;
@@ -49,7 +53,7 @@ public class SalaryCalculationControllerTest extends ApplicationTest {
     controller.setDataAccess(dataAccess);
     loader.setLocation(SalaryCheckerApp.class.getResource("views/SalaryCalculation.fxml"));
     createTestUsers();
-    user = (User) dataAccess.userLogin("testcalc@live.no", "Password123!");
+    user = (User) dataAccess.userLogin("ola@live.no", "Password123!");
     URL url = getClass().getResource("SalesReport.csv");
     File file = new File(url.getFile());
     controller.setFile(file);
@@ -70,12 +74,13 @@ public class SalaryCalculationControllerTest extends ApplicationTest {
     paidText = lookup("#paidText").query();
     differenceText = lookup("#differenceText").query();
   }
+
   @Test
   public void testCalc(){
     writeCalculation();
-    assertEquals("15169.0", expectedText.getText());
+    assertEquals("14980.0", expectedText.getText());
     assertEquals("10000.0", paidText.getText());
-    assertEquals("5169.0", differenceText.getText());
+    assertEquals("4980.0", differenceText.getText());
   }
 
   private void writeCalculation(){
@@ -89,16 +94,23 @@ public class SalaryCalculationControllerTest extends ApplicationTest {
     clickOn(calculateButton);
   }
 
-
-
   private void createTestUsers() throws IOException {
     try {
-      dataAccess.createUser(new User("Test", "User",
-          "testcalc@live.no", "Password123!", "22030191349",
+      dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+          "boss@mail.com", "Vandre333!"));
+      User user = new User("Ola", "Nordmann",
+          "ola@live.no", "Password123!", "22030191349",
+          12345, "boss@mail.com", 30.0, 130.0);
+      UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+      user.addUserSale(testsale1);
+      UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+      user.addUserSale(testsale2);
+      dataAccess.createUser(user);
+      dataAccess.createUser(new User("Peter", "Nordmann",
+          "peter@live.no", "Test123!", "22030191349",
           12345, "employeer1@gmail.com", 30.0, 130.0));
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
-  }*/
-
+  }
 }

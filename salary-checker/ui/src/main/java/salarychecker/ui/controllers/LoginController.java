@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import salarychecker.core.AbstractUser;
+import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.core.UserSale;
@@ -63,16 +64,16 @@ public class LoginController extends AbstractController {
   @FXML
   private void createUsersAction(ActionEvent event) throws IOException {
     try {
-      User user = new User("Test", "User",
-          "test@live.no", "Password123!", "22030191349",
-          12345, "employeer1@gmail.com", 30.0, 130.0);
+      User user = new User("Ola", "Nordmann",
+          "ola@live.no", "Password123!", "22030191349",
+          12345, "boss@mail.com", 30.0, 130.0);
       UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
       user.addUserSale(testsale1);
       UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
       user.addUserSale(testsale2);
       dataAccess.createUser(user);
-      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
-          "test@admin.no", "Password123!"));
+      dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+          "boss@mail.com", "Password123!"));
       createButton.setText("Test users created!");
     } catch (Exception e) {
       createButton.setText(e.getMessage());

@@ -120,8 +120,8 @@ public class LocalSalaryCheckerAccess implements SalaryCheckerAccess {
     return user.getUserSale(salesperiod);
   }
 
-  public Path getFilePath() {
-    return this.salaryCsv.toPath();
+  public String getFilePath() {
+    return this.salaryCsv.getAbsolutePath();
   }
 
   public String getFileName() {

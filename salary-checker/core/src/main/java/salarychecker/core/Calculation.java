@@ -162,14 +162,14 @@ public class Calculation {
   /**
    * Upadtes the list according to salesreport.
    *
-   * @param path location of salesreport
+   * @param pathToCsv location of salesreport
    * @throws IOException Signals that an I/O exception of some sort has occurred.
    *                     This class is the general class of exceptions produced by
    *                     failed or interrupted I/O operations.
    */
-  public void updateList(Path path) {
+  public void updateList(String pathToCsv) {
     FileInputStream pathToReadFile = null;
-    File file = path.toFile();
+    File file = new File(pathToCsv);
     try {
       pathToReadFile = new FileInputStream(file);
       saleslist = SALARY_CSV_READER.csvToSale(pathToReadFile);
@@ -216,11 +216,40 @@ public class Calculation {
           || s.getSalgsType().equals("Produktbytte") && LEADS.contains(s.getCampaign())) {
         s.updateCommission(50);
       }
+      if (s.getSalgsType().equals("Flytting") || s.getSalgsType().equals("Nysalg")) {
+        checkIfBundling(s);
+        checkIfNySalgContainsCampaign(s);
+        checkIfComebackContainsCampaign(s);
+        checkIfLeadsContainsCampaign(s);
+        checkIfWinBackContainsCampaing(s);
+      }
+    }
+  }
 
-      checkIfBundling(s);
-      checkIfNySalgContainsCampaign(s);
-      checkIfComebackContainsCampaign(s);
-      checkIfLeadsContainsCampaign(s);
+  private void checkIfWinBackContainsCampaing(Sale s) {
+    if (WINBACK.contains(s.getCampaign())) {
+      if (ORG.contains(s.getProduct()) || VAR.contains(s.getProduct())) {
+        s.updateCommission(110);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-30);
+        }
+        if (s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-60);
+        }
+      }
+      if (NSPOT.contains(s.getProduct())) {
+        s.updateCommission(80);
+        if (s.getRebate().equals("300") || s.getRebate().equals("500")
+            || s.getRebate().equals("750") || s.getRebate().equals("1000")) {
+          s.updateCommission(-30);
+        }
+      }
+      if (RSPOT.contains(s.getProduct())) {
+        s.updateCommission(50);
+        if (s.getRebate().equals("500")) {
+          s.updateCommission(-25);
+        }
+      }
     }
   }
 
@@ -383,16 +412,16 @@ public class Calculation {
   /**
    * This method do the full calculation. This method is needed by API.
    *
-   * @param path to the SalesReport.
+   * @param pathToCsv to the SalesReport.
    * @param user the user.
    * @throws FileNotFoundException Signals that an attempt to open the file
    *                                denoted by a specified pathname has failed.
    */
   
   public void doCalculation(
-      Path path, User user)
+      String pathToCsv, User user)
       throws IOException {
-    updateList(path);
+    updateList(pathToCsv);
     removeUnwanted();
     updateElectricityCommission();
     calculateElectricityCommission();
@@ -402,4 +431,5 @@ public class Calculation {
     
     user.addUserSale(new UserSale(this.salesperiod, getCalculated(), this.paid));
   }
+
 }

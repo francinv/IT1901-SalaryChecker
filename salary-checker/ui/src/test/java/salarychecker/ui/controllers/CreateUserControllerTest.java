@@ -8,19 +8,19 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
-import salarychecker.core.Accounts;
 import salarychecker.core.AdminUser;
 import salarychecker.core.User;
-import salarychecker.core.UserValidation;
+import salarychecker.core.UserSale;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
 import salarychecker.dataaccess.SalaryCheckerAccess;
-import salarychecker.json.SalaryCheckerPersistence;
 import salarychecker.ui.SalaryCheckerApp;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,7 +76,7 @@ public class CreateUserControllerTest extends ApplicationTest {
     controller.setDataAccess(dataAccess);
     loader.setLocation(SalaryCheckerApp.class.getResource("views/CreateUser.fxml"));
     createTestUsers();
-    adminUser = (AdminUser) dataAccess.userLogin("testcreate@gmail.com", "Vandre333!");
+    adminUser = (AdminUser) dataAccess.userLogin("boss@mail.com", "Vandre333!");
     final Parent parent = loader.load();
     controller.loadUserAndAccount();
     stage.setScene(new Scene(parent));
@@ -94,7 +94,10 @@ public class CreateUserControllerTest extends ApplicationTest {
   }
 
   @Test
-  public void testCreateUser() {
+  public void testCreateUser() throws IOException {
+    Path.of(System.getProperty("user.home"), "Accounts.json").toFile().delete();
+    Path.of(System.getProperty("user.home"), "SalarycheckerKeystore.jks").toFile().delete();
+    createTestUsers();
     clickOn(goOnButton);
     assertEquals("Please enter a name.",errorMessageDisplay.getText());
     writeInFields(nameField, "J");
@@ -176,19 +179,28 @@ public class CreateUserControllerTest extends ApplicationTest {
     assertEquals("0x008000ff", errorMessageDisplay.getFill().toString());
   }
 
-  private void writeInFields(TextField wantedField, String write) {
-    clickOn(wantedField).write(write);
-  }
-
   private void createTestUsers() throws IOException {
     try {
-      dataAccess.createAdminUser(new AdminUser("Test", "Admin",
-          "testcreate@gmail.com", "Vandre333!"));
-      dataAccess.createUser(new User("Test", "User",
-          "testcreate@live.no", "Password123!", "22030191349",
+      dataAccess.createAdminUser(new AdminUser("Kari", "Nordmann",
+          "boss@mail.com", "Vandre333!"));
+      User user = new User("Ola", "Nordmann",
+          "ola@live.no", "Password123!", "22030191349",
+          12345, "boss@mail.com", 30.0, 130.0);
+      UserSale testsale1 = new UserSale("August 2021", 15643.0, 10000.0);
+      user.addUserSale(testsale1);
+      UserSale testsale2 = new UserSale("September 2021", 13000.0, 8000.0);
+      user.addUserSale(testsale2);
+      dataAccess.createUser(user);
+      dataAccess.createUser(new User("Peter", "Nordmann",
+          "peter@live.no", "Test123!", "22030191349",
           12345, "employeer1@gmail.com", 30.0, 130.0));
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
   }
+
+  private void writeInFields(TextField wantedField, String write) {
+    clickOn(wantedField).write(write);
+  }
+
 }

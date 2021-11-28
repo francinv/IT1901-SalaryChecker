@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import salarychecker.core.AbstractUser;
+import salarychecker.core.Accounts;
 import salarychecker.core.User;
 import salarychecker.core.UserValidation;
 
@@ -16,6 +18,7 @@ import salarychecker.core.UserValidation;
 public class SettingsController extends AbstractController {
 
   private User user;
+  private int index;
 
   //FXML VARIABLES
   @FXML private TextField changeFirstNameField;
@@ -38,8 +41,11 @@ public class SettingsController extends AbstractController {
    * Method that is called from HomepageController.
    * We use this method to load existing user information as a prompt text to Text Fields.
    */
-  public void loadSettingsInfo() {
+  public void loadSettingsInfo() throws IOException {
     user = (User) getDataAccess().getLoggedInUser();
+    Accounts accounts = getDataAccess().readAccounts();
+    AbstractUser temp = accounts.getUser(user.getEmail());
+    index = accounts.indexOf(temp);
     changeFirstNameField.setPromptText(user.getFirstname());
     changeLastNameField.setPromptText(user.getLastname());
     changeEmailField.setPromptText(user.getEmail());
@@ -124,8 +130,7 @@ public class SettingsController extends AbstractController {
         successMessageDisplay.setText("Changes successfully saved.");
         clearFields(changeEmployeeNumberField);
       }
-      dataAccess.updateUserAttributes(user, 
-          getDataAccess().readAccounts().getAccounts().indexOf(user));
+      dataAccess.updateUserAttributes(user, index);
       loadSettingsInfo();
     } catch (IllegalArgumentException e) {
       errorTextDisplay.setText(e.getMessage());

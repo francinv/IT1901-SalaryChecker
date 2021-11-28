@@ -169,7 +169,7 @@ public class SalaryCheckerService {
       throws NumberFormatException, IOException {
     User user = (User) accounts.getUser(emailOfUser);
     int index = accounts.indexOf(user);
-    Path path = this.fileStorageLocation.resolve("SalesReport.csv");
+    final String path = System.getProperty("user.home")+"/.salarychecker/SalesReport.csv";
     calculation.doCalculation(path, user);
     this.updateUserAttributes(user, index);
   }
