@@ -8,8 +8,8 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import salarychecker.core.Accounts;
@@ -17,9 +17,10 @@ import salarychecker.core.AdminUser;
 import salarychecker.core.User;
 import salarychecker.ui.controllers.SalaryCheckerConfig;
 
+@Disabled
 public class RemoteSalaryCheckerAccessTest {
 
-    /*private WireMockConfiguration wireMockConfig;
+    private WireMockConfiguration wireMockConfig;
     private WireMockServer wireMockServer;
 
     private RemoteSalaryCheckerAccess remoteSalaryCheckerAccess;
@@ -131,5 +132,4 @@ public class RemoteSalaryCheckerAccessTest {
     public RemoteSalaryCheckerAccess getRemoteSalaryCheckerAccess() {
         return remoteSalaryCheckerAccess;
     }
-*/
 }
