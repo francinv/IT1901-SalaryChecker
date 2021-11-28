@@ -43,8 +43,7 @@ public class RestServerApplication {
         public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/salarychecker/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedOrigins("https://salarycheckergr2111.herokuapp.com/")
+                .allowedOrigins("http://localhost:3000", "https://salarycheckergr2111.herokuapp.com/")
                 .allowedMethods("PUT", "POST", "GET");
       }
     };
