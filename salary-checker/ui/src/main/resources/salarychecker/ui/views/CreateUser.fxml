@@ -83,12 +83,12 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text fx:id="errorMessageDisplay" fill="RED" layoutX="397.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="205.46710205078125">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
          </children>
       </AnchorPane>
+      <Text fx:id="errorMessageDisplay" fill="RED" layoutX="374.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="205.46710205078125">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

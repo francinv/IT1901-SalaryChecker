@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextArea?>
@@ -10,9 +15,9 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 
-<AnchorPane fx:id="calculationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/SalaryCalculationStylesheet.css">
+<AnchorPane fx:id="calculationPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="940.0" stylesheets="@../styles/SalaryCalculationStylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ComboBox fx:id="monthDropdown" layoutX="507.0" layoutY="60.0" prefHeight="48.0" prefWidth="174.0" promptText="Måned">
+      <ComboBox fx:id="monthDropdown" layoutX="435.0" layoutY="60.0" prefHeight="48.0" prefWidth="174.0" promptText="Måned">
          <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:id="jan" fx:value="Januar" />
@@ -35,71 +40,71 @@
             <Font size="36.0" />
          </font>
       </Text>
-      <TextField fx:id="yearField" layoutX="681.0" layoutY="60.0" prefHeight="48.0" prefWidth="265.0" promptText="Årstall (åååå)" />
-      <Text layoutX="59.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall timer arbeidet:" wrappingWidth="347.205078125" AnchorPane.leftAnchor="60.0">
+      <TextField fx:id="yearField" layoutX="609.0" layoutY="60.0" prefHeight="48.0" prefWidth="265.0" promptText="Årstall (åååå)" />
+      <Text layoutX="60.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall timer arbeidet:" wrappingWidth="347.205078125" AnchorPane.leftAnchor="60.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <TextField fx:id="hoursField" layoutX="507.0" layoutY="212.0" prefHeight="48.0" prefWidth="174.0" promptText="Antall timer" />
-      <Text layoutX="50.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utbetalt nettolønn:" wrappingWidth="347.205078125" AnchorPane.leftAnchor="60.0">
+      <TextField fx:id="hoursField" layoutX="435.0" layoutY="142.0" prefHeight="48.0" prefWidth="174.0" promptText="Antall timer" />
+      <Text layoutX="60.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utbetalt nettolønn:" wrappingWidth="347.205078125" AnchorPane.leftAnchor="60.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Text layoutX="58.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last opp salgsrapport:" AnchorPane.leftAnchor="60.0">
+      <Text layoutX="60.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last opp salgsrapport:" AnchorPane.leftAnchor="60.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <TextField fx:id="paidField" layoutX="506.0" layoutY="378.0" prefHeight="48.0" prefWidth="174.0" promptText="Nettolønn NOK" />
-      <Button fx:id="uploadButton" layoutX="507.0" layoutY="450.0" mnemonicParsing="false" onAction="#uploadAction" prefHeight="39.0" prefWidth="174.0" text="Velg fil...">
+      <TextField fx:id="paidField" layoutX="435.0" layoutY="301.0" prefHeight="48.0" prefWidth="174.0" promptText="Nettolønn NOK" />
+      <Button fx:id="uploadButton" layoutX="435.0" layoutY="400.0" mnemonicParsing="false" onAction="#uploadAction" prefHeight="51.0" prefWidth="174.0" text="Velg fil...">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <TextArea fx:id="fileField" layoutX="681.0" layoutY="450.0" prefHeight="51.0" prefWidth="265.0" promptText="Opplastet fil">
+      <TextArea fx:id="fileField" layoutX="609.0" layoutY="400.0" prefHeight="51.0" prefWidth="265.0" promptText="Opplastet fil">
          <font>
             <Font size="24.0" />
          </font>
       </TextArea>
-      <Text layoutX="58.0" layoutY="588.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forventet lønn:" wrappingWidth="351.439453125" AnchorPane.leftAnchor="60.0">
+      <Text layoutX="60.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forventet lønn:" wrappingWidth="351.439453125" AnchorPane.leftAnchor="60.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Text layoutX="57.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utbetalt lønn:" wrappingWidth="235.205078125" AnchorPane.leftAnchor="60.0">
+      <Text layoutX="60.0" layoutY="565.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utbetalt lønn:" wrappingWidth="235.205078125" AnchorPane.leftAnchor="60.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Text layoutX="59.0" layoutY="707.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Differanse:" wrappingWidth="202.314453125" AnchorPane.leftAnchor="60.0">
+      <Text layoutX="61.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Differanse:" wrappingWidth="202.314453125" AnchorPane.leftAnchor="61.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Text fx:id="expectedText" layoutX="343.0" layoutY="590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forventet" AnchorPane.leftAnchor="340.0">
+      <Text fx:id="expectedText" layoutX="435.0" layoutY="507.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forventet" AnchorPane.leftAnchor="435.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Text fx:id="paidText" layoutX="340.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utbetalt">
+      <Text fx:id="paidText" layoutX="435.0" layoutY="567.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Utbetalt">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Text fx:id="differenceText" layoutX="340.0" layoutY="707.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Differanse">
+      <Text fx:id="differenceText" layoutX="434.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Differanse">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Text layoutX="60.0" layoutY="333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall mobil:" AnchorPane.leftAnchor="60.0">
+      <Text layoutX="61.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Antall mobil:" AnchorPane.leftAnchor="61.0">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <TextField fx:id="mobileField" layoutX="507.0" layoutY="294.0" prefHeight="48.0" prefWidth="174.0" promptText="Antall mobil" />
-      <Button fx:id="calculateButton" layoutX="762.0" layoutY="566.0" mnemonicParsing="false" onAction="#calculateSalary" prefHeight="111.0" prefWidth="180.0" text="Kalkuler lønn">
+      <TextField fx:id="mobileField" layoutX="435.0" layoutY="218.0" prefHeight="48.0" prefWidth="174.0" promptText="Antall mobil" />
+      <Button fx:id="calculateButton" layoutX="694.0" layoutY="516.0" mnemonicParsing="false" onAction="#calculateSalary" prefHeight="111.0" prefWidth="180.0" text="Kalkuler lønn">
          <font>
             <Font size="20.0" />
          </font>

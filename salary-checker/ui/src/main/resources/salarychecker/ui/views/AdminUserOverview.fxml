@@ -25,7 +25,7 @@
             <TableColumn fx:id="fnameCol" prefWidth="187.0" text="Fornavn" />
             <TableColumn fx:id="lnameCol" prefWidth="243.0" text="Etternavn" />
             <TableColumn fx:id="emailCol" prefWidth="193.0" text="E-post" />
-            <TableColumn fx:id="idCol" prefWidth="196.0" text="Ansatt-ID" />
+            <TableColumn fx:id="idCol" prefWidth="210.0" text="Ansatt-ID" />
         </columns>
       </TableView>
    </children>
