@@ -11,21 +11,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="userOverviewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1340.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/UserOverviewStylesheet.css">
+<AnchorPane fx:id="userOverviewPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="940.0" stylesheets="@../styles/UserOverviewStylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox layoutX="365.0" layoutY="40.0">
+      <HBox layoutX="163.0" layoutY="38.0">
          <children>
             <Button fx:id="searchButton" layoutX="365.0" layoutY="40.0" mnemonicParsing="false" onAction="#searchAction" prefHeight="39.0" prefWidth="41.0" text="⚲" />
             <TextField fx:id="searchField" prefHeight="39.0" prefWidth="528.0" promptText="Søk etter brukere... (kun fornavn)" />
             <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearAction" prefHeight="39.0" prefWidth="41.0" text="⨯" />
          </children>
       </HBox>
-      <TableView fx:id="tableUsers" layoutX="65.0" layoutY="98.0" prefHeight="696.0" prefWidth="1206.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
+      <TableView fx:id="tableUsers" layoutX="65.0" layoutY="101.0" prefHeight="447.0" prefWidth="827.0" AnchorPane.bottomAnchor="102.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="101.0">
         <columns>
-            <TableColumn fx:id="fnameCol" prefWidth="301.5" text="Fornavn" />
-            <TableColumn fx:id="lnameCol" prefWidth="301.5" text="Etternavn" />
-            <TableColumn fx:id="emailCol" prefWidth="301.5" text="E-post" />
-            <TableColumn fx:id="idCol" prefWidth="301.5" text="Ansatt-ID" />
+            <TableColumn fx:id="fnameCol" prefWidth="187.0" text="Fornavn" />
+            <TableColumn fx:id="lnameCol" prefWidth="243.0" text="Etternavn" />
+            <TableColumn fx:id="emailCol" prefWidth="193.0" text="E-post" />
+            <TableColumn fx:id="idCol" prefWidth="196.0" text="Ansatt-ID" />
         </columns>
       </TableView>
    </children>
