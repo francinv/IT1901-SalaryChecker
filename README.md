@@ -14,6 +14,9 @@ This project is built up with maven and subsequently, if maven is not installed,
 
 Furthermore, only admin-users added by developers can use the application as admins.
 
+Due to the size of the UI-test the app seemlingly stops building at random times. If this happens UI-tests can be skipped.
+See bottom of page.
+
 
 ### Running application with local access:
 1) Navigate to salary-checker directory.
@@ -156,3 +159,10 @@ _____________________________________________________________
 *This plan is tentative, so the plan can be changed as we develop. The finished product for the sprint will be documented in 
 the respective release folders.* 
 
+
+
+### Continuation from Note:
+
+The application is able to build, but not consistently, due to the size of UI-tests.
+
+[Picture](docs/Pictures/BuilSuccess.jpg)
