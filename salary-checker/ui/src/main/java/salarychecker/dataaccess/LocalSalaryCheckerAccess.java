@@ -2,7 +2,6 @@ package salarychecker.dataaccess;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.List;
 import salarychecker.core.AbstractUser;
 import salarychecker.core.Accounts;
