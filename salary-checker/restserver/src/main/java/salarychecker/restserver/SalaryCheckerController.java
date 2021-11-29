@@ -129,7 +129,6 @@ public class SalaryCheckerController {
     try {
       salaryCheckerService.calculateUsersUserSale(calculation, emailOfUser);
     } catch (NumberFormatException | IOException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }

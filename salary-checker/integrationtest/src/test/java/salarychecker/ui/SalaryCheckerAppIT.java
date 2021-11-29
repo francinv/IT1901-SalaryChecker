@@ -37,7 +37,6 @@ public class SalaryCheckerAppIT extends ApplicationTest {
 
   private ObjectMapper objectMapper;
 
-  // Need config-data from ajour.properties in order to get the correct path for the json-file.
   private SalaryCheckerConfig config;
   private LoginController loginController;
   private SalaryCheckerAccess dataAccess;
@@ -72,7 +71,8 @@ public class SalaryCheckerAppIT extends ApplicationTest {
     createTestUsers();
   }
 
-  @AfterAll static void tearDown() {
+  @AfterAll 
+  public static void tearDown() {
     Path.of(System.getProperty("user.home") + "/.salarychecker/" + "Accounts.json").toFile().delete();
   }
     
