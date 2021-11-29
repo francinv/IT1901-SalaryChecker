@@ -1,5 +1,5 @@
 variables:
-  SKIP_UI_TESTS: -DskipUiTests -DfailIfNoTests=false
+  SKIP_TESTS: -DskipTests -DfailIfNoTests=false
 
 image: maven:3-openjdk-16
 before_script:
@@ -18,17 +18,17 @@ build:
 test:
   stage: test
   script:
-    - mvn test $SKIP_UI_TESTS
+    - mvn test
 
 verify:
   stage: verify
   script:
-    - mvn verify $SKIP_UI_TESTS
+    - mvn verify
 
-jacoco:
-  stage: verify
-  script:
-    - mvn jacoco:report
-    - mvn verify $SKIP_UI_TESTS
-    - cat report/target/site/jacoco-aggregate/index.html | grep -o 'Total[^%]*%' | sed -e 's/Total/Jacoco-Test-Coverage:/g'
-  coverage: '/Jacoco-Test-Coverage[^%]+[>](\d+.?\d*)%/'
+# jacoco:
+#   stage: verify
+#   script:
+#     - mvn jacoco:report
+#     - mvn verify
+#     - cat report/target/site/jacoco-aggregate/index.html | grep -o 'Total[^%]*%' | sed -e 's/Total/Jacoco-Test-Coverage:/g'
+#   coverage: '/Jacoco-Test-Coverage[^%]+[>](\d+.?\d*)%/'
