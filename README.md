@@ -18,6 +18,7 @@ Due to the size of the UI-test the app seemlingly stops building at random times
 See bottom of page.
 
 
+
 ### Running application with local access:
 1) Navigate to salary-checker directory.
 2) Install dependencies and run tests.
@@ -30,7 +31,7 @@ cd salary-checker
 2)
 mvn clean install
 #Tests can be skipped by using "mvn clean install -DskipTests"
-
+#Clean install can be skipped if application has been ran with remote access or with react client previously.
 
 3)
 mvn javafx:run -pl ui
@@ -39,6 +40,7 @@ mvn javafx:run -pl ui
 1) Navigate to salary-checker directory.
 2) Install dependencies and run tests.
 3) Start server. 
+3.5) Open new terminal window.
 4) Run javafx client application.
 
 ```sh
@@ -48,9 +50,12 @@ cd salary-checker
 2)
 mvn clean install
 #Tests can be skipped by using "mvn clean install -DskipTests"
+#Clean install can be skipped if application has been ran with local access or with react client previously.
 
 3)
 mvn spring-boot:run -pl restserver
+
+#Command 4 must be written in seperate terminal window after repeating step 1)
 
 4)
 mvn javafx:run -pl ui -P remoteapp
@@ -68,12 +73,14 @@ cd salary-checker
 2)
 mvn clean install
 #Tests can be skipped by using "mvn clean install -DskipTests"
+#Clean install can be skipped if application has been ran with remote access or with local access previously.
 
 3)
 mvn spring-boot:run -pl restserver
 
 4)
 https://salarycheckergr2111.herokuapp.com/
+#Click link above.
 ```
 ## How to get started using SalaryChecker:
 The SalaryChecker application is meant for two seperate user-groups. 
