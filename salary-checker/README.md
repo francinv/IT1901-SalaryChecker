@@ -119,8 +119,7 @@ cd target/SalaryCheckerFX/bin
 
 
 ## Project structure:
-### Project structure will be updated after later releases.
-![Architecture](../docs/ARCHITECTURE.png)
+![Architecture](../docs/release3/Diagrams/PackageDiagram.png)
 
 - [docs](../../docs)
     - [release1](../../docs/release1)
