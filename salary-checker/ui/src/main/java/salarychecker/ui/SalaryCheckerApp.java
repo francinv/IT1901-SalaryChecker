@@ -1,5 +1,6 @@
 package salarychecker.ui;
 
+import java.nio.file.Path;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,8 +9,6 @@ import javafx.stage.Stage;
 import salarychecker.dataaccess.LocalSalaryCheckerAccess;
 import salarychecker.ui.controllers.LoginController;
 
-import java.nio.file.Path;
-
 /**
  * JavaFX App.
  */
@@ -17,9 +16,10 @@ public class SalaryCheckerApp extends Application {
 
   @Override
   public void start(Stage stage) throws Exception {
-    FXMLLoader loader = new FXMLLoader();
+    final FXMLLoader loader = new FXMLLoader();
     Path.of(System.getProperty("user.home"), "/.salarychecker/Accounts.json").toFile().delete();
-    Path.of(System.getProperty("user.home"), "/.salarychecker/SalarycheckerKeystore.jks").toFile().delete();
+    Path.of(System.getProperty("user.home"), 
+        "/.salarychecker/SalarycheckerKeystore.jks").toFile().delete();
     LoginController controller = new LoginController();
     controller.setDataAccess(
         new LocalSalaryCheckerAccess()

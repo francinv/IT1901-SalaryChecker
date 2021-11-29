@@ -14,7 +14,7 @@ public class FileStorageProperties {
   }
 
   public void setUploadDir(String uploadDir) {
-    this.uploadDir = System.getProperty("user.home")+uploadDir;
+    this.uploadDir = System.getProperty("user.home") + uploadDir;
   }
 
 }

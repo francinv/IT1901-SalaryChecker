@@ -167,8 +167,7 @@ public class RemoteSalaryCheckerAccess implements SalaryCheckerAccess {
       if (httpResponse.body().contains("employeeNumber")) {
         this.user = objectMapper.readValue(httpResponse.body(), User.class);
         return objectMapper.readValue(httpResponse.body(), User.class);
-      }
-      else {
+      } else {
         this.user = objectMapper.readValue(httpResponse.body(), AdminUser.class);
       }
       return objectMapper.readValue(httpResponse.body(), AdminUser.class);

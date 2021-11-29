@@ -34,7 +34,7 @@ public class SalaryCheckerPersistence {
   }
 
   public void setFilePath(String fileName) {
-    String filePath = "/.salarychecker/"+fileName;
+    String filePath = "/.salarychecker/" + fileName;
     this.filePath = Paths.get(System.getProperty("user.home"), filePath);
   }
 
