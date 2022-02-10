@@ -1,9 +1,23 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111)
+![java-badge](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+![spring-badge](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![react-badge](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![redux-badge](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+![material-badge](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)
+![router-badge](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+[![Gitpod Ready-to-Code](https://camo.githubusercontent.com/81356c564790644ad4669af2d3105447a5789c9e137f7ec7416a201d4eebb826/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f476974706f642532302d2532333144314431442e7376673f267374796c653d666f722d7468652d6261646765266c6f676f3d476974706f64266c6f676f436f6c6f723d314141364534)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2111/gr2111)
 # Salary Checker :computer:
 
 This repo contains a multi-module, multi-package javafx project for checking salary. This application is mainly meant for people who work on commision. 
 The app will calculate if you have been paid the correct amount based on your sales. You can read more about the project here: [Salary Checker](salary-checker/README.md).
 
+***JavaFX APP***
+![Login Page](docs/Pictures/fx_login.png)
+![Homepage](docs/Pictures/fx_homepage.png)
+
+***React client***
+![Login React](docs/Pictures/react_login.png)
+![Admin Home](docs/Pictures/react_admin.png)
+![User Home](docs/Pictures/react_user.png)
 
 ## Building and running the project:
 
